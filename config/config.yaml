@@ -1,0 +1,53 @@
+# Gida & Saglik Asistani - Merkezi Konfigurasyon
+# Not: Bu dosyadaki esik degerleri, Faz 1'de data/knowledge_base/thresholds.json
+# icine islenecek WHO/EFSA/TGK kaynaklariyla dogrulanip guncellenecektir (baslangic degerleridir).
+
+llm:
+  provider: anthropic   # anthropic | openai
+  model_anthropic: claude-sonnet-5
+  model_openai: gpt-4o-mini
+  max_tokens: 1024
+  temperature: 0.2
+
+paths:
+  raw_data: data/raw
+  processed_data: data/processed
+  images: data/images
+  knowledge_base: data/knowledge_base
+  models: models
+
+vision:
+  categories:
+    - sut_urunu
+    - atistirmalik
+    - icecek
+    - hazir_gida
+    - konserve
+  image_size: 224
+  backbone_primary: mobilenetv3
+  backbone_secondary: efficientnet_b3
+
+ocr:
+  engines: [easyocr, tesseract]
+  languages: [tr, en]
+
+# 100g/100mL bazinda "yuksek" kabul edilen baslangic esikleri (Nutri-Score / EFSA
+# referans alim degerlerine dayali taslak - Faz 1'de TGK/WHO ile netlestirilecek).
+thresholds:
+  sugar_high_g_per_100g: 22.5
+  salt_high_g_per_100g: 1.5
+  saturated_fat_high_g_per_100g: 5.0
+  sodium_high_mg_per_100g: 600
+
+allergens:
+  - laktoz
+  - gluten
+  - findik
+  - soya
+  - yumurta
+  - balik
+
+rag:
+  embedding_model: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+  top_k: 5
+  similarity_threshold: 0.35

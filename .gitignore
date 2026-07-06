@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Sanal ortam
+.venv/
+venv/
+env/
+
+# Ortam degiskenleri / gizli anahtarlar
+.env
+
+# Veri ve modeller (git'e girmez)
+data/raw/
+data/processed/
+data/images/
+models/*.pt
+models/*.pth
+models/*.onnx
+*.faiss
+*.index
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Flutter (mobil - Faz 7)
+mobile/build/
+mobile/.dart_tool/
+mobile/.flutter-plugins*
+mobile/ios/Pods/
