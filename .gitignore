@@ -13,15 +13,17 @@ env/
 # Ortam degiskenleri / gizli anahtarlar
 .env
 
-# Veri ve modeller (git'e girmez)
+# Veri ve modeller (git'e girmez - buyuk/binary)
 data/raw/
-data/processed/
 data/images/
+data/processed/images_hq/
 models/*.pt
 models/*.pth
 models/*.onnx
 *.faiss
 *.index
+# Not: data/processed/*.csv (dataset.csv, data_quality_report.csv) BILEREK
+# git'e dahil edilir - hafif, izlenebilir arastirma ciktilaridir.
 
 # IDE / OS
 .vscode/

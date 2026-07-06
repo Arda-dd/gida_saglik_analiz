@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "generated_from": "config\\config.yaml",
+  "thresholds": {
+    "sugar_high_g_per_100g": {
+      "value": 22.5,
+      "unit": "g/100g",
+      "source": "UK FSA traffic-light / Nutri-Score front-of-pack konvansiyonu",
+      "source_note": "TODO: TGK'nin kendi esikleriyle karsilastirilip dogrulanmali. Bkz. docs/nutriscore_thresholds_overview.md",
+      "verified": false
+    },
+    "salt_high_g_per_100g": {
+      "value": 1.5,
+      "unit": "g/100g",
+      "source": "UK FSA traffic-light / Nutri-Score front-of-pack konvansiyonu",
+      "source_note": "TODO: TGK'nin kendi esikleriyle karsilastirilip dogrulanmali. Bkz. docs/nutriscore_thresholds_overview.md",
+      "verified": false
+    },
+    "saturated_fat_high_g_per_100g": {
+      "value": 5.0,
+      "unit": "g/100g",
+      "source": "UK FSA traffic-light / Nutri-Score front-of-pack konvansiyonu",
+      "source_note": "TODO: TGK'nin kendi esikleriyle karsilastirilip dogrulanmali. Bkz. docs/nutriscore_thresholds_overview.md",
+      "verified": false
+    },
+    "sodium_high_mg_per_100g": {
+      "value": 600,
+      "unit": "mg/100g",
+      "source": "UK FSA traffic-light / Nutri-Score front-of-pack konvansiyonu",
+      "source_note": "TODO: TGK'nin kendi esikleriyle karsilastirilip dogrulanmali. Bkz. docs/nutriscore_thresholds_overview.md",
+      "verified": false
+    },
+    "who_salt_daily_intake_g": {
+      "value": 5,
+      "unit": "g/gun",
+      "source": "WHO 'Salt reduction' Fact Sheet",
+      "source_note": "https://www.who.int/news-room/fact-sheets/detail/salt-reduction (WebFetch ile 2026-07-06 tarihinde dogrulandi)",
+      "verified": true
+    },
+    "who_free_sugars_energy_pct": {
+      "value": 10,
+      "unit": "% gunluk toplam enerji",
+      "source": "WHO 'Healthy diet' Fact Sheet",
+      "source_note": "https://www.who.int/news-room/fact-sheets/detail/healthy-diet (WebFetch ile 2026-07-06 tarihinde dogrulandi)",
+      "verified": true
+    },
+    "who_fat_energy_pct_max": {
+      "value": 30,
+      "unit": "% gunluk toplam enerji",
+      "source": "WHO 'Healthy diet' Fact Sheet",
+      "source_note": "https://www.who.int/news-room/fact-sheets/detail/healthy-diet (WebFetch ile 2026-07-06 tarihinde dogrulandi)",
+      "verified": true
+    },
+    "who_saturated_fat_energy_pct_max": {
+      "value": 10,
+      "unit": "% gunluk toplam enerji",
+      "source": "WHO 'Healthy diet' Fact Sheet",
+      "source_note": "https://www.who.int/news-room/fact-sheets/detail/healthy-diet (WebFetch ile 2026-07-06 tarihinde dogrulandi)",
+      "verified": true
+    },
+    "energy_kcal_max_plausible_per_100g": {
+      "value": 900,
+      "unit": "kcal/100g",
+      "source": "Teorik maksimum (saf yag ~9kcal/g x 100g)",
+      "source_note": "Saglik esigi degil, veri dogrulama (validation.py) icin mantik sinirdir.",
+      "verified": true
+    }
+  }
+}

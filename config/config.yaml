@@ -1,6 +1,7 @@
 # Gida & Saglik Asistani - Merkezi Konfigurasyon
-# Not: Bu dosyadaki esik degerleri, Faz 1'de data/knowledge_base/thresholds.json
-# icine islenecek WHO/EFSA/TGK kaynaklariyla dogrulanip guncellenecektir (baslangic degerleridir).
+# Not: Bu dosyadaki esik degerlerinin kaynak/birim/dogrulama notlari
+# data/knowledge_base/thresholds.json icinde src/data/kb_builder.py tarafindan
+# uretilir (bkz. THRESHOLD_METADATA). Buradaki "value" alanlari tek dogruluk kaynagidir.
 
 llm:
   provider: anthropic   # anthropic | openai
@@ -31,13 +32,21 @@ ocr:
   engines: [easyocr, tesseract]
   languages: [tr, en]
 
-# 100g/100mL bazinda "yuksek" kabul edilen baslangic esikleri (Nutri-Score / EFSA
-# referans alim degerlerine dayali taslak - Faz 1'de TGK/WHO ile netlestirilecek).
+# 100g/100mL bazinda urun-seviyesi "yuksek" esikleri (Nutri-Score/UK FSA front-of-pack
+# konvansiyonu - DOGRULANMALI, bkz. data/knowledge_base/docs/nutriscore_thresholds_overview.md)
+# + WHO gunluk toplam alim referanslari (DOGRULANDI, WebFetch ile resmi WHO sayfalarindan
+# cekildi - bkz. data/knowledge_base/docs/who_salt_reduction.md ve who_sugars_intake.md)
+# + veri dogrulama amacli mantik esikleri (Faz 1 validation.py).
 thresholds:
   sugar_high_g_per_100g: 22.5
   salt_high_g_per_100g: 1.5
   saturated_fat_high_g_per_100g: 5.0
   sodium_high_mg_per_100g: 600
+  who_salt_daily_intake_g: 5
+  who_free_sugars_energy_pct: 10
+  who_fat_energy_pct_max: 30
+  who_saturated_fat_energy_pct_max: 10
+  energy_kcal_max_plausible_per_100g: 900
 
 allergens:
   - laktoz

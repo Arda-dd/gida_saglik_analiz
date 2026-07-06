@@ -1,0 +1,119 @@
+product_id,rule,message
+off_20004132,salt_sodium_inconsistent,"salt_g ve sodium_mg, Tuz=Sodyum*2.5 formuluyle tutarsiz (>%15 sapma)"
+off_3083681094923,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_3083681057843,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_3017800509937,missing_energy_and_macros,Enerji ve tum makrolar eksik
+off_20198107,salt_sodium_inconsistent,"salt_g ve sodium_mg, Tuz=Sodyum*2.5 formuluyle tutarsiz (>%15 sapma)"
+off_20153229,salt_sodium_inconsistent,"salt_g ve sodium_mg, Tuz=Sodyum*2.5 formuluyle tutarsiz (>%15 sapma)"
+off_3083681095319,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_3083681027860,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_3083680025881,salt_sodium_inconsistent,"salt_g ve sodium_mg, Tuz=Sodyum*2.5 formuluyle tutarsiz (>%15 sapma)"
+off_3017800078846,missing_energy_and_macros,Enerji ve tum makrolar eksik
+off_8712566246526,missing_energy_and_macros,Enerji ve tum makrolar eksik
+off_3478820031479,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_3017800078860,missing_energy_and_macros,Enerji ve tum makrolar eksik
+off_3017800510025,missing_energy_and_macros,Enerji ve tum makrolar eksik
+off_20856090,salt_sodium_inconsistent,"salt_g ve sodium_mg, Tuz=Sodyum*2.5 formuluyle tutarsiz (>%15 sapma)"
+off_8720182748461,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_3478820013185,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_3083680002929,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_3083680002929,salt_sodium_inconsistent,"salt_g ve sodium_mg, Tuz=Sodyum*2.5 formuluyle tutarsiz (>%15 sapma)"
+off_3017800078853,missing_energy_and_macros,Enerji ve tum makrolar eksik
+off_3017800055939,missing_energy_and_macros,Enerji ve tum makrolar eksik
+off_3307130801154,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_3270190134695,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_3270190153917,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_3083681127850,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_20543167,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_40879321,salt_sodium_inconsistent,"salt_g ve sodium_mg, Tuz=Sodyum*2.5 formuluyle tutarsiz (>%15 sapma)"
+off_8005110172106,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_3022820420216,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_3017800509968,missing_energy_and_macros,Enerji ve tum makrolar eksik
+off_3017800501658,missing_energy_and_macros,Enerji ve tum makrolar eksik
+off_3017800246719,missing_energy_and_macros,Enerji ve tum makrolar eksik
+off_3564700005200,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_3564700005101,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_6111246721261,salt_sodium_inconsistent,"salt_g ve sodium_mg, Tuz=Sodyum*2.5 formuluyle tutarsiz (>%15 sapma)"
+off_3329770077003,salt_sodium_inconsistent,"salt_g ve sodium_mg, Tuz=Sodyum*2.5 formuluyle tutarsiz (>%15 sapma)"
+off_6111032001010,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_3451790988677,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_6111099005495,missing_energy_and_macros,Enerji ve tum makrolar eksik
+off_6111260232095,missing_energy_and_macros,Enerji ve tum makrolar eksik
+off_3329770073265,salt_sodium_inconsistent,"salt_g ve sodium_mg, Tuz=Sodyum*2.5 formuluyle tutarsiz (>%15 sapma)"
+off_8436547770137,salt_sodium_inconsistent,"salt_g ve sodium_mg, Tuz=Sodyum*2.5 formuluyle tutarsiz (>%15 sapma)"
+off_6111242102019,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_6111260230619,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_6111246721957,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_6111035000430,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_6111035002175,missing_energy_and_macros,Enerji ve tum makrolar eksik
+off_3274080005003,missing_energy_and_macros,Enerji ve tum makrolar eksik
+off_3274080005003,salt_sodium_inconsistent,"salt_g ve sodium_mg, Tuz=Sodyum*2.5 formuluyle tutarsiz (>%15 sapma)"
+off_6111035003035,missing_energy_and_macros,Enerji ve tum makrolar eksik
+off_5411188112709,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_6111035001659,missing_energy_and_macros,Enerji ve tum makrolar eksik
+off_6111128000460,missing_energy_and_macros,Enerji ve tum makrolar eksik
+off_5449000214799,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_5449000214799,salt_sodium_inconsistent,"salt_g ve sodium_mg, Tuz=Sodyum*2.5 formuluyle tutarsiz (>%15 sapma)"
+off_6111266963207,duplicate_product_id,Tekrarlanan product_id
+off_6111032006619,duplicate_product_id,Tekrarlanan product_id
+off_8420756010320,duplicate_product_id,Tekrarlanan product_id
+off_6111018903161,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_6111035003523,missing_energy_and_macros,Enerji ve tum makrolar eksik
+off_3033710073467,missing_energy_and_macros,Enerji ve tum makrolar eksik
+off_6111242101050,duplicate_product_id,Tekrarlanan product_id
+off_6111252421575,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_16256866,missing_energy_and_macros,Enerji ve tum makrolar eksik
+off_6923818812082,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_8424893600352,duplicate_product_id,Tekrarlanan product_id
+off_7613035676497,missing_energy_and_macros,Enerji ve tum makrolar eksik
+off_6111242100930,duplicate_product_id,Tekrarlanan product_id
+off_3067140013120,missing_energy_and_macros,Enerji ve tum makrolar eksik
+off_8445290133403,missing_energy_and_macros,Enerji ve tum makrolar eksik
+off_6111271800054,missing_energy_and_macros,Enerji ve tum makrolar eksik
+off_5449000131805,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_3664346306027,missing_energy_and_macros,Enerji ve tum makrolar eksik
+off_5449000131836,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_7613032655495,missing_energy_and_macros,Enerji ve tum makrolar eksik
+off_8436547770137,salt_sodium_inconsistent,"salt_g ve sodium_mg, Tuz=Sodyum*2.5 formuluyle tutarsiz (>%15 sapma)"
+off_8436547770137,duplicate_product_id,Tekrarlanan product_id
+off_6111175000741,missing_energy_and_macros,Enerji ve tum makrolar eksik
+off_6111126001988,duplicate_product_id,Tekrarlanan product_id
+off_3124480186560,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_6111035001024,missing_energy_and_macros,Enerji ve tum makrolar eksik
+off_6111126005894,duplicate_product_id,Tekrarlanan product_id
+off_6111242107366,salt_sodium_inconsistent,"salt_g ve sodium_mg, Tuz=Sodyum*2.5 formuluyle tutarsiz (>%15 sapma)"
+off_3187570015447,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_3664346315371,missing_energy_and_macros,Enerji ve tum makrolar eksik
+off_6111242100992,duplicate_product_id,Tekrarlanan product_id
+off_3268840001008,duplicate_product_id,Tekrarlanan product_id
+off_3175681066632,implausible_energy,energy_kcal=1896.0 teorik maksimumu asiyor
+off_3175681066632,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_6111031005439,salt_sodium_inconsistent,"salt_g ve sodium_mg, Tuz=Sodyum*2.5 formuluyle tutarsiz (>%15 sapma)"
+off_8410076610737,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_3228857001378,missing_energy_and_macros,Enerji ve tum makrolar eksik
+off_3046920028004,salt_sodium_inconsistent,"salt_g ve sodium_mg, Tuz=Sodyum*2.5 formuluyle tutarsiz (>%15 sapma)"
+off_80052760,salt_sodium_inconsistent,"salt_g ve sodium_mg, Tuz=Sodyum*2.5 formuluyle tutarsiz (>%15 sapma)"
+off_7622201809638,missing_energy_and_macros,Enerji ve tum makrolar eksik
+off_6111266962187,duplicate_product_id,Tekrarlanan product_id
+off_3168930163480,duplicate_product_id,Tekrarlanan product_id
+off_3083681095296,duplicate_product_id,Tekrarlanan product_id
+off_3242274030056,salt_sodium_inconsistent,"salt_g ve sodium_mg, Tuz=Sodyum*2.5 formuluyle tutarsiz (>%15 sapma)"
+off_3083680901024,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_3083680901024,salt_sodium_inconsistent,"salt_g ve sodium_mg, Tuz=Sodyum*2.5 formuluyle tutarsiz (>%15 sapma)"
+off_3021690201123,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_8852018101024,missing_energy_and_macros,Enerji ve tum makrolar eksik
+off_3021690201116,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_5011321361058,missing_energy_and_macros,Enerji ve tum makrolar eksik
+off_6111263000202,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_3600900021050,missing_energy_and_macros,Enerji ve tum makrolar eksik
+off_3307130803004,duplicate_product_id,Tekrarlanan product_id
+off_3083681001808,duplicate_product_id,Tekrarlanan product_id
+off_3083681148626,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_3242274034054,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_3083680652094,duplicate_product_id,Tekrarlanan product_id
+off_3083681029994,duplicate_product_id,Tekrarlanan product_id
+off_8722700027775,missing_energy_and_macros,Enerji ve tum makrolar eksik
+off_3478820023757,duplicate_product_id,Tekrarlanan product_id
+off_3083681116939,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
+off_3038352880206,salt_sodium_inconsistent,"salt_g ve sodium_mg, Tuz=Sodyum*2.5 formuluyle tutarsiz (>%15 sapma)"
+off_3478820003193,macro_energy_mismatch,Makrolardan hesaplanan enerji ile beyan edilen enerji arasinda >%20 sapma
