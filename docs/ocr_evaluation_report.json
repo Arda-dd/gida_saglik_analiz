@@ -1,0 +1,1148 @@
+{
+  "per_image_results": [
+    {
+      "product_id": "off_7622210449283",
+      "category": "atistirmalik",
+      "engine": "tesseract",
+      "ocr_confidence": 0.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_3046920029759",
+      "category": "atistirmalik",
+      "engine": "tesseract",
+      "ocr_confidence": 67.855421686747,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 2
+    },
+    {
+      "product_id": "off_06175700",
+      "category": "atistirmalik",
+      "engine": "tesseract",
+      "ocr_confidence": 77.96363636363637,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 2
+    },
+    {
+      "product_id": "off_3175680011480",
+      "category": "atistirmalik",
+      "engine": "tesseract",
+      "ocr_confidence": 0.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_3046920022651",
+      "category": "atistirmalik",
+      "engine": "tesseract",
+      "ocr_confidence": 81.4090909090909,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 2
+    },
+    {
+      "product_id": "off_3046920022606",
+      "category": "atistirmalik",
+      "engine": "tesseract",
+      "ocr_confidence": 0.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_3242274030056",
+      "category": "hazir_gida",
+      "engine": "tesseract",
+      "ocr_confidence": 0.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_7613035937420",
+      "category": "hazir_gida",
+      "engine": "tesseract",
+      "ocr_confidence": 0.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_3175681170872",
+      "category": "hazir_gida",
+      "engine": "tesseract",
+      "ocr_confidence": 0.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_3083681148640",
+      "category": "hazir_gida",
+      "engine": "tesseract",
+      "ocr_confidence": 0.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_3281780893915",
+      "category": "hazir_gida",
+      "engine": "tesseract",
+      "ocr_confidence": 83.33333333333333,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 2
+    },
+    {
+      "product_id": "off_3021690201123",
+      "category": "hazir_gida",
+      "engine": "tesseract",
+      "ocr_confidence": 58.850746268656714,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": true,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 2
+    },
+    {
+      "product_id": "off_6111035000430",
+      "category": "icecek",
+      "engine": "tesseract",
+      "ocr_confidence": 42.31818181818182,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_6111035000058",
+      "category": "icecek",
+      "engine": "tesseract",
+      "ocr_confidence": 42.333333333333336,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "carbohydrate_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 6,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_6111128000071",
+      "category": "icecek",
+      "engine": "tesseract",
+      "ocr_confidence": 69.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_6111252421568",
+      "category": "icecek",
+      "engine": "tesseract",
+      "ocr_confidence": 0.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_6111035000027",
+      "category": "icecek",
+      "engine": "tesseract",
+      "ocr_confidence": 31.4,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 8,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_6111035502828",
+      "category": "icecek",
+      "engine": "tesseract",
+      "ocr_confidence": 31.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_3083681095296",
+      "category": "konserve",
+      "engine": "tesseract",
+      "ocr_confidence": 54.89705882352941,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_20004132",
+      "category": "konserve",
+      "engine": "tesseract",
+      "ocr_confidence": 0.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_3083681094459",
+      "category": "konserve",
+      "engine": "tesseract",
+      "ocr_confidence": 69.95238095238095,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 2
+    },
+    {
+      "product_id": "off_3307130803004",
+      "category": "konserve",
+      "engine": "tesseract",
+      "ocr_confidence": 84.25396825396825,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 3
+    },
+    {
+      "product_id": "off_3083681001808",
+      "category": "konserve",
+      "engine": "tesseract",
+      "ocr_confidence": 58.72727272727273,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_3083681094923",
+      "category": "konserve",
+      "engine": "tesseract",
+      "ocr_confidence": 0.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_6111246721261",
+      "category": "sut_urunu",
+      "engine": "tesseract",
+      "ocr_confidence": 89.88732394366197,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 2
+    },
+    {
+      "product_id": "off_6111242100992",
+      "category": "sut_urunu",
+      "engine": "tesseract",
+      "ocr_confidence": 0.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_6111242106949",
+      "category": "sut_urunu",
+      "engine": "tesseract",
+      "ocr_confidence": 0.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_6111242101180",
+      "category": "sut_urunu",
+      "engine": "tesseract",
+      "ocr_confidence": 81.27272727272727,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 8,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_6111242100985",
+      "category": "sut_urunu",
+      "engine": "tesseract",
+      "ocr_confidence": 0.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_6111246721278",
+      "category": "sut_urunu",
+      "engine": "tesseract",
+      "ocr_confidence": 85.45454545454545,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": true,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 3
+    },
+    {
+      "product_id": "off_7622210449283",
+      "category": "atistirmalik",
+      "engine": "easyocr",
+      "ocr_confidence": 64.02013261391733,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_3046920029759",
+      "category": "atistirmalik",
+      "engine": "easyocr",
+      "ocr_confidence": 77.48907378670901,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 2
+    },
+    {
+      "product_id": "off_06175700",
+      "category": "atistirmalik",
+      "engine": "easyocr",
+      "ocr_confidence": 77.95701529822973,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 2
+    },
+    {
+      "product_id": "off_3175680011480",
+      "category": "atistirmalik",
+      "engine": "easyocr",
+      "ocr_confidence": 6.217445402696131,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_3046920022651",
+      "category": "atistirmalik",
+      "engine": "easyocr",
+      "ocr_confidence": 85.70010356874224,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": false,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": false,
+        "protein_g": true,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 6
+    },
+    {
+      "product_id": "off_3046920022606",
+      "category": "atistirmalik",
+      "engine": "easyocr",
+      "ocr_confidence": 9.679176690576151,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_3242274030056",
+      "category": "hazir_gida",
+      "engine": "easyocr",
+      "ocr_confidence": 34.0501528980211,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 2
+    },
+    {
+      "product_id": "off_7613035937420",
+      "category": "hazir_gida",
+      "engine": "easyocr",
+      "ocr_confidence": 38.98027298894114,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_3175681170872",
+      "category": "hazir_gida",
+      "engine": "easyocr",
+      "ocr_confidence": 37.18046413111656,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 2
+    },
+    {
+      "product_id": "off_3083681148640",
+      "category": "hazir_gida",
+      "engine": "easyocr",
+      "ocr_confidence": 25.64963364223667,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_3281780893915",
+      "category": "hazir_gida",
+      "engine": "easyocr",
+      "ocr_confidence": 83.67972440195032,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 2
+    },
+    {
+      "product_id": "off_3021690201123",
+      "category": "hazir_gida",
+      "engine": "easyocr",
+      "ocr_confidence": 73.93128378357326,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 1
+    },
+    {
+      "product_id": "off_6111035000430",
+      "category": "icecek",
+      "engine": "easyocr",
+      "ocr_confidence": 47.63945738832149,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_6111035000058",
+      "category": "icecek",
+      "engine": "easyocr",
+      "ocr_confidence": 0.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "carbohydrate_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 6,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_6111128000071",
+      "category": "icecek",
+      "engine": "easyocr",
+      "ocr_confidence": 63.5405285647267,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_6111252421568",
+      "category": "icecek",
+      "engine": "easyocr",
+      "ocr_confidence": 9.632855532233009,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_6111035000027",
+      "category": "icecek",
+      "engine": "easyocr",
+      "ocr_confidence": 6.208355819048122,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 8,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_6111035502828",
+      "category": "icecek",
+      "engine": "easyocr",
+      "ocr_confidence": 35.58203670457614,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_3083681095296",
+      "category": "konserve",
+      "engine": "easyocr",
+      "ocr_confidence": 66.6743123091378,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_20004132",
+      "category": "konserve",
+      "engine": "easyocr",
+      "ocr_confidence": 21.73011897577771,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_3083681094459",
+      "category": "konserve",
+      "engine": "easyocr",
+      "ocr_confidence": 82.03853692433476,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": false,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 8
+    },
+    {
+      "product_id": "off_3307130803004",
+      "category": "konserve",
+      "engine": "easyocr",
+      "ocr_confidence": 81.47497191953654,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": true,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 4
+    },
+    {
+      "product_id": "off_3083681001808",
+      "category": "konserve",
+      "engine": "easyocr",
+      "ocr_confidence": 78.72293970524272,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 2
+    },
+    {
+      "product_id": "off_3083681094923",
+      "category": "konserve",
+      "engine": "easyocr",
+      "ocr_confidence": 76.35435268231839,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 7
+    },
+    {
+      "product_id": "off_6111246721261",
+      "category": "sut_urunu",
+      "engine": "easyocr",
+      "ocr_confidence": 85.73148147563904,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 3
+    },
+    {
+      "product_id": "off_6111242100992",
+      "category": "sut_urunu",
+      "engine": "easyocr",
+      "ocr_confidence": 27.76846581341905,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_6111242106949",
+      "category": "sut_urunu",
+      "engine": "easyocr",
+      "ocr_confidence": 26.126057169752915,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_6111242101180",
+      "category": "sut_urunu",
+      "engine": "easyocr",
+      "ocr_confidence": 90.24920003339692,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 8,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_6111242100985",
+      "category": "sut_urunu",
+      "engine": "easyocr",
+      "ocr_confidence": 29.081876037508028,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_6111246721278",
+      "category": "sut_urunu",
+      "engine": "easyocr",
+      "ocr_confidence": 86.35000461154527,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 2
+    }
+  ],
+  "summary": {
+    "tesseract": {
+      "total_fields_evaluated": 265,
+      "total_fields_correct": 20,
+      "field_accuracy_pct": 7.547169811320755,
+      "mean_ocr_confidence": 36.996967371368854
+    },
+    "easyocr": {
+      "total_fields_evaluated": 265,
+      "total_fields_correct": 43,
+      "field_accuracy_pct": 16.22641509433962,
+      "mean_ocr_confidence": 50.9813343624408
+    }
+  }
+}
