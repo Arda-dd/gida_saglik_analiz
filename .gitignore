@@ -23,6 +23,7 @@ models/*.pth
 models/*.onnx
 *.faiss
 *.index
+data/knowledge_base/index/
 # Not: data/processed/*.csv (dataset.csv, data_quality_report.csv) BILEREK
 # git'e dahil edilir - hafif, izlenebilir arastirma ciktilaridir.
 
