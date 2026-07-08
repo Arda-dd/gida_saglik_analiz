@@ -24,6 +24,7 @@ from src.common.schema import Allergen, NutritionFacts, ProductRecord
 from src.data.off_category_map import map_categories_tags
 
 BASE_URL = "https://world.openfoodfacts.org/api/v2/search"
+PRODUCT_URL = "https://world.openfoodfacts.org/api/v2/product/{code}.json"
 USER_AGENT = (
     "GidaSaglikAsistani-TUBITAK2209A/0.1 "
     "(egitim amacli arastirma projesi; iletisim: ardatnmzoglu@gmail.com)"
@@ -107,6 +108,30 @@ def fetch_products_by_category(
             time.sleep(sleep_between_pages)  # OFF API'sine karsi kibarlik (rate limiting)
 
     return all_products
+
+
+def fetch_single_product(
+    code: str, fields: str, session: requests.Session | None = None
+) -> dict | None:
+    """OFF v2 tekil urun API'sinden (api/v2/product/{code}.json) belirli alanlari ceker.
+
+    Onemli bulgu: /api/v2/search endpoint'i 'image_nutrition_url' / 'image_ingredients_url'
+    gibi secili-goruntu alanlarini DONDURMEZ (arama indeksinde yok), fakat bu tekil urun
+    endpoint'i dondurur. Besin tablosu/icindekiler gorseli gerektiginde bu fonksiyon kullanilir.
+    """
+    session = session or requests.Session()
+    headers = {"User-Agent": USER_AGENT}
+    url = PRODUCT_URL.format(code=code)
+
+    response = _get_with_retry(session, url, {"fields": fields}, headers, timeout=20)
+    if response.status_code != 200:
+        return None
+
+    data = response.json()
+    if data.get("status") != 1:
+        return None
+
+    return data.get("product")
 
 
 def download_product_image(

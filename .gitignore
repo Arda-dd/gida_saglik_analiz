@@ -17,6 +17,7 @@ env/
 data/raw/
 data/images/
 data/processed/images_hq/
+data/tessdata/
 models/*.pt
 models/*.pth
 models/*.onnx
