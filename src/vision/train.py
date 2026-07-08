@@ -173,13 +173,13 @@ def main() -> None:
     for backbone in SUPPORTED_BACKBONES:
         print(f"\n=== {backbone} ===")
         print("  k-fold CV (egitim seti uzerinde)...")
-        cv_result = run_kfold_cv(backbone, train_df, categories, n_splits=5, epochs=8, device=device)
+        cv_result = run_kfold_cv(backbone, train_df, categories, n_splits=5, epochs=15, device=device)
         print(f"  CV ortalama: acc={cv_result['mean_accuracy']:.3f}±{cv_result['std_accuracy']:.3f} "
               f"f1={cv_result['mean_f1_macro']:.3f}±{cv_result['std_f1_macro']:.3f}")
 
         print("  Final model egitimi (tum egitim seti) + held-out test degerlendirmesi...")
         final_model, train_result = train_model(
-            backbone, train_df, test_df, categories, epochs=10, device=device
+            backbone, train_df, test_df, categories, epochs=20, device=device
         )
         test_metrics = max(train_result["history"], key=lambda m: m["f1_macro"])
         print(f"  Held-out test: acc={test_metrics['accuracy']:.3f} f1={test_metrics['f1_macro']:.3f}")
