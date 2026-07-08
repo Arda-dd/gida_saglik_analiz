@@ -99,6 +99,16 @@ def main() -> None:
         columns=["product_id", "category", "image_path", "width", "height", "blur_score", "is_valid", "reasons"]
     )
     dataset_df = build_dataset(valid_records, empty_local_manifest)
+
+    # OFF gorselleri IMAGES_DIR/{product_id}.jpg kuralina gore indirildi (bkz. yukarida);
+    # dataset.csv'nin image_path kolonunu bu kurala gore doldur (sadece diskte var olanlar icin).
+    def _off_image_path(product_id: str) -> str | None:
+        candidate = IMAGES_DIR / f"{product_id}.jpg"
+        return str(candidate) if candidate.exists() else None
+
+    is_off = dataset_df["source"] == "open_food_facts"
+    dataset_df.loc[is_off, "image_path"] = dataset_df.loc[is_off, "product_id"].apply(_off_image_path)
+
     save_dataset(dataset_df, DATASET_OUT)
     print(f"\ndataset.csv kaydedildi: {DATASET_OUT} ({len(dataset_df)} satir)")
 
