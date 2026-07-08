@@ -30,6 +30,7 @@ sentence-transformers>=2.5
 faiss-cpu>=1.8
 anthropic>=0.25
 openai>=1.14
+rank-bm25>=0.2.2
 
 # --- Backend / Demo (Faz 6) ---
 fastapi>=0.110

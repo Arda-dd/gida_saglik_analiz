@@ -1,0 +1,62 @@
+[
+  {
+    "query": "Günlük tuz alımı için WHO önerisi nedir?",
+    "relevant_chunk_ids": ["who_salt_reduction::0"]
+  },
+  {
+    "query": "Sodyum ile tuz arasındaki dönüşüm formülü nedir?",
+    "relevant_chunk_ids": ["glossary_nutrition_terms::0", "who_salt_reduction::0"]
+  },
+  {
+    "query": "Serbest şeker günlük enerjinin yüzde kaçını geçmemeli?",
+    "relevant_chunk_ids": ["who_sugars_intake::0"]
+  },
+  {
+    "query": "Doymuş yağ için WHO enerji yüzdesi sınırı nedir?",
+    "relevant_chunk_ids": ["who_sugars_intake::0"]
+  },
+  {
+    "query": "Ürün etiketinde yüksek şeker eşiği kaç gramdır?",
+    "relevant_chunk_ids": ["nutriscore_thresholds_overview::0"]
+  },
+  {
+    "query": "Yüksek tuz içeren bir ürün için 100g başına eşik nedir?",
+    "relevant_chunk_ids": ["nutriscore_thresholds_overview::0"]
+  },
+  {
+    "query": "Bu projede kullanılan alerjen listesi nelerdir?",
+    "relevant_chunk_ids": ["allergen_labeling_overview::0"]
+  },
+  {
+    "query": "Fındık alerjeni bu sistemde nasıl tespit edilir?",
+    "relevant_chunk_ids": ["allergen_labeling_overview::1"]
+  },
+  {
+    "query": "EFSA beslenme referans değerleri neyi kapsar?",
+    "relevant_chunk_ids": ["efsa_dietary_reference_values::0"]
+  },
+  {
+    "query": "Türk Gıda Kodeksi etiketleme yönetmeliğinde besin değerleri nasıl beyan edilir?",
+    "relevant_chunk_ids": ["tgk_etiketleme_ozet::0"]
+  },
+  {
+    "query": "Enerjinin kcal ve kJ cinsinden dönüşüm oranı nedir?",
+    "relevant_chunk_ids": ["glossary_nutrition_terms::0"]
+  },
+  {
+    "query": "Protein kelimesinin İngilizce karşılığı nedir?",
+    "relevant_chunk_ids": ["glossary_nutrition_terms::preamble"]
+  },
+  {
+    "query": "Nutri-Score eşikleri hangi resmi kaynaktan doğrulanmalı?",
+    "relevant_chunk_ids": ["nutriscore_thresholds_overview::preamble"]
+  },
+  {
+    "query": "Dünyada ortalama günlük sodyum tüketimi ne kadardır?",
+    "relevant_chunk_ids": ["who_salt_reduction::0"]
+  },
+  {
+    "query": "TGK alerjen tebliği hangi AB yönetmeliğiyle örtüşüyor?",
+    "relevant_chunk_ids": ["allergen_labeling_overview::preamble"]
+  }
+]
