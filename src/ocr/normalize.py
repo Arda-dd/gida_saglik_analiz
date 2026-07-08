@@ -1,0 +1,166 @@
+"""OCR metninden besin degerlerini cikaran regex tabanli ayristirici + normalizasyon.
+
+Oneri formu 2.3: "Enerji: 450 kcal" ifadesi "enerji" degiskeniyle eslestirilirken, "Tuz: 2.1 g"
+degeri sodyum-tuz donusum fonksiyonu araciligiyla saglik degerlendirmesinde kullanilabilir
+forma donusturulecektir. "100 g basina" ve "porsiyon basina" ifadeleri otomatik tespit edilip
+tum degerler 100g/100mL bazinda normalize edilir.
+"""
+
+from __future__ import annotations
+
+import re
+
+from src.common.schema import NutritionBasis, NutritionFacts
+from src.common.units import fill_missing_energy_and_salt, normalize_nutrition_to_per_100
+
+NUMBER = r"(\d+[.,]\d+|\d+)"
+
+
+def _to_float(number_str: str) -> float:
+    """OCR'da hem nokta hem virgul ondalik ayirici olarak gorulebilir."""
+    return float(number_str.replace(",", "."))
+
+
+def _search_value(text: str, keyword_pattern: str, unit_pattern: str) -> tuple[float, str] | None:
+    """keyword ... SAYI BIRIM seklindeki ilk eslesmeyi (deger, birim) olarak doner.
+
+    Keyword ile sayi arasinda OCR kaynakli kisa artefaktlara (":", bosluk vb.) izin verilir
+    ama baska bir besin degerine atlamamak icin bu bosluk 10 karakterle sinirlidir.
+    """
+    pattern = rf"(?:{keyword_pattern})\D{{0,10}}{NUMBER}\s*({unit_pattern})\b"
+    match = re.search(pattern, text, re.IGNORECASE)
+    if not match:
+        return None
+    return _to_float(match.group(1)), match.group(2).lower()
+
+
+def extract_energy(text: str) -> tuple[float | None, float | None]:
+    """Enerjiyi kcal ve/veya kJ olarak cikarir (ikisi de etikette bulunabilir).
+
+    kcal/kJ birimleri beslenme etiketlerinde sadece enerji icin kullanildigindan
+    (baska hicbir besin ogesi bu birimlerle olculmez), "enerji" anahtar kelimesine
+    yakinlik aranmaz - bu, "Enerji 450 kcal / 1883 kJ" gibi iki degerin arasinda
+    baska bir sayi (450) olan durumlarda da kJ'nin dogru yakalanmasini saglar.
+    """
+    energy_kcal = None
+    energy_kj = None
+
+    kcal_match = re.search(rf"{NUMBER}\s*kcal\b", text, re.IGNORECASE)
+    if kcal_match:
+        energy_kcal = _to_float(kcal_match.group(1))
+
+    kj_match = re.search(rf"{NUMBER}\s*kj\b", text, re.IGNORECASE)
+    if kj_match:
+        energy_kj = _to_float(kj_match.group(1))
+
+    return energy_kcal, energy_kj
+
+
+def extract_saturated_fat(text: str) -> float | None:
+    match = _search_value(text, r"doymu[sş]\s*ya[gğ]|saturated\s*fat", r"g|gr")
+    return match[0] if match else None
+
+
+def extract_fat(text: str) -> float | None:
+    """Toplam yag - 'doymus yag' ile karismamasi icin o ifadeyi devre disi birakir."""
+    # Once doymus yag ifadesini metinden gecici olarak cikar, boylece plain 'yag' araması
+    # yanlislikla doymus yag degerini yakalamaz.
+    cleaned = re.sub(r"doymu[sş]\s*ya[gğ][^0-9]{0,10}\d+[.,]?\d*\s*(?:g|gr)\b", "", text, flags=re.IGNORECASE)
+    match = _search_value(cleaned, r"ya[gğ]|fat", r"g|gr")
+    return match[0] if match else None
+
+
+def extract_carbohydrate(text: str) -> float | None:
+    match = _search_value(text, r"karbonhidrat|carbohydrate", r"g|gr")
+    return match[0] if match else None
+
+
+def extract_sugar(text: str) -> float | None:
+    match = _search_value(text, r"[sş]eker|sugars?", r"g|gr")
+    return match[0] if match else None
+
+
+def extract_fiber(text: str) -> float | None:
+    match = _search_value(text, r"lif|fiber|fibre", r"g|gr")
+    return match[0] if match else None
+
+
+def extract_protein(text: str) -> float | None:
+    match = _search_value(text, r"protein", r"g|gr")
+    return match[0] if match else None
+
+
+def extract_salt(text: str) -> float | None:
+    match = _search_value(text, r"tuz|salt", r"g|gr")
+    return match[0] if match else None
+
+
+def extract_sodium(text: str) -> float | None:
+    """Sodyum genelde mg olarak yazilir, bazen g olarak da gorulebilir (g ise mg'a cevrilir)."""
+    mg_match = _search_value(text, r"sodyum|sodium", r"mg")
+    if mg_match:
+        return mg_match[0]
+
+    g_match = _search_value(text, r"sodyum|sodium", r"g|gr")
+    if g_match:
+        return g_match[0] * 1000
+
+    return None
+
+
+def extract_nutrition_facts(text: str) -> NutritionFacts:
+    """OCR metninden tum besin degerlerini cikarip NutritionFacts nesnesine doldurur."""
+    energy_kcal, energy_kj = extract_energy(text)
+
+    facts = NutritionFacts(
+        energy_kcal=energy_kcal,
+        energy_kj=energy_kj,
+        fat_g=extract_fat(text),
+        saturated_fat_g=extract_saturated_fat(text),
+        carbohydrate_g=extract_carbohydrate(text),
+        sugar_g=extract_sugar(text),
+        fiber_g=extract_fiber(text),
+        protein_g=extract_protein(text),
+        salt_g=extract_salt(text),
+        sodium_mg=extract_sodium(text),
+    )
+    return fill_missing_energy_and_salt(facts)
+
+
+def detect_nutrition_basis(text: str) -> tuple[NutritionBasis, float | None]:
+    """'100 g/100 ml basina' veya 'porsiyon basina (X g)' ifadesini tespit eder.
+
+    Porsiyon tespit edilirse ve gram/mL degeri de metinde bulunursa, bu deger
+    (serving_size_g, ...) olarak ikinci elemanda dondurulur - normalize_to_per_100 icin kullanilir.
+    """
+    if re.search(r"100\s*m[il]", text, re.IGNORECASE):
+        return NutritionBasis.PER_100ML, None
+    if re.search(r"100\s*g", text, re.IGNORECASE):
+        return NutritionBasis.PER_100G, None
+
+    serving_match = re.search(
+        r"porsiyon\D{0,15}(\d+[.,]?\d*)\s*(g|ml)\b", text, re.IGNORECASE
+    ) or re.search(r"serving\D{0,15}(\d+[.,]?\d*)\s*(g|ml)\b", text, re.IGNORECASE)
+    if serving_match:
+        return NutritionBasis.PER_SERVING, _to_float(serving_match.group(1))
+
+    if re.search(r"porsiyon|serving|portion", text, re.IGNORECASE):
+        return NutritionBasis.PER_SERVING, None
+
+    return NutritionBasis.PER_100G, None  # varsayilan: cogu etiket 100g bazlidir
+
+
+def extract_and_normalize(text: str) -> tuple[NutritionFacts, NutritionBasis]:
+    """Tam pipeline: cikarim + eksik alan tamamlama + (mumkunse) 100g/100mL normalizasyonu.
+
+    Porsiyon boyutu tespit edilemezse, ham porsiyon degerleri (normalize edilmeden) donulur
+    ve basis PER_SERVING olarak isaretlenir - cagiran kod bu durumu ele almalidir.
+    """
+    facts = extract_nutrition_facts(text)
+    basis, serving_size_g = detect_nutrition_basis(text)
+
+    if basis == NutritionBasis.PER_SERVING and serving_size_g:
+        facts = normalize_nutrition_to_per_100(facts, serving_size_g)
+        basis = NutritionBasis.PER_100G
+
+    return facts, basis
