@@ -1,14 +1,15 @@
-"""Hibrit retriever: FAISS yogun (dense) benzerlik + BM25 seyrek (sparse) skorunun agirlikli
-birlesimi.
+"""Hibrit retriever: FAISS yogun (dense, OpenAI embedding API) benzerlik + BM25 seyrek
+(sparse) skorunun agirlikli birlesimi.
 
 Oneri formu 2.4: "Retriever (FAISS/BM25)". Bilgi tabani kucuk olcekli oldugundan (dokuman
 basina birkaç chunk), her sorguda tum chunk'lar uzerinde tam tarama yapmak (brute-force)
 performans sorunu yaratmaz; bu yuzden FAISS IndexFlatIP (exact search) + rank_bm25 BM25Okapi
 (tam corpus) tercih edilmistir - ANN (approximate) index'e gecmek bu olcekte gereksizdir.
 
-Dense embedding, es anlamli/parafraz sorgularda (ornegin "tuz fazla mi?" ~ "sodyum yuksek mi?")
-guclu; BM25 ise Turkce esik degeri gibi tam kelime/sayi eslesmelerinde (ornegin "22.5" veya
-"who_salt_daily_intake_g") daha guclu oldugundan ikisi birlikte kullanilir.
+Dense embedding (OpenAI API, yerel model YOK - bkz. src/rag/embeddings.py), es anlamli/parafraz
+sorgularda (ornegin "tuz fazla mi?" ~ "sodyum yuksek mi?") guclu; BM25 ise Turkce esik degeri
+gibi tam kelime/sayi eslesmelerinde (ornegin "22.5" veya "who_salt_daily_intake_g") daha guclu
+oldugundan ikisi birlikte kullanilir.
 """
 
 from __future__ import annotations
@@ -19,10 +20,10 @@ from pathlib import Path
 
 import numpy as np
 from rank_bm25 import BM25Okapi
-from sentence_transformers import SentenceTransformer
 
 from src.rag.chunking import Chunk
-from src.rag.index_builder import DEFAULT_INDEX_DIR, DEFAULT_MODEL_NAME, embed_texts, load_index
+from src.rag.embeddings import DEFAULT_EMBEDDING_MODEL, embed_texts
+from src.rag.index_builder import DEFAULT_INDEX_DIR, load_index
 
 DEFAULT_DENSE_WEIGHT = 0.6
 DEFAULT_BM25_WEIGHT = 0.4
@@ -52,13 +53,15 @@ class Retriever:
         self,
         chunks: list[Chunk],
         index,
-        model: SentenceTransformer,
+        embedding_model: str = DEFAULT_EMBEDDING_MODEL,
+        embedding_client=None,
         dense_weight: float = DEFAULT_DENSE_WEIGHT,
         bm25_weight: float = DEFAULT_BM25_WEIGHT,
     ) -> None:
         self.chunks = chunks
         self.index = index
-        self.model = model
+        self.embedding_model = embedding_model
+        self.embedding_client = embedding_client
         self.dense_weight = dense_weight
         self.bm25_weight = bm25_weight
         self._bm25 = BM25Okapi([_tokenize(c.embedding_text) for c in chunks])
@@ -67,15 +70,14 @@ class Retriever:
     def load(
         cls,
         index_dir: Path = DEFAULT_INDEX_DIR,
-        model_name: str = DEFAULT_MODEL_NAME,
+        embedding_model: str = DEFAULT_EMBEDDING_MODEL,
         **kwargs,
     ) -> "Retriever":
         index, chunks = load_index(index_dir)
-        model = SentenceTransformer(model_name)
-        return cls(chunks, index, model, **kwargs)
+        return cls(chunks, index, embedding_model=embedding_model, **kwargs)
 
     def _dense_scores(self, query: str) -> np.ndarray:
-        query_vec = embed_texts([query], self.model)
+        query_vec = embed_texts([query], model=self.embedding_model, client=self.embedding_client)
         n = len(self.chunks)
         similarities, indices = self.index.search(query_vec, n)
         scores = np.zeros(n, dtype=np.float32)

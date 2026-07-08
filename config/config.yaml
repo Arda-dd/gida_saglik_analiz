@@ -57,6 +57,8 @@ allergens:
   - balik
 
 rag:
-  embedding_model: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+  # Embedding OpenAI API'sinden alinir (yerel model YOK - diske buyuk dosya inmesin diye,
+  # kullanici karari 2026-07-08). LLM ile ayni felsefe: API tabanli, yerel kaynagi zorlama.
+  embedding_model: text-embedding-3-small
   top_k: 5
   similarity_threshold: 0.35

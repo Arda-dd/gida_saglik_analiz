@@ -4,7 +4,8 @@ Oneri formu 2.4: "Retriever (FAISS/BM25)". Burada FAISS tarafi + kalici saklama 
 chunk metadatasi) implemente edilir; BM25 tarafi src/rag/retriever.py icinde hibrit skor
 icin ayrica calisir (bu modulden bagimsizdir, kendi rank_bm25 corpus'unu kurar).
 
-Cosine benzerligi icin embedding vektorleri L2-normalize edilip IndexFlatIP kullanilir
+Embedding OpenAI API'sinden alinir (bkz. src/rag/embeddings.py) - yerel bir model diske
+inmez. Cosine benzerligi icin embedding vektorleri L2-normalize edilip IndexFlatIP kullanilir
 (normalize edilmis vektorlerde ic carpim = cosine benzerligi).
 """
 
@@ -15,30 +16,21 @@ from dataclasses import asdict
 from pathlib import Path
 
 import faiss
-import numpy as np
-from sentence_transformers import SentenceTransformer
 
 from src.rag.chunking import Chunk, chunk_knowledge_base
+from src.rag.embeddings import DEFAULT_EMBEDDING_MODEL, embed_texts
 
-DEFAULT_MODEL_NAME = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 DEFAULT_INDEX_DIR = Path(__file__).resolve().parents[2] / "data" / "knowledge_base" / "index"
 
 
-def embed_texts(texts: list[str], model: SentenceTransformer) -> np.ndarray:
-    """Metinleri embed edip L2-normalize eder (cosine benzerligi = ic carpim icin)."""
-    embeddings = model.encode(texts, convert_to_numpy=True, show_progress_bar=False)
-    faiss.normalize_L2(embeddings)
-    return embeddings.astype(np.float32)
-
-
 def build_faiss_index(
-    chunks: list[Chunk], model: SentenceTransformer
+    chunks: list[Chunk], model: str = DEFAULT_EMBEDDING_MODEL, client=None
 ) -> faiss.Index:
     """Chunk listesinden IndexFlatIP (cosine benzerligi) FAISS index'i olusturur."""
     if not chunks:
         raise ValueError("Bos chunk listesinden index olusturulamaz")
 
-    embeddings = embed_texts([c.embedding_text for c in chunks], model)
+    embeddings = embed_texts([c.embedding_text for c in chunks], model=model, client=client)
     dimension = embeddings.shape[1]
     index = faiss.IndexFlatIP(dimension)
     index.add(embeddings)
@@ -64,21 +56,19 @@ def load_index(out_dir: Path = DEFAULT_INDEX_DIR) -> tuple[faiss.Index, list[Chu
 def build_and_save_index(
     docs_dir: Path | None = None,
     out_dir: Path = DEFAULT_INDEX_DIR,
-    model_name: str = DEFAULT_MODEL_NAME,
+    model: str = DEFAULT_EMBEDDING_MODEL,
 ) -> tuple[faiss.Index, list[Chunk]]:
-    """Uctan uca: dokumanlari chunk'la -> embed et -> FAISS index kur -> diske kaydet."""
+    """Uctan uca: dokumanlari chunk'la -> embed et (OpenAI API) -> FAISS index kur -> diske kaydet."""
     chunks = chunk_knowledge_base(docs_dir) if docs_dir else chunk_knowledge_base()
-    model = SentenceTransformer(model_name)
-    index = build_faiss_index(chunks, model)
+    index = build_faiss_index(chunks, model=model)
     save_index(index, chunks, out_dir)
     return index, chunks
 
 
 def main() -> None:
     chunks = chunk_knowledge_base()
-    print(f"{len(chunks)} chunk bulundu, embedding modeli yukleniyor ({DEFAULT_MODEL_NAME})...")
-    model = SentenceTransformer(DEFAULT_MODEL_NAME)
-    index = build_faiss_index(chunks, model)
+    print(f"{len(chunks)} chunk bulundu, OpenAI embedding API'si ile vektorlestiriliyor ({DEFAULT_EMBEDDING_MODEL})...")
+    index = build_faiss_index(chunks)
     save_index(index, chunks)
     print(f"FAISS index kaydedildi: {DEFAULT_INDEX_DIR} ({index.ntotal} vektor)")
 

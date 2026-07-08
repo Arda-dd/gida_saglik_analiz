@@ -26,7 +26,9 @@ pytesseract>=0.3.10
 rapidfuzz>=3.6
 
 # --- RAG (Faz 4) ---
-sentence-transformers>=2.5
+# Not: Embedding de LLM gibi API uzerinden alinir (OpenAI text-embedding-3-small) - yerel
+# sentence-transformers modeli KULLANILMAZ, diske buyuk model dosyasi indirilmesin diye
+# (kullanici karari, 2026-07-08 - disk alani kisitli).
 faiss-cpu>=1.8
 anthropic>=0.25
 openai>=1.14
