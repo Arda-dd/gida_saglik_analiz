@@ -1,0 +1,94 @@
+{
+  "categories": [
+    "sut_urunu",
+    "atistirmalik",
+    "icecek",
+    "hazir_gida",
+    "konserve"
+  ],
+  "n_total": 394,
+  "n_train": 334,
+  "n_test": 60,
+  "backbones": {
+    "mobilenetv3": {
+      "cross_validation": {
+        "fold_metrics": [
+          {
+            "fold": 1,
+            "accuracy": 0.5970149253731343,
+            "f1_macro": 0.5470381231671555
+          },
+          {
+            "fold": 2,
+            "accuracy": 0.6865671641791045,
+            "f1_macro": 0.6788140850209816
+          },
+          {
+            "fold": 3,
+            "accuracy": 0.6716417910447762,
+            "f1_macro": 0.6641194978547593
+          },
+          {
+            "fold": 4,
+            "accuracy": 0.746268656716418,
+            "f1_macro": 0.7231804946672774
+          },
+          {
+            "fold": 5,
+            "accuracy": 0.7727272727272727,
+            "f1_macro": 0.7686371763613143
+          }
+        ],
+        "mean_accuracy": 0.694843962008141,
+        "std_accuracy": 0.06146165608419894,
+        "mean_f1_macro": 0.6763578754142976,
+        "std_f1_macro": 0.07427952103933304
+      },
+      "held_out_test": {
+        "accuracy": 0.75,
+        "f1_macro": 0.7320691884180729
+      }
+    },
+    "efficientnet_b3": {
+      "cross_validation": {
+        "fold_metrics": [
+          {
+            "fold": 1,
+            "accuracy": 0.7761194029850746,
+            "f1_macro": 0.7507639789127991
+          },
+          {
+            "fold": 2,
+            "accuracy": 0.6716417910447762,
+            "f1_macro": 0.6558055531058
+          },
+          {
+            "fold": 3,
+            "accuracy": 0.8059701492537313,
+            "f1_macro": 0.8085162180814354
+          },
+          {
+            "fold": 4,
+            "accuracy": 0.7164179104477612,
+            "f1_macro": 0.709208211143695
+          },
+          {
+            "fold": 5,
+            "accuracy": 0.7424242424242424,
+            "f1_macro": 0.7375258105714169
+          }
+        ],
+        "mean_accuracy": 0.7425146992311171,
+        "std_accuracy": 0.04660448462109683,
+        "mean_f1_macro": 0.7323639543630293,
+        "std_f1_macro": 0.0501233482111651
+      },
+      "held_out_test": {
+        "accuracy": 0.6833333333333333,
+        "f1_macro": 0.6809902740937224
+      }
+    }
+  },
+  "best_backbone": "mobilenetv3",
+  "best_f1_macro": 0.7320691884180729
+}
