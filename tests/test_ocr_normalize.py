@@ -36,6 +36,30 @@ def test_extract_fat_does_not_confuse_with_saturated_fat():
     assert extract_saturated_fat(text) == 5
 
 
+def test_extract_french_label_fields():
+    # OFF verisinin buyuk kismi Fransizca (bkz. docs/ocr_results_notes.md) - gercek etiket ornegi
+    text = (
+        "VALEURS NUTRITIONNELLES Energie: 298 kcal Matieres grasses: 11 g "
+        "dont acides gras satures: 7 g Glucides: 10 g dont sucres: 4 g "
+        "Fibres alimentaires: 2 g Proteines: 5 g Sel: 0.25 g"
+    )
+    facts = extract_nutrition_facts(text)
+
+    assert facts.energy_kcal == 298
+    assert facts.fat_g == 11
+    assert facts.saturated_fat_g == 7
+    assert facts.carbohydrate_g == 10
+    assert facts.sugar_g == 4
+    assert facts.fiber_g == 2
+    assert facts.protein_g == 5
+    assert facts.salt_g == pytest.approx(0.25)
+
+
+def test_extract_salt_french_sel_does_not_false_match_inside_other_words():
+    # "conseil" gibi kelimeler icinde "sel" alt dizisi olarak yanlislikla eslesmemeli
+    assert extract_salt("Conseil de conservation: au frais") is None
+
+
 def test_extract_fat_only_saturated_present_returns_none_for_total():
     text = "Doymus yag: 5 g"
     assert extract_fat(text) is None

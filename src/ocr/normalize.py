@@ -56,8 +56,11 @@ def extract_energy(text: str) -> tuple[float | None, float | None]:
     return energy_kcal, energy_kj
 
 
+SATURATED_FAT_KEYWORDS = r"doymu[sş]\s*ya[gğ]|saturated\s*fat|acides?\s*gras\s*satur[ée]s?"
+
+
 def extract_saturated_fat(text: str) -> float | None:
-    match = _search_value(text, r"doymu[sş]\s*ya[gğ]|saturated\s*fat", r"g|gr")
+    match = _search_value(text, SATURATED_FAT_KEYWORDS, r"g|gr")
     return match[0] if match else None
 
 
@@ -65,33 +68,35 @@ def extract_fat(text: str) -> float | None:
     """Toplam yag - 'doymus yag' ile karismamasi icin o ifadeyi devre disi birakir."""
     # Once doymus yag ifadesini metinden gecici olarak cikar, boylece plain 'yag' araması
     # yanlislikla doymus yag degerini yakalamaz.
-    cleaned = re.sub(r"doymu[sş]\s*ya[gğ][^0-9]{0,10}\d+[.,]?\d*\s*(?:g|gr)\b", "", text, flags=re.IGNORECASE)
-    match = _search_value(cleaned, r"ya[gğ]|fat", r"g|gr")
+    cleaned = re.sub(
+        rf"(?:{SATURATED_FAT_KEYWORDS})[^0-9]{{0,10}}\d+[.,]?\d*\s*(?:g|gr)\b", "", text, flags=re.IGNORECASE
+    )
+    match = _search_value(cleaned, r"ya[gğ]|fat|mati[eè]res\s*grasses|lipides", r"g|gr")
     return match[0] if match else None
 
 
 def extract_carbohydrate(text: str) -> float | None:
-    match = _search_value(text, r"karbonhidrat|carbohydrate", r"g|gr")
+    match = _search_value(text, r"karbonhidrat|carbohydrate|glucides", r"g|gr")
     return match[0] if match else None
 
 
 def extract_sugar(text: str) -> float | None:
-    match = _search_value(text, r"[sş]eker|sugars?", r"g|gr")
+    match = _search_value(text, r"[sş]eker|sugars?|sucres?", r"g|gr")
     return match[0] if match else None
 
 
 def extract_fiber(text: str) -> float | None:
-    match = _search_value(text, r"lif|fiber|fibre", r"g|gr")
+    match = _search_value(text, r"lif|fiber|fibres?(?:\s*alimentaires?)?", r"g|gr")
     return match[0] if match else None
 
 
 def extract_protein(text: str) -> float | None:
-    match = _search_value(text, r"protein", r"g|gr")
+    match = _search_value(text, r"protein|prot[eé]ines?", r"g|gr")
     return match[0] if match else None
 
 
 def extract_salt(text: str) -> float | None:
-    match = _search_value(text, r"tuz|salt", r"g|gr")
+    match = _search_value(text, r"tuz|salt|\bsel\b", r"g|gr")
     return match[0] if match else None
 
 
