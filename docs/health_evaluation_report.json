@@ -1,0 +1,110 @@
+{
+  "profile_consistency": {
+    "score": 1.0,
+    "cases": [
+      {
+        "name": "diyabetik_yuksek_seker_urunu",
+        "passed": true,
+        "health_risk_messages": [
+          "Yuksek seker icerir (100g'da esigin uzerinde).",
+          "Diyabet hastalari icin onerilmez (yuksek seker icerigi kan sekerini hizla yukseltebilir)."
+        ],
+        "allergen_warning": false
+      },
+      {
+        "name": "saglikli_profil_ayni_urun_diyabet_uyarisi_olmamali",
+        "passed": true,
+        "health_risk_messages": [
+          "Yuksek seker icerir (100g'da esigin uzerinde)."
+        ],
+        "allergen_warning": false
+      },
+      {
+        "name": "hipertansif_yuksek_tuz_urunu",
+        "passed": true,
+        "health_risk_messages": [
+          "Yuksek tuz icerir (100g'da esigin uzerinde).",
+          "Hipertansiyon hastalari icin onerilmez (yuksek tuz kan basincini artirabilir)."
+        ],
+        "allergen_warning": false
+      },
+      {
+        "name": "bobrek_hastasi_yuksek_sodyum_urunu",
+        "passed": true,
+        "health_risk_messages": [
+          "Yuksek sodyum icerir (100g'da esigin uzerinde).",
+          "Bobrek hastalari icin dikkatli tuketilmeli (yuksek sodyum bobrekleri zorlayabilir)."
+        ],
+        "allergen_warning": false
+      },
+      {
+        "name": "kalp_hastasi_yuksek_doymus_yag_urunu",
+        "passed": true,
+        "health_risk_messages": [
+          "Yuksek doymus yag icerir (100g'da esigin uzerinde).",
+          "Kalp hastalari icin onerilmez (yuksek doymus yag kolesterolu olumsuz etkileyebilir)."
+        ],
+        "allergen_warning": false
+      },
+      {
+        "name": "findik_alerjisi_findik_iceren_urun",
+        "passed": true,
+        "health_risk_messages": [],
+        "allergen_warning": true
+      },
+      {
+        "name": "findik_alerjisi_findik_icermeyen_urun_uyari_olmamali",
+        "passed": true,
+        "health_risk_messages": [],
+        "allergen_warning": false
+      },
+      {
+        "name": "coklu_kosul_dogru_ve_ayrik_uyarilar",
+        "passed": true,
+        "health_risk_messages": [
+          "Yuksek seker icerir (100g'da esigin uzerinde).",
+          "Yuksek tuz icerir (100g'da esigin uzerinde).",
+          "Diyabet hastalari icin onerilmez (yuksek seker icerigi kan sekerini hizla yukseltebilir).",
+          "Hipertansiyon hastalari icin onerilmez (yuksek tuz kan basincini artirabilir)."
+        ],
+        "allergen_warning": false
+      },
+      {
+        "name": "dusuk_riskli_urun_hicbir_kosul_uyarisi_uretmemeli",
+        "passed": true,
+        "health_risk_messages": [],
+        "allergen_warning": false
+      }
+    ]
+  },
+  "recommendation_relevance": {
+    "score": 1.0,
+    "cases": [
+      {
+        "name": "findik_alerjisi_guvenli_alternatif_bulunmali_digerleri_elenmeli",
+        "passed": true,
+        "actual_ids": [
+          "good1"
+        ]
+      },
+      {
+        "name": "birden_fazla_guvenli_alternatif_risk_sirasina_gore_siralanmali",
+        "passed": true,
+        "actual_ids": [
+          "best2",
+          "medium2"
+        ]
+      },
+      {
+        "name": "daha_dusuk_riskli_alternatif_yoksa_bos_liste_donmeli",
+        "passed": true,
+        "actual_ids": []
+      },
+      {
+        "name": "hicbir_aday_yoksa_bos_liste_donmeli",
+        "passed": true,
+        "actual_ids": []
+      }
+    ]
+  }
+}
