@@ -62,11 +62,34 @@ cp .env.example .env   # ve .env icine API anahtarlarini girin
 pytest tests/ -v
 ```
 
-## LLM Sağlayıcısı
+## LLM ve Embedding Sağlayıcısı
 
-Sistem, RAG modülünde LLM'i **API üzerinden** (Anthropic veya OpenAI) kullanır — büyük dil
-modeli eğitimi yapılmaz, sadece hazır bir model inference aşamasında kullanılır (bkz. öneri
-formu 2.4). Sağlayıcı `config/config.yaml -> llm.provider` ve `.env` üzerinden seçilir.
+Sistem, RAG modülünde hem LLM'i hem embedding'i **API üzerinden** kullanır — hiçbir model
+yerel olarak eğitilmez veya diske indirilmez (bkz. öneri formu 2.4). Varsayılan sağlayıcı
+**HuggingFace Inference API** (ücretsiz, kart gerektirmez); Anthropic/OpenAI ödemeli
+alternatifler olarak `config/config.yaml -> llm.provider` / `rag.embedding_provider` ve `.env`
+üzerinden seçilebilir.
+
+## API ve Web Demo Çalıştırma (Faz 6)
+
+RAG index'i ilk kullanımdan önce bir kez kurulmalı (knowledge_base chunk'larını embed eder):
+
+```bash
+python -m src.rag.index_builder
+```
+
+FastAPI backend:
+
+```bash
+uvicorn api.main:app --reload
+# http://127.0.0.1:8000/docs -> etkilesimli API dokumantasyonu
+```
+
+Streamlit web demo (api katmanini dogrudan cagirir, ayri sunucu gerekmez):
+
+```bash
+streamlit run demo/app.py
+```
 
 ## Geliştirme Ekibi
 
