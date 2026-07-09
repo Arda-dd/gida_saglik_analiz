@@ -15,7 +15,7 @@ def _stable_hash(word: str, mod: int) -> int:
     return int(hashlib.md5(word.encode("utf-8")).hexdigest(), 16) % mod
 
 
-def _fake_embed_texts(texts: list[str], model: str = "", client=None) -> np.ndarray:
+def _fake_embed_texts(texts: list[str], provider: str = "", model: str = "", client=None) -> np.ndarray:
     """OpenAI embedding API'sini taklit eden, deterministik bag-of-words tabanli sahte embedding
     (bkz. tests/test_rag_index_builder.py - ayni yaklasim, network/API key gerektirmez)."""
     vectors = []

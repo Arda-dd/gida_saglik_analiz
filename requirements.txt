@@ -26,12 +26,15 @@ pytesseract>=0.3.10
 rapidfuzz>=3.6
 
 # --- RAG (Faz 4) ---
-# Not: Embedding de LLM gibi API uzerinden alinir (OpenAI text-embedding-3-small) - yerel
-# sentence-transformers modeli KULLANILMAZ, diske buyuk model dosyasi indirilmesin diye
-# (kullanici karari, 2026-07-08 - disk alani kisitli).
+# Not: Hem LLM hem embedding API uzerinden alinir - yerel model KULLANILMAZ, diske buyuk
+# model dosyasi indirilmesin diye (kullanici karari, 2026-07-08 - disk alani kisitli).
+# Varsayilan saglayici huggingface (ucretsiz, kart gerektirmez, 2026-07-09 kullanici karari);
+# anthropic/openai odemeli alternatifler olarak korunur. huggingface-hub zaten timm'in
+# bagimliligi olarak kurulu - InferenceClient icin ek paket gerekmez.
 faiss-cpu>=1.8
 anthropic>=0.25
 openai>=1.14
+huggingface-hub>=0.20
 rank-bm25>=0.2.2
 
 # --- Backend / Demo (Faz 6) ---

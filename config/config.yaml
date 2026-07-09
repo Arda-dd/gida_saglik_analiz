@@ -4,9 +4,12 @@
 # uretilir (bkz. THRESHOLD_METADATA). Buradaki "value" alanlari tek dogruluk kaynagidir.
 
 llm:
-  provider: anthropic   # anthropic | openai
+  # Varsayilan: huggingface (ucretsiz, kart gerektirmez - kullanici karari 2026-07-09).
+  # anthropic/openai odemeli alternatifler olarak korunur (bkz. src/rag/llm_provider.py).
+  provider: huggingface   # anthropic | openai | huggingface
   model_anthropic: claude-sonnet-5
   model_openai: gpt-4o-mini
+  model_huggingface: meta-llama/Llama-3.1-8B-Instruct
   max_tokens: 1024
   temperature: 0.2
 
@@ -57,8 +60,9 @@ allergens:
   - balik
 
 rag:
-  # Embedding OpenAI API'sinden alinir (yerel model YOK - diske buyuk dosya inmesin diye,
-  # kullanici karari 2026-07-08). LLM ile ayni felsefe: API tabanli, yerel kaynagi zorlama.
-  embedding_model: text-embedding-3-small
+  # Embedding API'den alinir (yerel model YOK - diske buyuk dosya inmesin diye, kullanici
+  # karari 2026-07-08). Varsayilan huggingface (ucretsiz) - openai odemeli alternatif.
+  embedding_provider: huggingface   # huggingface | openai
+  embedding_model: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
   top_k: 5
   similarity_threshold: 0.35

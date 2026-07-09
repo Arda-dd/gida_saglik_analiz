@@ -2,7 +2,12 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from src.rag.llm_provider import AnthropicProvider, OpenAIProvider, get_llm_provider
+from src.rag.llm_provider import (
+    AnthropicProvider,
+    HuggingFaceProvider,
+    OpenAIProvider,
+    get_llm_provider,
+)
 
 
 def test_anthropic_provider_requires_api_key(monkeypatch):
@@ -55,6 +60,31 @@ def test_openai_provider_generate_calls_sdk():
         assert call_kwargs["messages"][1] == {"role": "user", "content": "test prompt"}
 
 
+def test_huggingface_provider_requires_api_key(monkeypatch):
+    monkeypatch.delenv("HUGGINGFACE_API_KEY", raising=False)
+    with pytest.raises(ValueError, match="HUGGINGFACE_API_KEY"):
+        HuggingFaceProvider(model="meta-llama/Llama-3.1-8B-Instruct")
+
+
+def test_huggingface_provider_generate_calls_sdk():
+    with patch("huggingface_hub.InferenceClient") as mock_client_cls:
+        mock_client = MagicMock()
+        mock_message = MagicMock(content="test yaniti")
+        mock_choice = MagicMock(message=mock_message)
+        mock_response = MagicMock(choices=[mock_choice])
+        mock_client.chat_completion.return_value = mock_response
+        mock_client_cls.return_value = mock_client
+
+        provider = HuggingFaceProvider(model="meta-llama/Llama-3.1-8B-Instruct", api_key="fake-key")
+        result = provider.generate("test prompt", system="test system")
+
+        assert result == "test yaniti"
+        call_kwargs = mock_client.chat_completion.call_args.kwargs
+        assert call_kwargs["model"] == "meta-llama/Llama-3.1-8B-Instruct"
+        assert call_kwargs["messages"][0] == {"role": "system", "content": "test system"}
+        assert call_kwargs["messages"][1] == {"role": "user", "content": "test prompt"}
+
+
 def test_get_llm_provider_selects_anthropic_from_config(monkeypatch):
     monkeypatch.setenv("ANTHROPIC_API_KEY", "fake-key")
     config = {
@@ -88,6 +118,24 @@ def test_get_llm_provider_selects_openai_from_config(monkeypatch):
         provider = get_llm_provider(config)
         assert isinstance(provider, OpenAIProvider)
         assert provider.model == "gpt-4o-mini"
+
+
+def test_get_llm_provider_selects_huggingface_from_config(monkeypatch):
+    monkeypatch.setenv("HUGGINGFACE_API_KEY", "fake-key")
+    config = {
+        "llm": {
+            "provider": "huggingface",
+            "model_anthropic": "claude-sonnet-5",
+            "model_openai": "gpt-4o-mini",
+            "model_huggingface": "meta-llama/Llama-3.1-8B-Instruct",
+            "max_tokens": 512,
+            "temperature": 0.1,
+        }
+    }
+    with patch("huggingface_hub.InferenceClient"):
+        provider = get_llm_provider(config)
+        assert isinstance(provider, HuggingFaceProvider)
+        assert provider.model == "meta-llama/Llama-3.1-8B-Instruct"
 
 
 def test_get_llm_provider_rejects_unknown_provider():

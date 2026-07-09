@@ -2,8 +2,10 @@
 
 Oneri formu 2.4: "hazir buyuk dil modeli, sadece cikarim (inference) icin kullanilacak,
 egitilmeyecek". Kullanici karari (2026-07-06): API tabanli LLM (Anthropic/OpenAI) - 6GB VRAM'i
-yerel LLM ile zorlamamak icin. Bu arayuz sayesinde saglayici degistirmek tek bir alt siniftan
-baska hicbir cagiran kodu etkilemez.
+yerel LLM ile zorlamamak icin. Kullanici sonrasinda (2026-07-09) tamamen ucretsiz, kart
+gerektirmeyen bir secenek istedi - bu yuzden HuggingFace Inference API (ucretsiz token)
+`HuggingFaceProvider` olarak eklendi ve config.yaml'da varsayilan saglayici yapildi. Bu arayuz
+sayesinde saglayici degistirmek tek bir alt siniftan baska hicbir cagiran kodu etkilemez.
 
 Tum sayisal hesaplar (esik kiyaslama, risk bayraklari) kural tabanli Python'da yapilir
 (src/ocr/risk_engine.py) - LLM sadece retrieval ile saglanan baglami dogal dile donusturur,
@@ -88,6 +90,47 @@ class OpenAIProvider(LLMProvider):
         return response.choices[0].message.content or ""
 
 
+class HuggingFaceProvider(LLMProvider):
+    """HuggingFace Inference API - ucretsiz token (kart gerektirmez), acik kaynak modeller.
+
+    `huggingface_hub.InferenceClient.chat_completion`, OpenAI'nin chat completion formatiyla
+    uyumlu bir arayuz sunar (response.choices[0].message.content), bu yuzden OpenAIProvider'a
+    cok benzer sekilde implemente edilir. Ucretsiz kotanin rate limiti dusuktur ve hangi
+    modellerin serverless inference'ta aktif oldugu zamanla degisebilir - bkz. config.yaml
+    `llm.model_huggingface`, kullanilamayan bir model icin bu deger degistirilmelidir.
+    """
+
+    def __init__(
+        self,
+        model: str,
+        api_key: str | None = None,
+        max_tokens: int = 1024,
+        temperature: float = 0.2,
+    ) -> None:
+        from huggingface_hub import InferenceClient
+
+        api_key = api_key or os.environ.get("HUGGINGFACE_API_KEY")
+        if not api_key:
+            raise ValueError("HUGGINGFACE_API_KEY bulunamadi (.env dosyasini kontrol edin)")
+        self._client = InferenceClient(token=api_key)
+        self.model = model
+        self.max_tokens = max_tokens
+        self.temperature = temperature
+
+    def generate(self, prompt: str, system: str | None = None) -> str:
+        messages = []
+        if system:
+            messages.append({"role": "system", "content": system})
+        messages.append({"role": "user", "content": prompt})
+        response = self._client.chat_completion(
+            messages=messages,
+            model=self.model,
+            max_tokens=self.max_tokens,
+            temperature=self.temperature,
+        )
+        return response.choices[0].message.content or ""
+
+
 def get_llm_provider(config: dict | None = None) -> LLMProvider:
     """config.yaml -> llm.provider alanina gore dogru saglayici sinifini kurar (factory)."""
     if config is None:
@@ -107,6 +150,12 @@ def get_llm_provider(config: dict | None = None) -> LLMProvider:
     if provider_name == "openai":
         return OpenAIProvider(
             model=llm_cfg["model_openai"],
+            max_tokens=llm_cfg["max_tokens"],
+            temperature=llm_cfg["temperature"],
+        )
+    if provider_name == "huggingface":
+        return HuggingFaceProvider(
+            model=llm_cfg["model_huggingface"],
             max_tokens=llm_cfg["max_tokens"],
             temperature=llm_cfg["temperature"],
         )
