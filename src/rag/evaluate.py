@@ -134,7 +134,12 @@ def evaluate_generation(
         result: GenerationResult = generate_explanation(
             case.nutrition, case.risk_flags, retriever, llm, top_k=top_k
         )
+        # "Grounding" kaynagi hem retrieval baglamini HEM DE urunun kendi besin degerlerini
+        # (prompt'ta dogrudan verilen girdi verisi) icermeli - LLM'in urunun kendi 35g seker
+        # gibi degerlerini dogru sekilde tekrarlamasi halusinasyon DEGILDIR, sadece retrieval
+        # disi (ama yine de meşru) bir kaynaktan gelir.
         context_text = "\n".join(r.chunk.text for r in result.retrieved)
+        context_text += "\n" + str(case.nutrition.model_dump(exclude_none=True))
         alignment = ground_truth_alignment_ratio(result.text, context_text)
         rows.append(
             {

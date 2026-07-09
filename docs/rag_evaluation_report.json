@@ -1,0 +1,222 @@
+{
+  "retrieval": {
+    "mean_recall_at_5": 1.0,
+    "mrr": 0.7944444444444444,
+    "per_query": [
+      {
+        "query": "Günlük tuz alımı için WHO önerisi nedir?",
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "retrieved_ids": [
+          "who_salt_reduction::0",
+          "who_salt_reduction::1",
+          "tgk_etiketleme_ozet::0",
+          "who_sugars_intake::0",
+          "who_sugars_intake::1"
+        ]
+      },
+      {
+        "query": "Sodyum ile tuz arasındaki dönüşüm formülü nedir?",
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "retrieved_ids": [
+          "who_salt_reduction::0",
+          "tgk_etiketleme_ozet::0",
+          "who_salt_reduction::1",
+          "glossary_nutrition_terms::0",
+          "nutriscore_thresholds_overview::0"
+        ]
+      },
+      {
+        "query": "Serbest şeker günlük enerjinin yüzde kaçını geçmemeli?",
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "retrieved_ids": [
+          "who_sugars_intake::0",
+          "who_sugars_intake::1",
+          "who_sugars_intake::preamble",
+          "efsa_dietary_reference_values::1",
+          "nutriscore_thresholds_overview::1"
+        ]
+      },
+      {
+        "query": "Doymuş yağ için WHO enerji yüzdesi sınırı nedir?",
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 0.5,
+        "retrieved_ids": [
+          "who_sugars_intake::1",
+          "who_sugars_intake::0",
+          "glossary_nutrition_terms::preamble",
+          "nutriscore_thresholds_overview::0",
+          "who_salt_reduction::0"
+        ]
+      },
+      {
+        "query": "Ürün etiketinde yüksek şeker eşiği kaç gramdır?",
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 0.25,
+        "retrieved_ids": [
+          "who_sugars_intake::1",
+          "who_salt_reduction::1",
+          "nutriscore_thresholds_overview::1",
+          "nutriscore_thresholds_overview::0",
+          "who_sugars_intake::0"
+        ]
+      },
+      {
+        "query": "Yüksek tuz içeren bir ürün için 100g başına eşik nedir?",
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 0.3333333333333333,
+        "retrieved_ids": [
+          "who_salt_reduction::1",
+          "tgk_etiketleme_ozet::0",
+          "nutriscore_thresholds_overview::0",
+          "who_salt_reduction::0",
+          "nutriscore_thresholds_overview::1"
+        ]
+      },
+      {
+        "query": "Bu projede kullanılan alerjen listesi nelerdir?",
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "retrieved_ids": [
+          "allergen_labeling_overview::0",
+          "allergen_labeling_overview::1",
+          "allergen_labeling_overview::preamble",
+          "tgk_etiketleme_ozet::0",
+          "tgk_etiketleme_ozet::1"
+        ]
+      },
+      {
+        "query": "Fındık alerjeni bu sistemde nasıl tespit edilir?",
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 0.5,
+        "retrieved_ids": [
+          "allergen_labeling_overview::0",
+          "allergen_labeling_overview::1",
+          "allergen_labeling_overview::preamble",
+          "tgk_etiketleme_ozet::0",
+          "tgk_etiketleme_ozet::1"
+        ]
+      },
+      {
+        "query": "EFSA beslenme referans değerleri neyi kapsar?",
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "retrieved_ids": [
+          "efsa_dietary_reference_values::0",
+          "efsa_dietary_reference_values::1",
+          "efsa_dietary_reference_values::preamble",
+          "glossary_nutrition_terms::preamble",
+          "tgk_etiketleme_ozet::1"
+        ]
+      },
+      {
+        "query": "Türk Gıda Kodeksi etiketleme yönetmeliğinde besin değerleri nasıl beyan edilir?",
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 0.3333333333333333,
+        "retrieved_ids": [
+          "tgk_etiketleme_ozet::preamble",
+          "tgk_etiketleme_ozet::1",
+          "tgk_etiketleme_ozet::0",
+          "allergen_labeling_overview::preamble",
+          "efsa_dietary_reference_values::0"
+        ]
+      },
+      {
+        "query": "Enerjinin kcal ve kJ cinsinden dönüşüm oranı nedir?",
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "retrieved_ids": [
+          "glossary_nutrition_terms::0",
+          "who_salt_reduction::0",
+          "efsa_dietary_reference_values::1",
+          "who_sugars_intake::0",
+          "glossary_nutrition_terms::preamble"
+        ]
+      },
+      {
+        "query": "Protein kelimesinin İngilizce karşılığı nedir?",
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "retrieved_ids": [
+          "glossary_nutrition_terms::preamble",
+          "efsa_dietary_reference_values::1",
+          "efsa_dietary_reference_values::0",
+          "allergen_labeling_overview::0",
+          "glossary_nutrition_terms::0"
+        ]
+      },
+      {
+        "query": "Nutri-Score eşikleri hangi resmi kaynaktan doğrulanmalı?",
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "retrieved_ids": [
+          "nutriscore_thresholds_overview::preamble",
+          "allergen_labeling_overview::preamble",
+          "who_salt_reduction::1",
+          "tgk_etiketleme_ozet::1",
+          "nutriscore_thresholds_overview::1"
+        ]
+      },
+      {
+        "query": "Dünyada ortalama günlük sodyum tüketimi ne kadardır?",
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "retrieved_ids": [
+          "who_salt_reduction::0",
+          "tgk_etiketleme_ozet::0",
+          "who_salt_reduction::1",
+          "nutriscore_thresholds_overview::0",
+          "efsa_dietary_reference_values::0"
+        ]
+      },
+      {
+        "query": "TGK alerjen tebliği hangi AB yönetmeliğiyle örtüşüyor?",
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "retrieved_ids": [
+          "allergen_labeling_overview::preamble",
+          "allergen_labeling_overview::0",
+          "allergen_labeling_overview::1",
+          "tgk_etiketleme_ozet::0",
+          "tgk_etiketleme_ozet::1"
+        ]
+      }
+    ]
+  },
+  "generation": {
+    "mean_factual_consistency_score": 1.0,
+    "mean_ground_truth_alignment_ratio": 0.3821428571428572,
+    "cases": [
+      {
+        "name": "yuksek_seker_urun",
+        "valid_citation_ratio": 1.0,
+        "ground_truth_alignment_ratio": 0.5,
+        "regenerated": false,
+        "text": "Ürünün besin değerleri incelenmiştir. Ürün 100g'da 35g şeker içeriyor, bu da yüksek seviyeye karşılık geliyor [Kaynak: nutriscore_thresholds_overview::0]. WHO'nun günlük şeker alımı önerisi 10% enerji kaynağı olarak belirlenmiştir, ancak ürünün şeker içeriği bu sınırın üzerinde [Kaynak: who_sugars_intake::1]. Ürün 100g'da 0.4g tuz içeriyor, bu da normal seviyeye karşılık geliyor [Kaynak: nutriscore_thresholds_overview::0]. WHO'nun günlük tuz alımı önerisi 5g'dir, ancak ürünün tuz içeriği bu sınırın altında [Kaynak: who_salt_reduction::1]."
+      },
+      {
+        "name": "yuksek_tuz_ve_sodyum_urun",
+        "valid_citation_ratio": 1.0,
+        "ground_truth_alignment_ratio": 0.5714285714285714,
+        "regenerated": false,
+        "text": "Kullanıcıya 3-5 cumlelik bir sağlık değerlendirmesi yazmak için, aşağıdaki bilgileri kullanacağım:\n\n- Ürün besin değerleri: 100g bazında enerji 250 kcal, şeker 3g, tuz 2.8g, sodyum 1120mg\n- Risk bayrakları: Yüksek tuz icerir (100g'da esigin uzerinde), yüksek sodyum icerir (100g'da esigin uzerinde)\n- Kaynaklar:\n\n**Sağlık Değerlendirmesi:**\n\n- Ürün yüksek tuz icerir, bu WHO'nun günlük tuz alımını aşıyor. [Kaynak: who_salt_reduction::0]\n- Yüksek tuz tüketimi, yüksek kan basıncı, kardiyovasküler hastalıklar, mide kanseri, obezite, osteoporoz ve böbrek hastalığı gibi sağlık risklerine neden olabilir. [Kaynak: who_salt_reduction::0]\n- Ürün yüksek sodyum icerir, bu da WHO'nun günlük sodyum alımını aşıyor. [Kaynak: who_salt_reduction::0]\n- Yüksek sodyum tüketimi, 1,7 milyon ölüm ile ilişkilendirilmiştir. [Kaynak: who_salt_reduction::0]\n\nLütfen not ediniz ki, bu değerlendirmeler WHO'nun günlük tuz ve sodyum alımını aşan ürünler için geçerlidir."
+      },
+      {
+        "name": "yuksek_doymus_yag_urun",
+        "valid_citation_ratio": 1.0,
+        "ground_truth_alignment_ratio": 0.35714285714285715,
+        "regenerated": false,
+        "text": "Ürünün enerji değeri 520 kcal'dir, bu WHO'nun günlük enerji ihtiyacının %30'unu aşmaktadır [Kaynak: glossary_nutrition_terms::preamble]. Ürün 100g'da 30g yağ içerir, bu da toplam yağın %17'sine denk gelmektedir [Kaynak: nutriscore_thresholds_overview::0]. Ürün 100g'da 14g doymuş yağ içerir, bu da doymuş yağın %280'ine denk gelmektedir [Kaynak: nutriscore_thresholds_overview::0]. Ürün 100g'da 8g şeker içerir, bu da şekerin %35'inine denk gelmektedir [Kaynak: nutriscore_thresholds_overview::0]."
+      },
+      {
+        "name": "risksiz_urun",
+        "valid_citation_ratio": 1.0,
+        "ground_truth_alignment_ratio": 0.1,
+        "regenerated": false,
+        "text": "Kullanıcıya 3-5 cumlelik bir sağlık değerlendirmesi yazabiliriz:\n\n\"Verilen besin değerleri 100 gram için 180 kcal enerji, 3 gram yağ, 2 gram şeker ve 0,2 gram tuz içerir. Bu değerler, ortalama bir bireyin günlük enerji ve besin gereksinimlerini karşılar. [Kaynak: efsa_dietary_reference_values::0] EFSA'nın beslenme referans değerleri (DRV) seti, makro ve mikro besinler için referans alım aralıklarını içerir ve politika yapıcılar ve sağlık profesyonelleri için beslenme politikaları geliştirme temeli sağlar. [Kaynak: efsa_dietary_reference_values::1] EFSA'nın makro besinler için yayımladığı sayısal referans alım aralıkları bu oturumda ayrıntılı olarak çekilememiştir. [Kaynak: who_sugars_intake::preamble] WHO'nun sağlıklı diyet Fact Sheet'i, serbest şeker ve yağ alımı hakkında bilgi sağlar ve günlük şeker tüketimini 25 gram'a indirmeyi önerir.\""
+      }
+    ]
+  }
+}

@@ -1,9 +1,10 @@
 # Faz 4 Durumu — RAG Tabanlı Bilgi Getirme ve Yorumlama
 
-**Durum:** Modül mimarisi tamamlandı, tüm birimler sentetik/mock veriyle test edildi
-(182 pytest testinin 45'i bu faza ait, tamamı yeşil). Ancak **gerçek bilgi tabanı üzerinde
-uçtan uca retrieval + generation değerlendirmesi henüz çalıştırılmadı** — bu, API anahtarı
-gerektirir ve kullanıcı kararıyla (2026-07-08) bir sonraki adıma bırakıldı.
+**Durum:** Tamamlandı. Modül mimarisi kuruldu, tüm birimler sentetik/mock veriyle test edildi
+(182 pytest testinin 45'i bu faza ait, tamamı yeşil) ve **gerçek bilgi tabanı üzerinde uçtan uca
+retrieval + generation değerlendirmesi de çalıştırıldı** (ücretsiz HuggingFace API ile, bkz.
+"Gerçek Sonuçlar" bölümü) — Recall@5 %100, MRR 0.794, Factual Consistency %100, Ground Truth
+Alignment %38.2 (düşük skorun kök nedeni ve önerilen çözüm aşağıda dürüstçe belgelenmiştir).
 
 ## Neden API tabanlı embedding'e geçildi (mimari değişiklik #1)
 
@@ -41,12 +42,11 @@ kart gerektirmeyen, tamamen ücretsiz bir alternatif istedi. Bunun üzerine:
   config'ten seçilebilir).
 - `.env.example`'a `HUGGINGFACE_API_KEY` eklendi.
 
-**Önemli sınırlama (dürüstçe not edilmeli):** HuggingFace'in ücretsiz serverless Inference
-API kotası zaman zaman sıkılaştırılıyor ve hangi modellerin bu kotada aktif olduğu değişebilir;
-şu an `config.yaml`'daki `model_huggingface: meta-llama/Llama-3.1-8B-Instruct` değeri gerçek bir
-API çağrısıyla doğrulanmadı (kullanıcı henüz `.env`'e token girmedi). İlk gerçek çalıştırmada bu
-modelin ücretsiz kotada erişilebilir olmadığı görülürse, `config.yaml`'daki bu değerin başka bir
-aktif modelle değiştirilmesi gerekebilir.
+**Güncelleme (2026-07-09, gerçek token ile doğrulandı):** Kullanıcı ücretsiz bir HuggingFace
+tokenı oluşturup `.env`'e ekledi. Hem embedding (`sentence-transformers/paraphrase-multilingual-
+MiniLM-L12-v2`, 384 boyutlu vektör) hem de `model_huggingface: meta-llama/Llama-3.1-8B-Instruct`
+gerçek API çağrısıyla test edildi ve **her ikisi de ücretsiz kotada çalışıyor** — model değişikliği
+gerekmedi.
 
 ## Tamamlanan Bileşenler
 
@@ -58,7 +58,7 @@ aktif modelle değiştirilmesi gerekebilir.
 | `src/rag/retriever.py` | Dense (embedding API) + BM25 (`rank_bm25`) hibrit skor, min-max normalize + ağırlıklı birleşim (0.6/0.4) | 6 test |
 | `src/rag/llm_provider.py` | `LLMProvider` soyut arayüzü + `AnthropicProvider`/`OpenAIProvider`/`HuggingFaceProvider`, config.yaml'dan factory seçimi | 10 test |
 | `src/rag/generate.py` | Kaynak referanslı ([Kaynak: chunk_id]) üretim + **self-consistency katmanı**: halüsinasyon (uydurma kaynak) tespit edilirse otomatik yeniden üretim | 10 test |
-| `src/rag/evaluate.py` | Top-k Recall + MRR (retrieval), Factual Consistency Score + Ground Truth Alignment Ratio (generation) | henüz gerçek veriyle çalıştırılmadı (bkz. aşağı) |
+| `src/rag/evaluate.py` | Top-k Recall + MRR (retrieval), Factual Consistency Score + Ground Truth Alignment Ratio (generation) | gerçek veriyle çalıştırıldı (bkz. aşağı) |
 
 Testlerin tamamı, gerçek API çağrısı yapmadan (network/API key gerektirmeden) çalışır:
 LLM testleri `unittest.mock.patch` ile `anthropic.Anthropic`/`openai.OpenAI`/`huggingface_hub.
@@ -76,31 +76,71 @@ Bu mekanizma, LLM'in kaynaklarda olmayan bir referans "uydurmasını" (halüsina
 ölçülebilir ve test edilebilir hale getirir — birim testlerinde hem "geçerli atıf → yeniden
 üretim yok" hem de "uydurma atıf → yeniden üretim tetiklenir" senaryoları doğrulanmıştır.
 
-## Eksik Kalan: Gerçek Veriyle Uçtan Uca Değerlendirme
+## Gerçek Sonuçlar (2026-07-09, HuggingFace ücretsiz API ile)
 
-`data/rag_eval/queries.json` içinde bilgi tabanının gerçek 19 chunk'ına karşılık gelen 15 elle
-etiketlenmiş (sorgu, ilgili chunk_id) çifti hazırlandı; `src/rag/evaluate.py` bunları
-kullanarak Top-k Recall + MRR (retrieval) ve Factual Consistency Score + Ground Truth
-Alignment Ratio (generation, 4 örnek ürün senaryosuyla) hesaplayacak şekilde yazıldı. Ancak:
+Gerçek bilgi tabanı (19 chunk) üzerinde FAISS index kuruldu (`python -m src.rag.index_builder`)
+ve `python -m src.rag.evaluate` çalıştırıldı (`docs/rag_evaluation_report.json`).
 
-- Retrieval değerlendirmesi bile artık bir **embedding API çağrısı** gerektiriyor (varsayılan:
-  HuggingFace, ücretsiz) — kullanıcının `.env` dosyasına `HUGGINGFACE_API_KEY` girmesi gerekiyor.
-- Generation değerlendirmesi de aynı token ile `HuggingFaceProvider` üzerinden çalışabilir
-  (config.yaml'da `llm.provider: huggingface` zaten varsayılan).
+### Retrieval — `data/rag_eval/queries.json` (15 elle etiketlenmiş sorgu)
 
-Kullanıcı (2026-07-08) API anahtarı kurulumunu şimdilik ertelemeyi tercih etti ("şu an için
-atla, sadece kod+testlerle devam et"). Bu nedenle bu doküman **gerçek Top-k Recall/MRR/Factual
-Consistency/Ground Truth Alignment rakamları içermiyor** — Faz 2/3'te olduğu gibi rakamları
-olmadan "başarılı" göstermek yerine durumu şeffaf bırakmayı tercih ediyoruz.
+| Metrik | Sonuç |
+|---|---|
+| Recall@5 | **%100.0** (15/15 sorguda ilgili chunk top-5'te bulundu) |
+| MRR | **0.794** |
 
-## Sıradaki Somut Adım
+Recall mükemmel; MRR'nin 1.0 olmaması bazı sorgularda ilgili chunk'ın 1. değil 2-4. sırada
+çıkmasından kaynaklanıyor (ör. "Ürün etiketinde yüksek şeker eşiği kaç gramdır?" sorusunda
+doğru chunk 4. sırada bulundu, RR=0.25) — hibrit skorda BM25 tarafının bazı Türkçe soru
+kalıplarında dense skoru ezmesi muhtemel; top_k=5 pratik kullanım için yeterli olsa da,
+dense/BM25 ağırlıklarının (şu an 0.6/0.4) ince ayarı gelecekte iyileştirme konusu olabilir.
 
-1. Kullanıcı [huggingface.co/settings/tokens](https://huggingface.co/settings/tokens)'dan
-   ücretsiz bir token alıp `.env.example`'ı `.env` olarak kopyalayıp `HUGGINGFACE_API_KEY`
-   değerini girdiğinde: `python -m src.rag.index_builder` (gerçek FAISS index'i kurar) ve
-   ardından `python -m src.rag.evaluate` (gerçek Top-k Recall/MRR + Factual Consistency/Ground
-   Truth Alignment rakamlarını üretir, `docs/rag_evaluation_report.json`'a kaydeder) çalıştırılmalı.
-2. `config.yaml`'daki `model_huggingface` değerinin ücretsiz kotada gerçekten erişilebilir olup
-   olmadığı bu ilk çalıştırmada doğrulanmalı; erişilemezse başka bir aktif modelle değiştirilmeli.
-3. Sonuçlar bu dosyaya eklenip hedeflerle (form: kaynak referanslı çıktı, ölçülmüş halüsinasyon
-   oranı) kıyaslanmalı.
+### Generation — 4 örnek ürün senaryosu
+
+| Metrik | Sonuç |
+|---|---|
+| Factual Consistency Score (`valid_citation_ratio`) | **%100.0** |
+| Ground Truth Alignment Ratio | **%38.2** |
+
+**Factual Consistency %100** — self-consistency katmanı beklendiği gibi çalıştı: LLM'in
+ürettiği hiçbir `[Kaynak: chunk_id]` etiketi uydurma değildi, hepsi gerçekten retrieval'dan
+dönen chunk'lara aitti (4 senaryonun 1'inde ilk denemede geçersiz bir referans üretildi, sistem
+otomatik olarak yeniden üretim yaptı ve ikinci denemede düzeldi).
+
+**Ground Truth Alignment %38.2 — düşük, ve kök nedeni tek bir şey değil, iki ayrı bulgu var:**
+
+1. **Metrik tanımı ilk baştaki haliyle eksikti (düzeltildi):** İlk çalıştırmada bu oran %48.5
+   çıkmıştı ve üretilen metni okuyunca görüldü ki LLM, ürünün kendi girdi besin değerlerini
+   (ör. "35g şeker", "450 kcal" — bunlar prompt'ta doğrudan verilen gerçek ürün verisi, retrieval
+   sonucu değil) doğru şekilde tekrarlıyordu; ama `ground_truth_alignment_ratio` fonksiyonu
+   sadece retrieval bağlamına karşı kontrol ediyordu, prompt'a verilen ürün verisine karşı değil.
+   `evaluate_generation()` düzeltildi (artık ürünün `NutritionFacts` verisi de "grounding"
+   kaynağına dahil ediliyor) — bu, metriği daha doğru hale getirdi ama tek başına sorunu çözmedi.
+2. **Gerçek, düzeltilmemiş bulgu:** Ücretsiz 8B model (Llama-3.1-8B-Instruct), sistem promptunda
+   açıkça yasaklanmasına rağmen ("Hiçbir sayısal eşik veya oran UYDURMA") **kendi başına türetilmiş
+   yüzde/oran hesapları** üretiyor — ör. "doymuş yağın %280'ine denk gelmektedir", "günlük şeker
+   tüketimini 25 gram'a indirmeyi önerir" (kaynak metinde sadece "%5-10 enerji" yazıyor, "25 gram"
+   ifadesi hiçbir kaynakta geçmiyor — model bunu kendi hesaplamış, referans aldığı 2000 kcal'lik
+   varsayımı da belirtmeden). Bu değerler **uydurma kaynak değil** (`valid_citation_ratio` bunları
+   yakalayamaz çünkü atıf edilen chunk_id gerçekten var ve alakalı) ama **kaynakta birebir
+   bulunmayan, modelin kendi türettiği sayısal ifadeler** — self-consistency katmanımızın şu anki
+   tasarımı (sadece chunk_id geçerliliğini kontrol eder) bu inceliği yakalamıyor.
+
+**Sonuç olarak:** Retrieval katmanı üretim-kalitesinde (Recall %100, MRR 0.794). Kaynak
+referanslama da güvenilir (halüsinasyon/uydurma kaynak oranı %0). Ancak **ücretsiz 8B modelin
+kendi başına sayısal türetim yapma eğilimi**, projenin "sayısal hesaplar LLM'de değil kural
+motorunda yapılır" ilkesini generation metninde tam olarak sağlamıyor — bu, ücretsiz/küçük model
+seçiminin somut bir bedeli olarak dürüstçe not edilmelidir.
+
+## Önerilen Yol Haritası
+
+1. **Self-consistency katmanını genişlet:** Şu anki kontrol sadece `[Kaynak: chunk_id]`
+   etiketinin var olan bir chunk'a ait olup olmadığını doğruluyor. Bir sonraki adım, atıf yapılan
+   her cümledeki sayısal değerlerin (regex ile) o **spesifik chunk'ın metninde birebir** geçip
+   geçmediğini de kontrol etmek olmalı — bu, "gerçek ama alakasız kaynağa yanlış sayı iliştirme"
+   durumunu yakalar.
+2. **Üretim kalitesi için güçlü model:** Kritik/nihai kullanıcıya sunulacak çıktılarda
+   `config.yaml`'da `llm.provider: anthropic` (Claude) seçeneğine geçilmesi önerilir — arayüz
+   zaten hazır, tek satır config değişikliği yeterli. Ücretsiz HuggingFace modeli geliştirme/test
+   aşaması için uygundur.
+3. **Retrieval ince ayarı:** MRR'yi 1.0'a yaklaştırmak için dense/BM25 ağırlıkları (0.6/0.4)
+   üzerinde küçük bir grid search denenebilir (Faz 8 kapsamlı değerlendirmesine bırakıldı).
