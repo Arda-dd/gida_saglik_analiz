@@ -8,14 +8,20 @@ akis denenebilir. Calistirmadan once proje kokunden `streamlit run demo/app.py` 
 
 from __future__ import annotations
 
+import sys
 import tempfile
 from pathlib import Path
 
 import streamlit as st
 
-from api.pipeline import analyze_label_image
-from src.common.schema import Allergen
-from src.health.profile import ChronicCondition, HealthProfile
+# `streamlit run demo/app.py` calistirilan dizinden bagimsiz olarak proje kokunu sys.path'e
+# ekler - Streamlit, pytest'in aksine proje kokunu otomatik path'e eklemez, bu yuzden
+# `from api...`/`from src...` importlari bu satir olmadan ModuleNotFoundError verir.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+from api.pipeline import analyze_label_image  # noqa: E402
+from src.common.schema import Allergen  # noqa: E402
+from src.health.profile import ChronicCondition, HealthProfile  # noqa: E402
 
 st.set_page_config(page_title="Gida & Saglik Asistani", page_icon="🥗")
 st.title("Gida & Saglik Asistani")
