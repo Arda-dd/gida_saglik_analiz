@@ -280,7 +280,7 @@ async def analyze(
 
                 candidates = get_candidate_products()
                 try:
-                    from src.health.recommend import ProductCategory
+                    from src.common.schema import ProductCategory
                     current_cat = ProductCategory(cached_scan.category)
                 except ValueError:
                     current_cat = ProductCategory.BILINMIYOR

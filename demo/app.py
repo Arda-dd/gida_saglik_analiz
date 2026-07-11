@@ -311,7 +311,7 @@ if result_data is not None:
         # Alternatif öneriler
         candidates = get_candidate_products()
         try:
-            from src.health.recommend import ProductCategory
+            from src.common.schema import ProductCategory
             current_cat = ProductCategory(result_data["category"])
         except ValueError:
             current_cat = ProductCategory.BILINMIYOR

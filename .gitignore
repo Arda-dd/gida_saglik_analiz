@@ -13,6 +13,10 @@ env/
 # Ortam degiskenleri / gizli anahtarlar
 .env
 
+# Yerel SQLite veritabani (kullanici/profil/tarama gecmisi - kisisel veri, git'e girmez)
+data/app.db
+*.db
+
 # Veri ve modeller (git'e girmez - buyuk/binary)
 data/raw/
 data/images/
