@@ -99,7 +99,12 @@ class LabelImageDataset(Dataset):
 
     def __getitem__(self, idx: int) -> tuple[torch.Tensor, int]:
         row = self.df.iloc[idx]
-        image = cv2.imread(str(row["image_path"]))
+        try:
+            buffer = np.fromfile(str(row["image_path"]), dtype=np.uint8)
+            image = cv2.imdecode(buffer, cv2.IMREAD_COLOR)
+        except Exception:
+            image = None
+
         if image is None:
             raise ValueError(f"Gorsel okunamadi: {row['image_path']}")
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)

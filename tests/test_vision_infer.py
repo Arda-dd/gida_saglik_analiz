@@ -30,7 +30,9 @@ def test_predict_category_returns_valid_category_and_confidence(tmp_path):
 
     image_path = tmp_path / "label.jpg"
     image = np.random.randint(0, 255, (100, 100, 3), dtype=np.uint8)
-    cv2.imwrite(str(image_path), image)
+    ret, buf = cv2.imencode(".jpg", image)
+    assert ret
+    buf.tofile(str(image_path))
 
     category, confidence = predict_category(model, image_path, CATEGORIES, device="cpu", image_size=64)
 

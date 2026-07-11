@@ -40,7 +40,13 @@ def predict_category(
     image_size: int = 224,
 ) -> tuple[str, float]:
     """Tek bir etiket goruntusu icin (kategori, guven_skoru) doner (guven = softmax olasiligi)."""
-    image = cv2.imread(str(image_path))
+    import numpy as np
+    try:
+        buffer = np.fromfile(str(image_path), dtype=np.uint8)
+        image = cv2.imdecode(buffer, cv2.IMREAD_COLOR)
+    except Exception:
+        image = None
+
     if image is None:
         raise ValueError(f"Gorsel okunamadi: {image_path}")
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)

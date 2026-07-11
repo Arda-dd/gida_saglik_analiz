@@ -12,6 +12,15 @@ from src.data.local_intake import (
     init_counter_state_from_existing,
     organize_raw_image,
 )
+from pathlib import Path
+
+
+def _imwrite_unicode(path: Path, img: np.ndarray, ext: str = ".jpg") -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    ret, buf = cv2.imencode(ext, img)
+    if not ret:
+        raise ValueError("imencode failed")
+    buf.tofile(str(path))
 
 
 def _make_jpeg_with_exif(path, size=(200, 150)) -> None:
@@ -38,7 +47,7 @@ def test_anonymize_image_exif_strips_metadata(tmp_path):
 def test_check_image_quality_rejects_low_resolution(tmp_path):
     path = tmp_path / "small.jpg"
     small_image = np.full((100, 100, 3), 128, dtype=np.uint8)
-    cv2.imwrite(str(path), small_image)
+    _imwrite_unicode(path, small_image)
 
     report = check_image_quality(path, min_width=1600, min_height=1600)
 
@@ -51,7 +60,7 @@ def test_check_image_quality_rejects_blurry_image(tmp_path):
     rng = np.random.default_rng(1)
     sharp = rng.integers(0, 255, (1800, 1800, 3), dtype=np.uint8)
     blurry = cv2.GaussianBlur(sharp, (51, 51), 0)
-    cv2.imwrite(str(path), blurry)
+    _imwrite_unicode(path, blurry)
 
     report = check_image_quality(path, min_width=1600, min_height=1600, blur_var_threshold=120.0)
 
@@ -63,7 +72,7 @@ def test_check_image_quality_accepts_sharp_high_res_image(tmp_path):
     path = tmp_path / "sharp.jpg"
     rng = np.random.default_rng(2)
     sharp = rng.integers(0, 255, (1800, 1800, 3), dtype=np.uint8)  # yuksek frekansli gurultu = "keskin"
-    cv2.imwrite(str(path), sharp)
+    _imwrite_unicode(path, sharp)
 
     report = check_image_quality(path, min_width=1600, min_height=1600, blur_var_threshold=120.0)
 
@@ -121,7 +130,7 @@ def test_build_intake_manifest_has_expected_columns(tmp_path):
     category_dir.mkdir(parents=True)
 
     image = np.full((1700, 1700, 3), 128, dtype=np.uint8)
-    cv2.imwrite(str(category_dir / "local_icecek_0001.jpg"), image)
+    _imwrite_unicode(category_dir / "local_icecek_0001.jpg", image)
 
     manifest = build_intake_manifest(raw_dir)
 

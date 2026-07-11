@@ -54,7 +54,13 @@ def check_image_quality(
     blur_var_threshold: float = 120.0,
 ) -> QualityReport:
     """Cozunurluk ve bulaniklik (Laplacian varyansi) kontrolu yapar."""
-    image = cv2.imread(str(image_path))
+    import numpy as np
+    try:
+        buffer = np.fromfile(str(image_path), dtype=np.uint8)
+        image = cv2.imdecode(buffer, cv2.IMREAD_COLOR)
+    except Exception:
+        image = None
+
     if image is None:
         return QualityReport(is_valid=False, blur_score=0.0, width=0, height=0, reasons=["okunamadi"])
 

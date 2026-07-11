@@ -10,7 +10,7 @@ listelerini profille kiyaslar.
 
 from __future__ import annotations
 
-from src.common.schema import Allergen, NutritionFacts
+from src.common.schema import Allergen, NutritionFacts, UserObjective
 from src.health.profile import ChronicCondition, HealthProfile
 
 # Kronik durum -> (ilgili risk bayragi -> kullaniciya ozel uyari) eslemesi.
@@ -85,18 +85,35 @@ def compute_diet_compliance_score(
     Iki bagimsiz ceza bileseninden olusur:
     1. Kalori payi cezasi: urunun (100g bazinda) enerjisi, kullanicinin gunluk kalori hedefinin
        makul bir tek-porsiyon payini (%25) asiyorsa, asim oraniyla orantili ceza (en fazla 50 puan).
+       Not: ALERJI_TAKIBI hedefinde kalori cezasi uygulanmaz.
     2. Kronik durum cezasi: kullanicinin durumuyla celisen her aktif risk bayragi icin sabit
        ceza (25 puan/uyari, en fazla 50 puan).
     """
     score = 100.0
 
-    if profile.daily_calorie_target_kcal and nutrition.energy_kcal:
-        share = nutrition.energy_kcal / profile.daily_calorie_target_kcal
-        if share > REASONABLE_SERVING_CALORIE_SHARE:
-            excess_ratio = (share - REASONABLE_SERVING_CALORIE_SHARE) / REASONABLE_SERVING_CALORIE_SHARE
-            score -= min(CALORIE_PENALTY_CAP, excess_ratio * CALORIE_PENALTY_CAP)
+    # 1. Kalori Payi Cezasi (Alerji takibi amacinda kalori hedefleri goz ardi edilir)
+    if profile.objective != UserObjective.ALERJI_TAKIBI:
+        if profile.daily_calorie_target_kcal and nutrition.energy_kcal:
+            share = nutrition.energy_kcal / profile.daily_calorie_target_kcal
+            if share > REASONABLE_SERVING_CALORIE_SHARE:
+                excess_ratio = (share - REASONABLE_SERVING_CALORIE_SHARE) / REASONABLE_SERVING_CALORIE_SHARE
+                # Kilo verme hedefinde kalori cezasi 1.5 kat daha agirdir
+                multiplier = 1.5 if profile.objective == UserObjective.KILO_VERME else 1.0
+                penalty = excess_ratio * CALORIE_PENALTY_CAP * multiplier
+                score -= min(CALORIE_PENALTY_CAP * multiplier, penalty)
 
+    # 2. Kronik Durum Cezalari
     condition_warnings = condition_based_warnings(risk_flags, profile.chronic_conditions)
     score -= min(CONDITION_PENALTY_CAP, len(condition_warnings) * CONDITION_PENALTY_PER_WARNING)
 
-    return max(0.0, round(score, 1))
+    # 3. Hedefe Ozel Ek Puanlama Kurallari
+    if profile.objective == UserObjective.KILO_VERME:
+        # Seker uyarisi varsa kilo verme skorundan ekstra 15 puan dusulur
+        if "yuksek_seker" in risk_flags:
+            score -= 15.0
+    elif profile.objective == UserObjective.PROTEIN_AGIRLIKLI:
+        # Protein miktari >= 10g ise 15 puan diyet uyum bonusu verilir (maks 100)
+        if nutrition.protein_g is not None and nutrition.protein_g >= 10.0:
+            score += 15.0
+
+    return max(0.0, min(100.0, round(score, 1)))

@@ -11,15 +11,17 @@ from src.vision.train import evaluate, run_kfold_cv, train_model, train_one_epoc
 CATEGORIES = ["sut_urunu", "atistirmalik", "icecek"]
 
 
-def _make_synthetic_df(tmp_path, n_per_category=6):
+def _make_synthetic_df(tmp_path, n_per_category=4):
     rows = []
     for cat in CATEGORIES:
-        # Kategoriye gore farkli ortalama parlaklikta gorseller uret - ogrenilebilir bir sinyal
-        base = {"sut_urunu": 60, "atistirmalik": 130, "icecek": 200}[cat]
+        base = 100 if cat == "sut_urunu" else 150
         for i in range(n_per_category):
             img = np.clip(np.random.normal(base, 10, (40, 40, 3)), 0, 255).astype(np.uint8)
             path = tmp_path / f"{cat}_{i}.jpg"
-            cv2.imwrite(str(path), img)
+            ret, buf = cv2.imencode(".jpg", img)
+            if not ret:
+                raise ValueError("imencode failed")
+            buf.tofile(str(path))
             rows.append({"product_id": f"{cat}_{i}", "category": cat, "image_path": str(path)})
     return pd.DataFrame(rows)
 

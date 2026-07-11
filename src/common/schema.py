@@ -29,6 +29,13 @@ class Allergen(str, Enum):
     BALIK = "balik"
 
 
+class UserObjective(str, Enum):
+    KILO_VERME = "kilo_verme"
+    PROTEIN_AGIRLIKLI = "protein_agirlikli"
+    ALERJI_TAKIBI = "alerji_takibi"
+
+
+
 class NutritionBasis(str, Enum):
     """Etikette degerlerin hangi baza gore verildigi (normalizasyon oncesi kaynak bilgisi)."""
 

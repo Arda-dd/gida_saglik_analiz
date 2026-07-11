@@ -3,9 +3,10 @@ from pathlib import Path
 import pytest
 from PIL import Image, ImageDraw, ImageFont
 
-from src.ocr.extract import OCRResult, extract_text_easyocr, extract_text_tesseract
+from src.ocr.extract import OCRResult, extract_text_easyocr, extract_text_tesseract, TESSERACT_EXE
 
 FONT_PATH = Path(r"C:\Windows\Fonts\arial.ttf")
+tesseract_not_installed = not TESSERACT_EXE.exists()
 
 
 def _make_text_image(tmp_path, text, size=(500, 150), font_size=36):
@@ -19,6 +20,7 @@ def _make_text_image(tmp_path, text, size=(500, 150), font_size=36):
     return path
 
 
+@pytest.mark.skipif(tesseract_not_installed, reason="Tesseract OCR is not installed")
 def test_extract_text_tesseract_reads_simple_english_text(tmp_path):
     image_path = _make_text_image(tmp_path, "Energy 450 kcal")
     result = extract_text_tesseract(image_path, lang="eng")
@@ -29,6 +31,7 @@ def test_extract_text_tesseract_reads_simple_english_text(tmp_path):
     assert result.mean_confidence > 0
 
 
+@pytest.mark.skipif(tesseract_not_installed, reason="Tesseract OCR is not installed")
 def test_extract_text_tesseract_reads_turkish_text(tmp_path):
     image_path = _make_text_image(tmp_path, "Enerji 450 kcal Tuz 1.2 g")
     result = extract_text_tesseract(image_path, lang="tur+eng")
@@ -37,6 +40,7 @@ def test_extract_text_tesseract_reads_turkish_text(tmp_path):
     assert result.mean_confidence > 0
 
 
+@pytest.mark.skipif(tesseract_not_installed, reason="Tesseract OCR is not installed")
 def test_extract_text_tesseract_blank_image_has_low_confidence(tmp_path):
     blank_path = tmp_path / "blank.png"
     Image.new("RGB", (200, 100), color=(255, 255, 255)).save(blank_path)
@@ -56,8 +60,14 @@ def test_extract_text_easyocr_reads_simple_text(tmp_path):
     assert 0 <= result.mean_confidence <= 100
 
 
-@pytest.mark.parametrize("engine_fn", [extract_text_tesseract, extract_text_easyocr])
-def test_extract_functions_raise_or_handle_missing_file_gracefully(tmp_path, engine_fn):
+def test_extract_functions_raise_or_handle_missing_file_gracefully(tmp_path):
     missing_path = tmp_path / "does_not_exist.png"
+    
+    # EasyOCR
     with pytest.raises(Exception):
-        engine_fn(missing_path)
+        extract_text_easyocr(missing_path)
+        
+    # Tesseract (sadece yuklu ise test et)
+    if not tesseract_not_installed:
+        with pytest.raises(Exception):
+            extract_text_tesseract(missing_path)

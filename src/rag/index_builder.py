@@ -44,8 +44,22 @@ def build_faiss_index(
 
 
 def save_index(index: faiss.Index, chunks: list[Chunk], out_dir: Path = DEFAULT_INDEX_DIR) -> None:
+    import shutil
+    import uuid
     out_dir.mkdir(parents=True, exist_ok=True)
-    faiss.write_index(index, str(out_dir / "index.faiss"))
+    
+    # Windows unicode uyumlulugu icin index dosyasini gecici olarak ASCII bir dizinde (C:\\Users\\Public) yazip
+    # ardindan python shutil kullanarak hedef dizine kopyaliyoruz.
+    temp_name = f"temp_faiss_{uuid.uuid4().hex}.index"
+    temp_path = Path("C:/Users/Public") / temp_name
+    
+    try:
+        faiss.write_index(index, str(temp_path))
+        shutil.copy(str(temp_path), str(out_dir / "index.faiss"))
+    finally:
+        if temp_path.exists():
+            temp_path.unlink()
+
     chunks_data = [asdict(c) for c in chunks]
     (out_dir / "chunks.json").write_text(
         json.dumps(chunks_data, ensure_ascii=False, indent=2), encoding="utf-8"
@@ -53,7 +67,20 @@ def save_index(index: faiss.Index, chunks: list[Chunk], out_dir: Path = DEFAULT_
 
 
 def load_index(out_dir: Path = DEFAULT_INDEX_DIR) -> tuple[faiss.Index, list[Chunk]]:
-    index = faiss.read_index(str(out_dir / "index.faiss"))
+    import shutil
+    import uuid
+    
+    # Windows unicode uyumlulugu icin index dosyasini gecici olarak ASCII bir dizine kopyalayip yukluyoruz.
+    temp_name = f"temp_faiss_{uuid.uuid4().hex}.index"
+    temp_path = Path("C:/Users/Public") / temp_name
+    
+    shutil.copy(str(out_dir / "index.faiss"), str(temp_path))
+    try:
+        index = faiss.read_index(str(temp_path))
+    finally:
+        if temp_path.exists():
+            temp_path.unlink()
+
     chunks_data = json.loads((out_dir / "chunks.json").read_text(encoding="utf-8"))
     chunks = [Chunk(**d) for d in chunks_data]
     return index, chunks

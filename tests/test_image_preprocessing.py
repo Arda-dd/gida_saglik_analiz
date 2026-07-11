@@ -66,10 +66,17 @@ def test_preprocess_label_image_does_not_resize(tmp_path):
     dest = tmp_path / "processed" / "label.jpg"
 
     original = _noisy_flat_image(size=137)  # tuhaf bir boyut - kasitli
-    cv2.imwrite(str(src), original)
+    
+    # Unicode safe write
+    ret, buf = cv2.imencode(".jpg", original)
+    assert ret
+    buf.tofile(str(src))
 
     result_path = preprocess_label_image(src, dest)
-    result = cv2.imread(str(result_path))
+    
+    # Unicode safe read
+    buffer = np.fromfile(str(result_path), dtype=np.uint8)
+    result = cv2.imdecode(buffer, cv2.IMREAD_COLOR)
 
     assert result_path == dest
     assert result.shape == original.shape

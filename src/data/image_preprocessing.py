@@ -53,7 +53,13 @@ def preprocess_label_image(src_path: Path, dest_path: Path) -> Path:
 
     Bu fonksiyon resize YAPMAZ - cikti boyutu girdiyle ayni olmalidir (bkz. modul dokstring'i).
     """
-    image = cv2.imread(str(src_path))
+    # Windows'ta Turkce karakter iceren yollarla uyumluluk icin np.fromfile kullanilarak okunur
+    try:
+        buffer = np.fromfile(str(src_path), dtype=np.uint8)
+        image = cv2.imdecode(buffer, cv2.IMREAD_COLOR)
+    except Exception as e:
+        raise ValueError(f"Gorsel okunamadi: {src_path} (Hata: {e})")
+
     if image is None:
         raise ValueError(f"Gorsel okunamadi: {src_path}")
 
@@ -66,5 +72,11 @@ def preprocess_label_image(src_path: Path, dest_path: Path) -> Path:
     assert processed.shape == original_shape, "preprocess_label_image resize yapmamalidir"
 
     dest_path.parent.mkdir(parents=True, exist_ok=True)
-    cv2.imwrite(str(dest_path), processed)
+    
+    # Windows'ta Turkce karakter iceren yollarla uyumluluk icin cv2.imencode + tofile kullanilarak yazilir
+    ret, buf = cv2.imencode(".jpg", processed)
+    if not ret:
+        raise ValueError(f"Gorsel encode edilemedi: {dest_path}")
+    buf.tofile(str(dest_path))
+    
     return dest_path

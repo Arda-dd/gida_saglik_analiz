@@ -19,109 +19,321 @@ import streamlit as st
 # `from api...`/`from src...` importlari bu satir olmadan ModuleNotFoundError verir.
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from api.pipeline import analyze_label_image  # noqa: E402
-from src.common.schema import Allergen  # noqa: E402
-from src.health.profile import ChronicCondition, HealthProfile  # noqa: E402
+import hashlib
+import json
+import uuid
 
-st.set_page_config(page_title="Gida & Saglik Asistani", page_icon="🥗")
-st.title("Gida & Saglik Asistani")
+from api.database import init_db, SessionLocal, User as DBUser, Profile as DBProfile, ScanHistory as DBScanHistory
+from api.auth import hash_password, verify_password
+from api.pipeline import analyze_label_image, get_candidate_products
+from src.common.schema import Allergen, NutritionFacts, ProductRecord, UserObjective
+from src.health.profile import ChronicCondition, HealthProfile
+from src.health.recommend import build_health_assessment, recommend_alternatives
+from src.ocr.risk_engine import describe_risks
+
+# Veritabanını ilklendir
+init_db()
+
+st.set_page_config(page_title="Gıda & Sağlık Asistanı", page_icon="🥗")
+st.title("Gıda & Sağlık Asistanı")
 st.caption(
-    "TUBITAK 2209-A prototipi — etiket fotografi yukleyin, kategori + besin degerleri + "
-    "saglik riski + (opsiyonel) kisisel degerlendirme alin."
+    "TÜBİTAK 2209-A prototipi — etiket fotoğrafı yükleyin, kategori + besin değerleri + "
+    "sağlık riski + kişisel değerlendirme alın."
 )
 
-with st.sidebar:
-    st.header("Kisisel Profil (opsiyonel)")
-    st.caption("Bos birakilirsa sadece genel (kisisellestirilmemis) sonuc gosterilir.")
+db = SessionLocal()
 
-    condition_labels = st.multiselect(
-        "Kronik durumlar", options=[c.value for c in ChronicCondition]
-    )
-    allergen_labels = st.multiselect("Alerjiler", options=[a.value for a in Allergen])
-    calorie_target = st.number_input(
-        "Gunluk kalori hedefi (kcal, 0 = belirtilmedi)", min_value=0, value=0, step=100
-    )
+# Oturum durumlarını tanımla
+if "user_id" not in st.session_state:
+    st.session_state.user_id = None
+if "user_email" not in st.session_state:
+    st.session_state.user_email = None
+
+with st.sidebar:
+    # 1) Kullanıcı Giriş / Kayıt Bölümü
+    st.header("👤 Kullanıcı Hesabı")
+    if st.session_state.user_id is None:
+        auth_mode = st.radio("İşlem", ["Giriş Yap", "Kayıt Ol"])
+        email = st.text_input("E-posta")
+        password = st.text_input("Şifre", type="password")
+        remember_me = st.checkbox("Beni Hatırla (30 gün)")
+
+        if auth_mode == "Giriş Yap":
+            if st.button("Giriş"):
+                user = db.query(DBUser).filter(DBUser.email == email).first()
+                if user and verify_password(password, user.hashed_password):
+                    st.session_state.user_id = user.id
+                    st.session_state.user_email = user.email
+                    st.success("Giriş başarılı!")
+                    st.rerun()
+                else:
+                    st.error("Hatalı e-posta veya şifre.")
+        else:
+            if st.button("Kayıt Ol"):
+                if not email or not password:
+                    st.error("E-posta ve şifre boş bırakılamaz.")
+                else:
+                    existing = db.query(DBUser).filter(DBUser.email == email).first()
+                    if existing:
+                        st.error("Bu e-posta zaten kayıtlı.")
+                    else:
+                        hashed = hash_password(password)
+                        new_user = DBUser(email=email, hashed_password=hashed)
+                        db.add(new_user)
+                        db.commit()
+                        db.refresh(new_user)
+
+                        profile = DBProfile(user_id=new_user.id, objective=None)
+                        db.add(profile)
+                        db.commit()
+                        st.success("Kayıt başarılı! Şimdi giriş yapabilirsiniz.")
+    else:
+        st.write(f"Giriş yapıldı: **{st.session_state.user_email}**")
+        if st.button("Çıkış Yap"):
+            st.session_state.user_id = None
+            st.session_state.user_email = None
+            st.rerun()
 
     st.divider()
-    generate_explanation = st.checkbox(
-        "Kaynak referansli LLM aciklamasi uret (API cagrisi gerektirir)", value=True
-    )
 
-uploaded_file = st.file_uploader("Etiket fotografi", type=["jpg", "jpeg", "png"])
+    # 2) Profil Yönetimi Bölümü
+    profile = None
+    if st.session_state.user_id is not None:
+        st.header("⚙️ Kişisel Sağlık Profili")
+        user = db.query(DBUser).filter(DBUser.id == st.session_state.user_id).first()
+        db_profile = user.profile
+        if not db_profile:
+            db_profile = DBProfile(user_id=user.id)
+            db.add(db_profile)
+            db.commit()
 
-if uploaded_file is not None:
-    with tempfile.TemporaryDirectory() as tmp_dir:
-        image_path = Path(tmp_dir) / uploaded_file.name
-        image_path.write_bytes(uploaded_file.getvalue())
+        saved_conditions = [ChronicCondition(c) for c in db_profile.chronic_conditions.split(",") if c]
+        saved_allergens = [Allergen(a) for a in db_profile.allergens.split(",") if a]
+        saved_cal = db_profile.daily_calorie_target_kcal or 0
+        saved_obj_str = db_profile.objective if db_profile.objective else "Belirtilmedi"
 
-        st.image(str(image_path), caption="Yuklenen gorsel", use_container_width=True)
+        condition_labels = st.multiselect(
+            "Kronik durumlar",
+            options=[c.value for c in ChronicCondition],
+            default=[c.value for c in saved_conditions]
+        )
+        allergen_labels = st.multiselect(
+            "Alerjiler",
+            options=[a.value for a in Allergen],
+            default=[a.value for a in saved_allergens]
+        )
+        calorie_target = st.number_input(
+            "Günlük kalori hedefi (kcal, 0 = belirtilmedi)",
+            min_value=0,
+            value=int(saved_cal),
+            step=100
+        )
+        objective_options = ["Belirtilmedi", "kilo_verme", "protein_agirlikli", "alerji_takibi"]
+        objective_label = st.selectbox(
+            "Beslenme Amacınız",
+            options=objective_options,
+            index=objective_options.index(saved_obj_str)
+        )
 
-        profile = None
-        if condition_labels or allergen_labels or calorie_target:
+        if st.button("Ayarları Kaydet"):
+            db_profile.chronic_conditions = ",".join(condition_labels)
+            db_profile.allergens = ",".join(allergen_labels)
+            db_profile.daily_calorie_target_kcal = calorie_target if calorie_target > 0 else None
+            db_profile.objective = objective_label if objective_label != "Belirtilmedi" else None
+            db.commit()
+            st.success("Ayarlar başarıyla güncellendi!")
+            st.rerun()
+
+        profile = HealthProfile(
+            profile_id=f"user_{user.id}",
+            chronic_conditions=[ChronicCondition(c) for c in condition_labels],
+            allergens=[Allergen(a) for a in allergen_labels],
+            daily_calorie_target_kcal=calorie_target if calorie_target > 0 else None,
+            objective=UserObjective(objective_label) if objective_label != "Belirtilmedi" else None
+        )
+    else:
+        st.header("Kişisel Profil (Anonim)")
+        st.caption("Giriş yapmadan yapılan değişiklikler kaydedilmez.")
+
+        condition_labels = st.multiselect(
+            "Kronik durumlar", options=[c.value for c in ChronicCondition]
+        )
+        allergen_labels = st.multiselect("Alerjiler", options=[a.value for a in Allergen])
+        calorie_target = st.number_input(
+            "Günlük kalori hedefi (kcal, 0 = belirtilmedi)", min_value=0, value=0, step=100
+        )
+        objective_options = ["Belirtilmedi", "kilo_verme", "protein_agirlikli", "alerji_takibi"]
+        objective_label = st.selectbox(
+            "Beslenme Amacınız",
+            options=objective_options,
+            index=0
+        )
+
+        if condition_labels or allergen_labels or calorie_target or objective_label != "Belirtilmedi":
             profile = HealthProfile(
                 profile_id="demo_session",
                 chronic_conditions=[ChronicCondition(c) for c in condition_labels],
                 allergens=[Allergen(a) for a in allergen_labels],
-                daily_calorie_target_kcal=calorie_target or None,
+                daily_calorie_target_kcal=calorie_target if calorie_target > 0 else None,
+                objective=UserObjective(objective_label) if objective_label != "Belirtilmedi" else None
             )
 
-        with st.spinner("Analiz ediliyor (kategori + OCR + risk motoru + RAG)..."):
-            try:
-                result = analyze_label_image(
-                    image_path, profile=profile, generate_llm_explanation=generate_explanation
-                )
-            except Exception as exc:  # noqa: BLE001 - demo katmaninda kullaniciya guvenli mesaj
-                st.error(f"Analiz sirasinda bir hata olustu: {exc}")
-                st.stop()
+    st.divider()
+    generate_explanation = st.checkbox(
+        "Kaynak referanslı LLM açıklaması üret (API çağrısı)", value=True
+    )
 
-        st.subheader("Kategori")
-        st.write(f"**{result.category}**  (guven: %{result.category_confidence * 100:.1f})")
-        st.caption(f"OCR ortalama guven skoru: %{result.ocr_confidence:.1f}")
+# 3) Geçmiş Tarama Seçici (Tarihçe)
+selected_scan = None
+if st.session_state.user_id is not None:
+    scans = db.query(DBScanHistory).filter(DBScanHistory.user_id == st.session_state.user_id).order_by(DBScanHistory.scanned_at.desc()).all()
+    if scans:
+        st.subheader("📜 Geçmiş Taramalarınız")
+        scan_options = {f"{s.scanned_at.strftime('%Y-%m-%d %H:%M')} — {s.category.upper()}": s for s in scans}
+        selected_scan_key = st.selectbox("Önceki taramalarınızı hızlıca inceleyin:", ["— Seçin —"] + list(scan_options.keys()))
+        if selected_scan_key != "— Seçin —":
+            selected_scan = scan_options[selected_scan_key]
 
-        st.subheader("Besin Degerleri (100g bazinda)")
-        nutrition_dict = result.nutrition.model_dump(exclude_none=True)
-        if nutrition_dict:
-            st.json(nutrition_dict)
+uploaded_file = st.file_uploader("Yeni bir etiket fotoğrafı yükleyin", type=["jpg", "jpeg", "png"])
+
+result_data = None
+is_cached = False
+
+if uploaded_file is not None:
+    file_bytes = uploaded_file.getvalue()
+    file_hash = hashlib.sha256(file_bytes).hexdigest()
+
+    # Önbellek kontrolü
+    cached_scan = None
+    if st.session_state.user_id is not None:
+        cached_scan = db.query(DBScanHistory).filter(
+            DBScanHistory.user_id == st.session_state.user_id,
+            DBScanHistory.file_hash == file_hash
+        ).first()
+
+    if cached_scan:
+        selected_scan = cached_scan
+        is_cached = True
+        st.info("Bu görsel daha önce analiz edilmiş. Sonuçlar önbellekten (cache) yüklendi.")
+    else:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            image_path = Path(tmp_dir) / uploaded_file.name
+            image_path.write_bytes(file_bytes)
+
+            st.image(str(image_path), caption="Yüklenen görsel", use_container_width=True)
+
+            with st.spinner("Analiz ediliyor (kategori + OCR + risk motoru + RAG)..."):
+                try:
+                    result = analyze_label_image(
+                        image_path, profile=profile, generate_llm_explanation=generate_explanation
+                    )
+                    result_data = {
+                        "category": result.category,
+                        "category_confidence": result.category_confidence,
+                        "nutrition": result.nutrition.model_dump(exclude_none=True),
+                        "detected_allergens": [a.value for a in result.detected_allergens],
+                        "risk_flags": result.risk_flags,
+                        "risk_messages": result.risk_messages,
+                        "ocr_confidence": result.ocr_confidence,
+                        "explanation_text": result.explanation.text if result.explanation else None,
+                    }
+
+                    # Veritabanına kaydet
+                    if st.session_state.user_id is not None:
+                        new_scan = DBScanHistory(
+                            user_id=st.session_state.user_id,
+                            product_id=f"scan_{uuid.uuid4().hex[:8]}",
+                            category=result.category,
+                            category_confidence=result.category_confidence,
+                            nutrition_json=json.dumps(result_data["nutrition"]),
+                            detected_allergens=",".join(result_data["detected_allergens"]),
+                            risk_flags=",".join(result_data["risk_flags"]),
+                            ocr_confidence=result.ocr_confidence,
+                            file_hash=file_hash,
+                            explanation_text=result_data["explanation_text"]
+                        )
+                        db.add(new_scan)
+                        db.commit()
+                        st.success("Yeni analiz veritabanı geçmişinize kaydedildi.")
+                except Exception as exc:
+                    st.error(f"Analiz sırasında bir hata oluştu: {exc}")
+                    st.stop()
+
+if selected_scan is not None and result_data is None:
+    nutrition_data = json.loads(selected_scan.nutrition_json)
+    result_data = {
+        "category": selected_scan.category,
+        "category_confidence": selected_scan.category_confidence,
+        "nutrition": nutrition_data,
+        "detected_allergens": [a for a in selected_scan.detected_allergens.split(",") if a],
+        "risk_flags": [rf for rf in selected_scan.risk_flags.split(",") if rf],
+        "risk_messages": describe_risks([rf for rf in selected_scan.risk_flags.split(",") if rf]),
+        "ocr_confidence": selected_scan.ocr_confidence,
+        "explanation_text": selected_scan.explanation_text,
+    }
+    is_cached = True
+
+if result_data is not None:
+    st.subheader("Kategori")
+    st.write(f"**{result_data['category']}**  (güven: %{result_data['category_confidence'] * 100:.1f})")
+    st.caption(f"OCR ortalama güven skoru: %{result_data['ocr_confidence']:.1f}")
+
+    st.subheader("Besin Değerleri (100g bazında)")
+    if result_data["nutrition"]:
+        st.json(result_data["nutrition"])
+    else:
+        st.info("OCR'dan besin değeri çıkarılamadı.")
+
+    st.subheader("1️⃣ Gıda Risk Değerlendirmesi")
+    if result_data["risk_messages"]:
+        for msg in result_data["risk_messages"]:
+            st.warning(msg)
+    else:
+        st.success("Belirgin bir risk bayrağı tespit edilmedi.")
+
+    # Kişisel profil uyarısı ve diyet uyumu
+    if profile is not None:
+        nutrition = NutritionFacts(**result_data["nutrition"])
+        detected_allergens_list = [Allergen(a) for a in result_data["detected_allergens"]]
+        health_assessment = build_health_assessment(nutrition, detected_allergens_list, profile)
+
+        st.subheader("2️⃣ Diyet Uyum Skoru")
+        st.metric("Uyum Skoru", f"{health_assessment.diet_compliance_score:.0f} / 100")
+        st.caption(f"Aktif Beslenme Amacı: **{profile.objective.value.upper()}**")
+
+        st.subheader("3️⃣ Alerjen Uyarısı")
+        if health_assessment.allergen_warning:
+            conflict_names = ", ".join(a.value for a in health_assessment.allergen_conflicts)
+            st.error(f"Dikkat: profilinizdeki alerjenlerle çelişiyor ({conflict_names})!")
         else:
-            st.info("OCR'dan besin degeri cikarilamadi (gorsel kalitesi/tablo duzeni etkileyebilir).")
+            st.success("Profilinizdeki alerjenlerle bilinen bir çelişki yok.")
 
-        st.subheader("1️⃣ Saglik Riski")
-        if result.risk_messages:
-            for msg in result.risk_messages:
-                st.warning(msg)
-        else:
-            st.success("Kural motoruna gore belirgin bir risk bayragi tespit edilmedi.")
+        # Alternatif öneriler
+        candidates = get_candidate_products()
+        try:
+            from src.health.recommend import ProductCategory
+            current_cat = ProductCategory(result_data["category"])
+        except ValueError:
+            current_cat = ProductCategory.BILINMIYOR
 
-        if result.health_assessment is not None:
-            st.subheader("2️⃣ Diyet Uyum Skoru")
-            st.metric("Uyum Skoru", f"{result.health_assessment.diet_compliance_score:.0f} / 100")
-
-            st.subheader("3️⃣ Alerjen Uyarisi")
-            if result.health_assessment.allergen_warning:
-                conflict_names = ", ".join(a.value for a in result.health_assessment.allergen_conflicts)
-                st.error(f"Dikkat: profilinizdeki alerjenlerle celisiyor ({conflict_names})!")
-            else:
-                st.success("Profilinizdeki alerjenlerle bilinen bir celisme yok.")
-        elif result.detected_allergens:
-            st.caption(
-                "Tespit edilen alerjenler (profil girilmedigi icin kisisel uyari uretilmedi): "
-                + ", ".join(a.value for a in result.detected_allergens)
-            )
-
-        if result.explanation is not None:
-            st.subheader("Kaynak Referansli Aciklama (RAG)")
-            st.write(result.explanation.text)
-            with st.expander(f"Kaynaklar ({len(result.explanation.retrieved)})"):
-                for r in result.explanation.retrieved:
-                    verified_label = "✅ dogrulanmis" if r.chunk.verified else "⚠️ taslak"
-                    st.caption(f"`{r.chunk.chunk_id}` — {r.chunk.title} / {r.chunk.section} ({verified_label})")
-        elif generate_explanation:
-            st.info(
-                "RAG aciklamasi uretilemedi (API anahtari eksik olabilir veya FAISS index'i "
-                "henuz kurulmamis olabilir — bkz. `python -m src.rag.index_builder`)."
-            )
-
-        if result.alternatives:
-            st.subheader("Alternatif Urun Onerileri")
-            for alt in result.alternatives:
+        current_prod = ProductRecord(
+            product_id="uploaded_image",
+            category=current_cat,
+            nutrition=nutrition,
+            allergens=detected_allergens_list,
+            source="upload"
+        )
+        alternatives = recommend_alternatives(current_prod, list(candidates), profile)
+        if alternatives:
+            st.subheader("Alternatif Ürün Önerileri")
+            for alt in alternatives:
                 st.write(f"- `{alt.product_id}` ({alt.category.value})")
+    elif result_data["detected_allergens"]:
+        st.caption(
+            "Tespit edilen alerjenler (profil girilmediği için kişisel uyarı üretilmedi): "
+            + ", ".join(result_data["detected_allergens"])
+        )
+
+    if result_data["explanation_text"]:
+        st.subheader("Kaynak Referanslı Açıklama (RAG)")
+        st.write(result_data["explanation_text"])

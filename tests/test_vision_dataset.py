@@ -17,7 +17,10 @@ from src.vision.dataset import (
 def _write_image(path, size=(50, 50)):
     path.parent.mkdir(parents=True, exist_ok=True)
     image = np.random.randint(0, 255, (*size, 3), dtype=np.uint8)
-    cv2.imwrite(str(path), image)
+    ret, buf = cv2.imencode(".jpg", image)
+    if not ret:
+        raise ValueError("imencode failed")
+    buf.tofile(str(path))
     return path
 
 

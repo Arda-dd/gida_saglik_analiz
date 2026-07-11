@@ -12,7 +12,7 @@ from enum import Enum
 
 from pydantic import BaseModel, Field
 
-from src.common.schema import Allergen
+from src.common.schema import Allergen, UserObjective
 
 
 class ChronicCondition(str, Enum):
@@ -32,3 +32,7 @@ class HealthProfile(BaseModel):
     daily_protein_target_g: float | None = Field(default=None, ge=0)
     daily_fat_target_g: float | None = Field(default=None, ge=0)
     daily_carbohydrate_target_g: float | None = Field(default=None, ge=0)
+    objective: UserObjective | None = None
+
+
+
