@@ -187,35 +187,35 @@
   },
   "generation": {
     "mean_factual_consistency_score": 1.0,
-    "mean_ground_truth_alignment_ratio": 0.3821428571428572,
+    "mean_ground_truth_alignment_ratio": 0.8642857142857143,
     "cases": [
       {
         "name": "yuksek_seker_urun",
         "valid_citation_ratio": 1.0,
-        "ground_truth_alignment_ratio": 0.5,
+        "ground_truth_alignment_ratio": 1.0,
         "regenerated": false,
-        "text": "Ürünün besin değerleri incelenmiştir. Ürün 100g'da 35g şeker içeriyor, bu da yüksek seviyeye karşılık geliyor [Kaynak: nutriscore_thresholds_overview::0]. WHO'nun günlük şeker alımı önerisi 10% enerji kaynağı olarak belirlenmiştir, ancak ürünün şeker içeriği bu sınırın üzerinde [Kaynak: who_sugars_intake::1]. Ürün 100g'da 0.4g tuz içeriyor, bu da normal seviyeye karşılık geliyor [Kaynak: nutriscore_thresholds_overview::0]. WHO'nun günlük tuz alımı önerisi 5g'dir, ancak ürünün tuz içeriği bu sınırın altında [Kaynak: who_salt_reduction::1]."
+        "text": "Ürünün enerji değeri 100g'da 450 kcal'dir. [Kaynak: nutriscore_thresholds_overview::1]\n\nÜründe 12g yağ ve 5g doymuş yağ bulunur, bu da yüksek yağ içeriğine işaret eder. [Kaynak: nutriscore_thresholds_overview::0]\n\nÜrünün şeker içeriği 35g'dır, ancak bu WHO'nun günlük şeker alım önerisinden (10% enerji) daha düşüktür. [Kaynak: who_sugars_intake::1]\n\nÜrünün tuz içeriği 0.4g'dır, bu da WHO'nun günlük tuz alım önerisinden (5g) daha düşüktür. [Kaynak: who_salt_reduction::1]\n\nÜrünün besin değerleri, günlük alım önerilerine göre yüksek yağ ve tuz içeriği olmasına rağmen, WHO'nun önerilerinden daha düşüktür. [Kaynak: glossary_nutrition_terms::preamble]"
       },
       {
         "name": "yuksek_tuz_ve_sodyum_urun",
         "valid_citation_ratio": 1.0,
-        "ground_truth_alignment_ratio": 0.5714285714285714,
+        "ground_truth_alignment_ratio": 0.8571428571428571,
         "regenerated": false,
-        "text": "Kullanıcıya 3-5 cumlelik bir sağlık değerlendirmesi yazmak için, aşağıdaki bilgileri kullanacağım:\n\n- Ürün besin değerleri: 100g bazında enerji 250 kcal, şeker 3g, tuz 2.8g, sodyum 1120mg\n- Risk bayrakları: Yüksek tuz icerir (100g'da esigin uzerinde), yüksek sodyum icerir (100g'da esigin uzerinde)\n- Kaynaklar:\n\n**Sağlık Değerlendirmesi:**\n\n- Ürün yüksek tuz icerir, bu WHO'nun günlük tuz alımını aşıyor. [Kaynak: who_salt_reduction::0]\n- Yüksek tuz tüketimi, yüksek kan basıncı, kardiyovasküler hastalıklar, mide kanseri, obezite, osteoporoz ve böbrek hastalığı gibi sağlık risklerine neden olabilir. [Kaynak: who_salt_reduction::0]\n- Ürün yüksek sodyum icerir, bu da WHO'nun günlük sodyum alımını aşıyor. [Kaynak: who_salt_reduction::0]\n- Yüksek sodyum tüketimi, 1,7 milyon ölüm ile ilişkilendirilmiştir. [Kaynak: who_salt_reduction::0]\n\nLütfen not ediniz ki, bu değerlendirmeler WHO'nun günlük tuz ve sodyum alımını aşan ürünler için geçerlidir."
+        "text": "Kullanıcıya 3-5 cumlelik bir sağlık değerlendirmesi yazmak için, aşağıdaki bilgileri kullanabilirsiniz:\n\n- Ürün 100g'da yüksek tuz içerir, çünkü tuz içeriği 2.8g'dir ve WHO'nun günlük tuz alım önerisi 5g'dir. [Kaynak: who_salt_reduction::1]\n- Ürün 100g'da yüksek sodyum içerir, çünkü sodyum içeriği 1120mg'dir ve WHO'nun günlük sodyum alım önerisi 2000mg'dir. [Kaynak: who_salt_reduction::0]\n- Yüksek sodyumlu diyetin ilişkilendirildiği sağlık riskleri arasında yüksek kan basıncı, kardiyovasküler hastalıklar, mide kanseri, obezite, osteoporoz ve böbrek hastalığı bulunur. [Kaynak: who_salt_reduction::0]\n\nBu değerlendirmeyi daha anlaşılır hale getirmek için, aşağıdaki cümleleri ekleyebilirsiniz:\n\n- Yüksek tuz ve sodyum içeriği, kalp sağlığını olumsuz etkileyebilir ve çeşitli sağlık sorunlarına neden olabilir. [Kaynak: who_salt_reduction::0]\n- Sağlıklı bir diyet için, günlük tuz ve sodyum alımını azaltmak önemlidir. [Kaynak: who_salt_reduction::1]\n\nBu şekilde, kullanıcıya 3-5 cumlelik bir sağlık değerlendirmesi sunulmuş olur."
       },
       {
         "name": "yuksek_doymus_yag_urun",
         "valid_citation_ratio": 1.0,
-        "ground_truth_alignment_ratio": 0.35714285714285715,
+        "ground_truth_alignment_ratio": 1.0,
         "regenerated": false,
-        "text": "Ürünün enerji değeri 520 kcal'dir, bu WHO'nun günlük enerji ihtiyacının %30'unu aşmaktadır [Kaynak: glossary_nutrition_terms::preamble]. Ürün 100g'da 30g yağ içerir, bu da toplam yağın %17'sine denk gelmektedir [Kaynak: nutriscore_thresholds_overview::0]. Ürün 100g'da 14g doymuş yağ içerir, bu da doymuş yağın %280'ine denk gelmektedir [Kaynak: nutriscore_thresholds_overview::0]. Ürün 100g'da 8g şeker içerir, bu da şekerin %35'inine denk gelmektedir [Kaynak: nutriscore_thresholds_overview::0]."
+        "text": "Ürünün enerji değeri 520 kcal/100g'dir, bu WHO'nun günlük enerji yüzdesi önerisinin üzerinde [Kaynak: who_sugars_intake::1]. \n\nÜründe 30g/100g yağ ve 14g/100g doymuş yağ bulunur, bu da yüksek doymuş yağ içeriğine işaret eder [Kaynak: glossary_nutrition_terms::preamble]. \n\nÜründe 8g/100g şeker bulunur, bu WHO'nun günlük şeker alım önerisinin üzerinde [Kaynak: who_sugars_intake::1]."
       },
       {
         "name": "risksiz_urun",
         "valid_citation_ratio": 1.0,
-        "ground_truth_alignment_ratio": 0.1,
-        "regenerated": false,
-        "text": "Kullanıcıya 3-5 cumlelik bir sağlık değerlendirmesi yazabiliriz:\n\n\"Verilen besin değerleri 100 gram için 180 kcal enerji, 3 gram yağ, 2 gram şeker ve 0,2 gram tuz içerir. Bu değerler, ortalama bir bireyin günlük enerji ve besin gereksinimlerini karşılar. [Kaynak: efsa_dietary_reference_values::0] EFSA'nın beslenme referans değerleri (DRV) seti, makro ve mikro besinler için referans alım aralıklarını içerir ve politika yapıcılar ve sağlık profesyonelleri için beslenme politikaları geliştirme temeli sağlar. [Kaynak: efsa_dietary_reference_values::1] EFSA'nın makro besinler için yayımladığı sayısal referans alım aralıkları bu oturumda ayrıntılı olarak çekilememiştir. [Kaynak: who_sugars_intake::preamble] WHO'nun sağlıklı diyet Fact Sheet'i, serbest şeker ve yağ alımı hakkında bilgi sağlar ve günlük şeker tüketimini 25 gram'a indirmeyi önerir.\""
+        "ground_truth_alignment_ratio": 0.6,
+        "regenerated": true,
+        "text": "Kullanıcıya 3-5 cumlelik bir sağlık değerlendirmesi yazmak için, kaynak parcalarını ve risk bayraklarını analiz edeceğiz.\n\n**Günlük Tüketim için Uygun Olabilir Mi?**\n[Kaynak: efsa_dietary_reference_values::0] göre, besin referans değerleri seti, makro ve mikro besinler için ortalama gereksinim, nüfus referans alım, yetkili alım ve tolerable üst alım seviyelerini içerir. Bu ürünün enerji değeri 180 kcal'dir, ancak günlük tüketim için uygun olup olmadığını belirlemek için daha fazla bilgi gereklidir.\n\n**Serbest Şeker Tüketimi**\n[Kaynak: who_sugars_intake::preamble] göre, Dünya Sağlık Örgütü, günlük serbest şeker tüketimini 25 gram'a indirmeyi önermektedir. Ürünün şeker içeriği 2 gram'dır, bu nedenle günlük serbest şeker tüketimine katkıda bulunmaz.\n\n**Diyet İçin Uygun Olabilir Mi?**\n[Kaynak: efsa_dietary_reference_values::0] göre, besin referans değerleri seti, makro ve mikro besinler için ortalama gereksinim, nüfus referans alım, yetkili alım ve tolerable üst alım seviyelerini içerir. Ürünün yağ içeriği 3 gram'dır, ancak günlük yağ tüketimini belirlemek için daha fazla bilgi gereklidir.\n\n**Sonuç**\nÜrünün besin değerleri, günlük tüketim için uygun olup olmadığını belirlemek için daha fazla bilgi gereklidir. Ürünün şeker içeriği günlük serbest şeker tüketimine katkıda bulunmaz. Ürünün yağ içeriği günlük yağ tüketimini belirlemek için daha fazla bilgi gereklidir."
       }
     ]
   }

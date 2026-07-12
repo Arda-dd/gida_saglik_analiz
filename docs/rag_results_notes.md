@@ -1,10 +1,11 @@
 # Faz 4 Durumu — RAG Tabanlı Bilgi Getirme ve Yorumlama
 
 **Durum:** Tamamlandı. Modül mimarisi kuruldu, tüm birimler sentetik/mock veriyle test edildi
-(182 pytest testinin 45'i bu faza ait, tamamı yeşil) ve **gerçek bilgi tabanı üzerinde uçtan uca
+(242 pytest testinin 53'ü bu faza ait, tamamı yeşil) ve **gerçek bilgi tabanı üzerinde uçtan uca
 retrieval + generation değerlendirmesi de çalıştırıldı** (ücretsiz HuggingFace API ile, bkz.
 "Gerçek Sonuçlar" bölümü) — Recall@5 %100, MRR 0.794, Factual Consistency %100, Ground Truth
-Alignment %38.2 (düşük skorun kök nedeni ve önerilen çözüm aşağıda dürüstçe belgelenmiştir).
+Alignment **%86.4** (2026-07-12'de self-consistency katmanı sayısal-dayanak kontrolüyle
+güçlendirildikten sonra %38.2'den %86.4'e çıktı — bkz. "Sayısal Dayanak Kontrolü Eklendi" bölümü).
 
 ## Neden API tabanlı embedding'e geçildi (mimari değişiklik #1)
 
@@ -57,7 +58,7 @@ gerekmedi.
 | `src/rag/index_builder.py` | FAISS `IndexFlatIP` (cosine) index kurma/saklama/yükleme | 4 test |
 | `src/rag/retriever.py` | Dense (embedding API) + BM25 (`rank_bm25`) hibrit skor, min-max normalize + ağırlıklı birleşim (0.6/0.4) | 6 test |
 | `src/rag/llm_provider.py` | `LLMProvider` soyut arayüzü + `AnthropicProvider`/`OpenAIProvider`/`HuggingFaceProvider`, config.yaml'dan factory seçimi | 10 test |
-| `src/rag/generate.py` | Kaynak referanslı ([Kaynak: chunk_id]) üretim + **self-consistency katmanı**: halüsinasyon (uydurma kaynak) tespit edilirse otomatik yeniden üretim | 10 test |
+| `src/rag/generate.py` | Kaynak referanslı ([Kaynak: chunk_id]) üretim + **self-consistency katmanı**: (1) uydurma kaynak, (2) kaynakta olmayan türetilmiş sayı tespit edilirse otomatik yeniden üretim | 18 test |
 | `src/rag/evaluate.py` | Top-k Recall + MRR (retrieval), Factual Consistency Score + Ground Truth Alignment Ratio (generation) | gerçek veriyle çalıştırıldı (bkz. aşağı) |
 
 Testlerin tamamı, gerçek API çağrısı yapmadan (network/API key gerektirmeden) çalışır:
@@ -68,13 +69,29 @@ embedding" fonksiyonuyla gerçek embedding API çağrısını taklit eder (bkz.
 
 ## Self-Consistency Katmanı Nasıl Çalışır (form 2.4 taahhüdü)
 
-`generate_explanation()`, LLM'in ürettiği `[Kaynak: chunk_id]` etiketlerini regex ile çıkarır
-ve bunların gerçekten o sorgu için retrieval'dan dönen chunk'lara ait olup olmadığını kontrol
-eder (`valid_citation_ratio`). Oran eşiğin (varsayılan %70) altındaysa, geçerli chunk_id
-listesini açıkça hatırlatan daha sıkı bir talimatla **otomatik olarak yeniden üretim** yapılır.
-Bu mekanizma, LLM'in kaynaklarda olmayan bir referans "uydurmasını" (halüsinasyon) doğrudan
-ölçülebilir ve test edilebilir hale getirir — birim testlerinde hem "geçerli atıf → yeniden
-üretim yok" hem de "uydurma atıf → yeniden üretim tetiklenir" senaryoları doğrulanmıştır.
+`generate_explanation()` artık **iki bağımsız** kontrol yapar:
+
+1. **Kaynak geçerliliği (`valid_citation_ratio`):** LLM'in ürettiği `[Kaynak: chunk_id]`
+   etiketlerini regex ile çıkarır ve bunların gerçekten o sorgu için retrieval'dan dönen
+   chunk'lara ait olup olmadığını kontrol eder (uydurma kaynak/halüsinasyon tespiti).
+2. **Sayısal dayanak (`numeric_grounding_ratio`, 2026-07-12'de eklendi):** Her `[Kaynak: ...]`
+   etiketinden önceki cümleyi o etikete eşler (`_extract_citation_segments`), cümledeki her
+   sayının **o spesifik chunk'ın metninde** ya da ürünün kendi girdi besin verisinde birebir
+   geçip geçmediğini kontrol eder. Bu, ilk kontrolün yakalayamadığı bir sorunu hedefler: model
+   gerçek/alakalı bir chunk'a atıf yapar ama o chunk'ta YAZMAYAN bir sayıyı kendi başına
+   "türetip" sunabilir (ör. kaynakta "%5-10 enerji" yazarken kendi hesabıyla "25 gram" uydurmak).
+
+Her iki oran da eşiğin (varsayılan %70) altındaysa, **hangi sorunun tespit edildiğini açıkça
+belirten** daha sıkı bir talimatla otomatik olarak yeniden üretim yapılır. Birim testlerinde
+dört senaryo da doğrulanmıştır: "geçerli atıf → yeniden üretim yok", "uydurma kaynak → yeniden
+üretim", "kaynakta olmayan türetilmiş sayı → yeniden üretim" ve "ürünün kendi besin verisini
+tekrarlamak → cezalandırılmaz" (bkz. `test_compute_numeric_grounding_accepts_product_nutrition_numbers`).
+
+**Neden bu eklendi:** Gerçek bir market fotoğrafıyla (Eti Puf bisküvi, 2026-07-09) yapılan canlı
+demo testinde, RAG açıklamasının "[Kaynak: URUN BESIN DEGERLERI]" gibi geçersiz bir etiket
+kullandığı ve WHO kaynağında olmayan "25 gram" gibi türetilmiş rakamlar sunduğu görüldü. O tarihte
+sadece kaynak geçerliliği kontrol ediliyordu; bu ikinci kontrol tam olarak bu sınıf sorunu
+yakalamak için eklendi.
 
 ## Gerçek Sonuçlar (2026-07-09, HuggingFace ücretsiz API ile)
 
@@ -96,51 +113,37 @@ dense/BM25 ağırlıklarının (şu an 0.6/0.4) ince ayarı gelecekte iyileştir
 
 ### Generation — 4 örnek ürün senaryosu
 
-| Metrik | Sonuç |
-|---|---|
-| Factual Consistency Score (`valid_citation_ratio`) | **%100.0** |
-| Ground Truth Alignment Ratio | **%38.2** |
+| Metrik | İlk ölçüm (2026-07-09) | Sayısal dayanak kontrolü sonrası (2026-07-12) |
+|---|---|---|
+| Factual Consistency Score (`valid_citation_ratio`) | %100.0 | **%100.0** |
+| Ground Truth Alignment Ratio (`numeric_grounding_ratio`) | %38.2 | **%86.4** |
 
-**Factual Consistency %100** — self-consistency katmanı beklendiği gibi çalıştı: LLM'in
-ürettiği hiçbir `[Kaynak: chunk_id]` etiketi uydurma değildi, hepsi gerçekten retrieval'dan
-dönen chunk'lara aitti (4 senaryonun 1'inde ilk denemede geçersiz bir referans üretildi, sistem
-otomatik olarak yeniden üretim yaptı ve ikinci denemede düzeldi).
+**Factual Consistency %100** — değişmedi, hâlâ mükemmel: LLM'in ürettiği hiçbir
+`[Kaynak: chunk_id]` etiketi uydurma değil.
 
-**Ground Truth Alignment %38.2 — düşük, ve kök nedeni tek bir şey değil, iki ayrı bulgu var:**
+**Ground Truth Alignment %38.2 → %86.4 — gerçek, ölçülebilir bir iyileşme.** Kök neden iki
+parçaydı: (1) eski metrik ürünün kendi girdi besin verisini (ör. "35g şeker") retrieval bağlamı
+saymadığından yanlışlıkla cezalandırıyordu — bu `evaluate_generation()`'da düzeltildi; (2) küçük
+ücretsiz model bazen kaynakta olmayan türetilmiş sayılar (ör. "25 gram") üretiyordu — bunun için
+self-consistency katmanına **sayısal dayanak kontrolü** eklendi (yukarıdaki bölüme bakınız).
+4 senaryodan 3'ü artık %86-100 arası, 1'i (`risksiz_urun`) hâlâ %60'ta kalıyor.
 
-1. **Metrik tanımı ilk baştaki haliyle eksikti (düzeltildi):** İlk çalıştırmada bu oran %48.5
-   çıkmıştı ve üretilen metni okuyunca görüldü ki LLM, ürünün kendi girdi besin değerlerini
-   (ör. "35g şeker", "450 kcal" — bunlar prompt'ta doğrudan verilen gerçek ürün verisi, retrieval
-   sonucu değil) doğru şekilde tekrarlıyordu; ama `ground_truth_alignment_ratio` fonksiyonu
-   sadece retrieval bağlamına karşı kontrol ediyordu, prompt'a verilen ürün verisine karşı değil.
-   `evaluate_generation()` düzeltildi (artık ürünün `NutritionFacts` verisi de "grounding"
-   kaynağına dahil ediliyor) — bu, metriği daha doğru hale getirdi ama tek başına sorunu çözmedi.
-2. **Gerçek, düzeltilmemiş bulgu:** Ücretsiz 8B model (Llama-3.1-8B-Instruct), sistem promptunda
-   açıkça yasaklanmasına rağmen ("Hiçbir sayısal eşik veya oran UYDURMA") **kendi başına türetilmiş
-   yüzde/oran hesapları** üretiyor — ör. "doymuş yağın %280'ine denk gelmektedir", "günlük şeker
-   tüketimini 25 gram'a indirmeyi önerir" (kaynak metinde sadece "%5-10 enerji" yazıyor, "25 gram"
-   ifadesi hiçbir kaynakta geçmiyor — model bunu kendi hesaplamış, referans aldığı 2000 kcal'lik
-   varsayımı da belirtmeden). Bu değerler **uydurma kaynak değil** (`valid_citation_ratio` bunları
-   yakalayamaz çünkü atıf edilen chunk_id gerçekten var ve alakalı) ama **kaynakta birebir
-   bulunmayan, modelin kendi türettiği sayısal ifadeler** — self-consistency katmanımızın şu anki
-   tasarımı (sadece chunk_id geçerliliğini kontrol eder) bu inceliği yakalamıyor.
-
-**Sonuç olarak:** Retrieval katmanı üretim-kalitesinde (Recall %100, MRR 0.794). Kaynak
-referanslama da güvenilir (halüsinasyon/uydurma kaynak oranı %0). Ancak **ücretsiz 8B modelin
-kendi başına sayısal türetim yapma eğilimi**, projenin "sayısal hesaplar LLM'de değil kural
-motorunda yapılır" ilkesini generation metninde tam olarak sağlamıyor — bu, ücretsiz/küçük model
-seçiminin somut bir bedeli olarak dürüstçe not edilmelidir.
+**Kalan bulgu (dürüstçe not edilmeli):** `risksiz_urun` senaryosunda self-consistency katmanı
+sorunu **doğru şekilde tespit etti** ve yeniden üretimi tetikledi (`regenerated=True`) — ama
+ücretsiz Llama-3.1-8B modeli ikinci denemede de aynı "25 gram" türetimini tekrarladı, açıkça
+"sadece kaynakta yazan sayıyı kullan" talimatına rağmen. Yani **tespit mekanizması işliyor**,
+ama küçük/ücretsiz modelin kendini düzeltme kapasitesi sınırlı. Bu, aşağıdaki "güçlü model"
+önerisinin somut, ölçülmüş bir kanıtıdır.
 
 ## Önerilen Yol Haritası
 
-1. **Self-consistency katmanını genişlet:** Şu anki kontrol sadece `[Kaynak: chunk_id]`
-   etiketinin var olan bir chunk'a ait olup olmadığını doğruluyor. Bir sonraki adım, atıf yapılan
-   her cümledeki sayısal değerlerin (regex ile) o **spesifik chunk'ın metninde birebir** geçip
-   geçmediğini de kontrol etmek olmalı — bu, "gerçek ama alakasız kaynağa yanlış sayı iliştirme"
-   durumunu yakalar.
+1. ~~Self-consistency katmanını genişlet~~ **✅ Tamamlandı (2026-07-12)** — sayısal dayanak
+   kontrolü eklendi, Ground Truth Alignment %38.2→%86.4.
 2. **Üretim kalitesi için güçlü model:** Kritik/nihai kullanıcıya sunulacak çıktılarda
    `config.yaml`'da `llm.provider: anthropic` (Claude) seçeneğine geçilmesi önerilir — arayüz
-   zaten hazır, tek satır config değişikliği yeterli. Ücretsiz HuggingFace modeli geliştirme/test
-   aşaması için uygundur.
+   zaten hazır, tek satır config değişikliği yeterli. `risksiz_urun` senaryosu, self-consistency
+   doğru tespit etse bile küçük modelin düzeltmeyi tam uygulayamadığını gösteriyor — bu, güçlü
+   modelin sadece "daha iyi" değil, bu spesifik sorun için gerekli olduğunu kanıtlıyor. Ücretsiz
+   HuggingFace modeli geliştirme/test aşaması için uygundur.
 3. **Retrieval ince ayarı:** MRR'yi 1.0'a yaklaştırmak için dense/BM25 ağırlıkları (0.6/0.4)
    üzerinde küçük bir grid search denenebilir (Faz 8 kapsamlı değerlendirmesine bırakıldı).
