@@ -186,6 +186,7 @@ class TestAnalyzeLabelImage:
             retrieved=[],
             cited_chunk_ids=["who_sugars_intake::0"],
             valid_citation_ratio=1.0,
+            numeric_grounding_ratio=1.0,
             regenerated=False,
         )
         monkeypatch.setattr(pipeline_module, "_get_retriever", lambda: MagicMock())

@@ -6,8 +6,10 @@ from src.common.schema import NutritionFacts
 from src.rag.chunking import Chunk
 from src.rag.generate import (
     _extract_cited_ids,
+    _extract_citation_segments,
     _valid_citation_ratio,
     build_prompt,
+    compute_numeric_grounding,
     generate_explanation,
 )
 from src.rag.retriever import RetrievalResult
@@ -116,3 +118,90 @@ def test_generate_explanation_does_not_regenerate_when_no_chunks_retrieved():
 
     assert result.regenerated is False
     assert llm.generate.call_count == 1
+
+
+def test_extract_citation_segments_pairs_preceding_text_with_chunk_id():
+    text = "Once bu var [Kaynak: a::0]. Sonra bu var [Kaynak: b::1]."
+    segments = _extract_citation_segments(text)
+
+    assert len(segments) == 2
+    assert segments[0] == ("Once bu var ", "a::0")
+    assert segments[1] == (". Sonra bu var ", "b::1")
+
+
+def test_extract_citation_segments_empty_when_no_citations():
+    assert _extract_citation_segments("Hic kaynak yok.") == []
+
+
+def test_compute_numeric_grounding_number_present_in_cited_chunk():
+    text = "WHO gunluk %10'dan az onerir [Kaynak: who_sugars_intake::0]."
+    retrieved = [make_retrieval_result("who_sugars_intake::0")]
+    retrieved[0].chunk.text = "Serbest sekerin gunluk enerjinin %10'undan az olmasi onerilir."
+
+    ratio = compute_numeric_grounding(text, retrieved, NutritionFacts())
+    assert ratio == 1.0
+
+
+def test_compute_numeric_grounding_derived_number_not_in_source_is_flagged():
+    # Kaynakta "%10" yaziyor ama model kendi hesabiyla "25 gram" turetip sunmus - bu sayi
+    # ne kaynakta ne de urun verisinde var, dogru sekilde "dayanaksiz" olarak isaretlenmeli.
+    text = "WHO gunluk seker tuketimini 25 grama indirmeyi onerir [Kaynak: who_sugars_intake::0]."
+    retrieved = [make_retrieval_result("who_sugars_intake::0")]
+    retrieved[0].chunk.text = "Serbest sekerin gunluk enerjinin %10'undan az olmasi onerilir."
+
+    ratio = compute_numeric_grounding(text, retrieved, NutritionFacts())
+    assert ratio == 0.0
+
+
+def test_compute_numeric_grounding_accepts_product_nutrition_numbers():
+    # Urunun kendi girdi verisindeki bir sayiyi (35g seker) tekrarlamak halusinasyon degildir,
+    # atif yapilan kaynakta gecmese bile "gecerli" (dayanakli) sayilmali.
+    text = "Bu urun 35g seker icerir [Kaynak: who_sugars_intake::0]."
+    retrieved = [make_retrieval_result("who_sugars_intake::0")]
+    retrieved[0].chunk.text = "Serbest sekerin gunluk enerjinin %10'undan az olmasi onerilir."
+
+    ratio = compute_numeric_grounding(text, retrieved, NutritionFacts(sugar_g=35.0))
+    assert ratio == 1.0
+
+
+def test_compute_numeric_grounding_flags_misattributed_number_from_wrong_chunk():
+    # "5" sayisi GERCEKTEN retrieval'da var ama baska bir chunk'ta (b::0) - a::0'a atif
+    # yapilirken kullanilmasi yanlis kaynak gosterme (misattribution) sayilmali.
+    text = "Gunluk tuz alimi 5g'dan az olmali [Kaynak: a::0]."
+    chunk_a = make_retrieval_result("a::0")
+    chunk_a.chunk.text = "Bu bolumde sayisal bir deger yok."
+    chunk_b = make_retrieval_result("b::0")
+    chunk_b.chunk.text = "WHO gunluk 5g'dan az tuz onerir."
+
+    ratio = compute_numeric_grounding(text, [chunk_a, chunk_b], NutritionFacts())
+    assert ratio == 0.0
+
+
+def test_compute_numeric_grounding_no_numbers_is_vacuously_grounded():
+    text = "Bu urun risklidir [Kaynak: a::0]."
+    retrieved = [make_retrieval_result("a::0")]
+
+    ratio = compute_numeric_grounding(text, retrieved, NutritionFacts())
+    assert ratio == 1.0
+
+
+def test_generate_explanation_regenerates_when_numeric_claim_unsupported():
+    retrieved = [make_retrieval_result("who_sugars_intake::0")]
+    retrieved[0].chunk.text = "Serbest sekerin gunluk enerjinin %10'undan az olmasi onerilir."
+    retriever = MagicMock()
+    retriever.retrieve.return_value = retrieved
+
+    llm = MagicMock()
+    llm.generate.side_effect = [
+        # Ilk yanit: gecerli bir chunk_id'ye atif yapiyor ama kaynakta olmayan "25 gram" sayisini turetmis.
+        "WHO gunluk seker tuketimini 25 grama indirmeyi onerir [Kaynak: who_sugars_intake::0].",
+        # Ikinci yanit: sadece kaynaktaki sayiyi (%10) kullanan duzeltilmis versiyon.
+        "WHO gunluk enerjinin %10'undan azini seker olarak onerir [Kaynak: who_sugars_intake::0].",
+    ]
+
+    nutrition = NutritionFacts(sugar_g=35.0)
+    result = generate_explanation(nutrition, ["yuksek_seker"], retriever, llm, top_k=3)
+
+    assert result.regenerated is True
+    assert result.numeric_grounding_ratio == 1.0
+    assert llm.generate.call_count == 2

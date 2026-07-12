@@ -184,6 +184,7 @@ def _serialize_result(result: AnalysisResult) -> dict:
                 for r in result.explanation.retrieved
             ],
             "valid_citation_ratio": result.explanation.valid_citation_ratio,
+            "numeric_grounding_ratio": result.explanation.numeric_grounding_ratio,
         }
 
     if result.health_assessment is not None:

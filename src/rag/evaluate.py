@@ -4,16 +4,16 @@ Retrieval metrikleri (oneri formu 2.4): Top-k Recall, MRR - data/rag_eval/querie
 icindeki elle etiketlenmis (query, relevant_chunk_ids) ciftleriyle olculur.
 
 Generation metrikleri: Factual Consistency Score (LLM'in urettigi [Kaynak: ...] etiketlerinin
-gercekten retrieval'da donen chunk'lara ait olma orani - src/rag/generate.py'deki
-valid_citation_ratio ile ayni mekanizma) ve Ground Truth Alignment Ratio (uretilen metindeki
-sayisal degerlerin retrieval baglaminda GERCEKTEN var olma orani - halusinasyon/uydurma sayisal
-deger kontrolu, ek bir ground-truth esik veritabani gerektirmez).
+gercekten retrieval'da donen chunk'lara ait olma orani) ve Ground Truth Alignment Ratio
+(bir cumledeki sayisal iddianin, o cumlede atif yapilan SPESIFIK kaynakta ya da urunun kendi
+besin verisinde birebir gecip gecmedigi). Her iki metrik de src/rag/generate.py'deki
+self-consistency mekanizmasinin URETTIGI (valid_citation_ratio, numeric_grounding_ratio)
+degerlerdir - burada ayrica yeniden hesaplanmaz, dogrudan GenerationResult'tan okunur.
 """
 
 from __future__ import annotations
 
 import json
-import re
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -24,7 +24,6 @@ from src.rag.retriever import Retriever
 
 QUERIES_PATH = Path(__file__).resolve().parents[2] / "data" / "rag_eval" / "queries.json"
 REPORT_PATH = Path(__file__).resolve().parents[2] / "docs" / "rag_evaluation_report.json"
-NUMBER_PATTERN = re.compile(r"\d+(?:[.,]\d+)?")
 
 
 @dataclass
@@ -72,24 +71,6 @@ def evaluate_retrieval(
     return results, mean_recall, mrr
 
 
-def _numbers_in(text: str) -> list[str]:
-    return NUMBER_PATTERN.findall(text)
-
-
-def ground_truth_alignment_ratio(generated_text: str, retrieved_context: str) -> float:
-    """Uretilen metindeki sayilarin kac tanesi retrieval baglaminda GERCEKTEN geciyor.
-
-    Uretilen metinde hic sayi yoksa 1.0 doner (desteklenmeyen bir sayisal iddia YOK demektir,
-    bu guvenli bir durumdur - cezalandirilmaz).
-    """
-    generated_numbers = _numbers_in(generated_text)
-    if not generated_numbers:
-        return 1.0
-    context_numbers = set(_numbers_in(retrieved_context))
-    aligned = sum(1 for n in generated_numbers if n in context_numbers)
-    return aligned / len(generated_numbers)
-
-
 @dataclass
 class GenerationEvalCase:
     name: str
@@ -134,18 +115,11 @@ def evaluate_generation(
         result: GenerationResult = generate_explanation(
             case.nutrition, case.risk_flags, retriever, llm, top_k=top_k
         )
-        # "Grounding" kaynagi hem retrieval baglamini HEM DE urunun kendi besin degerlerini
-        # (prompt'ta dogrudan verilen girdi verisi) icermeli - LLM'in urunun kendi 35g seker
-        # gibi degerlerini dogru sekilde tekrarlamasi halusinasyon DEGILDIR, sadece retrieval
-        # disi (ama yine de meşru) bir kaynaktan gelir.
-        context_text = "\n".join(r.chunk.text for r in result.retrieved)
-        context_text += "\n" + str(case.nutrition.model_dump(exclude_none=True))
-        alignment = ground_truth_alignment_ratio(result.text, context_text)
         rows.append(
             {
                 "name": case.name,
                 "valid_citation_ratio": result.valid_citation_ratio,
-                "ground_truth_alignment_ratio": alignment,
+                "ground_truth_alignment_ratio": result.numeric_grounding_ratio,
                 "regenerated": result.regenerated,
                 "text": result.text,
             }
