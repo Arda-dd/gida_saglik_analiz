@@ -30,6 +30,19 @@ def test_extract_energy_english_label():
     assert kcal == 200
 
 
+def test_extract_energy_us_label_calories_without_unit():
+    # ABD/Kanada tipi etiketler "kcal" yazmaz, sadece "Calories 150" yazar.
+    kcal, kj = extract_energy("Calories 150")
+    assert kcal == 150
+    assert kj is None
+
+
+def test_extract_energy_prefers_explicit_kcal_over_calories_fallback():
+    # "kcal" birimi acikca yaziliysa, "calories" fallback'ine gerek kalmadan o kullanilir.
+    kcal, kj = extract_energy("Calories 450 kcal")
+    assert kcal == 450
+
+
 def test_extract_fat_does_not_confuse_with_saturated_fat():
     text = "Doymus yag: 5 g Yag: 12 g"
     assert extract_fat(text) == 12
@@ -131,6 +144,14 @@ def test_detect_nutrition_basis_defaults_to_100g_when_unclear():
     assert basis == NutritionBasis.PER_100G
 
 
+def test_detect_nutrition_basis_us_label_serving_with_imperial_unit_in_between():
+    # ABD tipi etiketlerde "Serving size 1 cup (240mL)" gibi metrik olmayan bir birim
+    # (ve onun kendi sayisi) araya girer - gercek g/mL degeri parantez icinde sonra gelir.
+    basis, serving = detect_nutrition_basis("Serving size 1 cup (240mL)")
+    assert basis == NutritionBasis.PER_SERVING
+    assert serving == 240
+
+
 def test_extract_and_normalize_converts_serving_to_100g():
     text = "Porsiyon (30 g) icin: Enerji: 60 kcal Seker: 5 g"
     facts, basis = extract_and_normalize(text)
@@ -146,3 +167,26 @@ def test_extract_and_normalize_leaves_per_100g_untouched():
 
     assert basis == NutritionBasis.PER_100G
     assert facts.energy_kcal == 450
+
+
+def test_extract_and_normalize_handles_us_style_milk_label():
+    # Gercek bir ABD sut etiketi ornegi (2026-07-13 canli demo testinde karsilasilan
+    # gercek vaka) - birimsiz "Calories", "cup (240mL)" porsiyon formati.
+    text = (
+        "Nutrition Facts\n"
+        "Serving size 1 cup (240mL)\n"
+        "Calories 150\n"
+        "Total Fat 8g\n"
+        "Sodium 115mg\n"
+        "Total Carbohydrate 12g\n"
+        "Total Sugars 12g\n"
+        "Protein 8g"
+    )
+    facts, basis = extract_and_normalize(text)
+
+    assert basis == NutritionBasis.PER_100G
+    assert facts.energy_kcal == pytest.approx(62.5)
+    assert facts.fat_g == pytest.approx(3.333, rel=1e-3)
+    assert facts.sugar_g == pytest.approx(5.0)
+    assert facts.protein_g == pytest.approx(3.333, rel=1e-3)
+    assert facts.sodium_mg == pytest.approx(47.917, rel=1e-3)

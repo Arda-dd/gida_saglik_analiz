@@ -41,6 +41,10 @@ def extract_energy(text: str) -> tuple[float | None, float | None]:
     (baska hicbir besin ogesi bu birimlerle olculmez), "enerji" anahtar kelimesine
     yakinlik aranmaz - bu, "Enerji 450 kcal / 1883 kJ" gibi iki degerin arasinda
     baska bir sayi (450) olan durumlarda da kJ'nin dogru yakalanmasini saglar.
+
+    ABD/Kanada tipi etiketlerde birim hic yazilmaz ("Calories 150" - kcal zaten
+    varsayilir) - bu yuzden kcal icin once birimli kalibi, bulunamazsa "calories"
+    anahtar kelimesini (birimsiz) dener.
     """
     energy_kcal = None
     energy_kj = None
@@ -48,6 +52,10 @@ def extract_energy(text: str) -> tuple[float | None, float | None]:
     kcal_match = re.search(rf"{NUMBER}\s*kcal\b", text, re.IGNORECASE)
     if kcal_match:
         energy_kcal = _to_float(kcal_match.group(1))
+    else:
+        calories_match = re.search(rf"calories?\D{{0,5}}{NUMBER}", text, re.IGNORECASE)
+        if calories_match:
+            energy_kcal = _to_float(calories_match.group(1))
 
     kj_match = re.search(rf"{NUMBER}\s*kj\b", text, re.IGNORECASE)
     if kj_match:
@@ -143,9 +151,14 @@ def detect_nutrition_basis(text: str) -> tuple[NutritionBasis, float | None]:
     if re.search(r"100\s*g", text, re.IGNORECASE):
         return NutritionBasis.PER_100G, None
 
+    # Not: gap kismi (".{0,40}?") sayi icerebilir (\D degil) - ABD tipi etiketlerde
+    # "Serving size 1 cup (240mL)" gibi metrik olmayan bir birim (ve sayisi) araya girer;
+    # gercek g/mL degeri parantez icinde daha sonra gelir. Non-greedy oldugundan regex
+    # gramaj/mL'ye bitisik ILK sayi-birim eslesmesini bulur (once "1 cup" denenir, birim
+    # "g/ml" olmadigi icin elenir, sonra "240mL" ile eslesir).
     serving_match = re.search(
-        r"porsiyon\D{0,15}(\d+[.,]?\d*)\s*(g|ml)\b", text, re.IGNORECASE
-    ) or re.search(r"serving\D{0,15}(\d+[.,]?\d*)\s*(g|ml)\b", text, re.IGNORECASE)
+        r"porsiyon.{0,40}?(\d+[.,]?\d*)\s*(g|ml)\b", text, re.IGNORECASE | re.DOTALL
+    ) or re.search(r"serving.{0,40}?(\d+[.,]?\d*)\s*(g|ml)\b", text, re.IGNORECASE | re.DOTALL)
     if serving_match:
         return NutritionBasis.PER_SERVING, _to_float(serving_match.group(1))
 
