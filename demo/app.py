@@ -34,6 +34,43 @@ from src.ocr.risk_engine import describe_risks
 # Veritabanını ilklendir
 init_db()
 
+# Besin degerlerini kullaniciya okunakli Turkce etiket + birimle gostermek icin siralama ve
+# (alan_adi -> (Turkce etiket, birim)) eslemesi - NutritionFacts'in alan sirasiyla ayni.
+NUTRITION_DISPLAY_ORDER: list[tuple[str, str, str]] = [
+    ("energy_kcal", "Enerji", "kcal"),
+    ("energy_kj", "Enerji", "kJ"),
+    ("fat_g", "Yağ", "g"),
+    ("saturated_fat_g", "Doymuş Yağ", "g"),
+    ("carbohydrate_g", "Karbonhidrat", "g"),
+    ("sugar_g", "Şeker", "g"),
+    ("fiber_g", "Lif", "g"),
+    ("protein_g", "Protein", "g"),
+    ("salt_g", "Tuz", "g"),
+    ("sodium_mg", "Sodyum", "mg"),
+]
+
+
+def clean_explanation_text(text: str) -> str:
+    """Kucuk/ucretsiz modelin bazen ekledigi "Kullanıcıya 3-5 cümlelik bir değerlendirme
+    yazabiliriz:" turu meta-yorum satirini temizler - kullanicinin ilk okudugu seyin
+    dogrudan saglik degerlendirmesi olmasi icin (sistemin kendi kendine konusmasi degil)."""
+    lines = text.strip().splitlines()
+    if lines and lines[0].strip().lower().startswith("kullanıcıya"):
+        lines = lines[1:]
+    return "\n".join(lines).strip()
+
+
+def render_nutrition_table(nutrition_dict: dict) -> None:
+    """Ham NutritionFacts sozlugunu (ornegin {'sugar_g': 5.0}) okunakli bir Turkce
+    tabloya cevirir - kullaniciya ham JSON/alan-adi/ondalik-basamak karmasasi gostermemek icin."""
+    rows = [
+        {"Besin Öğesi": f"{label} ({unit})", "Değer": round(nutrition_dict[key], 1)}
+        for key, label, unit in NUTRITION_DISPLAY_ORDER
+        if key in nutrition_dict
+    ]
+    st.table(rows)
+
+
 st.set_page_config(page_title="Gıda & Sağlık Asistanı", page_icon="🥗")
 st.title("Gıda & Sağlık Asistanı")
 st.caption(
@@ -273,23 +310,48 @@ if selected_scan is not None and result_data is None:
     }
     is_cached = True
 
+CATEGORY_LABELS = {
+    "sut_urunu": "Süt Ürünü",
+    "atistirmalik": "Atıştırmalık",
+    "icecek": "İçecek",
+    "hazir_gida": "Hazır Gıda",
+    "konserve": "Konserve",
+    "bilinmiyor": "Bilinmiyor",
+}
+
 if result_data is not None:
-    st.subheader("Kategori")
-    st.write(f"**{result_data['category']}**  (güven: %{result_data['category_confidence'] * 100:.1f})")
-    st.caption(f"OCR ortalama güven skoru: %{result_data['ocr_confidence']:.1f}")
-
-    st.subheader("Besin Değerleri (100g bazında)")
-    if result_data["nutrition"]:
-        st.json(result_data["nutrition"])
+    # --- Genel Özet (en ust, tek bakista anlasilir kisa ozet) ---
+    category_label = CATEGORY_LABELS.get(result_data["category"], result_data["category"])
+    if result_data["risk_messages"]:
+        st.warning(f"**{category_label}** kategorisinde bir ürün — {len(result_data['risk_messages'])} sağlık uyarısı bulundu (aşağıda detaylı).")
     else:
-        st.info("OCR'dan besin değeri çıkarılamadı.")
+        st.success(f"**{category_label}** kategorisinde bir ürün — belirgin bir sağlık riski tespit edilmedi.")
 
-    st.subheader("1️⃣ Gıda Risk Değerlendirmesi")
+    if result_data["ocr_confidence"] < 50:
+        st.caption(
+            f"⚠️ OCR (metin okuma) güveni düşük (%{result_data['ocr_confidence']:.0f}) — bazı besin "
+            "değerleri yanlış veya eksik çıkmış olabilir. Etiketi düz açıyla, parlamasız ve yakından "
+            "çekmek doğruluğu artırabilir."
+        )
+
+    st.subheader("Kategori ve Besin Değerleri")
+    st.write(f"Tahmin edilen kategori: **{category_label}** (model güveni: %{result_data['category_confidence'] * 100:.0f})")
+
+    if result_data["nutrition"]:
+        st.caption("Aşağıdaki değerler 100 gram/100 mL bazına normalize edilmiştir.")
+        render_nutrition_table(result_data["nutrition"])
+    else:
+        st.info(
+            "OCR, etiketten besin değeri çıkaramadı. Bu genelde görsel kalitesi (parlama, açı, "
+            "çözünürlük) veya alışılmadık bir tablo düzeninden kaynaklanır."
+        )
+
+    st.subheader("1️⃣ Sağlık Riski")
     if result_data["risk_messages"]:
         for msg in result_data["risk_messages"]:
             st.warning(msg)
     else:
-        st.success("Belirgin bir risk bayrağı tespit edilmedi.")
+        st.success("Kural motoruna göre (şeker/tuz/doymuş yağ/sodyum eşikleri) belirgin bir risk tespit edilmedi.")
 
     # Kişisel profil uyarısı ve diyet uyumu
     if profile is not None:
@@ -299,7 +361,8 @@ if result_data is not None:
 
         st.subheader("2️⃣ Diyet Uyum Skoru")
         st.metric("Uyum Skoru", f"{health_assessment.diet_compliance_score:.0f} / 100")
-        st.caption(f"Aktif Beslenme Amacı: **{profile.objective.value.upper()}**")
+        objective_display = profile.objective.value.upper() if profile.objective else "Belirtilmedi"
+        st.caption(f"Aktif beslenme amacı: **{objective_display}**")
 
         st.subheader("3️⃣ Alerjen Uyarısı")
         if health_assessment.allergen_warning:
@@ -335,5 +398,10 @@ if result_data is not None:
         )
 
     if result_data["explanation_text"]:
-        st.subheader("Kaynak Referanslı Açıklama (RAG)")
-        st.write(result_data["explanation_text"])
+        st.subheader("Uzman Kaynaklara Dayalı Açıklama")
+        st.caption(
+            "WHO/EFSA/TGK kaynaklarından alınan bilgiyle üretilmiştir. Cümle sonundaki "
+            "`[Kaynak: ...]` etiketleri, o bilginin hangi kaynaktan geldiğini gösterir "
+            "(kaynakça şeffaflığı için) — okurken göz ardı edebilirsiniz."
+        )
+        st.write(clean_explanation_text(result_data["explanation_text"]))
