@@ -87,3 +87,16 @@ def test_preprocess_label_image_raises_on_missing_file(tmp_path):
 
     with pytest.raises(ValueError):
         preprocess_label_image(tmp_path / "yok.jpg", tmp_path / "out.jpg")
+
+
+def test_correct_perspective_warps_skewed_quadrilateral():
+    from src.data.image_preprocessing import correct_perspective
+    # 400x400 siyah arka plan
+    img = np.zeros((400, 400, 3), dtype=np.uint8)
+    # Beyaz bir dörtgen çizelim (etiket simülasyonu)
+    pts = np.array([[50, 50], [350, 70], [320, 320], [70, 300]], dtype=np.int32)
+    cv2.fillPoly(img, [pts], (255, 255, 255))
+    
+    warped = correct_perspective(img)
+    assert warped.shape != img.shape
+    assert warped[10, 10].mean() > 200
