@@ -13,6 +13,8 @@ import torch.nn as nn
 SUPPORTED_BACKBONES: dict[str, str] = {
     "mobilenetv3": "mobilenetv3_large_100",
     "efficientnet_b3": "efficientnet_b3",
+    "efficientnet_b4": "efficientnet_b4",
+    "vit": "vit_base_patch16_224",
 }
 
 

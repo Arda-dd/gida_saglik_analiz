@@ -68,7 +68,9 @@ def get_train_transforms(image_size: int = 224) -> A.Compose:
             A.Resize(image_size, image_size),
             A.HorizontalFlip(p=0.5),
             A.Rotate(limit=15, p=0.5),
-            A.RandomBrightnessContrast(p=0.3),
+            A.RandomBrightnessContrast(p=0.5),
+            A.GridDistortion(p=0.3),
+            A.CoarseDropout(p=0.3),
             A.Normalize(mean=IMAGENET_MEAN, std=IMAGENET_STD),
             ToTensorV2(),
         ]
