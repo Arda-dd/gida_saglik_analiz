@@ -220,188 +220,283 @@ with st.sidebar:
         "Kaynak referanslı LLM açıklaması üret (API çağrısı)", value=True
     )
 
-# 3) Geçmiş Tarama Seçici (Tarihçe)
-selected_scan = None
-if st.session_state.user_id is not None:
-    scans = db.query(DBScanHistory).filter(DBScanHistory.user_id == st.session_state.user_id).order_by(DBScanHistory.scanned_at.desc()).all()
-    if scans:
-        st.subheader("📜 Geçmiş Taramalarınız")
-        scan_options = {f"{s.scanned_at.strftime('%Y-%m-%d %H:%M')} — {s.category.upper()}": s for s in scans}
-        selected_scan_key = st.selectbox("Önceki taramalarınızı hızlıca inceleyin:", ["— Seçin —"] + list(scan_options.keys()))
-        if selected_scan_key != "— Seçin —":
-            selected_scan = scan_options[selected_scan_key]
+tab_scan, tab_dash = st.tabs(["🔍 Yeni Analiz & Tarama", "📊 Sağlık Raporu & Tarihçe Analizi"])
 
-uploaded_file = st.file_uploader("Yeni bir etiket fotoğrafı yükleyin", type=["jpg", "jpeg", "png"])
-
-result_data = None
-is_cached = False
-
-if uploaded_file is not None:
-    file_bytes = uploaded_file.getvalue()
-    file_hash = hashlib.sha256(file_bytes).hexdigest()
-
-    # Önbellek kontrolü
-    cached_scan = None
+with tab_scan:
+    # 3) Geçmiş Tarama Seçici (Tarihçe)
+    selected_scan = None
     if st.session_state.user_id is not None:
-        cached_scan = db.query(DBScanHistory).filter(
-            DBScanHistory.user_id == st.session_state.user_id,
-            DBScanHistory.file_hash == file_hash
-        ).first()
+        scans = db.query(DBScanHistory).filter(DBScanHistory.user_id == st.session_state.user_id).order_by(DBScanHistory.scanned_at.desc()).all()
+        if scans:
+            st.subheader("📜 Geçmiş Taramalarınız")
+            scan_options = {f"{s.scanned_at.strftime('%Y-%m-%d %H:%M')} — {s.category.upper()}": s for s in scans}
+            selected_scan_key = st.selectbox("Önceki taramalarınızı hızlıca inceleyin:", ["— Seçin —"] + list(scan_options.keys()))
+            if selected_scan_key != "— Seçin —":
+                selected_scan = scan_options[selected_scan_key]
 
-    if cached_scan:
-        selected_scan = cached_scan
-        is_cached = True
-        st.info("Bu görsel daha önce analiz edilmiş. Sonuçlar önbellekten (cache) yüklendi.")
-    else:
-        with tempfile.TemporaryDirectory() as tmp_dir:
-            image_path = Path(tmp_dir) / uploaded_file.name
-            image_path.write_bytes(file_bytes)
+    uploaded_file = st.file_uploader("Yeni bir etiket fotoğrafı yükleyin", type=["jpg", "jpeg", "png"])
 
-            st.image(str(image_path), caption="Yüklenen görsel", use_container_width=True)
+    result_data = None
+    is_cached = False
 
-            with st.spinner("Analiz ediliyor (kategori + OCR + risk motoru + RAG)..."):
-                try:
-                    result = analyze_label_image(
-                        image_path, profile=profile, generate_llm_explanation=generate_explanation
-                    )
-                    result_data = {
-                        "category": result.category,
-                        "category_confidence": result.category_confidence,
-                        "nutrition": result.nutrition.model_dump(exclude_none=True),
-                        "detected_allergens": [a.value for a in result.detected_allergens],
-                        "risk_flags": result.risk_flags,
-                        "risk_messages": result.risk_messages,
-                        "ocr_confidence": result.ocr_confidence,
-                        "explanation_text": result.explanation.text if result.explanation else None,
-                    }
+    if uploaded_file is not None:
+        file_bytes = uploaded_file.getvalue()
+        file_hash = hashlib.sha256(file_bytes).hexdigest()
 
-                    # Veritabanına kaydet
-                    if st.session_state.user_id is not None:
-                        new_scan = DBScanHistory(
-                            user_id=st.session_state.user_id,
-                            product_id=f"scan_{uuid.uuid4().hex[:8]}",
-                            category=result.category,
-                            category_confidence=result.category_confidence,
-                            nutrition_json=json.dumps(result_data["nutrition"]),
-                            detected_allergens=",".join(result_data["detected_allergens"]),
-                            risk_flags=",".join(result_data["risk_flags"]),
-                            ocr_confidence=result.ocr_confidence,
-                            file_hash=file_hash,
-                            explanation_text=result_data["explanation_text"]
-                        )
-                        db.add(new_scan)
-                        db.commit()
-                        st.success("Yeni analiz veritabanı geçmişinize kaydedildi.")
-                except Exception as exc:
-                    st.error(f"Analiz sırasında bir hata oluştu: {exc}")
-                    st.stop()
+        # Önbellek kontrolü
+        cached_scan = None
+        if st.session_state.user_id is not None:
+            cached_scan = db.query(DBScanHistory).filter(
+                DBScanHistory.user_id == st.session_state.user_id,
+                DBScanHistory.file_hash == file_hash
+            ).first()
 
-if selected_scan is not None and result_data is None:
-    nutrition_data = json.loads(selected_scan.nutrition_json)
-    result_data = {
-        "category": selected_scan.category,
-        "category_confidence": selected_scan.category_confidence,
-        "nutrition": nutrition_data,
-        "detected_allergens": [a for a in selected_scan.detected_allergens.split(",") if a],
-        "risk_flags": [rf for rf in selected_scan.risk_flags.split(",") if rf],
-        "risk_messages": describe_risks([rf for rf in selected_scan.risk_flags.split(",") if rf]),
-        "ocr_confidence": selected_scan.ocr_confidence,
-        "explanation_text": selected_scan.explanation_text,
-    }
-    is_cached = True
-
-CATEGORY_LABELS = {
-    "sut_urunu": "Süt Ürünü",
-    "atistirmalik": "Atıştırmalık",
-    "icecek": "İçecek",
-    "hazir_gida": "Hazır Gıda",
-    "konserve": "Konserve",
-    "bilinmiyor": "Bilinmiyor",
-}
-
-if result_data is not None:
-    # --- Genel Özet (en ust, tek bakista anlasilir kisa ozet) ---
-    category_label = CATEGORY_LABELS.get(result_data["category"], result_data["category"])
-    if result_data["risk_messages"]:
-        st.warning(f"**{category_label}** kategorisinde bir ürün — {len(result_data['risk_messages'])} sağlık uyarısı bulundu (aşağıda detaylı).")
-    else:
-        st.success(f"**{category_label}** kategorisinde bir ürün — belirgin bir sağlık riski tespit edilmedi.")
-
-    if result_data["ocr_confidence"] < 50:
-        st.caption(
-            f"⚠️ OCR (metin okuma) güveni düşük (%{result_data['ocr_confidence']:.0f}) — bazı besin "
-            "değerleri yanlış veya eksik çıkmış olabilir. Etiketi düz açıyla, parlamasız ve yakından "
-            "çekmek doğruluğu artırabilir."
-        )
-
-    st.subheader("Kategori ve Besin Değerleri")
-    st.write(f"Tahmin edilen kategori: **{category_label}** (model güveni: %{result_data['category_confidence'] * 100:.0f})")
-
-    if result_data["nutrition"]:
-        st.caption("Aşağıdaki değerler 100 gram/100 mL bazına normalize edilmiştir.")
-        render_nutrition_table(result_data["nutrition"])
-    else:
-        st.info(
-            "OCR, etiketten besin değeri çıkaramadı. Bu genelde görsel kalitesi (parlama, açı, "
-            "çözünürlük) veya alışılmadık bir tablo düzeninden kaynaklanır."
-        )
-
-    st.subheader("1️⃣ Sağlık Riski")
-    if result_data["risk_messages"]:
-        for msg in result_data["risk_messages"]:
-            st.warning(msg)
-    else:
-        st.success("Kural motoruna göre (şeker/tuz/doymuş yağ/sodyum eşikleri) belirgin bir risk tespit edilmedi.")
-
-    # Kişisel profil uyarısı ve diyet uyumu
-    if profile is not None:
-        nutrition = NutritionFacts(**result_data["nutrition"])
-        detected_allergens_list = [Allergen(a) for a in result_data["detected_allergens"]]
-        health_assessment = build_health_assessment(nutrition, detected_allergens_list, profile)
-
-        st.subheader("2️⃣ Diyet Uyum Skoru")
-        st.metric("Uyum Skoru", f"{health_assessment.diet_compliance_score:.0f} / 100")
-        objective_display = profile.objective.value.upper() if profile.objective else "Belirtilmedi"
-        st.caption(f"Aktif beslenme amacı: **{objective_display}**")
-
-        st.subheader("3️⃣ Alerjen Uyarısı")
-        if health_assessment.allergen_warning:
-            conflict_names = ", ".join(a.value for a in health_assessment.allergen_conflicts)
-            st.error(f"Dikkat: profilinizdeki alerjenlerle çelişiyor ({conflict_names})!")
+        if cached_scan:
+            selected_scan = cached_scan
+            is_cached = True
+            st.info("Bu görsel daha önce analiz edilmiş. Sonuçlar önbellekten (cache) yüklendi.")
         else:
-            st.success("Profilinizdeki alerjenlerle bilinen bir çelişki yok.")
+            with tempfile.TemporaryDirectory() as tmp_dir:
+                image_path = Path(tmp_dir) / uploaded_file.name
+                image_path.write_bytes(file_bytes)
 
-        # Alternatif öneriler
-        candidates = get_candidate_products()
-        try:
-            from src.common.schema import ProductCategory
-            current_cat = ProductCategory(result_data["category"])
-        except ValueError:
-            current_cat = ProductCategory.BILINMIYOR
+                st.image(str(image_path), caption="Yüklenen görsel", use_container_width=True)
 
-        current_prod = ProductRecord(
-            product_id="uploaded_image",
-            category=current_cat,
-            nutrition=nutrition,
-            allergens=detected_allergens_list,
-            source="upload"
-        )
-        alternatives = recommend_alternatives(current_prod, list(candidates), profile)
-        if alternatives:
-            st.subheader("Alternatif Ürün Önerileri")
-            for alt in alternatives:
-                st.write(f"- `{alt.product_id}` ({alt.category.value})")
-    elif result_data["detected_allergens"]:
-        st.caption(
-            "Tespit edilen alerjenler (profil girilmediği için kişisel uyarı üretilmedi): "
-            + ", ".join(result_data["detected_allergens"])
-        )
+                with st.spinner("Analiz ediliyor (kategori + OCR + risk motoru + RAG)..."):
+                    try:
+                        result = analyze_label_image(
+                            image_path, profile=profile, generate_llm_explanation=generate_explanation
+                        )
+                        result_data = {
+                            "category": result.category,
+                            "category_confidence": result.category_confidence,
+                            "nutrition": result.nutrition.model_dump(exclude_none=True),
+                            "detected_allergens": [a.value for a in result.detected_allergens],
+                            "risk_flags": result.risk_flags,
+                            "risk_messages": result.risk_messages,
+                            "ocr_confidence": result.ocr_confidence,
+                            "explanation_text": result.explanation.text if result.explanation else None,
+                        }
 
-    if result_data["explanation_text"]:
-        st.subheader("Uzman Kaynaklara Dayalı Açıklama")
-        st.caption(
-            "WHO/EFSA/TGK kaynaklarından alınan bilgiyle üretilmiştir. Cümle sonundaki "
-            "`[Kaynak: ...]` etiketleri, o bilginin hangi kaynaktan geldiğini gösterir "
-            "(kaynakça şeffaflığı için) — okurken göz ardı edebilirsiniz."
-        )
-        st.write(clean_explanation_text(result_data["explanation_text"]))
+                        # Veritabanına kaydet
+                        if st.session_state.user_id is not None:
+                            new_scan = DBScanHistory(
+                                user_id=st.session_state.user_id,
+                                product_id=f"scan_{uuid.uuid4().hex[:8]}",
+                                category=result.category,
+                                category_confidence=result.category_confidence,
+                                nutrition_json=json.dumps(result_data["nutrition"]),
+                                detected_allergens=",".join(result_data["detected_allergens"]),
+                                risk_flags=",".join(result_data["risk_flags"]),
+                                ocr_confidence=result.ocr_confidence,
+                                file_hash=file_hash,
+                                explanation_text=result_data["explanation_text"]
+                            )
+                            db.add(new_scan)
+                            db.commit()
+                            st.success("Yeni analiz veritabanı geçmişinize kaydedildi.")
+                    except Exception as exc:
+                        st.error(f"Analiz sırasında bir hata oluştu: {exc}")
+                        st.stop()
+
+    if selected_scan is not None and result_data is None:
+        nutrition_data = json.loads(selected_scan.nutrition_json)
+        result_data = {
+            "category": selected_scan.category,
+            "category_confidence": selected_scan.category_confidence,
+            "nutrition": nutrition_data,
+            "detected_allergens": [a for a in selected_scan.detected_allergens.split(",") if a],
+            "risk_flags": [rf for rf in selected_scan.risk_flags.split(",") if rf],
+            "risk_messages": describe_risks([rf for rf in selected_scan.risk_flags.split(",") if rf]),
+            "ocr_confidence": selected_scan.ocr_confidence,
+            "explanation_text": selected_scan.explanation_text,
+        }
+        is_cached = True
+
+    if result_data is not None:
+        category_label = CATEGORY_TR_LABELS.get(result_data["category"], result_data["category"])
+
+        if result_data["ocr_confidence"] < 50:
+            st.caption(
+                f"⚠️ OCR (metin okuma) güveni düşük (%{result_data['ocr_confidence']:.0f}) — bazı besin "
+                "değerleri yanlış veya eksik çıkmış olabilir. Etiketi düz açıyla, parlamasız ve yakından "
+                "çekmek doğruluğu artırabilir."
+            )
+
+        st.subheader("Kategori ve Besin Değerleri")
+        st.write(f"Tahmin edilen kategori: **{category_label}** (model güveni: %{result_data['category_confidence'] * 100:.0f})")
+
+        if result_data["nutrition"]:
+            st.caption("Aşağıdaki değerler 100 gram/100 mL bazına normalize edilmiştir.")
+            render_nutrition_table(result_data["nutrition"])
+        else:
+            st.info(
+                "OCR, etiketten besin değeri çıkaramadı. Bu genelde görsel kalitesi (parlama, açı, "
+                "çözünürlük) veya alışılmadık bir tablo düzeninden kaynaklanır."
+            )
+
+        st.subheader("1️⃣ Sağlık Riski")
+        if result_data["risk_messages"]:
+            for msg in result_data["risk_messages"]:
+                st.warning(msg)
+        else:
+            st.success("Kural motoruna göre (şeker/tuz/doymuş yağ/sodyum eşikleri) belirgin bir risk tespit edilmedi.")
+
+        # Kişisel profil uyarısı ve diyet uyumu
+        if profile is not None:
+            nutrition = NutritionFacts(**result_data["nutrition"])
+            detected_allergens_list = [Allergen(a) for a in result_data["detected_allergens"]]
+            health_assessment = build_health_assessment(nutrition, detected_allergens_list, profile)
+
+            st.subheader("2️⃣ Diyet Uyum Skoru")
+            st.metric("Uyum Skoru", f"{health_assessment.diet_compliance_score:.0f} / 100")
+            objective_display = profile.objective.value.upper() if profile.objective else "Belirtilmedi"
+            st.caption(f"Aktif beslenme amacı: **{objective_display}**")
+
+            st.subheader("3️⃣ Alerjen Uyarısı")
+            if health_assessment.allergen_warning:
+                conflict_names = ", ".join(a.value for a in health_assessment.allergen_conflicts)
+                st.error(f"Dikkat: profilinizdeki alerjenlerle çelişiyor ({conflict_names})!")
+            else:
+                st.success("Profilinizdeki alerjenlerle bilinen bir çelişki yok.")
+
+            # Alternatif öneriler
+            candidates = get_candidate_products()
+            try:
+                from src.common.schema import ProductCategory
+                current_cat = ProductCategory(result_data["category"])
+            except ValueError:
+                current_cat = ProductCategory.BILINMIYOR
+
+            current_prod = ProductRecord(
+                product_id="uploaded_image",
+                category=current_cat,
+                nutrition=nutrition,
+                allergens=detected_allergens_list,
+                source="upload"
+            )
+            alternatives = recommend_alternatives(current_prod, list(candidates), profile)
+            if alternatives:
+                st.subheader("Alternatif Ürün Önerileri")
+                for alt in alternatives:
+                    st.write(f"- `{alt.product_id}` ({alt.category.value})")
+        elif result_data["detected_allergens"]:
+            st.caption(
+                "Tespit edilen alerjenler (profil girilmediği için kişisel uyarı üretilmedi): "
+                + ", ".join(result_data["detected_allergens"])
+            )
+
+        if result_data["explanation_text"]:
+            st.subheader("Uzman Kaynaklara Dayalı Açıklama")
+            st.caption(
+                "WHO/EFSA/TGK kaynaklarından alınan bilgiyle üretilmiştir. Cümle sonundaki "
+                "`[Kaynak: ...]` etiketleri, o bilginin hangi kaynaktan geldiğini gösterir "
+                "(kaynakça şeffaflığı için) — okurken göz ardı edebilirsiniz."
+            )
+            st.write(clean_explanation_text(result_data["explanation_text"]))
+
+with tab_dash:
+    st.header("📊 Sağlık Raporu & Tarihçe Analizi")
+    if st.session_state.user_id is None:
+        st.warning("Lütfen kişisel sağlık raporunuzu ve geçmiş analizlerinizi görüntülemek için sol menüden Giriş Yapın.")
+    else:
+        from datetime import datetime, timedelta
+        import pandas as pd
+        import plotly.express as px
+        import plotly.graph_objects as go
+
+        cutoff_date = datetime.utcnow() - timedelta(days=30)
+        scans_30d = db.query(DBScanHistory).filter(
+            DBScanHistory.user_id == st.session_state.user_id,
+            DBScanHistory.scanned_at >= cutoff_date
+        ).order_by(DBScanHistory.scanned_at.asc()).all()
+
+        if not scans_30d:
+            st.info("Son 30 gün içinde taranmış ürün geçmişiniz bulunmuyor. Yeni analizler yaptıktan sonra bu panel güncellenecektir.")
+        else:
+            dates = []
+            calories = []
+            sugar = []
+            salt = []
+            categories = []
+            product_names = []
+
+            for scan in scans_30d:
+                try:
+                    nut = json.loads(scan.nutrition_json)
+                    dates.append(scan.scanned_at.date())
+                    calories.append(nut.get("energy_kcal", 0) or 0)
+                    sugar.append(nut.get("sugar_g", 0) or 0)
+                    salt.append(nut.get("salt_g", 0) or 0)
+                    categories.append(scan.category)
+                    product_names.append(scan.product_id)
+                except Exception:
+                    continue
+
+            df = pd.DataFrame({
+                "Tarih": dates,
+                "Kalori (kcal)": calories,
+                "Şeker (g)": sugar,
+                "Tuz (g)": salt,
+                "Kategori": categories,
+                "Urun": product_names
+            })
+
+            df_daily = df.groupby("Tarih").sum().reset_index()
+
+            col1, col2, col3, col4 = st.columns(4)
+            col1.metric("Toplam Tarama", len(df))
+            col2.metric("Günlük Ort. Kalori", f"{df_daily['Kalori (kcal)'].mean():.0f} kcal")
+            col3.metric("Günlük Ort. Şeker", f"{df_daily['Şeker (g)'].mean():.1f} g")
+            col4.metric("Günlük Ort. Tuz", f"{df_daily['Tuz (g)'].mean():.2f} g")
+
+            st.markdown("---")
+
+            st.subheader("🔥 Günlük Kalori Alımı ve Hedef Durumu")
+            user = db.query(DBUser).filter(DBUser.id == st.session_state.user_id).first()
+            cal_target = (user.profile.daily_calorie_target_kcal if user.profile else 2000.0) or 2000.0
+
+            fig_cal = px.bar(df_daily, x="Tarih", y="Kalori (kcal)", title="Günlük Toplam Kalori (Taranan Ürünler)", color_discrete_sequence=["#FF4B4B"])
+            fig_cal.add_hline(y=cal_target, line_dash="dash", line_color="red", annotation_text=f"Günlük Limit ({cal_target} kcal)", annotation_position="top left")
+            st.plotly_chart(fig_cal, use_container_width=True)
+
+            excess_cal_days = df_daily[df_daily["Kalori (kcal)"] > cal_target]
+            if not excess_cal_days.empty:
+                st.warning(f"⚠️ Son 30 günde günlük kalori limitinizi aştığınız **{len(excess_cal_days)}** gün tespit edildi!")
+
+            st.subheader("🧂 Günlük Şeker ve Tuz Tüketim Analizi")
+            sugar_limit = 50.0
+            salt_limit = 5.0
+
+            col_sug, col_salt = st.columns(2)
+            with col_sug:
+                fig_sug = px.bar(df_daily, x="Tarih", y="Şeker (g)", title="Günlük Şeker Tüketimi (g)", color_discrete_sequence=["#FFA07A"])
+                fig_sug.add_hline(y=sugar_limit, line_dash="dash", line_color="red", annotation_text=f"WHO Limiti ({sugar_limit}g)", annotation_position="top left")
+                st.plotly_chart(fig_sug, use_container_width=True)
+
+                excess_sug = df_daily[df_daily["Şeker (g)"] > sugar_limit]
+                if not excess_sug.empty:
+                    st.error(f"🚨 Şeker limitinin aşıldığı gün sayısı: {len(excess_sug)}")
+
+            with col_salt:
+                fig_salt = px.bar(df_daily, x="Tarih", y="Tuz (g)", title="Günlük Tuz Tüketimi (g)", color_discrete_sequence=["#20B2AA"])
+                fig_salt.add_hline(y=salt_limit, line_dash="dash", line_color="red", annotation_text=f"WHO Limiti ({salt_limit}g)", annotation_position="top left")
+                st.plotly_chart(fig_salt, use_container_width=True)
+
+                excess_salt = df_daily[df_daily["Tuz (g)"] > salt_limit]
+                if not excess_salt.empty:
+                    st.error(f"🚨 Tuz limitinin aşıldığı gün sayısı: {len(excess_salt)}")
+
+            st.markdown("---")
+
+            st.subheader("🥗 Tüketim Çeşitliliği ve Dağılımları")
+            col_pie, col_box = st.columns(2)
+            with col_pie:
+                fig_pie = px.pie(df, names="Kategori", title="Taranan Ürünlerin Kategorilere Göre Dağılımı", hole=0.3)
+                st.plotly_chart(fig_pie, use_container_width=True)
+            with col_box:
+                fig_box = go.Figure()
+                fig_box.add_trace(go.Box(y=df["Şeker (g)"], name="Şeker (g)", marker_color="#FFA07A"))
+                fig_box.add_trace(go.Box(y=df["Tuz (g)"], name="Tuz (g)", marker_color="#20B2AA"))
+                fig_box.update_layout(title="Ürün Bazında Şeker ve Tuz Değerlerinin Dağılımı")
+                st.plotly_chart(fig_box, use_container_width=True)
