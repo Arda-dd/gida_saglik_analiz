@@ -60,6 +60,16 @@ CATEGORY_TR_LABELS: dict[str, str] = {
     "bilinmiyor": "Bilinmiyor",
 }
 
+# Secim kutusundaki (selectbox) ham enum degerlerini ("kilo_verme" vb.) kullaniciya gosterirken
+# okunakli Turkce etikete cevirmek icin - format_func ile: secilen deger degismez, sadece
+# ekranda gorunen metin degisir.
+OBJECTIVE_TR_LABELS: dict[str, str] = {
+    "Belirtilmedi": "Belirtilmedi",
+    "kilo_verme": "Kilo Verme",
+    "protein_agirlikli": "Protein Ağırlıklı Beslenme",
+    "alerji_takibi": "Alerji Takibi",
+}
+
 
 def _load_kb_doc_info() -> dict[str, tuple[str, bool, str | None]]:
     """Bilgi tabanindaki her dokuman icin (baslik, dogrulanmis-mi, kaynak-adi) haritasi cikarir.
@@ -226,7 +236,8 @@ with st.sidebar:
         objective_label = st.selectbox(
             "Beslenme Amacınız",
             options=objective_options,
-            index=objective_options.index(saved_obj_str)
+            index=objective_options.index(saved_obj_str),
+            format_func=lambda x: OBJECTIVE_TR_LABELS.get(x, x)
         )
 
         if st.button("Ayarları Kaydet"):
@@ -260,7 +271,8 @@ with st.sidebar:
         objective_label = st.selectbox(
             "Beslenme Amacınız",
             options=objective_options,
-            index=0
+            index=0,
+            format_func=lambda x: OBJECTIVE_TR_LABELS.get(x, x)
         )
 
         if condition_labels or allergen_labels or calorie_target or objective_label != "Belirtilmedi":
@@ -415,7 +427,11 @@ with tab_scan:
 
             st.subheader("2️⃣ Diyet Uyum Skoru")
             st.metric("Uyum Skoru", f"{health_assessment.diet_compliance_score:.0f} / 100")
-            objective_display = profile.objective.value.upper() if profile.objective else "Belirtilmedi"
+            objective_display = (
+                OBJECTIVE_TR_LABELS.get(profile.objective.value, profile.objective.value)
+                if profile.objective
+                else "Belirtilmedi"
+            )
             st.caption(f"Aktif beslenme amacı: **{objective_display}**")
 
             st.subheader("3️⃣ Alerjen Uyarısı")
