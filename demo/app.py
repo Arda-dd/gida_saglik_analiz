@@ -117,6 +117,17 @@ def render_sources_legend(chunk_ids: list[str]) -> None:
         st.caption(f"[{i}] {title} — {badge}")
 
 
+def diet_score_message(score: float) -> tuple[str, str]:
+    """Diyet Uyum Skoru'nu (0-100) tek basina bir sayi olarak degil, kullanicinin ne yapmasi
+    gerektigini soyleyen bir yoruma cevirir - donen ilk deger st.success/warning/error'dan
+    hangisinin cagrilacagini belirtir."""
+    if score >= 80:
+        return "success", "Bu ürün beslenme hedeflerinizle büyük ölçüde uyumlu."
+    if score >= 50:
+        return "warning", "Bu ürün beslenme hedeflerinizle kısmen uyumlu — dikkatli tüketin."
+    return "error", "Bu ürün beslenme hedeflerinizle uyumlu değil."
+
+
 def clean_explanation_text(text: str) -> str:
     """Kucuk/ucretsiz modelin bazen ekledigi "Kullanıcıya 3-5 cümlelik bir değerlendirme
     yazabiliriz:" turu meta-yorum satirini temizler - kullanicinin ilk okudugu seyin
@@ -427,6 +438,8 @@ with tab_scan:
 
             st.subheader("2️⃣ Diyet Uyum Skoru")
             st.metric("Uyum Skoru", f"{health_assessment.diet_compliance_score:.0f} / 100")
+            score_level, score_message = diet_score_message(health_assessment.diet_compliance_score)
+            getattr(st, score_level)(score_message)
             objective_display = (
                 OBJECTIVE_TR_LABELS.get(profile.objective.value, profile.objective.value)
                 if profile.objective
@@ -459,8 +472,22 @@ with tab_scan:
             alternatives = recommend_alternatives(current_prod, list(candidates), profile)
             if alternatives:
                 st.subheader("Alternatif Ürün Önerileri")
+                st.caption(
+                    "Aynı kategoride, profilinizle çelişmeyen ve bu üründen daha az sağlık "
+                    "riski taşıyan alternatifler (100g bazında)."
+                )
                 for alt in alternatives:
-                    st.write(f"- `{alt.product_id}` ({alt.category.value})")
+                    alt_category_label = CATEGORY_TR_LABELS.get(alt.category.value, alt.category.value)
+                    alt_nutrition = alt.nutrition.model_dump(exclude_none=True)
+                    detail_parts = []
+                    if "energy_kcal" in alt_nutrition:
+                        detail_parts.append(f"{alt_nutrition['energy_kcal']:.0f} kcal")
+                    if "sugar_g" in alt_nutrition:
+                        detail_parts.append(f"{alt_nutrition['sugar_g']:.1f} g şeker")
+                    if "salt_g" in alt_nutrition:
+                        detail_parts.append(f"{alt_nutrition['salt_g']:.1f} g tuz")
+                    detail = " · ".join(detail_parts) if detail_parts else "besin verisi sınırlı"
+                    st.write(f"- **{alt_category_label}** ürünü (`{alt.product_id}`) — {detail}")
         elif result_data["detected_allergens"]:
             st.caption(
                 "Tespit edilen alerjenler (profil girilmediği için kişisel uyarı üretilmedi): "
