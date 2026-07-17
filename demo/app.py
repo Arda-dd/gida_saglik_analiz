@@ -30,6 +30,8 @@ from src.common.schema import Allergen, NutritionFacts, ProductRecord, UserObjec
 from src.health.profile import ChronicCondition, HealthProfile
 from src.health.recommend import build_health_assessment, recommend_alternatives
 from src.ocr.risk_engine import describe_risks
+from src.rag.chunking import chunk_knowledge_base
+from src.rag.generate import CITATION_PATTERN
 
 # Veritabanını ilklendir
 init_db()
@@ -48,6 +50,61 @@ NUTRITION_DISPLAY_ORDER: list[tuple[str, str, str]] = [
     ("salt_g", "Tuz", "g"),
     ("sodium_mg", "Sodyum", "mg"),
 ]
+
+CATEGORY_TR_LABELS: dict[str, str] = {
+    "sut_urunu": "Süt Ürünü",
+    "atistirmalik": "Atıştırmalık",
+    "icecek": "İçecek",
+    "hazir_gida": "Hazır Gıda",
+    "konserve": "Konserve",
+    "bilinmiyor": "Bilinmiyor",
+}
+
+
+def _load_kb_doc_info() -> dict[str, tuple[str, bool, str | None]]:
+    """Bilgi tabanindaki her dokuman icin (baslik, dogrulanmis-mi, kaynak-adi) haritasi cikarir.
+
+    Amac: LLM ciktisindaki ham "[Kaynak: who_sugars_intake::2]" gibi chunk_id'leri, kullaniciya
+    "WHO — Serbest Seker ve Yag Alimi" gibi okunakli bir isimle gostermek (bkz. render_sources_legend).
+    """
+    info: dict[str, tuple[str, bool, str | None]] = {}
+    for chunk in chunk_knowledge_base():
+        info.setdefault(chunk.doc_id, (chunk.title, chunk.verified, chunk.source))
+    return info
+
+
+KB_DOC_INFO = _load_kb_doc_info()
+
+
+def format_citations_as_footnotes(text: str) -> tuple[str, list[str]]:
+    """Metindeki her "[Kaynak: chunk_id]" etiketini kucuk bir "[n]" dipnot isaretine cevirir.
+
+    Kullanicinin ham chunk_id'lerle (ornegin "who_sugars_intake::2") karsilasmasini onler -
+    okunakli kaynak adlari ayri bir listede render_sources_legend ile gosterilir.
+    """
+    seen: list[str] = []
+
+    def _replace(match) -> str:
+        chunk_id = match.group(1).strip()
+        if chunk_id not in seen:
+            seen.append(chunk_id)
+        return f"[{seen.index(chunk_id) + 1}]"
+
+    cleaned = CITATION_PATTERN.sub(_replace, text)
+    return cleaned, seen
+
+
+def render_sources_legend(chunk_ids: list[str]) -> None:
+    """format_citations_as_footnotes'un urettigi [n] dipnotlarina karsilik gelen okunakli
+    kaynak listesini gosterir (dogrulanmis/taslak rozetiyle birlikte)."""
+    if not chunk_ids:
+        return
+    st.markdown("**Kaynaklar:**")
+    for i, chunk_id in enumerate(chunk_ids, start=1):
+        doc_id = chunk_id.split("::")[0]
+        title, verified, _source = KB_DOC_INFO.get(doc_id, (doc_id, False, None))
+        badge = "✅ Doğrulanmış kaynak" if verified else "⚠️ Taslak/doğrulanmamış kaynak"
+        st.caption(f"[{i}] {title} — {badge}")
 
 
 def clean_explanation_text(text: str) -> str:
@@ -314,7 +371,15 @@ with tab_scan:
         is_cached = True
 
     if result_data is not None:
+        # --- Genel Özet (en ust, tek bakista anlasilir kisa ozet) ---
         category_label = CATEGORY_TR_LABELS.get(result_data["category"], result_data["category"])
+        if result_data["risk_messages"]:
+            st.warning(
+                f"**{category_label}** kategorisinde bir ürün — {len(result_data['risk_messages'])} "
+                "sağlık uyarısı bulundu (aşağıda detaylı)."
+            )
+        else:
+            st.success(f"**{category_label}** kategorisinde bir ürün — belirgin bir sağlık riski tespit edilmedi.")
 
         if result_data["ocr_confidence"] < 50:
             st.caption(
@@ -388,12 +453,12 @@ with tab_scan:
 
         if result_data["explanation_text"]:
             st.subheader("Uzman Kaynaklara Dayalı Açıklama")
-            st.caption(
-                "WHO/EFSA/TGK kaynaklarından alınan bilgiyle üretilmiştir. Cümle sonundaki "
-                "`[Kaynak: ...]` etiketleri, o bilginin hangi kaynaktan geldiğini gösterir "
-                "(kaynakça şeffaflığı için) — okurken göz ardı edebilirsiniz."
+            st.caption("WHO/EFSA/TGK kaynaklarından alınan bilgiyle üretilmiştir.")
+            cleaned_text, cited_chunk_ids = format_citations_as_footnotes(
+                clean_explanation_text(result_data["explanation_text"])
             )
-            st.write(clean_explanation_text(result_data["explanation_text"]))
+            st.write(cleaned_text)
+            render_sources_legend(cited_chunk_ids)
 
 with tab_dash:
     st.header("📊 Sağlık Raporu & Tarihçe Analizi")
