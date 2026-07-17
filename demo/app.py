@@ -336,7 +336,10 @@ with tab_scan:
         scans = db.query(DBScanHistory).filter(DBScanHistory.user_id == st.session_state.user_id).order_by(DBScanHistory.scanned_at.desc()).all()
         if scans:
             st.subheader("📜 Geçmiş Taramalarınız")
-            scan_options = {f"{s.scanned_at.strftime('%Y-%m-%d %H:%M')} — {s.category.upper()}": s for s in scans}
+            scan_options = {
+                f"{s.scanned_at.strftime('%Y-%m-%d %H:%M')} — {CATEGORY_TR_LABELS.get(s.category, s.category)}": s
+                for s in scans
+            }
             selected_scan_key = st.selectbox("Önceki taramalarınızı hızlıca inceleyin:", ["— Seçin —"] + list(scan_options.keys()))
             if selected_scan_key != "— Seçin —":
                 selected_scan = scan_options[selected_scan_key]
@@ -567,7 +570,7 @@ with tab_dash:
                     calories.append(nut.get("energy_kcal", 0) or 0)
                     sugar.append(nut.get("sugar_g", 0) or 0)
                     salt.append(nut.get("salt_g", 0) or 0)
-                    categories.append(scan.category)
+                    categories.append(CATEGORY_TR_LABELS.get(scan.category, scan.category))
                     product_names.append(scan.product_id)
                 except Exception:
                     continue
