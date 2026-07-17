@@ -70,6 +70,25 @@ OBJECTIVE_TR_LABELS: dict[str, str] = {
     "alerji_takibi": "Alerji Takibi",
 }
 
+# Alerji/kronik durum secim kutulari (multiselect) icin ayni okunakli-etiket yaklasimi -
+# ozellikle "bobrek_hastaligi"/"kalp_hastaligi" gibi snake_case degerlerin ham haliyle
+# kullaniciya gosterilmesini onler.
+ALLERGEN_TR_LABELS: dict[str, str] = {
+    "laktoz": "Laktoz",
+    "gluten": "Gluten",
+    "findik": "Fındık",
+    "soya": "Soya",
+    "yumurta": "Yumurta",
+    "balik": "Balık",
+}
+
+CONDITION_TR_LABELS: dict[str, str] = {
+    "diyabet": "Diyabet",
+    "hipertansiyon": "Hipertansiyon",
+    "bobrek_hastaligi": "Böbrek Hastalığı",
+    "kalp_hastaligi": "Kalp Hastalığı",
+}
+
 
 def _load_kb_doc_info() -> dict[str, tuple[str, bool, str | None]]:
     """Bilgi tabanindaki her dokuman icin (baslik, dogrulanmis-mi, kaynak-adi) haritasi cikarir.
@@ -230,12 +249,14 @@ with st.sidebar:
         condition_labels = st.multiselect(
             "Kronik durumlar",
             options=[c.value for c in ChronicCondition],
-            default=[c.value for c in saved_conditions]
+            default=[c.value for c in saved_conditions],
+            format_func=lambda x: CONDITION_TR_LABELS.get(x, x)
         )
         allergen_labels = st.multiselect(
             "Alerjiler",
             options=[a.value for a in Allergen],
-            default=[a.value for a in saved_allergens]
+            default=[a.value for a in saved_allergens],
+            format_func=lambda x: ALLERGEN_TR_LABELS.get(x, x)
         )
         calorie_target = st.number_input(
             "Günlük kalori hedefi (kcal, 0 = belirtilmedi)",
@@ -272,9 +293,15 @@ with st.sidebar:
         st.caption("Giriş yapmadan yapılan değişiklikler kaydedilmez.")
 
         condition_labels = st.multiselect(
-            "Kronik durumlar", options=[c.value for c in ChronicCondition]
+            "Kronik durumlar",
+            options=[c.value for c in ChronicCondition],
+            format_func=lambda x: CONDITION_TR_LABELS.get(x, x)
         )
-        allergen_labels = st.multiselect("Alerjiler", options=[a.value for a in Allergen])
+        allergen_labels = st.multiselect(
+            "Alerjiler",
+            options=[a.value for a in Allergen],
+            format_func=lambda x: ALLERGEN_TR_LABELS.get(x, x)
+        )
         calorie_target = st.number_input(
             "Günlük kalori hedefi (kcal, 0 = belirtilmedi)", min_value=0, value=0, step=100
         )
@@ -449,7 +476,9 @@ with tab_scan:
 
             st.subheader("3️⃣ Alerjen Uyarısı")
             if health_assessment.allergen_warning:
-                conflict_names = ", ".join(a.value for a in health_assessment.allergen_conflicts)
+                conflict_names = ", ".join(
+                    ALLERGEN_TR_LABELS.get(a.value, a.value) for a in health_assessment.allergen_conflicts
+                )
                 st.error(f"Dikkat: profilinizdeki alerjenlerle çelişiyor ({conflict_names})!")
             else:
                 st.success("Profilinizdeki alerjenlerle bilinen bir çelişki yok.")
@@ -491,7 +520,9 @@ with tab_scan:
         elif result_data["detected_allergens"]:
             st.caption(
                 "Tespit edilen alerjenler (profil girilmediği için kişisel uyarı üretilmedi): "
-                + ", ".join(result_data["detected_allergens"])
+                + ", ".join(
+                    ALLERGEN_TR_LABELS.get(a, a) for a in result_data["detected_allergens"]
+                )
             )
 
         if result_data["explanation_text"]:
