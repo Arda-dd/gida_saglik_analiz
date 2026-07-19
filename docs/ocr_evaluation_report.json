@@ -86,14 +86,14 @@
         "energy_kj": true,
         "fat_g": false,
         "saturated_fat_g": false,
-        "carbohydrate_g": false,
+        "carbohydrate_g": true,
         "sugar_g": false,
         "fiber_g": false,
         "protein_g": false,
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 2
+      "n_fields_correct": 3
     },
     {
       "product_id": "off_3046920022606",
@@ -569,7 +569,7 @@
       "product_id": "off_7622210449283",
       "category": "atistirmalik",
       "engine": "easyocr",
-      "ocr_confidence": 64.02013261391733,
+      "ocr_confidence": 60.28772349751982,
       "field_results": {
         "energy_kcal": false,
         "energy_kj": false,
@@ -588,7 +588,7 @@
       "product_id": "off_3046920029759",
       "category": "atistirmalik",
       "engine": "easyocr",
-      "ocr_confidence": 77.48907378670901,
+      "ocr_confidence": 77.56629155697429,
       "field_results": {
         "energy_kcal": true,
         "energy_kj": true,
@@ -607,7 +607,7 @@
       "product_id": "off_06175700",
       "category": "atistirmalik",
       "engine": "easyocr",
-      "ocr_confidence": 77.95701529822973,
+      "ocr_confidence": 74.59024883639003,
       "field_results": {
         "energy_kcal": true,
         "energy_kj": true,
@@ -626,7 +626,7 @@
       "product_id": "off_3175680011480",
       "category": "atistirmalik",
       "engine": "easyocr",
-      "ocr_confidence": 6.217445402696131,
+      "ocr_confidence": 6.866576317898062,
       "field_results": {
         "energy_kcal": false,
         "energy_kj": false,
@@ -645,7 +645,7 @@
       "product_id": "off_3046920022651",
       "category": "atistirmalik",
       "engine": "easyocr",
-      "ocr_confidence": 85.70010356874224,
+      "ocr_confidence": 85.63197160728687,
       "field_results": {
         "energy_kcal": true,
         "energy_kj": true,
@@ -664,7 +664,7 @@
       "product_id": "off_3046920022606",
       "category": "atistirmalik",
       "engine": "easyocr",
-      "ocr_confidence": 9.679176690576151,
+      "ocr_confidence": 9.456373998231046,
       "field_results": {
         "energy_kcal": false,
         "energy_kj": false,
@@ -683,10 +683,10 @@
       "product_id": "off_3242274030056",
       "category": "hazir_gida",
       "engine": "easyocr",
-      "ocr_confidence": 34.0501528980211,
+      "ocr_confidence": 33.799773204312984,
       "field_results": {
-        "energy_kcal": true,
-        "energy_kj": true,
+        "energy_kcal": false,
+        "energy_kj": false,
         "fat_g": false,
         "saturated_fat_g": false,
         "carbohydrate_g": false,
@@ -696,13 +696,13 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 2
+      "n_fields_correct": 0
     },
     {
       "product_id": "off_7613035937420",
       "category": "hazir_gida",
       "engine": "easyocr",
-      "ocr_confidence": 38.98027298894114,
+      "ocr_confidence": 39.93734970176153,
       "field_results": {
         "energy_kcal": false,
         "energy_kj": false,
@@ -721,10 +721,10 @@
       "product_id": "off_3175681170872",
       "category": "hazir_gida",
       "engine": "easyocr",
-      "ocr_confidence": 37.18046413111656,
+      "ocr_confidence": 34.04666600295319,
       "field_results": {
         "energy_kcal": true,
-        "energy_kj": true,
+        "energy_kj": false,
         "fat_g": false,
         "saturated_fat_g": false,
         "carbohydrate_g": false,
@@ -734,13 +734,13 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 2
+      "n_fields_correct": 1
     },
     {
       "product_id": "off_3083681148640",
       "category": "hazir_gida",
       "engine": "easyocr",
-      "ocr_confidence": 25.64963364223667,
+      "ocr_confidence": 26.30471368708946,
       "field_results": {
         "energy_kcal": false,
         "energy_kj": false,
@@ -759,7 +759,7 @@
       "product_id": "off_3281780893915",
       "category": "hazir_gida",
       "engine": "easyocr",
-      "ocr_confidence": 83.67972440195032,
+      "ocr_confidence": 84.7968930392979,
       "field_results": {
         "energy_kcal": true,
         "energy_kj": true,
@@ -778,26 +778,26 @@
       "product_id": "off_3021690201123",
       "category": "hazir_gida",
       "engine": "easyocr",
-      "ocr_confidence": 73.93128378357326,
+      "ocr_confidence": 68.23406495377517,
       "field_results": {
         "energy_kcal": false,
         "energy_kj": true,
         "fat_g": false,
         "saturated_fat_g": false,
-        "carbohydrate_g": false,
-        "sugar_g": false,
+        "carbohydrate_g": true,
+        "sugar_g": true,
         "fiber_g": false,
         "protein_g": false,
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 1
+      "n_fields_correct": 3
     },
     {
       "product_id": "off_6111035000430",
       "category": "icecek",
       "engine": "easyocr",
-      "ocr_confidence": 47.63945738832149,
+      "ocr_confidence": 43.37634326885233,
       "field_results": {
         "energy_kcal": false,
         "energy_kj": false,
@@ -832,7 +832,7 @@
       "product_id": "off_6111128000071",
       "category": "icecek",
       "engine": "easyocr",
-      "ocr_confidence": 63.5405285647267,
+      "ocr_confidence": 62.32400308040257,
       "field_results": {
         "energy_kcal": false,
         "energy_kj": false,
@@ -851,7 +851,7 @@
       "product_id": "off_6111252421568",
       "category": "icecek",
       "engine": "easyocr",
-      "ocr_confidence": 9.632855532233009,
+      "ocr_confidence": 38.93133850705546,
       "field_results": {
         "energy_kcal": false,
         "energy_kj": false,
@@ -870,7 +870,7 @@
       "product_id": "off_6111035000027",
       "category": "icecek",
       "engine": "easyocr",
-      "ocr_confidence": 6.208355819048122,
+      "ocr_confidence": 8.527633717441669,
       "field_results": {
         "energy_kcal": false,
         "energy_kj": false,
@@ -888,7 +888,7 @@
       "product_id": "off_6111035502828",
       "category": "icecek",
       "engine": "easyocr",
-      "ocr_confidence": 35.58203670457614,
+      "ocr_confidence": 51.86504942192313,
       "field_results": {
         "energy_kcal": false,
         "energy_kj": false,
@@ -907,7 +907,7 @@
       "product_id": "off_3083681095296",
       "category": "konserve",
       "engine": "easyocr",
-      "ocr_confidence": 66.6743123091378,
+      "ocr_confidence": 68.78612263592704,
       "field_results": {
         "energy_kcal": false,
         "energy_kj": false,
@@ -926,7 +926,7 @@
       "product_id": "off_20004132",
       "category": "konserve",
       "engine": "easyocr",
-      "ocr_confidence": 21.73011897577771,
+      "ocr_confidence": 9.671300201821117,
       "field_results": {
         "energy_kcal": false,
         "energy_kj": false,
@@ -945,7 +945,7 @@
       "product_id": "off_3083681094459",
       "category": "konserve",
       "engine": "easyocr",
-      "ocr_confidence": 82.03853692433476,
+      "ocr_confidence": 81.2687715569317,
       "field_results": {
         "energy_kcal": true,
         "energy_kj": true,
@@ -964,7 +964,7 @@
       "product_id": "off_3307130803004",
       "category": "konserve",
       "engine": "easyocr",
-      "ocr_confidence": 81.47497191953654,
+      "ocr_confidence": 84.18735266519225,
       "field_results": {
         "energy_kcal": true,
         "energy_kj": true,
@@ -983,7 +983,7 @@
       "product_id": "off_3083681001808",
       "category": "konserve",
       "engine": "easyocr",
-      "ocr_confidence": 78.72293970524272,
+      "ocr_confidence": 78.336386434653,
       "field_results": {
         "energy_kcal": true,
         "energy_kj": true,
@@ -1002,7 +1002,7 @@
       "product_id": "off_3083681094923",
       "category": "konserve",
       "engine": "easyocr",
-      "ocr_confidence": 76.35435268231839,
+      "ocr_confidence": 78.69027770528294,
       "field_results": {
         "energy_kcal": true,
         "energy_kj": true,
@@ -1040,7 +1040,7 @@
       "product_id": "off_6111242100992",
       "category": "sut_urunu",
       "engine": "easyocr",
-      "ocr_confidence": 27.76846581341905,
+      "ocr_confidence": 29.718882579740843,
       "field_results": {
         "energy_kcal": false,
         "energy_kj": false,
@@ -1059,7 +1059,7 @@
       "product_id": "off_6111242106949",
       "category": "sut_urunu",
       "engine": "easyocr",
-      "ocr_confidence": 26.126057169752915,
+      "ocr_confidence": 25.72904732201557,
       "field_results": {
         "energy_kcal": false,
         "energy_kj": false,
@@ -1078,7 +1078,7 @@
       "product_id": "off_6111242101180",
       "category": "sut_urunu",
       "engine": "easyocr",
-      "ocr_confidence": 90.24920003339692,
+      "ocr_confidence": 89.47012287856145,
       "field_results": {
         "energy_kcal": false,
         "energy_kj": false,
@@ -1096,7 +1096,7 @@
       "product_id": "off_6111242100985",
       "category": "sut_urunu",
       "engine": "easyocr",
-      "ocr_confidence": 29.081876037508028,
+      "ocr_confidence": 29.792684851448513,
       "field_results": {
         "energy_kcal": false,
         "energy_kj": false,
@@ -1115,7 +1115,7 @@
       "product_id": "off_6111246721278",
       "category": "sut_urunu",
       "engine": "easyocr",
-      "ocr_confidence": 86.35000461154527,
+      "ocr_confidence": 85.91801163871236,
       "field_results": {
         "energy_kcal": true,
         "energy_kj": true,
@@ -1134,15 +1134,15 @@
   "summary": {
     "tesseract": {
       "total_fields_evaluated": 265,
-      "total_fields_correct": 20,
-      "field_accuracy_pct": 7.547169811320755,
+      "total_fields_correct": 21,
+      "field_accuracy_pct": 7.9245283018867925,
       "mean_ocr_confidence": 36.996967371368854
     },
     "easyocr": {
       "total_fields_evaluated": 265,
-      "total_fields_correct": 43,
-      "field_accuracy_pct": 16.22641509433962,
-      "mean_ocr_confidence": 50.9813343624408
+      "total_fields_correct": 42,
+      "field_accuracy_pct": 15.849056603773585,
+      "mean_ocr_confidence": 51.794781878169715
     }
   }
 }

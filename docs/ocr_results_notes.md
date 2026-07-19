@@ -39,12 +39,35 @@ doğruluk, öneri formunun hedefine (**≥%90**) henüz ulaşmadı. Bu doküman 
    kaynakçası, Romero-Tapiador ve ark. 2025 — vizyon-dil modellerinin porsiyon/veri çeşitliliği
    sınırlamaları).
 
-## Önerilen Yol Haritası
+## Layout-Aware Satır Gruplama Denendi (2026-07-19) — Beklenen İyileşme Gerçekleşmedi
 
-1. **Konum-farkında (layout-aware) ayrıştırma:** EasyOCR zaten her tespit için bounding box (x,y
-   koordinatları) döndürüyor — şu an bu bilgi `extract_text_easyocr` içinde atılıyor. Bir sonraki
-   adım, tespitleri y-koordinatına göre satırlara gruplamak, her satır içinde x-koordinatına göre
-   sıralamak (klasik OCR tablo-yeniden-yapılandırma tekniği) ve regex'i satır bazında çalıştırmaktır.
+Aşağıdaki 1 numaralı öneri (konum-farkında ayrıştırma) Semih tarafından uygulandı
+(`src/ocr/extract.py::_group_boxes_into_rows` — tespitleri y-koordinatına göre satırlara
+gruplayıp her satırı x-koordinatına göre soldan sağa sıralıyor, hem Tesseract hem EasyOCR için).
+`python -m src.ocr.evaluate` aynı 30 gerçek görsel + ground-truth setiyle **tekrar çalıştırıldı**
+(2026-07-19) ve sonuç, hipotezin aksine, **ölçülebilir bir iyileşme göstermedi**:
+
+| Motor      | Önceki (satır gruplama öncesi) | Sonraki (satır gruplama sonrası) |
+|------------|-------------------------------|-----------------------------------|
+| Tesseract  | %7.5 (20/265 alan)             | %7.9 (21/265 alan)                 |
+| EasyOCR    | %16.2 (43/265 alan)            | %15.8 (42/265 alan) — **hafif gerileme** |
+
+Fark, gürültü seviyesinde (±1 alan) — istatistiksel olarak anlamlı bir kazanç yok. Muhtemel
+neden: kök neden analizindeki asıl darboğaz (madde 3), etiketlerin **"Per 100g" / "Per porsiyon"
+şeklinde yan yana iki sütun** içermesiydi — satır gruplama, bir satırdaki tüm kutucukları
+birleştirdiğinde bu iki sütunu da AYNI satıra dahil ediyor (örn. "Energie 638kJ 159kcal 300kcal"),
+yani etiket başına iki değer yan yana duruyor ve regex hâlâ hangisinin "100g" hangisinin
+"porsiyon" değeri olduğunu ayırt edemiyor — satır gruplama sütun içi karışıklığı çözmüyor, sadece
+satırlar arası karışıklığı çözüyor (ki bu örneklemde asıl sorun zaten sütunlar arasıydı). Bu
+yüzden **madde 1 kapandı sayılmıyor** — gerçek çözüm için sütun sınırlarını da (x-koordinatı
+kümelemesi ile "100g sütunu" / "porsiyon sütunu" ayrımı) tespit eden bir sonraki iterasyon
+gerekiyor; bkz. güncel yol haritası aşağıda. Ham veri: `docs/ocr_evaluation_report.json`.
+
+## Güncel Yol Haritası
+
+1. ~~Konum-farkında (layout-aware) satır gruplama~~ — **uygulandı, ölçülebilir kazanç yok**
+   (yukarı bakınız). Bir sonraki iterasyon satır İÇİNDEKİ sütun ayrımını (x-koordinatı bazlı
+   kümeleme) hedeflemeli.
 2. **Türkçe yerel etiketlerle yeniden değerlendirme:** Bu değerlendirme örneklemi tesadüfen büyük
    ölçüde Fransızca/çok sütunlu global ürünlerden oluştu. Projenin asıl hedefi Türkiye marketlerinden
    toplanan etiketlerdir (Faz 1'in bekleyen insan görevi) — bunlar genellikle tek sütunlu, Türkçe

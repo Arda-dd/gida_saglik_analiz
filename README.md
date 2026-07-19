@@ -54,7 +54,7 @@ api/                 FastAPI backend - pipeline orkestrasyonu (Faz 6)
 demo/                Streamlit web demo (Faz 6)
 mobile/              Flutter mobil uygulama (Faz 7 - henuz baslanmadi)
 models/              egitilmis agirliklar (git'e girmez, bkz. asagi)
-tests/               pytest testleri (235+ test)
+tests/               pytest testleri (250+ test)
 docs/                her fazin sonuc/durum notlari (dogruluk rakamlari, bilinen sorunlar)
 ```
 
@@ -153,7 +153,7 @@ pytest tests/ -v
 ```
 
 Tümü yeşil olmalı (API anahtarı/model dosyası eksikse bazı testler değil, sadece gerçek
-uçtan-uca çalıştırma script'leri —`index_builder`/`evaluate`— etkilenir; pytest'teki 235+ test
+uçtan-uca çalıştırma script'leri —`index_builder`/`evaluate`— etkilenir; pytest'teki 250+ test
 tamamı mock'lu olduğundan bağımsız çalışır).
 
 ## Çalıştırma
@@ -185,8 +185,8 @@ Her fazın sonucu, hedeflenen metrikle birlikte `docs/` altında **dürüstçe**
 |---|---|---|---|
 | 0-1 | İskelet + veri toplama | Tamamlandı (395 OFF kaydı) | `docs/attribution_off.md` |
 | 2 | Görsel sınıflandırma | **%75 test accuracy** (hedef ≥%85 — veri hacmi kısıtı, bkz. altta) | `docs/vision_results_notes.md` |
-| 3 | OCR + normalizasyon | **%16.2 alan doğruluğu** (hedef ≥%90 — çok sütunlu tablo/görsel kalitesi kısıtı) | `docs/ocr_results_notes.md` |
-| 4 | RAG | Recall@5 %100, Factual Consistency %100, Ground Truth Alignment %38 | `docs/rag_results_notes.md` |
+| 3 | OCR + normalizasyon | **%15.8 alan doğruluğu** (hedef ≥%90 — çok sütunlu tablo/görsel kalitesi kısıtı; layout-aware satır gruplama denendi, ölçülebilir kazanç sağlamadı) | `docs/ocr_results_notes.md` |
+| 4 | RAG | Recall@5 %100, Factual Consistency %100, Ground Truth Alignment **%86.4** (self-consistency'ye sayısal-dayanak kontrolü eklendikten sonra %38.2'den yükseldi) | `docs/rag_results_notes.md` |
 | 5 | Kişisel profil | Profile Consistency %100, Recommendation Relevance %100 | `docs/health_results_notes.md` |
 | 6 | API + Demo | Gerçek fotoğrafla uçtan uca doğrulandı | `docs/faz6_results_notes.md` |
 
@@ -197,17 +197,25 @@ Gerçek market etiketleriyle canlı testte (2026-07-09) doğrulanan, bilinen ve 
 iyileştirilmesi planlanıyor:
 
 1. **OCR doğruluğu düşük (~%16-52 güven).** Kök nedenler: (a) gerçek market fotoğraflarında
-   parlama/yansıma ve eğik açı, (b) çok sütunlu besin tablosu düzeni OCR'da düz metne
-   dönüşünce etiket-değer eşleşmesi bozuluyor, (c) küçük/yoğun yazı. Etkisi: bazı besin
-   değerleri (özellikle şeker/yağ/karbonhidrat) hiç çıkarılamayabiliyor, bu da risk motorunun
-   gerçek bir riski (ör. yüksek şeker) kaçırmasına yol açabiliyor. Bkz. `docs/ocr_results_notes.md`.
+   parlama/yansıma ve eğik açı, (b) çok sütunlu besin tablosu düzeni ("100g" ve "porsiyon"
+   sütunları yan yana) OCR'da düz metne dönüşünce etiket-değer eşleşmesi bozuluyor, (c)
+   küçük/yoğun yazı. Etkisi: bazı besin değerleri (özellikle şeker/yağ/karbonhidrat) hiç
+   çıkarılamayabiliyor, bu da risk motorunun gerçek bir riski (ör. yüksek şeker) kaçırmasına
+   yol açabiliyor. **Denendi ve işe yaramadı (2026-07-19):** EasyOCR/Tesseract çıktısını
+   y-koordinatına göre satırlara gruplayan bir "layout-aware" katman eklendi, ancak gerçek
+   değerlendirmede ölçülebilir bir iyileşme sağlamadı (%16.2 → %15.8) — çünkü asıl sorun
+   satırlar arası değil, AYNI satırdaki iki sütunun (100g/porsiyon) birbirinden ayrılamamasıydı.
+   Bkz. `docs/ocr_results_notes.md`.
 2. **Görsel sınıflandırma %75'te sınırlı** (394 eğitim görseli — veri hacmi darboğazı,
-   hiperparametre sorunu değil, iki ayrı deneyle doğrulandı). Bkz. `docs/vision_results_notes.md`.
+   hiperparametre sorunu değil, iki ayrı deneyle doğrulandı). Semih tarafından ViT/
+   EfficientNet-B4 backbone seçenekleri ve ek augmentation eklendi, ancak henüz yeniden
+   eğitim yapılıp doğrulanmadı — `docs/vision_results_notes.md` hâlâ %75 rakamını gösteriyor.
 
 **Planlanan iyileştirme yönleri:** (a) yerel Türkiye marketlerinden gerçek, düz açılı,
-parlamasız fotoğraf toplama (`docs/local_data_collection_protocol.md`), (b) EasyOCR'ın
-bounding box çıktısını kullanarak satır/sütun yapısını koruyan (layout-aware) bir ayrıştırma
-katmanı, (c) daha fazla eğitim görseli ile CNN'i yeniden eğitme.
+parlamasız fotoğraf toplama (`docs/local_data_collection_protocol.md`), (b) satır İÇİNDEKİ
+sütun ayrımını (x-koordinatı kümeleme ile "100g sütunu"/"porsiyon sütunu" ayrımı) hedefleyen
+bir sonraki OCR iterasyonu, (c) yeni backbone seçenekleriyle (ViT/EfficientNet-B4) CNN'i
+yeniden eğitip sonucu ölçme.
 
 ## LLM ve Embedding Sağlayıcısı
 
