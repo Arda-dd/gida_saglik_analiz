@@ -7,9 +7,11 @@ Görsel + Metin Analizi ile Besin Bilgilendirme Sistemi — TÜBİTAK 2209-A Ara
 Paketli bir gıda ürününün etiket fotoğrafını çeker, sisteme yüklersiniz. Sistem sırasıyla:
 
 1. **Kategori tanır** (süt ürünü / atıştırmalık / içecek / hazır gıda / konserve) — bir CNN
-   (MobileNetV3/EfficientNet-B3) ile.
-2. **Besin tablosunu okur** (OCR ile) ve enerji/yağ/karbonhidrat/şeker/protein/tuz/sodyum
-   değerlerini standart bir forma (100g bazında) normalize eder.
+   (MobileNetV3/EfficientNet-B3, ayrıca ViT/EfficientNet-B4 seçenekleriyle) ile.
+2. **Perspektifi düzeltir** (görsel çerçevenin büyük kısmını kaplayan bir etiket dörtgeni
+   tespit edilirse kuşbakışı görünüme çevirir) ve **besin tablosunu okur** (OCR ile),
+   enerji/yağ/karbonhidrat/şeker/protein/tuz/sodyum değerlerini standart bir forma (100g
+   bazında) normalize eder.
 3. **Risk analizi yapar**: WHO/Nutri-Score eşiklerine göre "yüksek şeker", "yüksek tuz" gibi
    bayraklar üretir; içindekiler metninden alerjen (laktoz, gluten, fındık, soya, yumurta,
    balık) tespit eder.
@@ -46,12 +48,12 @@ config/             merkezi konfigurasyon (esikler, model yollari, LLM/embedding
 data/                raw/processed/knowledge_base (buyuk/binary dosyalar git'e girmez)
 src/common/          ortak sema (Pydantic) ve birim donusumleri
 src/data/            veri toplama + on isleme (Faz 1)
-src/vision/          gorsel siniflandirma - MobileNetV3/EfficientNet-B3 (Faz 2)
+src/vision/          gorsel siniflandirma - MobileNetV3/EfficientNet-B3/ViT/EfficientNet-B4 (Faz 2)
 src/ocr/             OCR + normalizasyon + kural motoru + alerjen tespiti (Faz 3)
 src/rag/             chunking + FAISS/BM25 retriever + LLMProvider + generation (Faz 4)
 src/health/          kisisel saglik profili + risk/diyet skoru + oneri (Faz 5)
-api/                 FastAPI backend - pipeline orkestrasyonu (Faz 6)
-demo/                Streamlit web demo (Faz 6)
+api/                 FastAPI backend - pipeline orkestrasyonu + JWT auth (Faz 6)
+demo/                Streamlit web demo - giris/kayit, gecmis, Plotly dashboard (Faz 6)
 mobile/              Flutter mobil uygulama (Faz 7 - henuz baslanmadi)
 models/              egitilmis agirliklar (git'e girmez, bkz. asagi)
 tests/               pytest testleri (250+ test)
@@ -164,8 +166,16 @@ tamamı mock'lu olduğundan bağımsız çalışır).
 streamlit run demo/app.py
 ```
 
-`http://localhost:8501` otomatik açılır. Sol menüden opsiyonel bir sağlık profili gir, bir
-etiket fotoğrafı yükle, sonucu gör.
+`http://localhost:8501` otomatik açılır. İki sekme vardır:
+
+- **🔍 Yeni Analiz & Tarama:** Sol menüden hesap oluşturup giriş yapabilir (opsiyonel — girişsiz
+  de kullanılabilir, ancak o zaman hiçbir şey kaydedilmez) veya anonim devam edebilirsin. Giriş
+  yaptıysan bir sağlık profili (kronik durum/alerji/kalori hedefi/beslenme amacı) kaydedebilir,
+  geçmiş taramalarını tekrar açabilirsin (SQLite `data/app.db`'de saklanır — git'e girmez). Bir
+  etiket fotoğrafı yükle, 3 katmanlı sonucu gör.
+- **📊 Sağlık Raporu & Tarihçe Analizi:** Giriş yapmış kullanıcılar için, son 30 günün taranan
+  ürünlerinden Plotly ile üretilen bir kalori/şeker/tuz trend grafiği, kategori dağılım grafiği
+  ve WHO limitlerine göre aşım uyarıları gösterir.
 
 **API (FastAPI, geliştirici/entegrasyon amaçlı):**
 
