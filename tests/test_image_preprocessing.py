@@ -93,10 +93,36 @@ def test_correct_perspective_warps_skewed_quadrilateral():
     from src.data.image_preprocessing import correct_perspective
     # 400x400 siyah arka plan
     img = np.zeros((400, 400, 3), dtype=np.uint8)
-    # Beyaz bir dörtgen çizelim (etiket simülasyonu)
+    # Beyaz bir dörtgen çizelim (etiket simülasyonu) - çerçevenin büyük kısmını kaplıyor
     pts = np.array([[50, 50], [350, 70], [320, 320], [70, 300]], dtype=np.int32)
     cv2.fillPoly(img, [pts], (255, 255, 255))
-    
+
     warped = correct_perspective(img)
     assert warped.shape != img.shape
     assert warped[10, 10].mean() > 200
+
+
+def test_correct_perspective_rejects_small_quad_not_covering_most_of_frame():
+    """Regresyon: gercek bir OFF ornek goruntusunde (2026-07-14, Semih'in PR incelemesi)
+    sadece besin degerleri tablosunun kucuk ic kutusu yanlislikla 'etiket siniri' sanilip
+    warp edildi - goruntu 400x300'den 103x134'e kucularak icindekiler listesi/marka/barkod
+    tamamen kayboldu. Cerceve'nin kucuk bir kismini (~%15) kaplayan bir dortgen artik
+    secilmemeli; fonksiyon orijinal goruntuyu degismeden dondurmelidir."""
+    from src.data.image_preprocessing import correct_perspective
+
+    img = np.zeros((300, 400, 3), dtype=np.uint8)
+    # Buyuk ama dortgene indirgenmeyecek bir sekil (yildiz benzeri, quad testini gecmemeli)
+    star_pts = np.array(
+        [[300, 60], [320, 120], [385, 120], [335, 155], [355, 215],
+         [300, 178], [245, 215], [265, 155], [215, 120], [280, 120]],
+        dtype=np.int32,
+    )
+    cv2.fillPoly(img, [star_pts], (255, 255, 255))
+    # Kucuk bir dortgen (~%15 alan) - gercek etikette sadece besin tablosu gibi kucuk bir
+    # alt-bolge - cercevenin cogunu kaplamadigi icin secilmemeli
+    small_quad = np.array([[20, 20], [170, 25], [165, 145], [15, 140]], dtype=np.int32)
+    cv2.fillPoly(img, [small_quad], (255, 255, 255))
+
+    warped = correct_perspective(img)
+    assert warped.shape == img.shape
+    assert np.array_equal(warped, img)

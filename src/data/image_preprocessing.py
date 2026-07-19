@@ -61,10 +61,20 @@ def _order_points(pts: np.ndarray) -> np.ndarray:
     return rect
 
 
+MIN_LABEL_AREA_RATIO = 0.4
+"""Bir dortgen konturun 'etiketin tamami' sayilabilmesi icin kaplamasi gereken minimum alan
+orani. Onceki esik (%10) gercek bir OFF ornek goruntusunde cok dusuk cikti: sadece besin
+degerleri tablosunun kucuk ic kutusu bu esigi gecip yanlislikla 'etiket siniri' sanildi ve
+goruntu 400x300'den 103x134'e kirpilarak icindekiler listesi/marka/barkod (alerjen tespiti
+icin gerekli) tamamen kayboldu. Gercek bir etiket fotografi CERCEVENIN COGUNU kaplar; bu
+yuzden esik yukseltildi - kucuk/supheli bir dortgen adayi varsa YANLIS kirpma yerine
+perspektif duzeltmeden vazgecilip orijinal goruntu kullanilir (daha guvenli varsayilan)."""
+
+
 def correct_perspective(image: np.ndarray) -> np.ndarray:
-    """Görüntüdeki en büyük dörtgen konturu (etiket sınırları) bulup
+    """Görüntüdeki, çerçevenin büyük kısmını kaplayan dörtgen konturu (etiket sınırları) bulup
     perspektif (Homografi) düzelterek kuşbakışı görünüm elde eder.
-    Eğer geçerli bir dörtgen kontur bulunamazsa orijinal görüntüyü döner.
+    Eğer bu kritere uyan bir dörtgen kontur bulunamazsa orijinal görüntüyü döner.
     """
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     blurred = cv2.GaussianBlur(gray, (5, 5), 0)
@@ -81,7 +91,7 @@ def correct_perspective(image: np.ndarray) -> np.ndarray:
         approx = cv2.approxPolyDP(c, 0.02 * peri, True)
         if len(approx) == 4:
             img_area = image.shape[0] * image.shape[1]
-            if cv2.contourArea(c) > 0.1 * img_area:
+            if cv2.contourArea(c) > MIN_LABEL_AREA_RATIO * img_area:
                 screen_cnt = approx
                 break
 
