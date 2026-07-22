@@ -89,6 +89,36 @@ def test_preprocess_label_image_raises_on_missing_file(tmp_path):
         preprocess_label_image(tmp_path / "yok.jpg", tmp_path / "out.jpg")
 
 
+def test_preprocess_label_image_corrects_exif_rotated_photo(tmp_path):
+    """Regresyon: telefonla yan tutularak çekilen (EXIF Orientation etiketli) gerçek kullanıcı
+    fotoğrafları (2026-07-22, canlı demoda karşılaşılan gerçek vaka - kalori/tuz/kategori hep
+    anlamsız çıktı) için - cv2.imread/imdecode bu etiketi tamamen yok sayar, bu yüzden görüntü
+    pipeline'a YAN piksel verisiyle girip hem CNN kategori tahminini hem OCR metin çıkarımını
+    anlamsız hale getiriyordu. Sensörün yatay kaydedip EXIF Orientation=6 ile işaretlediği bir
+    fotoğraf simüle edilir; çıktının gerçekten (sensör verisi değil, EXIF'in belirttiği) doğru
+    yönde olduğu doğrulanır."""
+    from PIL import Image as PILImage
+
+    src = tmp_path / "rotated.jpg"
+    dest = tmp_path / "processed" / "rotated.jpg"
+
+    # Sensörün kaydettiği ham piksel verisi: yatay (200 genişlik x 100 yükseklik) - aslında
+    # dikey bir etiketin 90 derece döndürülmüş hali
+    sensor_data = np.full((100, 200, 3), 128, dtype=np.uint8)
+    pil_img = PILImage.fromarray(sensor_data)
+    exif = pil_img.getexif()
+    exif[0x0112] = 6  # Orientation: goruntuleyici 90 derece dondurmeli
+    pil_img.save(src, exif=exif)
+
+    preprocess_label_image(src, dest)
+
+    buffer = np.fromfile(str(dest), dtype=np.uint8)
+    result = cv2.imdecode(buffer, cv2.IMREAD_COLOR)
+
+    # EXIF dogru uygulandiysa cikti DIKEY olmali (yatay sensor verisi degil)
+    assert result.shape[0] > result.shape[1]
+
+
 def test_correct_perspective_warps_skewed_quadrilateral():
     from src.data.image_preprocessing import correct_perspective
     # 400x400 siyah arka plan

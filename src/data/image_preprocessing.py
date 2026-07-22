@@ -13,6 +13,7 @@ from pathlib import Path
 
 import cv2
 import numpy as np
+from PIL import Image, ImageOps
 
 
 def denoise_image(image: np.ndarray) -> np.ndarray:
@@ -125,12 +126,30 @@ def correct_perspective(image: np.ndarray) -> np.ndarray:
     return warped
 
 
+def _load_image_bgr_exif_corrected(src_path: Path) -> np.ndarray:
+    """Bir gorseli EXIF Orientation etiketini uygulayarak (dogru yonde) BGR (OpenCV) formatinda okur.
+
+    Telefon kameralari sensor verisini genelde SABIT bir yonde kaydedip, "bu nasil gosterilmeli"
+    bilgisini ayri bir EXIF Orientation etiketinde tutar - fotograf galerileri/tarayicilar bu
+    etiketi otomatik uygulayip gorseli dogru yonde gosterir. cv2.imread/imdecode bu etiketi
+    TAMAMEN YOK SAYAR: telefon yan tutularak (90 derece dondurulmus) cekilen, bizim gordugumuz
+    (dogru yonde) fotograf, pipeline'a YAN/TERS piksel verisi olarak girer - bu da hem CNN
+    kategori tahminini hem OCR metin cikarimini anlamsiz hale getirir (gercek kullanici
+    fotograflarinda gozlemlendi, 2026-07-22). PIL uzerinden okuyup ImageOps.exif_transpose()
+    ile fiziksel donusu uygulayarak bu farki kapatiyoruz - PIL, Windows'ta Turkce/Unicode
+    dosya yollarini da cv2'nin aksine dogrudan destekler.
+    """
+    with Image.open(src_path) as img:
+        img = ImageOps.exif_transpose(img)
+        rgb = np.array(img.convert("RGB"))
+    return cv2.cvtColor(rgb, cv2.COLOR_RGB2BGR)
+
+
 def preprocess_label_image(src_path: Path, dest_path: Path) -> Path:
-    """Bir etiket gorselini okur, perspektif/gurultu/kontrast/renk duzeltir, yuksek cozunurlukte kaydeder."""
-    # Windows'ta Turkce karakter iceren yollarla uyumluluk icin np.fromfile kullanilarak okunur
+    """Bir etiket gorselini okur, EXIF yonunu duzeltir, perspektif/gurultu/kontrast/renk
+    duzeltir, yuksek cozunurlukte kaydeder."""
     try:
-        buffer = np.fromfile(str(src_path), dtype=np.uint8)
-        image = cv2.imdecode(buffer, cv2.IMREAD_COLOR)
+        image = _load_image_bgr_exif_corrected(src_path)
     except Exception as e:
         raise ValueError(f"Gorsel okunamadi: {src_path} (Hata: {e})")
 
