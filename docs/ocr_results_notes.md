@@ -2,9 +2,11 @@
 
 **Durum:** Pipeline uçtan uca çalışıyor (Tesseract + EasyOCR ile metin çıkarımı → regex tabanlı
 besin değeri ayrıştırma → 100g normalizasyonu → risk motoru → alerjen tespiti), tüm modüller
-pytest ile test edilmiş (135+ test). Ancak gerçek besin tablosu görsellerinde ölçülen alan bazlı
-doğruluk, öneri formunun hedefine (**≥%90**) henüz ulaşmadı. Bu doküman sonuçları ve kök nedeni
-şeffaf şekilde raporlar.
+pytest ile test edilmiş (135+ test). Canlı pipeline hâlâ EasyOCR kullanıyor (%16 civarı alan
+doğruluğu, hedef ≥%90'ın altında) ama **2026-08-15'te eklenen OCR.space bulut API'si kısmi bir
+örneklemde %50.6 alan doğruluğu gösterdi** (bkz. aşağıdaki ilgili bölüm) - henüz tam
+doğrulanmadığı ve dağıtım riski taşıdığı için üretime alınmadı, sadece karşılaştırma amaçlı
+entegre edildi. Bu doküman sonuçları ve kök nedeni şeffaf şekilde raporlar.
 
 ## Sonuçlar (2026-07-08, 30 gerçek OFF besin tablosu görseli, ground-truth OFF nutriments ile kıyas)
 
@@ -63,19 +65,58 @@ yüzden **madde 1 kapandı sayılmıyor** — gerçek çözüm için sütun sın
 kümelemesi ile "100g sütunu" / "porsiyon sütunu" ayrımı) tespit eden bir sonraki iterasyon
 gerekiyor; bkz. güncel yol haritası aşağıda. Ham veri: `docs/ocr_evaluation_report.json`.
 
+## OCR.space Bulut API'si Eklendi (2026-08-15) — Büyük, Kısmen Doğrulanmış Kazanç
+
+Formun **Risk Yönetimi B-Planı** (ticari OCR servisine geçiş) erken denendi: `src/ocr/extract.py`'ye
+`extract_text_ocrspace()` eklendi (ücretsiz katman, `OCR_SPACE_API_KEY`). `isTable=True` +
+`OCREngine=3` parametreleriyle satırları TAB (Engine 3'te Markdown tablo) ile ayırarak
+döndürüyor — bizim `_group_boxes_into_rows`'un çözemediği **sütun içi** karışıklığı (yukarıdaki
+bölüm) doğrudan API'nin kendisi çözüyor.
+
+`python -m src.ocr.evaluate` aynı 30 görsel + ground-truth setiyle çalıştırıldı:
+
+| Motor      | Alan bazlı doğruluk | Ortalama "güven" |
+|------------|---------------------|----------------------|
+| Tesseract  | %7.9 (21/265 alan)  | %37.0                |
+| EasyOCR    | %15.8 (42/265 alan) | %51.8                |
+| **OCR.space** | **%50.6 (89/176 alan)** | %66.7 (bkz. not) |
+
+**Sonuç dramatik şekilde daha iyi** — ama iki önemli çekince ile:
+
+1. **Örneklem eksik:** Ücretsiz katmanın istek limiti, değerlendirme sırasında 30 görselin
+   10'unda `429 Too Many Requests` hatasına yol açtı (istekler arasına 3sn bekleme eklense de
+   değişmedi — bu bir hız degil, muhtemelen gunluk/saatlik bir kota siniri). Yani OCR.space
+   rakamı 265 değil **176 alan** üzerinden — tam 30 görsellik bir kıyas için kota sıfırlandığında
+   (`python -m src.ocr.evaluate`) tekrar çalıştırılıp bu tabloya eklenmelidir.
+2. **"Güven" gerçek bir güven skoru değil:** OCR.space'in ücretsiz API'si Tesseract/EasyOCR'in
+   aksine kelime bazlı bir güven skoru döndürmüyor - `mean_confidence` burada sadece istegin
+   basarili olup olmadigini (100.0/0.0) yansitan bir vekil, gercek bir OCR kalite olcusu degil.
+3. **Yan bulgu (fixlendi):** OCR.space, aksanlı Latin harflerini (é, è vb.) sistematik olarak
+   "�" (Unicode replacement karakteri) ile değiştiriyor - bu, Fransızca anahtar kelimelerimizin
+   (`matières`, `saturées`, `protéines`) regex'ini kırıyordu. Karakter sınıflarına "�"
+   toleransı eklendi (`src/ocr/normalize.py`) ve ayrıca "acides gras saturées" yerine kısa
+   "dont saturées" formunun da tanınması sağlandı (gerçek OCR.space çıktısında görüldü).
+
+**Dağıtım riski:** Serbest katmanın hız/kota sınırı, canlı demo pipeline'ında (kullanıcı yükledigi
+her fotograf icin anlık bir istek) güvenilir bir birincil motor olarak kullanmayı riskli kılıyor -
+şu an sadece **karşılaştırma/değerlendirme amaçlı** entegre edildi, `api/pipeline.py`'deki
+canlı akış hâlâ EasyOCR kullanıyor. Üretime almadan önce ya ücretli bir plana geçilmeli ya da
+EasyOCR'a otomatik geri düşen (fallback) bir deneme mekanizması eklenmelidir.
+
 ## Güncel Yol Haritası
 
 1. ~~Konum-farkında (layout-aware) satır gruplama~~ — **uygulandı, ölçülebilir kazanç yok**
-   (yukarı bakınız). Bir sonraki iterasyon satır İÇİNDEKİ sütun ayrımını (x-koordinatı bazlı
-   kümeleme) hedeflemeli.
-2. **Türkçe yerel etiketlerle yeniden değerlendirme:** Bu değerlendirme örneklemi tesadüfen büyük
+   (yukarı bakınız).
+2. **OCR.space'i tam 30 görsellik ornekte tekrar olcmek** (kota sifirlandiginda) ve gercekten
+   %50+ dogrulaniyorsa, hiz/kota sinirina karsi bir fallback stratejisiyle (EasyOCR'a otomatik
+   dusme) canli pipeline'a (`api/pipeline.py`) tasimak.
+3. **Türkçe yerel etiketlerle yeniden değerlendirme:** Bu değerlendirme örneklemi tesadüfen büyük
    ölçüde Fransızca/çok sütunlu global ürünlerden oluştu. Projenin asıl hedefi Türkiye marketlerinden
    toplanan etiketlerdir (Faz 1'in bekleyen insan görevi) — bunlar genellikle tek sütunlu, Türkçe
    etiketlerdir ve muhtemelen çok daha yüksek doğruluk verecektir. Yerel fotoğraflar toplanınca
    `python -m src.ocr.evaluate` benzeri bir değerlendirme Türkçe etiketlerle tekrarlanmalıdır.
-3. Doğruluk hâlâ hedefin altında kalırsa, formun **Risk Yönetimi B-Planı** devreye girer: Google
-   Cloud Vision veya Azure Cognitive Services OCR gibi ticari servislere geçiş (tablo yapısını daha
-   iyi koruyan gelişmiş düzen analizi sunarlar).
+4. Doğruluk hâlâ hedefin altında kalırsa, formun **Risk Yönetimi B-Planı**'nın diğer adayları
+   (Google Cloud Vision, Azure Document Intelligence) da denenebilir.
 
 ## Pipeline'ın Kendisi Hakkında
 

@@ -195,7 +195,7 @@ Her fazın sonucu, hedeflenen metrikle birlikte `docs/` altında **dürüstçe**
 |---|---|---|---|
 | 0-1 | İskelet + veri toplama | Tamamlandı (395 OFF kaydı) | `docs/attribution_off.md` |
 | 2 | Görsel sınıflandırma | **%75 test accuracy** (hedef ≥%85 — veri hacmi kısıtı, bkz. altta) | `docs/vision_results_notes.md` |
-| 3 | OCR + normalizasyon | **%15.8 alan doğruluğu** (hedef ≥%90 — çok sütunlu tablo/görsel kalitesi kısıtı; layout-aware satır gruplama denendi, ölçülebilir kazanç sağlamadı) | `docs/ocr_results_notes.md` |
+| 3 | OCR + normalizasyon | Canlı pipeline (EasyOCR): **%15.8**. Deneysel OCR.space bulut API'si kısmi örneklemde **%50.6** gösterdi ama henüz tam doğrulanmadı/üretime alınmadı (hedef ≥%90) | `docs/ocr_results_notes.md` |
 | 4 | RAG | Recall@5 %100, Factual Consistency %100, Ground Truth Alignment **%86.4** (self-consistency'ye sayısal-dayanak kontrolü eklendikten sonra %38.2'den yükseldi) | `docs/rag_results_notes.md` |
 | 5 | Kişisel profil | Profile Consistency %100, Recommendation Relevance %100 | `docs/health_results_notes.md` |
 | 6 | API + Demo | Gerçek fotoğrafla uçtan uca doğrulandı | `docs/faz6_results_notes.md` |
@@ -215,7 +215,11 @@ iyileştirilmesi planlanıyor:
    y-koordinatına göre satırlara gruplayan bir "layout-aware" katman eklendi, ancak gerçek
    değerlendirmede ölçülebilir bir iyileşme sağlamadı (%16.2 → %15.8) — çünkü asıl sorun
    satırlar arası değil, AYNI satırdaki iki sütunun (100g/porsiyon) birbirinden ayrılamamasıydı.
-   Bkz. `docs/ocr_results_notes.md`.
+   **Umut verici bulgu (2026-08-15):** OCR.space bulut API'si (`isTable=True`, ücretsiz
+   katman) bu sütun sorununu doğrudan çözüyor gibi görünüyor - 30 görselin 20'sinde ölçülen
+   kısmi örneklemde **%50.6** alan doğruluğu (EasyOCR'ın ~3 katı). Ücretsiz katmanın istek
+   kotası tam 30 görsellik ölçümü engelledi ve canlı pipeline'a henüz alınmadı (dağıtım riski
+   nedeniyle) - bkz. `docs/ocr_results_notes.md`.
 2. **Görsel sınıflandırma %75'te sınırlı** (394 eğitim görseli — veri hacmi darboğazı,
    hiperparametre sorunu değil, iki ayrı deneyle doğrulandı). Semih tarafından ViT/
    EfficientNet-B4 backbone seçenekleri ve ek augmentation eklendi, ancak henüz yeniden

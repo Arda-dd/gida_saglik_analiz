@@ -650,7 +650,7 @@
         "energy_kcal": true,
         "energy_kj": true,
         "fat_g": true,
-        "saturated_fat_g": false,
+        "saturated_fat_g": true,
         "carbohydrate_g": true,
         "sugar_g": true,
         "fiber_g": false,
@@ -658,7 +658,7 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 6
+      "n_fields_correct": 7
     },
     {
       "product_id": "off_3046920022606",
@@ -1129,6 +1129,472 @@
       },
       "n_fields_evaluated": 9,
       "n_fields_correct": 2
+    },
+    {
+      "product_id": "off_7622210449283",
+      "category": "atistirmalik",
+      "engine": "ocrspace",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 9
+    },
+    {
+      "product_id": "off_3046920029759",
+      "category": "atistirmalik",
+      "engine": "ocrspace",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 4
+    },
+    {
+      "product_id": "off_06175700",
+      "category": "atistirmalik",
+      "engine": "ocrspace",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 5
+    },
+    {
+      "product_id": "off_3175680011480",
+      "category": "atistirmalik",
+      "engine": "ocrspace",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 9
+    },
+    {
+      "product_id": "off_3046920022651",
+      "category": "atistirmalik",
+      "engine": "ocrspace",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": false,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 8
+    },
+    {
+      "product_id": "off_3046920022606",
+      "category": "atistirmalik",
+      "engine": "ocrspace",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": false,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 8
+    },
+    {
+      "product_id": "off_3242274030056",
+      "category": "hazir_gida",
+      "engine": "ocrspace",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 9
+    },
+    {
+      "product_id": "off_7613035937420",
+      "category": "hazir_gida",
+      "engine": "ocrspace",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 5
+    },
+    {
+      "product_id": "off_3175681170872",
+      "category": "hazir_gida",
+      "engine": "ocrspace",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": true,
+        "protein_g": false,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 5
+    },
+    {
+      "product_id": "off_3083681148640",
+      "category": "hazir_gida",
+      "engine": "ocrspace",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": false,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 7
+    },
+    {
+      "product_id": "off_3281780893915",
+      "category": "hazir_gida",
+      "engine": "ocrspace",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 2
+    },
+    {
+      "product_id": "off_3021690201123",
+      "category": "hazir_gida",
+      "engine": "ocrspace",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 8
+    },
+    {
+      "product_id": "off_6111035000430",
+      "category": "icecek",
+      "engine": "ocrspace",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_6111035000058",
+      "category": "icecek",
+      "engine": "ocrspace",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "carbohydrate_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 6,
+      "n_fields_correct": 6
+    },
+    {
+      "product_id": "off_6111128000071",
+      "category": "icecek",
+      "engine": "ocrspace",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_6111252421568",
+      "category": "icecek",
+      "engine": "ocrspace",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_6111035000027",
+      "category": "icecek",
+      "engine": "ocrspace",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 8,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_6111035502828",
+      "category": "icecek",
+      "engine": "ocrspace",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_3083681095296",
+      "category": "konserve",
+      "engine": "ocrspace",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 2
+    },
+    {
+      "product_id": "off_20004132",
+      "category": "konserve",
+      "engine": "ocrspace",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 2
+    },
+    {
+      "product_id": "off_3083681094459",
+      "category": "konserve",
+      "engine": "ocrspace",
+      "ocr_confidence": 0.0,
+      "field_results": {},
+      "n_fields_evaluated": 0,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_3307130803004",
+      "category": "konserve",
+      "engine": "ocrspace",
+      "ocr_confidence": 0.0,
+      "field_results": {},
+      "n_fields_evaluated": 0,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_3083681001808",
+      "category": "konserve",
+      "engine": "ocrspace",
+      "ocr_confidence": 0.0,
+      "field_results": {},
+      "n_fields_evaluated": 0,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_3083681094923",
+      "category": "konserve",
+      "engine": "ocrspace",
+      "ocr_confidence": 0.0,
+      "field_results": {},
+      "n_fields_evaluated": 0,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_6111246721261",
+      "category": "sut_urunu",
+      "engine": "ocrspace",
+      "ocr_confidence": 0.0,
+      "field_results": {},
+      "n_fields_evaluated": 0,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_6111242100992",
+      "category": "sut_urunu",
+      "engine": "ocrspace",
+      "ocr_confidence": 0.0,
+      "field_results": {},
+      "n_fields_evaluated": 0,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_6111242106949",
+      "category": "sut_urunu",
+      "engine": "ocrspace",
+      "ocr_confidence": 0.0,
+      "field_results": {},
+      "n_fields_evaluated": 0,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_6111242101180",
+      "category": "sut_urunu",
+      "engine": "ocrspace",
+      "ocr_confidence": 0.0,
+      "field_results": {},
+      "n_fields_evaluated": 0,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_6111242100985",
+      "category": "sut_urunu",
+      "engine": "ocrspace",
+      "ocr_confidence": 0.0,
+      "field_results": {},
+      "n_fields_evaluated": 0,
+      "n_fields_correct": 0
+    },
+    {
+      "product_id": "off_6111246721278",
+      "category": "sut_urunu",
+      "engine": "ocrspace",
+      "ocr_confidence": 0.0,
+      "field_results": {},
+      "n_fields_evaluated": 0,
+      "n_fields_correct": 0
     }
   ],
   "summary": {
@@ -1140,9 +1606,15 @@
     },
     "easyocr": {
       "total_fields_evaluated": 265,
-      "total_fields_correct": 42,
-      "field_accuracy_pct": 15.849056603773585,
+      "total_fields_correct": 43,
+      "field_accuracy_pct": 16.22641509433962,
       "mean_ocr_confidence": 51.794781878169715
+    },
+    "ocrspace": {
+      "total_fields_evaluated": 176,
+      "total_fields_correct": 89,
+      "field_accuracy_pct": 50.56818181818182,
+      "mean_ocr_confidence": 66.66666666666667
     }
   }
 }
