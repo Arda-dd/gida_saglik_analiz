@@ -220,3 +220,23 @@ def extract_text_ocrspace(
     exit_code = results[0].get("FileParseExitCode", 0)
     mean_confidence = 100.0 if exit_code == 1 else 0.0
     return OCRResult(text=text, mean_confidence=mean_confidence, engine="ocrspace")
+
+
+def extract_text_with_ocrspace_fallback(
+    image_path: Path, langs: tuple[str, ...] = ("tr", "en")
+) -> OCRResult:
+    """Canli pipeline icin: once OCR.space'i dener (gercek degerlendirmede EasyOCR'in ~3
+    kati alan dogrulugu, bkz. docs/ocr_results_notes.md), basarisiz olursa (API anahtari
+    yok, ucretsiz kota siniri/429, ag hatasi) SESSIZCE EasyOCR'a duser.
+
+    Boylece kullanicinin istegi OCR.space'in kota sinirina takilsa bile hicbir zaman
+    basarisiz olmaz - sadece dogruluk EasyOCR seviyesine iner (analiz pipeline'inin genel
+    "opsiyonel katman basarisiz olursa kural tabanli sonuca devam et" felsefesiyle tutarli,
+    bkz. api/pipeline.py generate_explanation try/except).
+    """
+    if os.environ.get("OCR_SPACE_API_KEY"):
+        try:
+            return extract_text_ocrspace(image_path)
+        except Exception:
+            pass
+    return extract_text_easyocr(image_path, langs=langs)

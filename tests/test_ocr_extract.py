@@ -1,5 +1,5 @@
 from pathlib import Path
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 
 import pytest
 from PIL import Image, ImageDraw, ImageFont
@@ -10,6 +10,7 @@ from src.ocr.extract import (
     extract_text_easyocr,
     extract_text_ocrspace,
     extract_text_tesseract,
+    extract_text_with_ocrspace_fallback,
 )
 
 FONT_PATH = Path(r"C:\Windows\Fonts\arial.ttf")
@@ -147,3 +148,40 @@ def test_extract_text_ocrspace_empty_parsed_results_returns_empty_text(tmp_path)
     result = extract_text_ocrspace(image_path, api_key="fake-key", session=session)
     assert result.text == ""
     assert result.mean_confidence == 0.0
+
+
+def test_fallback_uses_ocrspace_when_key_present_and_call_succeeds(tmp_path, monkeypatch):
+    monkeypatch.setenv("OCR_SPACE_API_KEY", "fake-key")
+    image_path = tmp_path / "label.jpg"
+    image_path.write_bytes(b"fake-jpeg-bytes")
+
+    fake_result = OCRResult(text="Enerji 450 kcal", mean_confidence=100.0, engine="ocrspace")
+    with patch("src.ocr.extract.extract_text_ocrspace", return_value=fake_result) as mocked:
+        result = extract_text_with_ocrspace_fallback(image_path)
+
+    mocked.assert_called_once()
+    assert result.engine == "ocrspace"
+    assert result.text == "Enerji 450 kcal"
+
+
+def test_fallback_drops_to_easyocr_when_ocrspace_raises(tmp_path, monkeypatch):
+    monkeypatch.setenv("OCR_SPACE_API_KEY", "fake-key")
+    image_path = _make_text_image(tmp_path, "Enerji 450 kcal")
+
+    with patch(
+        "src.ocr.extract.extract_text_ocrspace", side_effect=RuntimeError("429 Too Many Requests")
+    ):
+        result = extract_text_with_ocrspace_fallback(image_path, langs=("en",))
+
+    assert result.engine == "easyocr"
+    assert "450" in result.text
+
+
+def test_fallback_uses_easyocr_directly_when_no_api_key(tmp_path, monkeypatch):
+    monkeypatch.delenv("OCR_SPACE_API_KEY", raising=False)
+    image_path = _make_text_image(tmp_path, "Enerji 450 kcal")
+
+    result = extract_text_with_ocrspace_fallback(image_path, langs=("en",))
+
+    assert result.engine == "easyocr"
+    assert "450" in result.text
