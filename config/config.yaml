@@ -34,6 +34,12 @@ vision:
 ocr:
   engines: [easyocr, tesseract]
   languages: [tr, en]
+  # Uctan uca pipeline'in (api/pipeline.py) kullandigi motor.
+  # paddleocr = PP-Structure: besin tablosunu YAPISIYLA cikarir, etiket-deger bagi
+  # korunur (bkz. docs/ocr_results_notes.md). easyocr/tesseract duz metin dondurur.
+  # Not: paddleocr belirgin sekilde daha yavastir - mobil/dusuk gecikme senaryosunda
+  # easyocr'a donmek icin tek satir yeterlidir.
+  engine: paddleocr   # paddleocr | easyocr | tesseract
 
 # 100g/100mL bazinda urun-seviyesi "yuksek" esikleri (Nutri-Score/UK FSA front-of-pack
 # konvansiyonu - DOGRULANMALI, bkz. data/knowledge_base/docs/nutriscore_thresholds_overview.md)

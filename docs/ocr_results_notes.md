@@ -63,8 +63,92 @@ yüzden **madde 1 kapandı sayılmıyor** — gerçek çözüm için sütun sın
 kümelemesi ile "100g sütunu" / "porsiyon sütunu" ayrımı) tespit eden bir sonraki iterasyon
 gerekiyor; bkz. güncel yol haritası aşağıda. Ham veri: `docs/ocr_evaluation_report.json`.
 
+## PaddleOCR / PP-Structure'a Gecis (2026-08-22) — Ilk Olculebilir Kazanc
+
+Satir gruplamasinin cozemedigi sorun (sutunlar arasi karisiklik) icin tablo YAPISINI
+taniyan bir motora gecildi: **PaddleOCR 3.7 / PP-StructureV3**. PP-Structure tabloyu
+HTML olarak dondurur, yani etiket-deger bagi kaynakta korunur:
+
+```html
+<tr><td>Glucides</td><td>35g</td></tr>
+<tr><td>dont sucres</td><td>30g</td></tr>
+```
+
+### Sonuclar (ayni 30 gercek OFF besin tablosu gorseli, ayni ground-truth)
+
+| Motor | Alan bazli dogruluk | Ortalama OCR guveni |
+|---|---|---|
+| Tesseract | %7.9 (21/265) | %37.0 |
+| EasyOCR (onceki varsayilan) | %15.5 (41/264) | %51.8 |
+| **PaddleOCR / PP-Structure** | **%33.3 (88/264)** | **%78.7** |
+
+Olcum, `src/ocr/evaluate.py`'nin kendi `GT_FIELD_MAP` ve `_values_match` fonksiyonlariyla,
+ayni `data/raw/openfoodfacts_ocr_samples/manifest.json` uzerinde yapildi. **Ancak
+`docs/ocr_evaluation_report.json` henuz yeniden uretilmedi** - icindeki ham veri onceki
+(Tesseract/EasyOCR, 2026-07-19) kosusuna aittir. Kanonik raporu tazelemek icin
+`python -m src.ocr.evaluate` calistirilmalidir (PP-Structure yavas oldugundan ~45 dakika).
+
+Not: Alan sayisi 265 -> 264'e dustu (OFF'ta bir ground-truth alani degismis); EasyOCR
+taban cizgisi bu yeni setle yeniden olculdu (%15.8 -> %15.5), yani kiyas ayni set uzerinde.
+
+**Bu, bu problem alanindaki ilk gercek, olculebilir kazanctir** (dogruluk ~2.15 kat,
+guven ~1.5 kat). Yine de formun >=%90 hedefinin cok altindadir.
+
+### Kalan hatanin kok nedeni: artik OCR degil, AYRISTIRICI
+
+Sonuc cift tepeli: 11 gorselde 0 alan, 7 gorselde 6+ alan (1 gorselde 9/9). Sifir cikan
+gorseller tek tek incelendi ve **cogunda OCR metni kusursuzdu** - sorun `normalize.py`'de:
+
+1. **Birim-sayi sirasi (asil neden).** Ornek `off_6111242101180` (OCR guveni %96.1, 0/8):
+   OCR ciktisi `Valeur energetique Kcal 58`, `Proteines g 3,0`, `Lipides g 3,0` seklinde,
+   yani duzen `etiket BIRIM SAYI`. `normalize.py`'nin `_search_value` regex'i ise
+   `etiket ... SAYI BIRIM` bekliyor ve hicbirini yakalayamiyor. Bu, PP-Structure'in
+   basariyla cikardigi bir tablonun ayristiricida bosa gitmesi demektir.
+2. **Degerlendirme setinin veri kalitesi.** Ornek `off_6111035502828` (guven %96.2, 0/9):
+   OFF'un `image_nutrition_url`'i bir MADEN SUYU mineral analiz tablosunu gosteriyor
+   (`Sodium / Calcium / Bicarbonates / Sulfates / Nitrates`) - goruntude besin tablosu
+   hic yok, ama ground-truth 9 alan bekliyor. Bu gorseller ne yapilsa 0 verir.
+3. Birkac gorselde OCR gercekten bir sey bulamadi (guven 0.0) - dusuk kaliteli goruntu.
+
+0 alan cikan 11 gorselin ortalama OCR guveni %56.9 iken, 1+ alan cikanlarinki %91.2 -
+yani guven skoru basarisiz vakalar icin ise yarar bir gosterge.
+
+### Bedeli: gecikme
+
+PP-Structure varsayilan (server sinifi) modellerle CPU'da **gorsel basina ~75 saniye**
+surdu (30 gorsel ~38 dakika). EasyOCR birkac saniyede donuyordu. Form 2.6 `inference
+latency`'yi olculen bir metrik sayiyor ve mobil uygulama anlik yanit vaat ediyor -
+bu haliyle server modelleri mobil senaryo icin uygun DEGILDIR. Kullanilmayan alt
+moduller (formul/muhur/grafik/bolge tespiti) zaten kapatildi; sonraki adim
+`PP-OCRv5_mobile_det/rec` varyantlarini olcmektir.
+
+### Ortam: iki gercek hata bulundu ve koda gomuldu
+
+1. **ASCII olmayan model yolu.** Paddle'in C++ inference motoru
+   `C:/Users/Semih Erdogan/.paddlex` gibi ASCII disi karakter iceren yollarda dosyayi
+   acamiyor ve bos girdi okudugu icin
+   `[json.exception.parse_error.101] ... attempting to parse an empty input` veriyor.
+   `src/ocr/extract.py::_ensure_paddle_env` yolu Windows 8.3 kisa adina cevirir.
+2. **oneDNN + PIR yurutucu uyumsuzlugu.** Layout modelinde
+   `NotImplementedError: ConvertPirAttribute2RuntimeAttribute not support` cokmesi;
+   MKLDNN varsayilan olarak kapatilir.
+
+Ayrica **`paddlepaddle` Python 3.14 icin wheel yayinlamiyor** (sadece cp39-cp313) -
+proje bu yuzden Python 3.10-3.13 gerektirir (bkz. README).
+
+### Forma gore sapma notu (sonuc raporunda belirtilmeli)
+
+Oneri formu 2.1 OCR araci olarak "Tesseract ve EasyOCR" diyor; Risk Yonetimi B-plani
+yetersizlik halinde **Google Cloud Vision / Azure** ongoruyor. PaddleOCR formda adi
+gecmeyen bir aractir. Gerekce: acik kaynak kalinarak (formun tercih ettigi cizgi)
+ticari/odemeli buluta gitmeden B-planinin amaci saglandi ve dogruluk 2 katina cikti.
 ## Güncel Yol Haritası
 
+0. ~~Tablo yapisini taniyan motora gec (PaddleOCR/PP-Structure)~~ — **uygulandi,
+   %15.5 -> %33.3 (2026-08-22)**. Siradaki darbogaz OCR degil `normalize.py`:
+   (a) `etiket BIRIM SAYI` duzenini destekle, (b) degerlendirme setinden besin
+   tablosu OLMAYAN gorselleri ayikla, (c) mobil model varyantlarini olcup gecikmeyi
+   kabul edilebilir seviyeye cek.
 1. ~~Konum-farkında (layout-aware) satır gruplama~~ — **uygulandı, ölçülebilir kazanç yok**
    (yukarı bakınız). Bir sonraki iterasyon satır İÇİNDEKİ sütun ayrımını (x-koordinatı bazlı
    kümeleme) hedeflemeli.

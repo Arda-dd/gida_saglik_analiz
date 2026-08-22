@@ -11,10 +11,16 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from src.ocr.extract import extract_text_easyocr, extract_text_tesseract
+from src.ocr.extract import OCR_ENGINES, TESSERACT_EXE
 from src.ocr.normalize import extract_and_normalize
 
 MANIFEST_PATH = Path("data/raw/openfoodfacts_ocr_samples/manifest.json")
+
+# Karsilastirilan OCR motorlari. paddleocr (PP-Structure) tablo yapisini koruyarak
+# cikarim yapar; digerleri duz metin dondurur (bkz. docs/ocr_results_notes.md).
+ENGINES = ["tesseract", "easyocr", "paddleocr"]
+
+EXTRACTORS = OCR_ENGINES
 REPORT_PATH = Path("docs/ocr_evaluation_report.json")
 
 # OFF ground-truth alan adi -> bizim schema alan adi (off_client.py ile ayni esleme mantigi)
@@ -41,10 +47,7 @@ def _values_match(extracted: float | None, truth: float, rel_tol: float = 0.15, 
 def evaluate_entry(entry: dict, engine: str) -> dict:
     image_path = entry["nutrition_image"]
 
-    if engine == "tesseract":
-        ocr_result = extract_text_tesseract(Path(image_path))
-    else:
-        ocr_result = extract_text_easyocr(Path(image_path))
+    ocr_result = EXTRACTORS[engine](Path(image_path))
 
     extracted_facts, _basis = extract_and_normalize(ocr_result.text)
 
@@ -72,10 +75,15 @@ def main() -> None:
     with MANIFEST_PATH.open("r", encoding="utf-8") as f:
         manifest = json.load(f)
 
-    print(f"{len(manifest)} gercek besin tablosu gorseli degerlendiriliyor (2 motor)...\n")
+    engines = [e for e in ENGINES if e != "tesseract" or TESSERACT_EXE.exists()]
+    if "tesseract" not in engines:
+        print("UYARI: Tesseract kurulu degil, o motor atlaniyor.")
+
+    print(f"{len(manifest)} gercek besin tablosu gorseli degerlendiriliyor "
+          f"({len(engines)} motor)...")
 
     all_results = []
-    for engine in ["tesseract", "easyocr"]:
+    for engine in engines:
         print(f"=== {engine} ===")
         total_fields = 0
         correct_fields = 0
@@ -103,7 +111,7 @@ def main() -> None:
 
     # Motor bazinda ozet
     summary = {}
-    for engine in ["tesseract", "easyocr"]:
+    for engine in engines:
         engine_results = [r for r in all_results if r["engine"] == engine]
         total = sum(r["n_fields_evaluated"] for r in engine_results)
         correct = sum(r["n_fields_correct"] for r in engine_results)

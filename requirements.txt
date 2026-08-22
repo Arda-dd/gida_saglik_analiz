@@ -21,6 +21,14 @@ albumentations>=1.4
 scikit-learn>=1.4
 
 # --- OCR / Metin normalizasyon (Faz 3) ---
+# DIKKAT: paddlepaddle Python 3.14 icin wheel YAYINLAMIYOR (sadece cp39-cp313).
+# Bu yuzden proje Python 3.10-3.13 gerektirir (bkz. README kurulum adimi 1).
+# paddleocr = PP-Structure: besin tablosunu yapisiyla (satir/sutun) cikarir; easyocr ve
+# tesseract duz metin dondurur ve karsilastirma/yedek olarak korunur
+# (motor secimi: config/config.yaml -> ocr.engine).
+paddlepaddle>=3.3
+paddleocr>=3.7
+paddlex[ocr]>=3.7
 easyocr>=1.7
 pytesseract>=0.3.10
 rapidfuzz>=3.6

@@ -64,7 +64,8 @@ docs/                her fazin sonuc/durum notlari (dogruluk rakamlari, bilinen 
 
 ### 1. Ön koşullar
 
-- **Python 3.10+**
+- **Python 3.10-3.13** (3.14 DESTEKLENMIYOR: `paddlepaddle` bu surum icin wheel
+  yayinlamiyor - sadece cp39-cp313. Windows'ta: `winget install --id Python.Python.3.13`)
 - **Git**
 - Windows'ta OCR için **winget** (genelde hazır gelir)
 
@@ -86,7 +87,21 @@ pip install -r requirements.txt
 > `requirements.txt` tüm fazların bağımlılıklarını içerir (torch, easyocr, faiss, fastapi,
 > streamlit vb.) — kurulum biraz zaman alabilir (~5-10 dk, torch büyük bir paket).
 
-### 3. Tesseract OCR kur (Faz 3 için gerekli, Windows)
+### 3. OCR motorları
+
+Varsayılan motor **PaddleOCR / PP-Structure**'dır (`config/config.yaml -> ocr.engine`).
+`requirements.txt` ile birlikte kurulur, ek bir sistem paketi gerektirmez. İlk
+çalıştırmada modellerini kendisi indirir (~birkaç yüz MB, `~/.paddlex` altına).
+
+> **Windows notu:** Kullanıcı adında Türkçe karakter varsa (ör. `C:/Users/Semih Erdoğan`),
+> Paddle'ın C++ motoru model yolunu açamaz ve boş girdi okuduğu için çöker.
+> `src/ocr/extract.py` bu yolu otomatik olarak Windows 8.3 kısa adına çevirir —
+> elle bir şey yapmanız gerekmez.
+
+Tesseract ve EasyOCR karşılaştırma/yedek motor olarak korunur. EasyOCR `pip` ile
+gelir; **Tesseract** ayrıca kurulmalıdır (yalnızca o motoru seçecekseniz gerekli):
+
+#### Tesseract (opsiyonel, Windows)
 
 ```powershell
 winget install --id UB-Mannheim.TesseractOCR
@@ -195,7 +210,7 @@ Her fazın sonucu, hedeflenen metrikle birlikte `docs/` altında **dürüstçe**
 |---|---|---|---|
 | 0-1 | İskelet + veri toplama | Tamamlandı (395 OFF kaydı) | `docs/attribution_off.md` |
 | 2 | Görsel sınıflandırma | **%75 test accuracy** (hedef ≥%85 — veri hacmi kısıtı, bkz. altta) | `docs/vision_results_notes.md` |
-| 3 | OCR + normalizasyon | **%15.8 alan doğruluğu** (hedef ≥%90 — çok sütunlu tablo/görsel kalitesi kısıtı; layout-aware satır gruplama denendi, ölçülebilir kazanç sağlamadı) | `docs/ocr_results_notes.md` |
+| 3 | OCR + normalizasyon | **%33.3 alan doğruluğu** (hedef ≥%90 — PaddleOCR/PP-Structure'a geçişle %15.5'ten yükseldi; kalan darboğaz artık OCR değil `normalize.py` ayrıştırıcısı) | `docs/ocr_results_notes.md` |
 | 4 | RAG | Recall@5 %100, Factual Consistency %100, Ground Truth Alignment **%86.4** (self-consistency'ye sayısal-dayanak kontrolü eklendikten sonra %38.2'den yükseldi) | `docs/rag_results_notes.md` |
 | 5 | Kişisel profil | Profile Consistency %100, Recommendation Relevance %100 | `docs/health_results_notes.md` |
 | 6 | API + Demo | Gerçek fotoğrafla uçtan uca doğrulandı | `docs/faz6_results_notes.md` |
@@ -206,15 +221,22 @@ Gerçek market etiketleriyle canlı testte (2026-07-09) doğrulanan, bilinen ve 
 **çözülmemiş** iki temel doğruluk sorunu var — mobil uygulamaya geçmeden önce bunların
 iyileştirilmesi planlanıyor:
 
-1. **OCR doğruluğu düşük (~%16-52 güven).** Kök nedenler: (a) gerçek market fotoğraflarında
-   parlama/yansıma ve eğik açı, (b) çok sütunlu besin tablosu düzeni ("100g" ve "porsiyon"
-   sütunları yan yana) OCR'da düz metne dönüşünce etiket-değer eşleşmesi bozuluyor, (c)
-   küçük/yoğun yazı. Etkisi: bazı besin değerleri (özellikle şeker/yağ/karbonhidrat) hiç
-   çıkarılamayabiliyor, bu da risk motorunun gerçek bir riski (ör. yüksek şeker) kaçırmasına
-   yol açabiliyor. **Denendi ve işe yaramadı (2026-07-19):** EasyOCR/Tesseract çıktısını
-   y-koordinatına göre satırlara gruplayan bir "layout-aware" katman eklendi, ancak gerçek
-   değerlendirmede ölçülebilir bir iyileşme sağlamadı (%16.2 → %15.8) — çünkü asıl sorun
-   satırlar arası değil, AYNI satırdaki iki sütunun (100g/porsiyon) birbirinden ayrılamamasıydı.
+1. **OCR doğruluğu hâlâ hedefin altında (%33.3, hedef ≥%90).** Kök neden analizi iki
+   iterasyondan geçti:
+   - **Denendi ve işe yaramadı (2026-07-19):** EasyOCR/Tesseract çıktısını y-koordinatına
+     göre satırlara gruplayan "layout-aware" katman — ölçülebilir kazanç yok (%16.2 → %15.8),
+     çünkü sorun satırlar arası değil, AYNI satırdaki iki sütunun (100g/porsiyon) ayrılamamasıydı.
+   - **Denendi ve işe yaradı (2026-08-22):** Tablo yapısını tanıyan **PaddleOCR/PP-Structure**'a
+     geçildi. Tablo `<tr><td>etiket</td><td>değer</td></tr>` olarak çıktığı için etiket-değer
+     bağı korunuyor. Sonuç: **%15.5 → %33.3** doğruluk, ortalama güven %51.8 → %78.7.
+     Bu, bu problem alanındaki ilk gerçek ölçülebilir kazanç.
+   - **Sıradaki darboğaz artık OCR değil, ayrıştırıcı.** Sıfır alan çıkan görsellerin çoğunda
+     OCR metni kusursuz; `normalize.py` `etiket ... SAYI BİRİM` kalıbı beklediğinden
+     `Proteines g 3,0` gibi `etiket BİRİM SAYI` düzenini yakalayamıyor. Ayrıca değerlendirme
+     setindeki bazı görseller besin tablosu bile değil (ör. maden suyu mineral analizi).
+   - **Bedeli — gecikme:** PP-Structure server modelleriyle CPU'da görsel başına ~75 saniye
+     (EasyOCR birkaç saniye). Mobil senaryo için `PP-OCRv5_mobile` varyantları ölçülmeli.
+     Motor `config/config.yaml -> ocr.engine` ile kod değiştirmeden geri alınabilir.
    Bkz. `docs/ocr_results_notes.md`.
 2. **Görsel sınıflandırma %75'te sınırlı** (394 eğitim görseli — veri hacmi darboğazı,
    hiperparametre sorunu değil, iki ayrı deneyle doğrulandı). Semih tarafından ViT/

@@ -25,7 +25,7 @@ from src.data.image_preprocessing import preprocess_label_image
 from src.health.profile import HealthProfile
 from src.health.recommend import HealthAssessment, build_health_assessment, recommend_alternatives
 from src.ocr.allergens import detect_allergens
-from src.ocr.extract import extract_text_easyocr
+from src.ocr.extract import extract_text
 from src.ocr.normalize import extract_and_normalize
 from src.ocr.risk_engine import assess_risks, describe_risks
 from src.rag.generate import GenerationResult, generate_explanation
@@ -133,7 +133,7 @@ def analyze_label_image(
         model, categories = _get_vision_model()
         category, category_confidence = predict_category(model, processed_path, categories)
 
-        ocr_result = extract_text_easyocr(processed_path)
+        ocr_result = extract_text(processed_path)
         nutrition, _basis = extract_and_normalize(ocr_result.text)
         detected_allergens = detect_allergens(ocr_result.text)
 

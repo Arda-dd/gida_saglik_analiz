@@ -106,8 +106,8 @@ def mocked_pipeline_dependencies(monkeypatch):
     )
     monkeypatch.setattr(
         pipeline_module,
-        "extract_text_easyocr",
-        lambda path: OCRResult(text="Seker: 35 g Tuz: 2 g Findik icerir", mean_confidence=82.0, engine="easyocr"),
+        "extract_text",
+        lambda path: OCRResult(text="Seker: 35 g Tuz: 2 g Findik icerir", mean_confidence=82.0, engine="paddleocr"),
     )
     yield
 
