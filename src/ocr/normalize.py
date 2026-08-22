@@ -64,7 +64,14 @@ def extract_energy(text: str) -> tuple[float | None, float | None]:
     return energy_kcal, energy_kj
 
 
-SATURATED_FAT_KEYWORDS = r"doymu[sş]\s*ya[gğ]|saturated\s*fat|acides?\s*gras\s*satur[ée]s?"
+# Not 1: karakter siniflarindaki "�" (Unicode replacement karakteri) - OCR.space bulut
+# API'sinin (2026-08-15'te eklendi) aksanli Latin harflerini (e, é, è vb.) sistematik olarak
+# bu karakterle degistirdigi tespit edildi (ornegin "saturées" -> "satur�es"). Kaynak metni
+# degistirmek yerine (baska OCR motorlarinin dogru cikardigi durumu bozmamak icin) regex'in
+# kendisi bu bozulmayi da kabul edecek sekilde genisletildi.
+# Not 2: "acides gras" oneki artik OPSIYONEL - gercek OCR.space ciktisinda (ayni tarihte
+# kesfedildi) etiketler kisa formu "dont saturées" kullaniyor, "acides gras saturées" degil.
+SATURATED_FAT_KEYWORDS = r"doymu[sş]\s*ya[gğ]|saturated\s*fat|(?:acides?\s*gras\s*)?satur[ée�]s?"
 
 
 def extract_saturated_fat(text: str) -> float | None:
@@ -79,7 +86,7 @@ def extract_fat(text: str) -> float | None:
     cleaned = re.sub(
         rf"(?:{SATURATED_FAT_KEYWORDS})[^0-9]{{0,10}}\d+[.,]?\d*\s*(?:g|gr)\b", "", text, flags=re.IGNORECASE
     )
-    match = _search_value(cleaned, r"ya[gğ]|fat|mati[eè]res\s*grasses|lipides", r"g|gr")
+    match = _search_value(cleaned, r"ya[gğ]|fat|mati[eè�]res\s*grasses|lipides", r"g|gr")
     return match[0] if match else None
 
 
@@ -99,7 +106,7 @@ def extract_fiber(text: str) -> float | None:
 
 
 def extract_protein(text: str) -> float | None:
-    match = _search_value(text, r"protein|prot[eé]ines?", r"g|gr")
+    match = _search_value(text, r"protein|prot[eé�]ines?", r"g|gr")
     return match[0] if match else None
 
 

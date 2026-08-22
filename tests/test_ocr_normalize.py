@@ -73,6 +73,38 @@ def test_extract_salt_french_sel_does_not_false_match_inside_other_words():
     assert extract_salt("Conseil de conservation: au frais") is None
 
 
+def test_extract_saturated_fat_accepts_short_form_without_acides_gras_prefix():
+    # Gercek OCR.space ciktisinda (2026-08-15) "acides gras saturees" degil, kisa "dont
+    # saturees" formu goruldu - bu kisa form da yakalanmali
+    assert extract_saturated_fat("- dont saturees 24 g") == 24
+
+
+def test_extract_and_normalize_tolerates_ocrspace_accent_corruption():
+    # OCR.space bulut API'si (2026-08-15'te eklendi) aksanli harfleri (e, é, è) sistematik
+    # olarak Unicode replacement karakteriyle ("�") degistiriyor - gercek bir API
+    # yanitindan alinan bu ornek, regex'in bu bozulmaya ragmen dogru cikarim yapabildigini dogrular
+    text = (
+        "INFORMATIONS NUTRITIONNELLES\tPOUR 100g :\t\r\n"
+        "�nergie\t2350 kJ / 566 kcal\t\r\n"
+        "Mati�res grasses\t41 g\t\r\n"
+        "- dont satur�es\t24 g\t\r\n"
+        "Glucides\t35 g.\t\r\n"
+        "- dont sucres\t30 g\t\r\n"
+        "Prot�ines\t9,5 g\t\r\n"
+        "Sel\t0,02 g\t\r\n"
+    )
+    facts, basis = extract_and_normalize(text)
+
+    assert facts.energy_kcal == 566
+    assert facts.energy_kj == 2350
+    assert facts.fat_g == 41
+    assert facts.saturated_fat_g == 24
+    assert facts.carbohydrate_g == 35
+    assert facts.sugar_g == 30
+    assert facts.protein_g == pytest.approx(9.5)
+    assert facts.salt_g == pytest.approx(0.02)
+
+
 def test_extract_fat_only_saturated_present_returns_none_for_total():
     text = "Doymus yag: 5 g"
     assert extract_fat(text) is None
