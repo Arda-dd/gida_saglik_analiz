@@ -1,9 +1,15 @@
-"""Tesseract ve EasyOCR ile etiket gorsellerinden metin cikarimi.
+"""Tesseract, EasyOCR ve OCR.space ile etiket gorsellerinden metin cikarimi.
 
 Oneri formu 2.1: "Etiketlerde yer alan metinsel icerik, Tesseract ve EasyOCR gibi acik
 kaynakli optik karakter tanima araclariyla cikarilacaktir." Iki motor da desteklenir ve
 karsilastirma imkani sunar. Guven skorlari (confidence), OCR kalitesini bagimsiz
 degisken olarak kaydetmek icin dondurulur (oneri formu 2.3).
+
+OCR.space (ucretsiz bulut API, 2026-08-15'te eklendi) uculcu bir kiyas motoru olarak
+eklendi: kok neden analizinde (bkz. docs/ocr_results_notes.md) asil darbogazin coklu
+sutunlu tablo yapisi oldugu tespit edilmisti - OCR.space'in isTable parametresi, satirlari
+TAB ile ayirarak (Engine 3'te Markdown tablo olarak) dondurup bu sorunu manuel satir/sutun
+gruplamasi (_group_boxes_into_rows) yapmadan hedefliyor.
 """
 
 from __future__ import annotations
@@ -15,6 +21,10 @@ from pathlib import Path
 
 import cv2
 import pytesseract
+import requests
+from dotenv import load_dotenv
+
+load_dotenv()
 
 TESSERACT_EXE = Path(r"C:\Program Files\Tesseract-OCR\tesseract.exe")
 TESSDATA_DIR = (Path(__file__).resolve().parents[2] / "data" / "tessdata").resolve()
@@ -152,3 +162,61 @@ def extract_text_easyocr(image_path: Path, langs: tuple[str, ...] = ("tr", "en")
     return OCRResult(
         text=full_text, mean_confidence=sum(confidences) / len(confidences), engine="easyocr"
     )
+
+
+OCR_SPACE_ENDPOINT = "https://api.ocr.space/parse/image"
+
+
+def extract_text_ocrspace(
+    image_path: Path,
+    api_key: str | None = None,
+    language: str = "tur",
+    engine: int = 3,
+    session: requests.Session | None = None,
+) -> OCRResult:
+    """OCR.space ucretsiz bulut API'si ile metin cikarir.
+
+    isTable=True parametresi satirlari TAB ile ayirip (Engine 3'te Markdown tablo olarak)
+    dondurdugundan, Tesseract/EasyOCR'daki gibi manuel bir _group_boxes_into_rows adimina
+    gerek yok - sutunlu yapi API'nin kendisinden geliyor.
+
+    Not: OCR.space'in ucretsiz katmani Tesseract/EasyOCR'in aksine per-kelime bir guven
+    skoru DONDURMEZ - bu yuzden mean_confidence burada gercek bir OCR guveni degil, sadece
+    istegin basarili olup olmadigini (FileParseExitCode==1) yansitan ikili bir vekildir
+    (basarili=100.0, basarisiz=0.0).
+    """
+    key = api_key or os.environ.get("OCR_SPACE_API_KEY")
+    if not key:
+        raise ValueError("OCR_SPACE_API_KEY ayarlanmamis (ortam degiskeni veya api_key parametresi)")
+
+    http = session or requests.Session()
+    with open(image_path, "rb") as f:
+        response = http.post(
+            OCR_SPACE_ENDPOINT,
+            files={"file": f},
+            data={
+                "apikey": key,
+                "language": language,
+                "OCREngine": engine,
+                "isTable": True,
+                "scale": True,
+            },
+            timeout=30,
+        )
+    response.raise_for_status()
+    data = response.json()
+
+    if data.get("IsErroredOnProcessing"):
+        error_message = data.get("ErrorMessage") or "Bilinmeyen OCR.space hatasi"
+        if isinstance(error_message, list):
+            error_message = "; ".join(error_message)
+        raise ValueError(f"OCR.space hatasi: {error_message}")
+
+    results = data.get("ParsedResults") or []
+    if not results:
+        return OCRResult(text="", mean_confidence=0.0, engine="ocrspace")
+
+    text = results[0].get("ParsedText", "") or ""
+    exit_code = results[0].get("FileParseExitCode", 0)
+    mean_confidence = 100.0 if exit_code == 1 else 0.0
+    return OCRResult(text=text, mean_confidence=mean_confidence, engine="ocrspace")

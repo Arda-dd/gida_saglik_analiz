@@ -1,9 +1,16 @@
 from pathlib import Path
+from unittest.mock import MagicMock
 
 import pytest
 from PIL import Image, ImageDraw, ImageFont
 
-from src.ocr.extract import OCRResult, extract_text_easyocr, extract_text_tesseract, TESSERACT_EXE
+from src.ocr.extract import (
+    OCRResult,
+    TESSERACT_EXE,
+    extract_text_easyocr,
+    extract_text_ocrspace,
+    extract_text_tesseract,
+)
 
 FONT_PATH = Path(r"C:\Windows\Fonts\arial.ttf")
 tesseract_not_installed = not TESSERACT_EXE.exists()
@@ -71,3 +78,72 @@ def test_extract_functions_raise_or_handle_missing_file_gracefully(tmp_path):
     if not tesseract_not_installed:
         with pytest.raises(Exception):
             extract_text_tesseract(missing_path)
+
+
+def _mock_ocrspace_response(json_data: dict) -> MagicMock:
+    response = MagicMock()
+    response.raise_for_status.return_value = None
+    response.json.return_value = json_data
+    return response
+
+
+def test_extract_text_ocrspace_parses_successful_table_response(tmp_path):
+    image_path = tmp_path / "label.jpg"
+    image_path.write_bytes(b"fake-jpeg-bytes")
+
+    session = MagicMock()
+    session.post.return_value = _mock_ocrspace_response(
+        {
+            "IsErroredOnProcessing": False,
+            "ParsedResults": [
+                {"ParsedText": "Energie\t450 kcal\r\nSeker\t10 g\r\n", "FileParseExitCode": 1}
+            ],
+        }
+    )
+
+    result = extract_text_ocrspace(image_path, api_key="fake-key", session=session)
+
+    assert isinstance(result, OCRResult)
+    assert result.engine == "ocrspace"
+    assert "450" in result.text
+    assert result.mean_confidence == 100.0
+    # apikey dogru gonderilmis mi kontrol et
+    _, kwargs = session.post.call_args
+    assert kwargs["data"]["apikey"] == "fake-key"
+    assert kwargs["data"]["isTable"] is True
+
+
+def test_extract_text_ocrspace_raises_on_api_error(tmp_path):
+    image_path = tmp_path / "label.jpg"
+    image_path.write_bytes(b"fake-jpeg-bytes")
+
+    session = MagicMock()
+    session.post.return_value = _mock_ocrspace_response(
+        {"IsErroredOnProcessing": True, "ErrorMessage": ["Invalid API key"]}
+    )
+
+    with pytest.raises(ValueError, match="Invalid API key"):
+        extract_text_ocrspace(image_path, api_key="fake-key", session=session)
+
+
+def test_extract_text_ocrspace_raises_without_api_key(tmp_path, monkeypatch):
+    monkeypatch.delenv("OCR_SPACE_API_KEY", raising=False)
+    image_path = tmp_path / "label.jpg"
+    image_path.write_bytes(b"fake-jpeg-bytes")
+
+    with pytest.raises(ValueError, match="OCR_SPACE_API_KEY"):
+        extract_text_ocrspace(image_path, api_key=None, session=MagicMock())
+
+
+def test_extract_text_ocrspace_empty_parsed_results_returns_empty_text(tmp_path):
+    image_path = tmp_path / "label.jpg"
+    image_path.write_bytes(b"fake-jpeg-bytes")
+
+    session = MagicMock()
+    session.post.return_value = _mock_ocrspace_response(
+        {"IsErroredOnProcessing": False, "ParsedResults": []}
+    )
+
+    result = extract_text_ocrspace(image_path, api_key="fake-key", session=session)
+    assert result.text == ""
+    assert result.mean_confidence == 0.0

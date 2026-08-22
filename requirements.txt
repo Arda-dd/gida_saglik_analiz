@@ -12,6 +12,7 @@ opencv-python>=4.9
 pillow>=10.2
 numpy>=1.26
 pandas>=2.2
+requests>=2.31
 
 # --- Gorsel siniflandirma (Faz 2) ---
 torch>=2.2

@@ -9,13 +9,19 @@ gercek OCR ciktilarini karsilastirir.
 from __future__ import annotations
 
 import json
+import os
+import time
 from pathlib import Path
 
-from src.ocr.extract import extract_text_easyocr, extract_text_tesseract
+from src.ocr.extract import extract_text_easyocr, extract_text_ocrspace, extract_text_tesseract
 from src.ocr.normalize import extract_and_normalize
 
 MANIFEST_PATH = Path("data/raw/openfoodfacts_ocr_samples/manifest.json")
 REPORT_PATH = Path("docs/ocr_evaluation_report.json")
+
+# "ocrspace" bir API anahtari (OCR_SPACE_API_KEY) gerektirdiginden ve agdan gectiginden
+# (ucretsiz katman istek limiti olabilir), sadece anahtar mevcutsa degerlendirmeye dahil edilir.
+ENGINES = ["tesseract", "easyocr", "ocrspace"]
 
 # OFF ground-truth alan adi -> bizim schema alan adi (off_client.py ile ayni esleme mantigi)
 GT_FIELD_MAP = {
@@ -43,6 +49,8 @@ def evaluate_entry(entry: dict, engine: str) -> dict:
 
     if engine == "tesseract":
         ocr_result = extract_text_tesseract(Path(image_path))
+    elif engine == "ocrspace":
+        ocr_result = extract_text_ocrspace(Path(image_path))
     else:
         ocr_result = extract_text_easyocr(Path(image_path))
 
@@ -72,17 +80,40 @@ def main() -> None:
     with MANIFEST_PATH.open("r", encoding="utf-8") as f:
         manifest = json.load(f)
 
-    print(f"{len(manifest)} gercek besin tablosu gorseli degerlendiriliyor (2 motor)...\n")
+    engines = list(ENGINES)
+    if "ocrspace" in engines and not os.environ.get("OCR_SPACE_API_KEY"):
+        print("OCR_SPACE_API_KEY ayarlanmamis - 'ocrspace' motoru atlaniyor.\n")
+        engines.remove("ocrspace")
+
+    print(f"{len(manifest)} gercek besin tablosu gorseli degerlendiriliyor ({len(engines)} motor)...\n")
 
     all_results = []
-    for engine in ["tesseract", "easyocr"]:
+    for engine in engines:
         print(f"=== {engine} ===")
         total_fields = 0
         correct_fields = 0
         confidences = []
 
         for entry in manifest:
-            result = evaluate_entry(entry, engine)
+            if engine == "ocrspace":
+                # Ucretsiz katmanin istek hizi siniri var (gercek calistirmada 429 Too Many
+                # Requests goruldu, 2026-08-15) - istekler arasi kisa bir bekleme ile buna uyulur.
+                time.sleep(3)
+            try:
+                result = evaluate_entry(entry, engine)
+            except Exception as exc:
+                # ocrspace agdan gectigi icin (rate limit/gecici hata) tek bir goruntudeki
+                # hata tum degerlendirmeyi durdurmamali - 0 alan dogru olarak kaydedilir.
+                print(f"  {entry['product_id']}: HATA ({exc}) - atlaniyor")
+                result = {
+                    "product_id": entry["product_id"],
+                    "category": entry["category"],
+                    "engine": engine,
+                    "ocr_confidence": 0.0,
+                    "field_results": {},
+                    "n_fields_evaluated": 0,
+                    "n_fields_correct": 0,
+                }
             all_results.append(result)
             total_fields += result["n_fields_evaluated"]
             correct_fields += result["n_fields_correct"]
@@ -103,7 +134,7 @@ def main() -> None:
 
     # Motor bazinda ozet
     summary = {}
-    for engine in ["tesseract", "easyocr"]:
+    for engine in engines:
         engine_results = [r for r in all_results if r["engine"] == engine]
         total = sum(r["n_fields_evaluated"] for r in engine_results)
         correct = sum(r["n_fields_correct"] for r in engine_results)
