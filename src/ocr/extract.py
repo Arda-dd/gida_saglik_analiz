@@ -282,6 +282,8 @@ OPENAI_VISION_PROMPT = (
     "exactly as printed, in its ORIGINAL language and script. Do NOT translate. Do NOT guess, "
     "infer, complete or normalize anything, and never write a nutrition table or values that "
     "are not clearly visible. Keep cells of the same table row on one line, separated by ' | '. "
+    "If a table cell contains several stacked lines (e.g. a nutrient name with a 'of which' "
+    "sub-line below it), write each stacked line as its own row with its own values. "
     "Skip illegible parts. If no text is legible at all, output exactly "
     f"{UNREADABLE_MARKER}. Output only the transcription, no comments."
 )
