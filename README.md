@@ -109,21 +109,25 @@ curl -L -o data\tessdata\tur.traineddata https://github.com/tesseract-ocr/tessda
 cp .env.example .env
 ```
 
-Sistem LLM (metin üretimi) ve embedding (retrieval) için **HuggingFace Inference API**'yi
-varsayılan olarak kullanır — **tamamen ücretsiz, kredi kartı gerektirmez**:
+Sistem iki API anahtarı kullanır:
 
-1. [huggingface.co](https://huggingface.co) üzerinde ücretsiz bir hesap oluştur.
-2. [huggingface.co/settings/tokens](https://huggingface.co/settings/tokens) → **Create new
-   token** → "Fine-grained" seç → sadece **Inference → "Make calls to Inference Providers"**
-   kutusunu işaretle (başka hiçbir izin gerekmez) → token oluştur.
-3. `.env` dosyasını aç, şu satırı doldur:
-   ```
-   HUGGINGFACE_API_KEY=hf_...senin_tokenin...
-   ```
+- **Embedding (retrieval) → HuggingFace Inference API** — ücretsiz, kredi kartı gerektirmez:
+  1. [huggingface.co](https://huggingface.co) üzerinde ücretsiz bir hesap oluştur.
+  2. [huggingface.co/settings/tokens](https://huggingface.co/settings/tokens) → **Create new
+     token** → "Fine-grained" seç → sadece **Inference → "Make calls to Inference Providers"**
+     kutusunu işaretle (başka hiçbir izin gerekmez) → token oluştur.
+- **LLM (metin üretimi) → OpenAI `gpt-4.1-mini`** — ödemeli (analiz başına 1 sentin çok
+  altında); anahtar [platform.openai.com/api-keys](https://platform.openai.com/api-keys)'ten alınır.
 
-(İstersen `config/config.yaml` içindeki `llm.provider` / `rag.embedding_provider` değerlerini
-`anthropic` veya `openai` yapıp ilgili ödemeli API anahtarını da girebilirsin — arayüz zaten
-her ikisini de destekler.)
+`.env` dosyasını aç, şu satırları doldur:
+```
+HUGGINGFACE_API_KEY=hf_...senin_tokenin...
+OPENAI_API_KEY=sk-...senin_anahtarin...
+```
+
+OpenAI anahtarın yoksa `config/config.yaml` içinde `llm.provider: huggingface` yaparak ücretsiz
+Llama-3.1-8B ile de çalıştırabilirsin (açıklama kalitesi biraz daha oynak — bkz.
+`docs/rag_results_notes.md`, "OpenAI'a Geçiş ve Model Kıyası"). `anthropic` de desteklenir.
 
 ### 5. RAG bilgi tabanı index'ini kur
 
@@ -196,7 +200,7 @@ Her fazın sonucu, hedeflenen metrikle birlikte `docs/` altında **dürüstçe**
 | 0-1 | İskelet + veri toplama | Tamamlandı (395 OFF kaydı) | `docs/attribution_off.md` |
 | 2 | Görsel sınıflandırma | **%75 test accuracy** (hedef ≥%85 — veri hacmi kısıtı, bkz. altta) | `docs/vision_results_notes.md` |
 | 3 | OCR + normalizasyon | Canlı pipeline (EasyOCR): **%15.8**. Deneysel OCR.space bulut API'si kısmi örneklemde **%50.6** gösterdi ama henüz tam doğrulanmadı/üretime alınmadı (hedef ≥%90) | `docs/ocr_results_notes.md` |
-| 4 | RAG | Recall@5 %100, Factual Consistency %100, Ground Truth Alignment **%86.4** (self-consistency'ye sayısal-dayanak kontrolü eklendikten sonra %38.2'den yükseldi) | `docs/rag_results_notes.md` |
+| 4 | RAG | Recall@5 %100, MRR 0.794. LLM: OpenAI gpt-4.1-mini (3 koşu ort.) Factual Consistency **%96.5**, Ground Truth Alignment **%89.2**; metrikte daha yüksek çıkan gpt-4o-mini besin değerini yanlış besin öğesine bağladığı için elendi | `docs/rag_results_notes.md` |
 | 5 | Kişisel profil | Profile Consistency %100, Recommendation Relevance %100 | `docs/health_results_notes.md` |
 | 6 | API + Demo | Gerçek fotoğrafla uçtan uca doğrulandı | `docs/faz6_results_notes.md` |
 
@@ -234,10 +238,11 @@ yeniden eğitip sonucu ölçme.
 ## LLM ve Embedding Sağlayıcısı
 
 Sistem, RAG modülünde hem LLM'i hem embedding'i **API üzerinden** kullanır — hiçbir model
-yerel olarak eğitilmez veya diske indirilmez (bkz. öneri formu 2.4). Varsayılan sağlayıcı
-**HuggingFace Inference API** (ücretsiz, kart gerektirmez); Anthropic/OpenAI ödemeli
-alternatifler olarak `config/config.yaml -> llm.provider` / `rag.embedding_provider` ve `.env`
-üzerinden seçilebilir.
+yerel olarak eğitilmez veya diske indirilmez (bkz. öneri formu 2.4). Varsayılan LLM
+**OpenAI `gpt-4.1-mini`** (2026-10-06'dan beri, TÜBİTAK 2209-A bursuyla), varsayılan embedding
+**HuggingFace Inference API** (ücretsiz). Sağlayıcılar `config/config.yaml -> llm.provider` /
+`rag.embedding_provider` ve `.env` üzerinden değiştirilebilir (`openai` | `huggingface` |
+`anthropic`); modelleri karşılaştırmak için `python -m src.rag.compare_providers` kullanılabilir.
 
 ## Geliştirme Ekibi
 
