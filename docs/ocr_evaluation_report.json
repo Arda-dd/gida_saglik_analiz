@@ -17,7 +17,22 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 0.17329850001260638,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": ""
     },
     {
       "product_id": "off_3046920029759",
@@ -36,7 +51,22 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 2
+      "n_fields_correct": 2,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 0.36020240001380444,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "NUTRITION INFORMATION PER 100g:\nEnergi /Energiaa / Energi / Energi / Wartosé\nenergetyczna 2463 kJ /592 kcal\nFett / Rasvaa / Fedt/ Fett /Tluszez ET |\nyaran mattat fett/josta tyydyttynytta rasvaa /w / heraf\nmaettede fedtsyrer/ hvorav mettet fet tym ae\nimasy thuszczowe nasycone\nKolhydrater/ Hillihydraattia / Kulhydrater/\nKarbohydrater / Weglowodany\nsukkerarter varav sockerarter / /josta sokereita / w /heraf\nhvorav sukkerarter tym cukry\nProtein / Protelinia / Protein / Protein / Bialko\nSalt (Suolaa / Salt / Salt / SOL\nAYALIN GUARANTEE"
     },
     {
       "product_id": "off_06175700",
@@ -55,7 +85,22 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 2
+      "n_fields_correct": 2,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": true
+      },
+      "seconds": 0.337638899916783,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "Energie/Energie/Eneray 1631 kJ/385 kcal\nMatiéres grasses/Vetten/FatFett 289\ndont acides gras saturés/waarvan\nverzadigde vetzuren/of which saturates!\ndavon gesttigte Fetisâuren 069\nGlucides/Koolhydraten/Carbohydrate/\nKohlenhydrate 759\ndont sucres/waarvan suikers/of which sugar!\ndavon Zucker 269\nFibres alimentaires/Voedingsvezels/Dietetary fibres! 44g\nBallaststoffe\nProtéines/Eiwitten/Protein/EiweiB 134\nSel/Zout/Salt/Salz 0,68\nMagnésium/Magnesium 186 mg (49,6% des AR’\nFer/lizer/ron/Eisen 3,8 mg (27% des AR\nGe ii m a"
     },
     {
       "product_id": "off_3175680011480",
@@ -74,7 +119,22 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 0.132575299940072,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": ""
     },
     {
       "product_id": "off_3046920022651",
@@ -93,7 +153,22 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 3
+      "n_fields_correct": 3,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": false,
+        "carbohydrate_g": true,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": true
+      },
+      "seconds": 0.20180260005872697,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "[INFORMATIONS NUTRITIONNELLES\nPOUR 10 0g:\nEnergie | 2350k//566 kcal\nMatiöres grasses | 41g\n[dont saturées | 245\nGlucides 35g\n- dont sucres"
     },
     {
       "product_id": "off_3046920022606",
@@ -112,7 +187,21 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 0.14501770003698766,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": ""
     },
     {
       "product_id": "off_3242274030056",
@@ -131,7 +220,22 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 0.13779300008900464,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": ""
     },
     {
       "product_id": "off_7613035937420",
@@ -150,7 +254,22 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 0.14116749993991107,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": ""
     },
     {
       "product_id": "off_3175681170872",
@@ -169,7 +288,22 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 0.14957350003533065,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": ""
     },
     {
       "product_id": "off_3083681148640",
@@ -188,7 +322,22 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 0.13332080002874136,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": ""
     },
     {
       "product_id": "off_3281780893915",
@@ -207,7 +356,22 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 2
+      "n_fields_correct": 2,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 0.23741709999740124,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "Informations nutritionnelles pour 100 g\nEnergie 766kJ/183kcal\nMatiéres grasses\ndont Acides gras saturés\nGlucides\ndont Sucres\nFibres alimentaires _\nProtéines\nSel"
     },
     {
       "product_id": "off_3021690201123",
@@ -226,7 +390,22 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 2
+      "n_fields_correct": 2,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 0.39343779999762774,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "TERE TTTHITIATITIITC HOMEANES FURS NUTRITIONNELLES | | PAR in Del PORTION RE\nPOUR IOg\nnergie 415k] 868k)\n99 kcal) 207 kcal\nMatiéres yl 3,29 6,69\n- dont acides gras\nsaturés LI 23\nGlucides 10g 2g\na -dont sucres | 0,8 16\ndlimentores__2,8g| VE\nçe sel lg) 070g] TAL b\nUne portion de 205g est adaptable\n<a en fonction des des hesoins besoins de de chacun\nTonction co”"
     },
     {
       "product_id": "off_6111035000430",
@@ -245,7 +424,16 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kj": true,
+        "carbohydrate_g": false,
+        "sugar_g": false
+      },
+      "seconds": 0.33648399997036904,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "pba gale Gos #2 IS\nRésidu sec minérale 4 710*C : en 186 mg/!\ndum 26 İZ Peel 0 Saate iğ” 42\nidam 9 pa chiorures 14 2:\napndsm 3 peel Nirates =O\nweessum\nAnalyse INH 80/98 du 15-04-58\naw: ey it amk m"
     },
     {
       "product_id": "off_6111035000058",
@@ -261,7 +449,14 @@
         "salt_g": false
       },
       "n_fields_evaluated": 6,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {
+        "salt_g": false
+      },
+      "seconds": 0.15269889996852726,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "wee\n‘ ¥"
     },
     {
       "product_id": "off_6111128000071",
@@ -280,7 +475,12 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {},
+      "seconds": 0.277987000066787,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "Composition de l'eau eğ mg/L\nJa plot! dayi\nCalcium 63,5 —\nMagnésium (| 35,5 pe\nNitrate 7 se\nSodium 8 oe\nChlorures 19,8 >\nSulfate 3,8 ee\nBicarbonate 372 Ly\nPotassium 1 2"
     },
     {
       "product_id": "off_6111252421568",
@@ -299,7 +499,14 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {
+        "salt_g": false
+      },
+      "seconds": 0.1350233000703156,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": ""
     },
     {
       "product_id": "off_6111035000027",
@@ -317,7 +524,14 @@
         "salt_g": false
       },
       "n_fields_evaluated": 8,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {
+        "salt_g": false
+      },
+      "seconds": 0.1718849999597296,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "Sema em a\n“ea se"
     },
     {
       "product_id": "off_6111035502828",
@@ -336,7 +550,12 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {},
+      "seconds": 0.1520277000963688,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "220080"
     },
     {
       "product_id": "off_3083681095296",
@@ -355,7 +574,22 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 0.3554529999382794,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "dolive Ratatouille vierge extra cuisinéeat'huile 1,5\nINGREDIENTS : Des\ndaubergines prefrites 25%\n(aubergines dés 22%, de huile de\ntournesol), courgettes\n25%, purée de tomates Matgresgrasses._Alg\nmi-téduite 21%, oignons en dontacesprassatués__—_ Og\ndés 4858%, 13%, double poivrons concentréde rougesen _ dotsises____ Glucides...__ 85, Sig)\nextra.5% tomate 33, huiledolivevierge sucre1, 3% sel ail, Fbresaimentaires_34p\njusconcentréde deBLE, thym0,1%. citron farine\n‘ores __etconsommez owerture,conservez34°Cmaximum dans les Bh\nadale Aconsommerdepreférenceavant igurantsurlefond dela boite."
     },
     {
       "product_id": "off_20004132",
@@ -374,7 +608,21 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 0.13462729996535927,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": ""
     },
     {
       "product_id": "off_3083681094459",
@@ -393,7 +641,22 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 2
+      "n_fields_correct": 2,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 0.23792739992495626,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "Vk ” VALEURS NUTRITIONNELLES\nPOUR 100g\nEnergie..........260 kI/62 kcal\nMatiğresgrasses................\ndont acides grassatures 0\nGlucides....\ndont sucres..\nFibres alimentaires.\nProtéines\nSel..."
     },
     {
       "product_id": "off_3307130803004",
@@ -412,7 +675,22 @@
         "salt_g": true
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 3
+      "n_fields_correct": 3,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "seconds": 0.318171999999322,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "VALEURS NUTRITIONNELLES\nMOYENNES POUR / PER 1006:\nEnergie , / Energie : 267 kJ (64 kcal),\nmatiéres grasses / vetten: 3,5 g\ndont acides gras saturés / waarvan\nverzadigde vetzuren : 0,5 g, glucides\n/ koolhydraten: 6,1 g dont sucres\n/ waarvan suikers : 5,2 g, fibres\nalimentaires / vezels : 1,7 g, protéines\n/ eiwitten: 1,2 g, sel / zout: 0,47 g."
     },
     {
       "product_id": "off_3083681001808",
@@ -431,7 +709,21 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 0.20541200006846339,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "mais çi gs | ERİ 06g\nBELL, La Woestyne, 59173 Renescure"
     },
     {
       "product_id": "off_3083681094923",
@@ -450,7 +742,22 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 0.14336540002841502,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": ""
     },
     {
       "product_id": "off_6111246721261",
@@ -469,7 +776,21 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 2
+      "n_fields_correct": 2,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": false,
+        "fat_g": true,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 0.3135958999628201,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "© Code Couleur & Nutri-Score\nD'aprés ses valeurs (159 kcal et 11g de lipides),\nce produit se situerait probablement en :\n* Nutri-Score :C\n* Code Couleur : Jaune / Orange clair\nPourquoi ? Bien qu'il soit \"nature\", sa teneur\nélevée en matiéres grasses (11g) et I'ajout\nd'amidon et d'épaississants font monter\nl'apport calorique par rapport a un fromage\nblanc classique a 3% de MG (qui tourne autour\nde 70-80 kcal)."
     },
     {
       "product_id": "off_6111242100992",
@@ -488,7 +809,19 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "protein_g": false
+      },
+      "seconds": 0.1506257998989895,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": ""
     },
     {
       "product_id": "off_6111242106949",
@@ -507,7 +840,20 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 0.13547840004321188,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": ""
     },
     {
       "product_id": "off_6111242101180",
@@ -525,7 +871,18 @@
         "salt_g": false
       },
       "n_fields_evaluated": 8,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "carbohydrate_g": false,
+        "protein_g": false
+      },
+      "seconds": 0.17806519998703152,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "Valeur énérgétique\n_\notéi\ng\n| Carbohydrates g\noh\nalcium. mg"
     },
     {
       "product_id": "off_6111242100985",
@@ -544,7 +901,18 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "carbohydrate_g": false,
+        "protein_g": false
+      },
+      "seconds": 0.13801530003547668,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": ""
     },
     {
       "product_id": "off_6111246721278",
@@ -563,7 +931,18 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 3
+      "n_fields_correct": 3,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": false,
+        "carbohydrate_g": false,
+        "protein_g": true
+      },
+      "seconds": 0.24403030006214976,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "URS NUTRITIONNELLES ET ENERGETİĞİ\nValeurs Nutritionnelles Moyennes pour 100g\nProtéines 10g\nGlucides 319\nLipides 189\nValeurs Energétique Moyennes pour 1009\n257 kcal / 1061 kd\n‘Température de conservation\nAcconserver entre +4°C et +6°C"
     },
     {
       "product_id": "off_7622210449283",
@@ -582,7 +961,22 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 7.149140399997123,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "Peuy Cumen\n[nformation 1009\nnutritionnelle_ [(20g) [(20g)\n[Energie [467kaall93kcall5 % 7962013920\nMatieres grasses 179 359 596\n(ontacides gras satures56g 01g 696\n(lucides 699 149 59\ndont sucres B29 639 796\nProteines_ Fibresalimentaires 2og 0,89\n[Sel [59 139B%\n0499 0,10929\nAnn"
     },
     {
       "product_id": "off_3046920029759",
@@ -601,7 +995,22 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 2
+      "n_fields_correct": 2,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": false,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": false,
+        "fiber_g": true,
+        "protein_g": false,
+        "salt_g": true
+      },
+      "seconds": 0.9264056000392884,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "NUTRITION INFORMATION PER 100g;\nEnete energetyczna Energiaa Energi / Energi Wartosc 2483 kJ 592 kcal\nFett Rasvaa Fedt Fett Tluszcz 55g\narav mattat tett josta tyydyttynytta rasvaa heraf\nmattede tedtsvrer 5w8s) hvorav mettet fett w tym 30 g\ntuszczowe nasycone\nKolhvdrateri Hiilihydraattia Karbohydrater Weglowodany Kulhydrater 14 g\nsukkerarter 6 Ce sockerarter Josta sokereita heraf 70g\nhvorav sukkerarter tym cukry\nProtein Proteiinia Protein Protein Bialko I0g\nSalt / Suolaa Salt Salt S6l 003\n(urciain nn Dlstribueras av Mlarkkinoija\nBtorn"
     },
     {
       "product_id": "off_06175700",
@@ -620,7 +1029,22 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 2
+      "n_fields_correct": 2,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": false,
+        "salt_g": true
+      },
+      "seconds": 0.5441561000188813,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "Energie Energie Energy 1631 kJ/385 kcal\nMatieres grasses NettenFatFett 2,8 9\ndont acides gras satures waarvan\nverzadigde vetzuren/of which saturatesl\ndavon gesattigte Fettsauren 0,6 9\nGlucides Koolhydraten /Carbohydratel\nKohlenhydrate 75 g\ndont sucres/waarvan suikerslof which sugarl\ndavon Zucker 2,6 g\nFibres alimentaires Noedingsvezels /Dietetary fibresl 4,4\nBallaststoffe\nProteines Eiwitten Protein /EiweiB 13\nSelZout/Salt/Salz 0,68\nMagnesium Magnesium 186 mg (49,6% des AR\nFer/ljzer /Iron/Eisen 3,8 mg (27% des AR"
     },
     {
       "product_id": "off_3175680011480",
@@ -639,7 +1063,22 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": true
+      },
+      "seconds": 0.22763380000833422,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "Aa S1\nPAEF Monenne\neoThn\nGugn? Oto\n0,4at9\no]\n9 Jua\nooo"
     },
     {
       "product_id": "off_3046920022651",
@@ -658,7 +1097,22 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 7
+      "n_fields_correct": 7,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": false,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "seconds": 0.2454982999479398,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "INFORMATIONS NUTRITIONNELLES\nPOUR 7oog\nEnergie 2350 kJ 566 kcal\nMatieres grasses 41 g\ndont saturees 24 g\nGlucides 35 g\ndont sucres 30g\nProteines 9,5 g\nSel 0,02"
     },
     {
       "product_id": "off_3046920022606",
@@ -677,7 +1131,21 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 0.8129047000547871,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "Ses EoeasesWin  aucuisfroovcinva\nLtA Moros o Son\nEavynd Drliin\nIS{lsof €AAD\nCrocouicoit fıln-in uadilioncl inFOeMAttPoJFYOITIONNLLGs\n530;b5 ~ Minimum\nngtedicnts : pile [1c10 Cacao 2ibhesal\nDrunede(CLuecusyonjut\nJatojl u 09 farrs Mc\nğ\n\";\n~\nSptüngl 545 Ivldsn\n{Rrvica Consommnatanote A{ATiE Ceckx 100g €"
     },
     {
       "product_id": "off_3242274030056",
@@ -696,7 +1164,22 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": true
+      },
+      "seconds": 0.5820092000067234,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "Vaeur nubutionnerzes partion 3209 dos OR\" par portion\nPour I00 595 Kral 305\n778 K] 106 Kcal24g0h\n~aroit 40n\nOILEsc?\nFasys\nGhickes\nt ne 280 900\no\n0,53 Rgerunce pOU un adune-tve 7040081/ 2000Kcal\nApg Gvox Vinaigrette Gressins { lourchetto\nportion  Salade Cookie"
     },
     {
       "product_id": "off_7613035937420",
@@ -715,7 +1198,22 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": true,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 0.5729179000481963,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "moyennes Valeurs nutritionneles | Pour Par portion MAr\"\n100, Dg] portion\nEnergie T@iM 7N 91\nTi Yicysss Zla 29 iikcal 18 5\ndont sucres Glucides 2829 79 8\nFibres 279 059\nProteines 06 Tp 7\nSe 139 0919\n\"u de relerence pour un X4contient,2 portions; Miik_ I20o kJj/ 2000keal x6 2\nKNACK? n 5 portions. portion equivaut & 2\nPortions aadapter pour les enfants selon eurene"
     },
     {
       "product_id": "off_3175681170872",
@@ -734,7 +1232,22 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 1
+      "n_fields_correct": 1,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": true,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": true
+      },
+      "seconds": 0.7236221000785008,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "ValeuremoTETIoue ] MgiRs ( Gex Ae) NWTPITIONMELLES ! YGEDIACSWAARDEN 'MOYENNES , Pour / Per 4009 Pour / Per 250g\nENERCIE 738 kJ 1s84 k\nMatiERES 5CRAS8ES 153 kcal 300 kcal\nMiaarvan Dont (acides [ cpas SatuRes [NYETTEN 6,49 160\nCiucIDES VERZADIGDE ) {Koolhyoratek 'Veizuren 1,10 2,8g\nFiBRES DoMi SucRes auivemTaRes) Maarvak 5 180 320\nPRoTEIMEST SeL 7 zou7 EMMIIEM NEZELS Ibuikers\n0,720"
     },
     {
       "product_id": "off_3083681148640",
@@ -753,7 +1266,22 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": true,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 0.5423243000404909,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "Yaleurs cuuibonees pou 100 8 Sal\nEncrrie spMsskd Ing\nMaucres gasses 126\ndonl aooepaDve 1 Dol\nGloadcs 70g [Con\ndont suaes 6 CV\nHibres Jor\nProlcincs Qr\n81 Cor\nRejolener noan uclle I\nIService Coros n e\nCS 30033 68747Genntakfrnce\n(o970252222caou\nMondsdon tounso edb"
     },
     {
       "product_id": "off_3281780893915",
@@ -772,7 +1300,22 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 2
+      "n_fields_correct": 2,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": true
+      },
+      "seconds": 0.1743371000047773,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "Informations nutritionnelles pour 100g\nEnergie 766ku/183kcal\nMatieres grasses 6,79\ndont Acides gras satures 08g\nGlucides 259\ndont Sucres 5,49\nFibres alimentaires 2,19\nProteines 459\nSel 0,90"
     },
     {
       "product_id": "off_3021690201123",
@@ -791,7 +1334,22 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 3
+      "n_fields_correct": 3,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": false,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": true
+      },
+      "seconds": 0.40771940001286566,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "VAifurs Muiruonneiles| PAr PoRTor\nMoyewnes POUR 700g de 2054\nEnergie 415 kJ 868 kJ\n99 kcol 20Z kcol\nMatieres grusses  3,2 9 6,69\ndont acides gros\nsatures 1,19 2,39\nGlucides 10g 21 g\ndont sucres 0,8 g 1,69\nFibres\nolimentgires 2,89 519\nFroteines 61 734\nSel 0,7 144\nUne portion de 205g est adaptable\nen fonction des besoins de chacun"
     },
     {
       "product_id": "off_6111035000430",
@@ -810,7 +1368,16 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kj": true,
+        "carbohydrate_g": false,
+        "sugar_g": false
+      },
+      "seconds": 0.6260227999882773,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "ernuisat978i_Stcune pureteincomuca 1976, Sidi Ali vous ottreomo\nminerale eueci dhydratation 2u quou\nUCC Ge bicn- Sidi Ali prend soin de Yous\n5 4 ( 4 441;1978\nUL Ja J2y,L\n4y k !+#j\nComposition minerale ?n mg/!\nResidu sec 0 T1o'C 186\n26 Ha Bicarbonates 104 2\nocum alaum 12 A sultates 42\n{eonesum Ff Chlorrres 14\ncussnum PLx Nitates\nAralyfe [nk 80/98 0- 15-04 86"
     },
     {
       "product_id": "off_6111035000058",
@@ -826,7 +1393,14 @@
         "salt_g": false
       },
       "n_fields_evaluated": 6,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {
+        "salt_g": false
+      },
+      "seconds": 0.029679699917323887,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": ""
     },
     {
       "product_id": "off_6111128000071",
@@ -845,7 +1419,12 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {},
+      "seconds": 0.32505159999709576,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "Composition de [ eau en mg/L ,\nJeias; A4W5\nCalcium 63,5 Axyi\nMagnesium 35,5 2;\nNitrate A44?\nSodium Jaals\nChlorures 19,8 auy\nSulfate 3,8 PGYl\nBicarbonate 372 AxWlbx\nPotassium"
     },
     {
       "product_id": "off_6111252421568",
@@ -864,7 +1443,14 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {
+        "salt_g": false
+      },
+      "seconds": 0.05368539993651211,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "4"
     },
     {
       "product_id": "off_6111035000027",
@@ -882,7 +1468,14 @@
         "salt_g": false
       },
       "n_fields_evaluated": 8,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {
+        "salt_g": true
+      },
+      "seconds": 0.17362629994750023,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "2\nn\n8\n1\nn\n1\n0"
     },
     {
       "product_id": "off_6111035502828",
@@ -901,7 +1494,12 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {},
+      "seconds": 0.15280410007108003,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "Sum E9 f\nPassum\nBrarbonates Corres #\nSufates\nNrates 4"
     },
     {
       "product_id": "off_3083681095296",
@@ -920,7 +1518,22 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": true,
+        "salt_g": false
+      },
+      "seconds": 0.5816128998994827,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "Ratatouille cuisineea lhuile\ndolive viergeextra 1,5%\nInGREDIENTS daubergines prgfrites 25% Des VALEURSNUTRITIONMELLES POUR  (1g\n(aubergines 22%, huile de Energie. 298U72/\ntournesol) des de courgettes Matieres grasses ,\n25%, puree tomates dont acices grassatures\nmi-reduite 21%, oignons en\ndes 13*, poivrons rouges en Glucides ,\ndes 8%, double concentre de dontsuges\ntomate 33, huiledolivevierge Fibresalimentaires\nextra 1,5%,sucre 1,3%,selail; Proteines _\nJus concentredecitron, larine\ndeBLE, thym 0,13 '08l;\nApres ouverture conserveza 4 Cmaximum\nJaaoesgunaaxs ilonsiealsste consommez dans les48h. Poidsner: 380g"
     },
     {
       "product_id": "off_20004132",
@@ -939,7 +1552,21 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 0.14124899997841567,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "iranander\nWMsniien falee 44\n11e\n4opge"
     },
     {
       "product_id": "off_3083681094459",
@@ -958,7 +1585,22 @@
         "salt_g": true
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 8
+      "n_fields_correct": 8,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": true
+      },
+      "seconds": 0.24355360004119575,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "1 /0\nVALEURS NUTRITIONNELLES\nPOUR 100g\nEnergie ._ 260 kJ/62 kcal\nMatieres grasses_ 3,4g\ndontacides gras satures . 0,5g\nGlucides . 5,5g\ndontsucres. 5,2g\nFibres alimentaires . 1,3g\nProteines 1,8g\nSel 0,71g"
     },
     {
       "product_id": "off_3307130803004",
@@ -977,7 +1619,22 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 4
+      "n_fields_correct": 4,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "seconds": 0.3286488999146968,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "VALEURS NUTRITIONNELLES\nMOYENNES POUR PER 1O0G :\nEnergie Energie : 267 kJ (64 kcal)\nmatieres grasses vetten: 3,5g\ndont acides gras satures waarvan\nverzadigde vetzuren: 0,5 g, glucides\nkoolhydraten 6,1 g dont sucres\nwaarvan suikers : 5,2 g, fibres\nalimentaires vezels : 1,7 9, proteines\neiwitten 1,2 g, sel zout: 0,479"
     },
     {
       "product_id": "off_3083681001808",
@@ -996,7 +1653,21 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 2
+      "n_fields_correct": 2,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": false,
+        "fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 0.24206339998636395,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "VALEURS Nutritionnelles\nPOUR 1009\nEnergie 322 W/77 kcal]\nMatieres grasses 0,69\ndont acides gras satures 0,19\nGlucides 9,79\ndont sucres 129\nFibres alimentaires 5,29\nProteines 559\n[Sel 0,659\nBELL, La Woestyne, 59173 Renescure"
     },
     {
       "product_id": "off_3083681094923",
@@ -1015,7 +1686,22 @@
         "salt_g": true
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 7
+      "n_fields_correct": 7,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": true
+      },
+      "seconds": 0.2723037999821827,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "VaLEURS Nutritionnelles\nPOUR Ioog DE PRODUIT\nEGOUTTE\nEnergie 82kJ/20 kcal\nMatieres grasses 0,1g\ndont acides gras satures <0,1g\nGlucides 2,3g\ndont sucres 1,3g\nFibres alimentaires 2,49\nProteines 1,49\nSel 0,79g"
     },
     {
       "product_id": "off_6111246721261",
@@ -1034,7 +1720,21 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 3
+      "n_fields_correct": 3,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": false,
+        "fat_g": true,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 0.37560620007570833,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "Code Couleur & Nutri-Score\nD'apres ses valeurs (159 kcal et 11g de lipides) ,\nce produit se situerait probablement en\nNutri-Score\nCode Couleur Jaune / Orange clair\nPourquoi ? Bien qu'il soit nature\" , sa teneur\nelevee en matieres grasses (11g) et l'ajout\nd'amidon et d'epaississants font monter\nlapport calorique par rapport & un fromage\nblanc classique & 3% de MG (qui tourne autour\nde 70-80 kcal) ."
     },
     {
       "product_id": "off_6111242100992",
@@ -1053,7 +1753,19 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "protein_g": true
+      },
+      "seconds": 0.3400225000223145,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "t10o Janan Zn\nValeurs nutrihonnelles pour 100g\nVecurs cnergehqueKa 07 Js\nOoheanes 8 0 Sua\nCorohydroies 94 sley\nL 310\nCokdum 250"
     },
     {
       "product_id": "off_6111242106949",
@@ -1072,7 +1784,20 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "seconds": 0.4079587999731302,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "Vaeurs nutuitionnelles pour 100g € 100 J ali:ll Zleqleal\nEnereie Kikcal 97251255 Nasuss Elal\nuraisses 8,21 Bhai\ndontiacides %ras Satures 8 0 uno UJudlall\nCucides 285 EuK\nVoni sucfes 80 ZeE\nProteines\" 2h5\nWip g0,466"
     },
     {
       "product_id": "off_6111242101180",
@@ -1090,7 +1815,18 @@
         "salt_g": false
       },
       "n_fields_evaluated": 8,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": false,
+        "fat_g": true,
+        "carbohydrate_g": true,
+        "protein_g": true
+      },
+      "seconds": 0.21295470010954887,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "LE LAIT Uht JAOUDA\nValeus nutoitlonnelles pour JoOnl\nValeur energetique Kcal 58\nProteines 3,0\nCarbohydrates 4,8\nLipides 3,0\nCalcium mg 120"
     },
     {
       "product_id": "off_6111242100985",
@@ -1109,7 +1845,18 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": true,
+        "carbohydrate_g": false,
+        "protein_g": false
+      },
+      "seconds": 0.4000091999769211,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "4s\nifanbyea Wyj4 G9iLlouia\n68 ;val Psualjal\n{80:!Laljjn Gubji\nIngredienis:\nlait edeme, aeme\nManere grasse: 68 lerments lociiques Jaoudaa ecoute.\nvotre\nPoids net: 809\n6s01 Ooou\nMMng Byw6 3899 0"
     },
     {
       "product_id": "off_6111246721278",
@@ -1128,7 +1875,962 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 2
+      "n_fields_correct": 2,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": false,
+        "carbohydrate_g": false,
+        "protein_g": false
+      },
+      "seconds": 0.2572715999558568,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "VALEURS NUTRITIONNELLES ET ENERGETIQUE\nValeurs Nutritionnelles Moyennes pour 1009\nProteines 109\nGlucides 3,19\nLipides 189\nValeurs Energetique Moyennes pour 100g\n257 kcal / 1061 k\nTemperature de conservation\nA conserver entre +49C et +6 C"
+    },
+    {
+      "product_id": "off_7622210449283",
+      "category": "atistirmalik",
+      "engine": "windows",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": false,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 3,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": false,
+        "salt_g": true
+      },
+      "seconds": 0.34903099993243814,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "Information\nnuritionnelle (20 g) (20 g)\n19620 392 W\n596\n467 kal 93 kal\nMatiğres grasses 179\ndont atides gras saturâs 5,6 g 696\nGluddes 69 g 149 596\ndontsucres 32 g 796\nFibresalimentaires 4,0 g 01 g\nProtiines 1,39\nsel\n0,49 g o,ıog"
+    },
+    {
+      "product_id": "off_3046920029759",
+      "category": "atistirmalik",
+      "engine": "windows",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": false,
+        "fiber_g": true,
+        "protein_g": false,
+        "salt_g": true
+      },
+      "seconds": 0.3496255000354722,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "NUTRITION INFORMATİON PER ı\nEnergiaa I Energİ I Energi I W'art0Şe 2483 ki 1592 kal\nenergetvczna\nFett ı ! fed: / Fett I Tiuszcz\n. varav manat fett / josta tyydyttynyttâ rasvaa / heraf\nfedtsyrer ş hvorav mettet fett w tym 30 g\n[was•,' t'uszczowe nasycone\nKolhydrater/ Hİİlihydraattia / Külhydrater/ 14 g\nI Wçglowodany\n- sorkerarter / josta sokereita / heraf\nsukkerarler hvorav sukkerarter/ w m cuk\nProtein / Proteiinia I Protein protein ş Bialko\nSuolaa Salt Salt Söl\nDistribueras av I Markkinoija"
+    },
+    {
+      "product_id": "off_06175700",
+      "category": "atistirmalik",
+      "engine": "windows",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 2,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": true,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 0.3301939000375569,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "energie/Energie/Energy 1631 kJ/385 kcaı\nMatiğres grassesNetten/FaVFett\ndont acides gras saturös/waarvan\nverzadigde vetzuren/of Whicn saturates/\ndavon gesâttigte Fettsâuren\nGlucides/Koolhydraten/Carbohydrate/\nKohlenhydrate 75 g\ndont sucres/waarvan suikers/of which sugar/\ndavon Zucker\nFibres alimentairesNoedingsvezels/Dietetary fibres/\nBallaststoffe\nProtĞines/Eiwitten/Protein/EiweiB\nMagnĞsiunı/Magnesium 186 mg deş AR\nmg (2704 deş AR"
+    },
+    {
+      "product_id": "off_3175680011480",
+      "category": "atistirmalik",
+      "engine": "windows",
+      "ocr_confidence": 0.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 0.2821068000048399,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": ""
+    },
+    {
+      "product_id": "off_3046920022651",
+      "category": "atistirmalik",
+      "engine": "windows",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 3,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": true
+      },
+      "seconds": 0.31110019993502647,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "INFORMATİONS NUTRITIONNELLES\nPOUR ıoog :\nEnergie 2350 k] / 566 kül\nMatiĞres grasses 41 g\n- dont saturâes 24 g\nGlucides 35 g\n- dont sucres 30 g\nProtâines\nsel 0,02 g"
+    },
+    {
+      "product_id": "off_3046920022606",
+      "category": "atistirmalik",
+      "engine": "windows",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 0.3238376999506727,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "El•og:\nSAS\nıooge"
+    },
+    {
+      "product_id": "off_3242274030056",
+      "category": "hazir_gida",
+      "engine": "windows",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 0.3147951998980716,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "320 q par pornon\n1 pornon Salade Cookie * Vınaigrette * Gressins et fourchetle"
+    },
+    {
+      "product_id": "off_7613035937420",
+      "category": "hazir_gida",
+      "engine": "windows",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 0.31981779995840043,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "Vah\"Mri— PM\n100 70\n264 kal 184 kil\n14 g\nhat sıms 22 g işg\n21 ıs\nSel 13 g 1919\nKNACKP x10 : 5 poüns. I portbn İEaut i '2\nport\" i şebn"
+    },
+    {
+      "product_id": "off_3175681170872",
+      "category": "hazir_gida",
+      "engine": "windows",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 0.3301825999515131,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "12\n0,11"
+    },
+    {
+      "product_id": "off_3083681148640",
+      "category": "hazir_gida",
+      "engine": "windows",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": true,
+        "fiber_g": false,
+        "protein_g": true,
+        "salt_g": false
+      },
+      "seconds": 0.30602209991775453,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "V*xs 100\nMathes gmw\nQ9702SZ2Z2"
+    },
+    {
+      "product_id": "off_3281780893915",
+      "category": "hazir_gida",
+      "engine": "windows",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": true,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 3,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": true,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": true
+      },
+      "seconds": 0.31196180009283125,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "Informations nutritionnelles pour 100 g\nEner ie 766kJ 183kcaı\nMatiğres grasses\ndont Acides gras saturâs\nGlucides 25 g\ndont Sucres\nFibres alimentaires\nProtâines\nsel 0,90"
+    },
+    {
+      "product_id": "off_3021690201123",
+      "category": "hazir_gida",
+      "engine": "windows",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 1,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 0.3280352000147104,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "NUTRITIONNEIIES PAR\nMOYENNES POUR 100 DE 205\nnergie 415kJ 868 k]\n27kI\nMatiğres rasses 3,2 g 6,6 g\n- dont aci es gros\nsoturâs 23\nG ucides 109 21 g\n- dont sucres 08 16\nFi res\nolimentoires 28\nProtâines 61 13\n070\nUne portion de 205g est odaptoble\nen fonction des besoins de (hocun"
+    },
+    {
+      "product_id": "off_6111035000430",
+      "category": "icecek",
+      "engine": "windows",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kj": false,
+        "carbohydrate_g": false,
+        "sugar_g": false
+      },
+      "seconds": 0.3388136000139639,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "Dwis 1978, Sidi Ah vous offre ene\nminerale natürelle d'une pureti mcompa\nde bıen-âre et (hydratatıon au quot\nSM Ah yend som de vous.\nCanposition minâraie en mg\"\nsec ııo:c : 186\n26\n12 42"
+    },
+    {
+      "product_id": "off_6111035000058",
+      "category": "icecek",
+      "engine": "windows",
+      "ocr_confidence": 0.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "carbohydrate_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 6,
+      "n_fields_correct": 0,
+      "number_recall": {
+        "salt_g": false
+      },
+      "seconds": 0.27679370006080717,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": ""
+    },
+    {
+      "product_id": "off_6111128000071",
+      "category": "icecek",
+      "engine": "windows",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0,
+      "number_recall": {},
+      "seconds": 0.33747150003910065,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "Composition de l'eaue mg/L\nJ/ p çL4-J1\nCalcium 63,5\nMagnâsium 35,5\nNitrate 7\nSodium 8\nChlorures 19,8\nSulfate\nBicarbonate 372\nPotassium"
+    },
+    {
+      "product_id": "off_6111252421568",
+      "category": "icecek",
+      "engine": "windows",
+      "ocr_confidence": 0.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0,
+      "number_recall": {
+        "salt_g": false
+      },
+      "seconds": 0.2762206000043079,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": ""
+    },
+    {
+      "product_id": "off_6111035000027",
+      "category": "icecek",
+      "engine": "windows",
+      "ocr_confidence": 0.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 8,
+      "n_fields_correct": 0,
+      "number_recall": {
+        "salt_g": false
+      },
+      "seconds": 0.28560000006109476,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": ""
+    },
+    {
+      "product_id": "off_6111035502828",
+      "category": "icecek",
+      "engine": "windows",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0,
+      "number_recall": {},
+      "seconds": 0.2945348999928683,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "Nitrates"
+    },
+    {
+      "product_id": "off_3083681095296",
+      "category": "konserve",
+      "engine": "windows",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 0.34404500003438443,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "Ratatouille cuİsİnâe d Ih uİle\nd' olive vierge extra\nINGRĞDIENTS : Diş VALEWSNUTRITIONMUES\ndaubergines prefrites 2S% POUR\n(aubergines 227., huile de en ergie —298\ntournesol), dis de rourgeltes\n25%, purâe de tomates Matiğresgrasses„\nmi•rğduite 21%, oignons en\ndiş 13%, poivrons rougesen Glucides.—yş\ndâs double concentrğde\nFiil es alimentaires—34;\nsel, ait,\njusconcentrğdecitrmfarine\nsel\nApres ouverture, conservezâ 4 maximum\netconsommezdansles48h_\nÂconsommer de pıifârenteavant 380!\nla datefigurantsurlefonddelaboite."
+    },
+    {
+      "product_id": "off_20004132",
+      "category": "konserve",
+      "engine": "windows",
+      "ocr_confidence": 0.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 0.27793550002388656,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": ""
+    },
+    {
+      "product_id": "off_3083681094459",
+      "category": "konserve",
+      "engine": "windows",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 1,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": true
+      },
+      "seconds": 0.31182090006768703,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "VALEURS NUTRITIONNELLES\nPOUR ıoog\nĞnergie— 260 0/62 kül\nMatiğres grasses\ndont atides gras g\nGlucides„\ndontsucres ..—.52g\nm.ı,3g\n.\nProtâines\nsel 0,71 g\n.. .. ...„"
+    },
+    {
+      "product_id": "off_3307130803004",
+      "category": "konserve",
+      "engine": "windows",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 3,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "seconds": 0.31455419992562383,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "VALEURS NUTRITIONNELLES\nMOYENNES POUR/ PER ı OOG :\nânergie / Energie : 267 kJ (64 kcal),\nmatiâres grasses / vetten : 3,5 g\ndont acides gras saturâs / waarvan\nverzadigde vetzuren : 0,5 g, glucides\n/ koolhydraten : 6,1 g dont sucres\n/ waarvan suikers: 5,2 g, fibres\nalimentaires / vezels: 1,7 g, protâines\n/ eiwitten: 1,2 g, sel / zout: 0,47 g."
+    },
+    {
+      "product_id": "off_3083681001808",
+      "category": "konserve",
+      "engine": "windows",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 1,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": false,
+        "fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 0.3129051000578329,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "VALEURS NUTRIIIONNELLES\nPOUR ıoog\nEner ie 322 77 kal\nMatiğres grasses\ndontaddes\nGlucides\ndont sucres\nFibres alimentaires\nProtâines 55\nsel 0,65 g\nBELİ, La Woestyne, 59173 Rüesçue"
+    },
+    {
+      "product_id": "off_3083681094923",
+      "category": "konserve",
+      "engine": "windows",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": true,
+        "sugar_g": false,
+        "fiber_g": true,
+        "protein_g": false,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 5,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": true,
+        "sugar_g": false,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "seconds": 0.3341447999700904,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "VALEURS NUTRITIONNÇLLES\nPOUR ıoog DE\nEGOUTTĞ\nenergie 82 kJ/29kcaı\nMatiĞres grasses Ö, I g\ndont acides gros saturâs 20, I g\nGlucides 2,3g\ndont sucres\nFibres alimentaires 2,4g\nProtâines 1,4g\nsel 0,79g"
+    },
+    {
+      "product_id": "off_6111246721261",
+      "category": "sut_urunu",
+      "engine": "windows",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 2,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 0.32810190005693585,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "Code Couleur & Nutri-Score\nD'aprĞs ses valeurs (159 kcal et lig de lipides),\nce produit se situerait probablement en :\n• Nutri-Score : C\n• Code Couleur : Jaune / Orange Clair\nPourquoi ? Bien qu'İI soİt \"natüre”, sa teneur\nâlevâe en matiğres grasses (lig) et l'ajout\nd'amidon et d'Ğpaississants font monter\nl'apport calorique par rapport un fromage\nblanc classique 3% de MG (qui tourne autour\nde 70-80 kcal)."
+    },
+    {
+      "product_id": "off_6111242100992",
+      "category": "sut_urunu",
+      "engine": "windows",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": false,
+        "fat_g": false,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "protein_g": false
+      },
+      "seconds": 0.3069263999350369,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "Valeurs nutritionneks pom 10«\n97\n9 9,4\n9 30"
+    },
+    {
+      "product_id": "off_6111242106949",
+      "category": "sut_urunu",
+      "engine": "windows",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 0.29816369991749525,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "50,45 i"
+    },
+    {
+      "product_id": "off_6111242101180",
+      "category": "sut_urunu",
+      "engine": "windows",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 8,
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": false,
+        "fat_g": false,
+        "carbohydrate_g": false,
+        "protein_g": false
+      },
+      "seconds": 0.31838620000053197,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "LE LAIT UHT JAOUDA\nnotlltıonneııes ıoomı\nVoleur ânârgĞtique Kcal 58\nProtĞines\nCarbohydrates\nLipides\nCalcium mg"
+    },
+    {
+      "product_id": "off_6111242100985",
+      "category": "sut_urunu",
+      "engine": "windows",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": true,
+        "carbohydrate_g": false,
+        "protein_g": false
+      },
+      "seconds": 0.31877419992815703,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "âcrârnâ cranw,\nküre grasse: 6% x:vOtre\nrwt: 809 I"
+    },
+    {
+      "product_id": "off_6111246721278",
+      "category": "sut_urunu",
+      "engine": "windows",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": true,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 1,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "carbohydrate_g": true,
+        "protein_g": true
+      },
+      "seconds": 0.32304769998881966,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "VALEURS NUTRITIONNELLES ET ENERGĞTIQUE\nValeurs Nutritionnelles Moyennes pour 1009\n10 g\nGlucides 3,1 g\nLipides 18\nValeurs Energâtique Moyennes pour 1\n257 kal/ 1061 k)\nTemperature de conşervation\nA conserver entre +40C et +60C"
     },
     {
       "product_id": "off_7622210449283",
@@ -1147,7 +2849,22 @@
         "salt_g": true
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 9
+      "n_fields_correct": 9,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "seconds": 2.3239565999247134,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "| | 100 g | 1 (20 g) | %*/ (20 g) |\n|---|---|---|---|\n| Information nutritionnelle |  |  |  |\n| Energie | 1962 kJ <br> 467 kcal | 392 kJ <br> 93 kcal | 5% |\n| Matières grasses | 17 g | 3,5 g | 5% |\n| dont acides gras saturés | 5,6 g. | 1,1 g | 6% |\n| Glucides | 69 g | 14 g | 5% |\n| dont sucres | 32 g | 6,3 g | 7% |\n| Fibres alimentaires | 4,0 g | 0,8 g | - |\n| Protéines | 6,3 g | 1,3 g | 3% |\n| Sel | 0,49 g | 0,10 g | 2% |"
     },
     {
       "product_id": "off_3046920029759",
@@ -1166,7 +2883,22 @@
         "salt_g": true
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 4
+      "n_fields_correct": 4,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": false,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "seconds": 3.0441644999664277,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "NUTRITION INFORMATION PER 100g:\nEnergi/Energiaa/Energi / Energi/Wartość\nenergetyczna\n2483 kJ/592 kcal\nFett/Rasvaa/Fedt/Fett/Tłuszcz\n55 g\n-varav mättat fett/josta tyydyttynyttä rasvaa / heraf\nmættede fedtsyrer / hvorav mettet fett / w tym\n30 g\nkwasy tłuszczowe nasycone\nKolhydrater/ Hiilihydraattia / Kulhydrater /\nKarbohydrater/Węglowodany\n14 g\n- varav sockerarter / josta sokereita / heraf\nsukkerarter/hvorav sukkerarter / w tym cukry\n7,0 g\nProtein/Proteiinia / Protein / Protein / Białko\n10 g\nSalt/Suolaa/Salt/Salt/Sól\n0,03 g\nQUALITY GUARANTEE\nCHOCOLADEFABRIKEN LINDT & SPRÜNGLI AG\nDistribueras av/Markkinoija/"
     },
     {
       "product_id": "off_06175700",
@@ -1176,16 +2908,31 @@
       "field_results": {
         "energy_kcal": true,
         "energy_kj": true,
-        "fat_g": true,
+        "fat_g": false,
         "saturated_fat_g": false,
         "carbohydrate_g": false,
         "sugar_g": false,
         "fiber_g": false,
-        "protein_g": true,
-        "salt_g": true
+        "protein_g": false,
+        "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 5
+      "n_fields_correct": 2,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": false,
+        "salt_g": true
+      },
+      "seconds": 2.136171399964951,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "Énergie/Energie/Energy\nMatières grasses/Vetten/Fat/Fett\n1631 kJ/385 kcal\n2,8 g\ndont acides gras saturés/waarvan\nverzadigde vetzuren/of which saturates/\ndavon gesättigte Fettsäuren\n0,6 g\nGlucides/Koolhydraten/Carbohydrate/\nKohlenhydrate\n75 g\ndont sucres/waarvan suikers/of which sugar/\ndavon Zucker\n2,6 g\nFibres alimentaires/Voedingsvezels/Dietetary fibres/\nBallaststoffe\n4,4 g\nProtéines/Eiwitten/Protein/Eiweiß\nSel/Zout/Salt/Salz\nMagnésium/Magnesium\nFer/ljzer/Iron/Eisen\n13 g\n0,68 g\n186 mg (49,6% des AR\n3,8 mg (27% des AR\n(EB) AB-Annorte de Référence (NL) RI"
     },
     {
       "product_id": "off_3175680011480",
@@ -1204,7 +2951,22 @@
         "salt_g": true
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 9
+      "n_fields_correct": 9,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": false,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "seconds": 2.671033599996008,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "| ANALYSE MOYENNE | Teneur pour 100g | % AQR*** pour 100g | Teneur pour 1 biscuit (11,5g) | % AQR*** pour 1 biscuit (11,5g) |\n|---|---|---|---|---|\n| Energie | 1967 kJ <br> 467 kcal | 23% | 228 kJ <br> 54 kcal | 3% |\n| Matières grasses | 18g | 26% | 2,1g | 3% |\n| dont Acides gras saturés | 2,0g | 10% | 0,2g | 1% |\n| Glucides | 64g | 25% | 7,4g | 3% |\n| dont Sucres | 17g | 19% | 2,0g | 2% |\n| Fibres alimentaires | 4,6g |  | 0,5g |  |\n| Protéines | 10g | 20% | 1,2g | 2% |\n\n| ANALYSE MOYENNE | Teneur pour 100g | % AQR*** pour 100g | Teneur pour 1 biscuit (11,5g) | % AQR*** pour 1 biscuit (11,5g) |\n|---|---|---|---|---|\n| Sel | 0,38 g | 6% | 0,05 g | 1% |\n| Vitamine E | 8,5 mg | 71% | 0,98 mg | 8% |\n| Vitamine B1 | 0,39 mg | 35% | 0,04 mg | 4% |\n| Vitamine PP | 3,7 mg | 23% | 0,43 mg | 3% |\n| Vitamine B6 | 0,38 mg | 27% | 0,04 mg | 3% |\n| Vitamine B9 | 58,3 µg | 29% | 6,7 µg | 3% |\n| Magnésium | 144 mg | 38% | 16,6 mg | 4% |\n\n***Apports Quotidiens de Référence pour un adulte-type (8400 kJ/2000 kcal)"
     },
     {
       "product_id": "off_3046920022651",
@@ -1223,7 +2985,22 @@
         "salt_g": true
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 8
+      "n_fields_correct": 8,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": false,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "seconds": 2.6653551999479532,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "INFORMATIONS NUTRITIONNELLES\nPOUR 100g:\n| | |\n|---|---|\n| Énergie | 2350 kJ/566 kcal |\n| Matières grasses | 41 g |\n| - dont saturées | 24 g |\n| Glucides | 35 g |\n| - dont sucres | 30 g |\n| Protéines | 9,5 g |\n| Sel | 0,02 g |"
     },
     {
       "product_id": "off_3046920022606",
@@ -1242,7 +3019,21 @@
         "salt_g": true
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 8
+      "n_fields_correct": 8,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "seconds": 2.3969578000251204,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "CEUVRER EN PARTENARIAT AVEC LES PRODUCTEURS\nET LEURS COMMUNAUTÉS\nRETROUVEZ PLUS DE DETAILS À PROPOS DE NOTRE\nPROGRAMME DE DEVELOPPEMENT DURABLE POUR\nLES FEVES DE CACAO SUR WWW.FARMING-PROGRAM.COM\nChocolat noir, extra-fin traditionnel.\nCacao: 85% minimum.\nIngrédients: pâte de cacao, cacao\nmaigre, beurre de cacao, cassonade,\nvanille.\nPeut contenir du lait, des fruits à coque,\ndo soja et des graines de sésame.\nINFORMATIONS NUTRITIONNELLES\nPOUR 100g:\nEnergie\n2418 kJ / 584 kcal\nMatières grasses\n46 g\n- dont saturées\n27 g\nGlucides\n22 g\n- dont sucres\n15 g\nProtéines\n12,5 g\nSel\n0,02 g\nConseil: conserver au frais et au sec.\nL4695 544 20:15\n31 10 2026\n250191\nÀ consommer de préférence avant le:\n3 046920 022606\nwww.lindt.com\nLINDT SUSTAINABILITY\nFR-64400 OLORON-SAINTE-MARIE\nLINDT & SPRÜNGLI SAS\nFABRIQUÉ EN FRANCE PAR:\nKILCHBERG/SUISSE\nCHOCOLADEFABRIKEN LINDT & SPRÜNGLI AG\nGARANTIE DE QUALITÉ\nLindt & Sprüngli SAS\nService Consommateurs, BP 49,\nFR-64402 Oloron-Sainte-Marie Cedex.\nPoids net:\n100 g e"
     },
     {
       "product_id": "off_3242274030056",
@@ -1261,7 +3052,22 @@
         "salt_g": true
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 9
+      "n_fields_correct": 9,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": false,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "seconds": 2.02317909989506,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "| | Valeurs nutritionnelles | | |\n|---|---|---|---|\n| | Pour 100 g | 1 portion - 320 g | % des AQR* par portion |\n| Energie | 778 kJ / 186 kcal | 2490 kJ / 595 kcal | 30% |\n| Matières grasses | 8,8 g | 28 g | 40% |\n| Dont acides gras saturés | 2,5 g | 8,0 g | 40% |\n| Glucides | 17 g | 54 g | 21% |\n| Dont sucres | 4,1 g | 13 g | 14% |\n| Fibres alimentaires | 2,8 g | 9,0 g | / |\n| Protéines | 8,3 g | 27 g | 54% |\n| Sel | 0,53 g | 1,7 g | 28% |\n\n*Apport Quotidien de Référence pour un adulte-type (8400 kJ / 2000 kcal)\n1 portion = Salade + Cookie + Vinaigrette + Gressins et fourchette"
     },
     {
       "product_id": "off_7613035937420",
@@ -1271,16 +3077,31 @@
       "field_results": {
         "energy_kcal": true,
         "energy_kj": true,
-        "fat_g": false,
-        "saturated_fat_g": false,
-        "carbohydrate_g": false,
-        "sugar_g": false,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
         "fiber_g": true,
         "protein_g": true,
         "salt_g": true
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 5
+      "n_fields_correct": 9,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "seconds": 2.4096592999994755,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "| Valeurs nutritionnelles moyennes | Pour 100 g | Par portion (70 g) | %AR** par portion |\n|---|---|---|---|\n| Énergie | 1097 kJ <br> 264 kcal | 765 kJ <br> 184 kcal | 9% |\n| Matières grasses | 20 g | 14 g | 20% |\n| dont saturées | 1,4 g | 1,0 g | 5% |\n| Glucides | 4,0 g | 2,8 g | 1% |\n| dont sucres | 2,2 g | 1,5 g | 2% |\n| Fibres | 2,1 g | 1,5 g | - |\n| Protéines | 16 g | 11 g | 22% |\n| Sel | 1,3 g | 0,91 g | 15% |\n\n**Apport de référence pour un adulte-type (8400 kJ / 2000 kcal).\nKNACKI® x4 contient 2 portions, KNACKI® x6 : 3 portions,\nKNACKI® x10 : 5 portions. 1 portion équivaut à 2 KNACKI®.\nPortions à adapter pour les enfants selon leur âge."
     },
     {
       "product_id": "off_3175681170872",
@@ -1291,7 +3112,7 @@
         "energy_kcal": true,
         "energy_kj": true,
         "fat_g": true,
-        "saturated_fat_g": false,
+        "saturated_fat_g": true,
         "carbohydrate_g": false,
         "sugar_g": false,
         "fiber_g": true,
@@ -1299,7 +3120,22 @@
         "salt_g": true
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 5
+      "n_fields_correct": 6,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "seconds": 2.3733727000653744,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "VALEURS NUTRITIONNELLES MOYENNES / Pour / Per Pour / Per\nGEMIDDELDE VOEDINGSWAARDEN 100 g 250 g\n\nVALEUR ENERGÉTIQUE /\nENERGIE\n638 kJ 1584 kJ\n153 kcal 380 kcal\n\nMATIÈRES GRASSES / VETTEN\n6,4 g 16 g\nDONT ACIDES GRAS SATURÉS /\n1,1 g 2,8 g\nWAARVAN VERZADIGDE VETZUREN\n\nGLUCIDES / KOOLHYDRATEN\n13 g 32 g\nDONT SUCRES / WAARVAN SUIKERS\n1,6 g 4,0 g\n\nFIBRES ALIMENTAIRES / VEZELS\n8,9 g 22 g\n\nPROTÉINES / EIWITTEN\n6,4 g 16 g\n\nSEL / ZOUT\n0,72 g 1,8 g"
     },
     {
       "product_id": "off_3083681148640",
@@ -1312,13 +3148,28 @@
         "fat_g": true,
         "saturated_fat_g": true,
         "carbohydrate_g": true,
-        "sugar_g": false,
+        "sugar_g": true,
         "fiber_g": true,
         "protein_g": true,
-        "salt_g": false
+        "salt_g": true
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 7
+      "n_fields_correct": 9,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "seconds": 1.8903017000993714,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "Valeurs nutritionnelles pour 100 g\nSAL\nING\nÉnergie\n570 kj/138 kcal\n(lait\nMatières grasses\n12 g\n(eau\ndont acides gras saturés\n1g\npou\nGlucides\n4,0 g\ngom\ndont sucres\n2g\ncru\nFibres\n3,0 g\nSam\nProtéines\n2,0 g\nAc\nSel\n0,88 g\nAc\nCom\nRejoignez-nous sur bonduelle.fr\nAc\nService Consommateurs Bonduelle\nC.S. 30033-69747 Genas cedex-France\n09 70 25 22 22 appel non surtaxé\nwww.fondation-louisbonduelle.org"
     },
     {
       "product_id": "off_3281780893915",
@@ -1337,7 +3188,22 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 2
+      "n_fields_correct": 2,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "seconds": 2.4552908999612555,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "Informations nutritionnelles pour 100 g\nEnergie\nMatières grasses\ndont Acides gras saturés\nGlucides\ndont Sucres\nFibres alimentaires\nProtéines\nSel\n766kJ/183kcal\n6,7 g\n0,8 g\n25 g\n5,4 g\n2,1 g\n4,5 g\n0,90 g"
     },
     {
       "product_id": "off_3021690201123",
@@ -1356,7 +3222,22 @@
         "salt_g": true
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 8
+      "n_fields_correct": 8,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "seconds": 1.8779775000875816,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "VALEURS NUTRITIONNELLES PAR PORTION\nMOYENNES POUR 100g\nDE 205g\nEnergie\n415 kJ\n868 kJ\n99 kcal\n207 kcal\nMatières grasses 3,2 g\n6,6 g\n- dont acides gras\nsaturés\n1,1 g\n2,3 g\nGlucides\n10 g\n21 g\n- dont sucres\n0,8 g\n1,6 g\nFibres\nalimentaires\n2,8 g\n5,7 g\nProtéines\n6,1 g\n13 g\nSel\n0,70 g\n1,4 g\nUne portion de 205g est adaptable\nen fonction des besoins de chacun"
     },
     {
       "product_id": "off_6111035000430",
@@ -1375,23 +3256,39 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kj": false,
+        "carbohydrate_g": false,
+        "sugar_g": false
+      },
+      "seconds": 2.4785218000179157,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "Depuis 1978, Sidi Ali vous offre une\nminérale naturelle d'une pureté incompar\nmurce de bien-être et d'hydratation au quotie\nSidi Ali prend soin de vous.\nد 1978 وسيدي علي يقدم لكم ماء معدني\nطبيعي ذو صفاء لا مثيل له. مصدر عناية\nوانتعاش لكل يوم، سيدي علي يعتني بكم.\nComposition minérale en mg/\nRésidu sec à 110°C: 186\nSodium\n26 صوديوم Bicarbonates 104 رينات\nCalcium\n12 كالسيوم Sulfates\n42\nـات\nMagnesium 9 مغنزيوم Chlorures\n14\nPotassium 3 بوتاسيوم Nitrates\nAnalyse INH 80/98 du 15-04-98\n。"
     },
     {
       "product_id": "off_6111035000058",
       "category": "icecek",
       "engine": "ocrspace",
-      "ocr_confidence": 100.0,
+      "ocr_confidence": 0.0,
       "field_results": {
-        "energy_kcal": true,
-        "energy_kj": true,
-        "fat_g": true,
-        "carbohydrate_g": true,
-        "protein_g": true,
-        "salt_g": true
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "carbohydrate_g": false,
+        "protein_g": false,
+        "salt_g": false
       },
       "n_fields_evaluated": 6,
-      "n_fields_correct": 6
+      "n_fields_correct": 0,
+      "number_recall": {
+        "salt_g": false
+      },
+      "seconds": null,
+      "cost_usd": 0.0,
+      "error": "429 Client Error: Too Many Requests for url: https://api.ocr.space/parse/image",
+      "ocr_text": null
     },
     {
       "product_id": "off_6111128000071",
@@ -1410,7 +3307,12 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {},
+      "seconds": 1.883477000053972,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "Composition de l'eau en mg/L\nتركيبة الماء مع ال\n| | |\n|---|---|\n| Calcium | 63,5 | كلسيوم |\n| Magnésium | 35,5 | منغنيزيوم |\n| Nitrate | 7 | نترات |\n| Sodium | 8 | صوديوم |\n| Chlorures | 19,8 | كلورور |\n| Sulfate | 3,8 | سولفات |\n| Bicarbonate | 372 | بيكاربونات |\n| Potassium | 1 | بوطاسيوم |\n| | | معران |"
     },
     {
       "product_id": "off_6111252421568",
@@ -1429,7 +3331,14 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {
+        "salt_g": false
+      },
+      "seconds": 1.8455050999764353,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "```\nת\nh\n6111252 421568\">\nارون بار دوز موروكو شو المنطقة الصناعية\nالدار البيضاء التقرب بترخيص\nالعلامة التجارية المسجلة الكوافينا\n+212 529055\n```"
     },
     {
       "product_id": "off_6111035000027",
@@ -1447,7 +3356,14 @@
         "salt_g": false
       },
       "n_fields_evaluated": 8,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {
+        "salt_g": false
+      },
+      "seconds": 1.866375199984759,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "| | |\n|---|---|\n| Sodium | 25.50 |\n| Calcium | 12.02 |\n| Magnesium | 8.70 |\n| Potassium | 2.80 |\n| Bicarbonates | 103.70 |\n| Sulfates | 41.70 |\n| Chlorures | 14.20 |\n| Nitrates | 0.10 |\n| | سلفات |\n| | التورير |\n| | نترات |"
     },
     {
       "product_id": "off_6111035502828",
@@ -1466,7 +3382,12 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0
+      "n_fields_correct": 0,
+      "number_recall": {},
+      "seconds": 1.3810580000281334,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "Sodium 48\nCalcium 18\nMagnésium 13\nPotassium 8\nBicarbonates 217\nChlorures 12\nSulfates 8\nNitrates 4"
     },
     {
       "product_id": "off_3083681095296",
@@ -1476,6 +3397,73 @@
       "field_results": {
         "energy_kcal": true,
         "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 9,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": false,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "seconds": 2.528792900033295,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "Ratatouille cuisinée à l'huile\nd'olive vierge extra 1,5%\nINGRÉDIENTS : Dés VALEURS NUTRITIONNELLES\nd'aubergines préfrites 25% POUR 100g\n(aubergines 22%, huile de Énergie. 298 kJ/72 kcal\ntournesol), dés de courgettes Matières grasses. 4,1g\n25%, purée de tomates dont acides gras saturés. 0,6g\nmi-réduite 21%, oignons en Glucides. 5,7g\ndés 13%, poivrons rouges en dont sucres. 5,5g\ndés 8%, double concentré de Fibres alimentaires. 3,4g\ntomate 3%, huile d'olive vierge Protéines. 1,3g\nextra 1,5%, sucre 1,3%, sel, ail, Sel. 0,81g\njus concentré de citron, farine\nde BLÉ, thym 0,1%.\nAprès ouverture, conservez à 4°C maximum\net consommez dans les 48h.\nÀ consommer de préférence avant\nla date figurant sur le fond de la boîte.\nPoids net: 380 g\nNUTRI-SCORE"
+    },
+    {
+      "product_id": "off_20004132",
+      "category": "konserve",
+      "engine": "ocrspace",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 8,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 2.738257099990733,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "Chopped peeled tomatoes in tomato juice. Ingredients: Tomatoes, tomato juice, acidity regulator: citric acid.\nStorage Instructions: Store in a cool, dry place. Once opened, keep refrigerated and use within 3 days.\nBest before: See end of can. Additional Information: Made in Italy.\nWarning: Open and dispose of can carefully. Keep away from children.\nDistributed by: Lidl Great Britain Ltd, 149 King's Road, New Malden, KT3 8RA. Lidl Ireland GmbH, Unit 10, Northwood Court, Santry, Dublin 9.\n\nRavintotarvo/Näringsvärde/\nNäringsinnehåll/Nutrition Information\n\nper 100 g\nEnergy/Energi 94 kJ/22 kcal\nFat/Fett 0.2 g\nof which saturates/varav mättat fett/\ndont acides gras saturés 0.1 g\nCarbohydrate/Kolhydrat/Kulhydrat/Carbohydrate 3.6 g\nof which sugars/varav sockerarter/\nheraf sukkerarter/dont sucres 2.7 g\nFibre/Fiber/Fibrer 1.7 g\nProtein/Protein/Proteiner 1.7 g\nSalt/Salt/Salt 0.07 g\n\n400 ge\n\nLidl Stiftung & Co. KG\nD-74167 Neckarsulm"
+    },
+    {
+      "product_id": "off_3083681094459",
+      "category": "konserve",
+      "engine": "ocrspace",
+      "ocr_confidence": 0.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
         "fat_g": false,
         "saturated_fat_g": false,
         "carbohydrate_g": false,
@@ -1485,12 +3473,937 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 2
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": null,
+      "cost_usd": 0.0,
+      "error": "429 Client Error: Too Many Requests for url: https://api.ocr.space/parse/image",
+      "ocr_text": null
+    },
+    {
+      "product_id": "off_3307130803004",
+      "category": "konserve",
+      "engine": "ocrspace",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 3,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "seconds": 2.2262638000538573,
+      "cost_usd": 0.0,
+      "error": null,
+      "ocr_text": "VALEURS NUTRITIONNELLES\nMOYENNES POUR / PER 100G:\nÉnergie / Energie: 267 kJ (64 kcal),\nmatières grasses / vetten : 3,5 g\ndont acides gras saturés / waarvan\nverzadigde vetzuren: 0,5 g, glucides\n/ koolhydraten: 6,1 g dont sucres\n/ waarvan suikers: 5,2 g, fibres\nalimentaires / vezels: 1,7 g, protéines\n/ eiwitten: 1,2 g, sel / zout: 0,47 g."
+    },
+    {
+      "product_id": "off_3083681001808",
+      "category": "konserve",
+      "engine": "ocrspace",
+      "ocr_confidence": 0.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": null,
+      "cost_usd": 0.0,
+      "error": "429 Client Error: Too Many Requests for url: https://api.ocr.space/parse/image",
+      "ocr_text": null
+    },
+    {
+      "product_id": "off_3083681094923",
+      "category": "konserve",
+      "engine": "ocrspace",
+      "ocr_confidence": 0.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": null,
+      "cost_usd": 0.0,
+      "error": "429 Client Error: Too Many Requests for url: https://api.ocr.space/parse/image",
+      "ocr_text": null
+    },
+    {
+      "product_id": "off_6111246721261",
+      "category": "sut_urunu",
+      "engine": "ocrspace",
+      "ocr_confidence": 0.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": null,
+      "cost_usd": 0.0,
+      "error": "429 Client Error: Too Many Requests for url: https://api.ocr.space/parse/image",
+      "ocr_text": null
+    },
+    {
+      "product_id": "off_6111242100992",
+      "category": "sut_urunu",
+      "engine": "ocrspace",
+      "ocr_confidence": 0.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "protein_g": false
+      },
+      "seconds": null,
+      "cost_usd": 0.0,
+      "error": "429 Client Error: Too Many Requests for url: https://api.ocr.space/parse/image",
+      "ocr_text": null
+    },
+    {
+      "product_id": "off_6111242106949",
+      "category": "sut_urunu",
+      "engine": "ocrspace",
+      "ocr_confidence": 0.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": null,
+      "cost_usd": 0.0,
+      "error": "429 Client Error: Too Many Requests for url: https://api.ocr.space/parse/image",
+      "ocr_text": null
+    },
+    {
+      "product_id": "off_6111242101180",
+      "category": "sut_urunu",
+      "engine": "ocrspace",
+      "ocr_confidence": 0.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 8,
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "carbohydrate_g": false,
+        "protein_g": false
+      },
+      "seconds": null,
+      "cost_usd": 0.0,
+      "error": "429 Client Error: Too Many Requests for url: https://api.ocr.space/parse/image",
+      "ocr_text": null
+    },
+    {
+      "product_id": "off_6111242100985",
+      "category": "sut_urunu",
+      "engine": "ocrspace",
+      "ocr_confidence": 0.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "carbohydrate_g": false,
+        "protein_g": false
+      },
+      "seconds": null,
+      "cost_usd": 0.0,
+      "error": "429 Client Error: Too Many Requests for url: https://api.ocr.space/parse/image",
+      "ocr_text": null
+    },
+    {
+      "product_id": "off_6111246721278",
+      "category": "sut_urunu",
+      "engine": "ocrspace",
+      "ocr_confidence": 0.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "carbohydrate_g": false,
+        "protein_g": false
+      },
+      "seconds": null,
+      "cost_usd": 0.0,
+      "error": "429 Client Error: Too Many Requests for url: https://api.ocr.space/parse/image",
+      "ocr_text": null
+    },
+    {
+      "product_id": "off_7622210449283",
+      "category": "atistirmalik",
+      "engine": "openai_vision",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 9,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "seconds": 4.012246199999936,
+      "cost_usd": 0.000446,
+      "error": null,
+      "ocr_text": "Information nutritionnelle | 100 g | 1 (20 g) | %(20 g)  \nEnergie | 1962 kJ | 392 kJ | 5 %  \n| 467 kcal | 93 kcal |  \nMatières grasses | 17 g | 3,5 g | 5 %  \ndont acides gras saturés | 5,6 g | 1,1 g | 6 %  \nGlucides | 69 g | 14 g | 5 %  \ndont sucres | 32 g | 6,3 g | 7 %  \nFibres alimentaires | 4,0 g | 0,8 g |  \nProtéines | 6,3 g | 1,3 g | 3 %  \nSel | 0,49 g | 0,10 g | 2 %"
+    },
+    {
+      "product_id": "off_3046920029759",
+      "category": "atistirmalik",
+      "engine": "openai_vision",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 3,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": false,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "seconds": 2.6839267999166623,
+      "cost_usd": 0.00046840000000000006,
+      "error": null,
+      "ocr_text": "NUTRITION INFORMATION PER 100g:  \nEnergi / Energiaa / Energi / Energi / Wartość energetyczna | 2483 kJ / 592 kcal  \nFett / Rasvaa / Fedt / Fett / Tłuszcz | 55 g  \n- varav mättat fett / josta tyydyttynyttä rasvaa / heraf mættede fedtsyrer / hvorav mettet fett / w tym kwasy tłuszczowe nasycone | 30 g  \nKolhydrater / Hiilihydraattia / Kulhydrater / Karbohydrater / Węglowodany | 14 g  \n- varav sockerarter / josta sokereita / heraf sukkerarter / hvorav sukkeraerter / w tym cukry | 7,0 g  \nProtein / Proteiinia / Protein / Protein / Białko | 10 g  \nSalt / Suolaa / Salt / Salt / Sól | 0,03 g"
+    },
+    {
+      "product_id": "off_06175700",
+      "category": "atistirmalik",
+      "engine": "openai_vision",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": true,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 4,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": false,
+        "salt_g": true
+      },
+      "seconds": 2.5969269999768585,
+      "cost_usd": 0.0004684000000000001,
+      "error": null,
+      "ocr_text": "Énergie/Energie/Energy 1631 kJ/385 kcal\nMatières grasses/Vetten/Fat/Fett 2,8 g\ndont acides gras saturés/waarvan verzadigde vetzuren/of which saturates/ davon gesättigte Fettsäuren 0,6 g\nGlucides/Koolhydraten/Carbohydrate/ Kohlenhydrate 75 g\ndont sucres/waarvan suikers/of which sugar/ davon Zucker 2,6 g\nFibres alimentaires/Voedingsvezels/Dietetary fibres/ Ballaststoffe 4,4 g\nProtéines/Eiwitten/Protein/Eiweiß 13 g\nSel/Zout/Salt/Salz 0,68\nMagnésium/Magnesium 186 mg (49,6% des AR)\nFer/Ijzer/Iron/Eisen 3,8 mg (27% des AR)"
+    },
+    {
+      "product_id": "off_3175680011480",
+      "category": "atistirmalik",
+      "engine": "openai_vision",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": false,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 8,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "seconds": 3.8282389999367297,
+      "cost_usd": 0.0008428000000000001,
+      "error": null,
+      "ocr_text": "ANALYSE MOYENNE | Teneur pour 100 g | % AQR** pour 100 g | Teneur pour 1 biscuit (11,3 g) | % AQR** pour 1 biscuit (11,3 g)  \nEnergie | 1961 kJ 467 kcal | 22% | 228 kJ 54 kcal | 3%  \nMatières grasses | 18 g | 26% | 2,1 g | 3%  \ndont Acides gras saturés | 2,0 g | 10% | 0,2 g | 1%  \nGlucides | 64 g | 25% | 7,4 g | 3%  \ndont Sucres | 18 g | 20% | 2,0 g | 2%  \nFibres alimentaires | 10 g | 40% | 1,2 g | 2%  \nProtéines | 10 g | 20% | 1,2 g | 2%  \n\nANALYSE MOYENNE | Teneur pour 100 g | % AQR** pour 100 g | Teneur pour 1 biscuit (11,3 g) | % AQR** pour 1 biscuit (11,3 g)  \nSel | 0,38 g | 6% | 0,05 g | 1%  \nVitamine E | 8,5 mg | 71% | 0,98 mg | 9%  \nVitamine B1 | 0,39 mg | 35% | 0,04 mg | 4%  \nVitamine B2 | 0,37 mg | 27% | 0,04 mg | 3%  \nVitamine B6 | 0,38 mg | 27% | 0,04 mg | 3%  \nVitamine B9 | 58,3 µg | 29% | 6,7 µg | 3%  \nMagnésium | 120 mg | 32% | 14 mg | 3%  \n\n**Apports Quotidiens de Référence pour un adulte-type (8400 kJ/2000 kcal)"
+    },
+    {
+      "product_id": "off_3046920022651",
+      "category": "atistirmalik",
+      "engine": "openai_vision",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": false,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 8,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": false,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "seconds": 1.571968000032939,
+      "cost_usd": 0.00027560000000000003,
+      "error": null,
+      "ocr_text": "INFORMATIONS NUTRITIONNELLES  \nPOUR 100g :  \nÉnergie | 2350 kJ / 566 kcal  \nMatières grasses | 41 g  \n- dont saturées | 24 g  \nGlucides | 35 g  \n- dont sucres | 30 g  \nProtéines | 9,5 g  \nSel | 0,02 g"
+    },
+    {
+      "product_id": "off_3046920022606",
+      "category": "atistirmalik",
+      "engine": "openai_vision",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": false,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 8,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": false,
+        "sugar_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "seconds": 4.862156399991363,
+      "cost_usd": 0.0006707999999999999,
+      "error": null,
+      "ocr_text": "ŒUVRER EN PARTENARIAT AVEC LES PRODUCTEURS ET LEURS COMMUNAUTÉS  \nRETROUVEZ PLUS DE DÉTAILS À PROPOS DE NOTRE PROGRAMME DE DÉVELOPPEMENT DURABLE POUR LES FÈVES DE CACAO SUR WWW.FARMING-PROGRAM.COM  \n\nChocolat noir, extra-fin traditionnel.  \nCacao : 85% minimum.  \nIngrédients : pâte de cacao, cacao maigre, beurre de cacao, cassonade, vanille.  \nPeut contenir du lait, des fruits à coque, du soya et des graines de sésame.  \n\nINFORMATIONS NUTRITIONNELLES  \nPOUR 100g :  \nÉnergie | 2418 kJ / 584 kcal  \nMatières grasses | 46 g  \ndont saturées | 27 g  \nGlucides | 23 g  \ndont sucres | 15 g  \nProtéines | 12,5 g  \nSel | 0,02 g  \n\nConseil : conserver au frais à l'abri de l'air et de l'humidité.  \n\nGARANTIE DE QUALITÉ  \nCHOCOLATIER DEPUIS 1845  \nLINDT & SPRÜNGLI SA  \nR.C. 460 010 000  \nFR-64402 OLORON SAINTE-MARIE CEDEX  \nwww.lindt.com  \n\n3 046920 022606  \n\n31.01.2026  \n1465 2442 2015  \n\nPoids net : 100 g"
+    },
+    {
+      "product_id": "off_3242274030056",
+      "category": "hazir_gida",
+      "engine": "openai_vision",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": false,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 8,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": false,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": false,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "seconds": 2.3171459999866784,
+      "cost_usd": 0.0004956,
+      "error": null,
+      "ocr_text": "Valeurs nutritionnelles  \nPour 100 g | 1 portion - 320 g | % des AQR* par portion  \nEnergie | 778 kJ / 186 kcal | 2490 kJ / 595 kcal | 30%  \nMatières grasses | 8,8 g | 28 g | 40%  \nDont acides gras saturés | 2,5 g | 8,0 g | 40%  \nGlucides | 1,7 g | 5,4 g | 21%  \nDont sucres | 4,1 g | 13 g | 14%  \nFibres alimentaires | 2,8 g | 9,0 g | 54%  \nProtéines | 8,3 g | 27 g | 28%  \nSel | 0,53 g | 1,7 g |   \n*Apport Quotidien de Référence pour un adulte-type (8400 kJ / 2000 kcal)  \n1 portion = Salade + Cookie + Vinaigrette + Gressins et fourchette"
+    },
+    {
+      "product_id": "off_7613035937420",
+      "category": "hazir_gida",
+      "engine": "openai_vision",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 9,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "seconds": 2.812835399992764,
+      "cost_usd": 0.0005548,
+      "error": null,
+      "ocr_text": "Valeurs nutritionnelles moyennes | Pour 100 g | Par portion 70 g | %AR** par portion\nÉnergie | 1097 kJ 264 kcal | 765 kJ 184 kcal | 9%\nMatières grasses | 20 g | 14 g | 20%\ndont saturées | 1,4 g | 1,0 g | 5%\nGlucides | 4,0 g | 2,8 g | 1%\ndont sucres | 2,2 g | 1,5 g | 2%\nFibres | 2,1 g | 1,5 g | -\nProtéines | 16 g | 11 g | 22%\nSel | 1,3 g | 0,91 g | 15%\n* Apport de référence pour un adulte-type (8400 kJ / 2000 kcal).\nKNACKI® x4 contient 2 portions, KNACKI® x6 : 3 portions,\nKNACKI® x10 : 5 portions. 1 portion équivaut à 2 KNACKI®.\nPortions à adapter pour les enfants selon leur âge."
+    },
+    {
+      "product_id": "off_3175681170872",
+      "category": "hazir_gida",
+      "engine": "openai_vision",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 3,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "seconds": 2.298561100033112,
+      "cost_usd": 0.0005044,
+      "error": null,
+      "ocr_text": "VALEURS NUTRITIONNELLES MOYENNES / GEMIDDELDE VOEDINGSWAARDEN | Pour / Per 100 g | Pour / Per 250 g\nVALEUR ENERGETIQUE / ENERGIE | 638 kJ | 1584 kJ\n| 153 kcal | 380 kcal\nMATIERES GRASSES / VETTEN | 6,4 g | 16 g\nDONT ACIDES GRAS SATURES / WAARVAN VERZADIGD | 1,1 g | 2,8 g\nGLUCIDES / KOOLHYDRATEN | 13 g | 32 g\nDONT SUCRES / WAARVAN SUIKERS | 1,6 g | 4,0 g\nFIBRES ALIMENTAIRES / VEZELS | 8,9 g | 22 g\nPROTEINES / EIWITTEN | 6,4 g | 16 g\nSEL / ZOUT | 0,72 g | 1,8 g"
+    },
+    {
+      "product_id": "off_3083681148640",
+      "category": "hazir_gida",
+      "engine": "openai_vision",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 9,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "seconds": 2.741336799925193,
+      "cost_usd": 0.00029039999999999996,
+      "error": null,
+      "ocr_text": "Valeurs nutritionnelles pour 100 g |  \nÉnergie | 570 kJ / 138 kcal  \nMatières grasses | 12 g  \ndont acides gras saturés | 1 g  \nGlucides | 4,0 g  \ndont sucres | 2 g  \nFibres | 3,0 g  \nProtéines | 2,0 g  \nSel | 0,88 g"
+    },
+    {
+      "product_id": "off_3281780893915",
+      "category": "hazir_gida",
+      "engine": "openai_vision",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 9,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "seconds": 1.59532990003936,
+      "cost_usd": 0.00028,
+      "error": null,
+      "ocr_text": "Informations nutritionnelles pour 100 g  \nEnergie | 766kJ/183kcal  \nMatières grasses | 6,7 g  \ndont Acides gras saturés | 0,8 g  \nGlucides | 25 g  \ndont Sucres | 5,4 g  \nFibres alimentaires | 2,1 g  \nProtéines | 4,5 g  \nSel | 0,90 g"
+    },
+    {
+      "product_id": "off_3021690201123",
+      "category": "hazir_gida",
+      "engine": "openai_vision",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 8,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "seconds": 1.8150150999426842,
+      "cost_usd": 0.000418,
+      "error": null,
+      "ocr_text": "VALEURS NUTRITIONNELLES | PAR PORTION  \nMOYENNES POUR 100 g | DE 205 g  \nÉnergie | 415 kJ | 868 kJ  \n99 kcal | 207 kcal  \nMatières grasses 3,2 g | 6,6 g  \n- dont acides gras saturés | 1,1 g | 2,3 g  \nGlucides | 10 g | 21 g  \n- dont sucres | 0,8 g | 1,6 g  \nFibres alimentaires | 2,8 g | 5,7 g  \nProtéines | 6,1 g | 13 g  \nSel | 0,70 g | 1,4 g  \nUne portion de 205g est adaptable en fonction des besoins de chacun"
+    },
+    {
+      "product_id": "off_6111035000430",
+      "category": "icecek",
+      "engine": "openai_vision",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kj": false,
+        "carbohydrate_g": false,
+        "sugar_g": false
+      },
+      "seconds": 1.7143134999787435,
+      "cost_usd": 0.00038040000000000003,
+      "error": null,
+      "ocr_text": "Depuis 1978, Sidi Ali vous offre une\nu minérale naturelle d'une pureté incompar\nurce de bien-être et d'hydratation au quoti\nSidi Ali prend soin de vous.\n\nComposition minérale en mg/\nRésidu sec à 110°C : 186\nSodium 26 صوديوم | Bicarbonates 104 بيكربونات\nCalcium 12 كالسيوم | Sulfates 42\nMagnesium 9 مغنزيوم | Chlorures 14\nPotassium 3 بوتاسيوم | Nitrates 0\n\nAnalyse INH 80/93 du 15-04-98"
+    },
+    {
+      "product_id": "off_6111035000058",
+      "category": "icecek",
+      "engine": "openai_vision",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "carbohydrate_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 6,
+      "n_fields_correct": 6,
+      "number_recall": {
+        "salt_g": true
+      },
+      "seconds": 1.514388700015843,
+      "cost_usd": 0.0002452,
+      "error": null,
+      "ocr_text": "Valeur nutritionnelle pour 100 ml  \nEnergie 0 kJ / 0 kcal  \nMatières grasses 0 g  \ndont acides gras saturés 0 g  \nGlucides 0 g  \ndont sucres 0 g  \nProtéines 0 g  \nSel 0 g"
+    },
+    {
+      "product_id": "off_6111128000071",
+      "category": "icecek",
+      "engine": "openai_vision",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0,
+      "number_recall": {},
+      "seconds": 1.4549974000547081,
+      "cost_usd": 0.00033080000000000007,
+      "error": null,
+      "ocr_text": "Composition de l'eau en mg/L | تركيبة الماء مغ/ل  \nCalcium | 63,5 | كالسيوم  \nMagnésium | 35,5 | مغنيسيوم  \nNitrate | 7 | نترات  \nSodium | 8 | صوديوم  \nChlorures | 19,8 | كلورور  \nSulfate | 3,8 | سلفات  \nBicarbonate | 372 | بيكربونات  \nPotassium | 1 | بوتاسيوم"
+    },
+    {
+      "product_id": "off_6111252421568",
+      "category": "icecek",
+      "engine": "openai_vision",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0,
+      "number_recall": {
+        "salt_g": false
+      },
+      "seconds": 1.3640411000233144,
+      "cost_usd": 0.0001304,
+      "error": null,
+      "ocr_text": "6 111252 421568"
+    },
+    {
+      "product_id": "off_6111035000027",
+      "category": "icecek",
+      "engine": "openai_vision",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 8,
+      "n_fields_correct": 0,
+      "number_recall": {
+        "salt_g": false
+      },
+      "seconds": 3.0431855999631807,
+      "cost_usd": 0.00026,
+      "error": null,
+      "ocr_text": "Sodium | 75.50  \nCalcium | 12.22  \nMagnesium | 8.70  \nPotassium | 2.10  \nBicarbonates | 163.70  \nSulfates | 41.70  \nChlorides | 14.50  \nNitrates | 0.10"
+    },
+    {
+      "product_id": "off_6111035502828",
+      "category": "icecek",
+      "engine": "openai_vision",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0,
+      "number_recall": {},
+      "seconds": 1.0912069999612868,
+      "cost_usd": 0.00017680000000000001,
+      "error": null,
+      "ocr_text": "Sodium 48 | Calcium 18 | Magnesium 13 | Potassium 8 | Bicarbonates 217 | Chlorures 12 | Sulfates 8 | Nitrates 4"
+    },
+    {
+      "product_id": "off_3083681095296",
+      "category": "konserve",
+      "engine": "openai_vision",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 9,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": false,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "seconds": 2.6154072999488562,
+      "cost_usd": 0.0006016,
+      "error": null,
+      "ocr_text": "Ratatouille cuisinée à l'huile d'olive vierge extra 1,5%  \nINGRÉDIENTS : Dés d'aubergines préfrites 25% (aubergines 22%, huile de tournesol), des de courgettes 25%, purée de tomates mi-réduite 21%, oignons de des 13%, poivrons rouges en dés 8%, double concentré de tomate 3%, huile d'olive vierge extra 1,5%, sucre 1,3%, sel, ail, jus concentré de citron, farine de BLE, thym 0,1%.  \nAprès ouverture, conservez à 4°C maximum et consommez dans les 48h.  \nÀ consommer de préférence avant la date figurant sur le fond de la boite.  \n\nVALEURS NUTRITIONNELLES POUR 100 g  \nÉnergie 298 kJ / 72 kcal  \nMatières grasses 4,1 g  \ndont acides gras saturés 0,6 g  \nGlucides 5,7 g  \ndont sucres 5,5 g  \nFibres alimentaires 3,4 g  \nProtéines 1,3 g  \nSel 0,81 g  \n\nPoids net: 380 g"
     },
     {
       "product_id": "off_20004132",
       "category": "konserve",
-      "engine": "ocrspace",
+      "engine": "openai_vision",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 2,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 1.6030577000929043,
+      "cost_usd": 0.00028520000000000005,
+      "error": null,
+      "ocr_text": "Ingredienser: Tomater, tomatjuice, tomatpuré, salt, socker, lök, vitlök, kryddor.  \nNäringsvärde per 100 g  \nEnergi 100 kJ/24 kcal  \nFett 0,2 g  \nvarav mättat fett 0,0 g  \nKolhydrat 3,7 g  \nvarav sockerarter 3,7 g  \nProtein 0,7 g  \nSalt 0,8 g  \n400 g e"
+    },
+    {
+      "product_id": "off_3083681094459",
+      "category": "konserve",
+      "engine": "openai_vision",
       "ocr_confidence": 100.0,
       "field_results": {
         "energy_kcal": true,
@@ -1504,97 +4417,308 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 2
-    },
-    {
-      "product_id": "off_3083681094459",
-      "category": "konserve",
-      "engine": "ocrspace",
-      "ocr_confidence": 0.0,
-      "field_results": {},
-      "n_fields_evaluated": 0,
-      "n_fields_correct": 0
+      "n_fields_correct": 2,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": true
+      },
+      "seconds": 1.3614041999680921,
+      "cost_usd": 0.00032720000000000004,
+      "error": null,
+      "ocr_text": "VALEURS NUTRITIONNELLES  \nPOUR 100 g  \nÉnergie ....................... 260 kJ/62 kcal  \nMatières grasses ....................... 3,4 g  \ndont acides gras saturés ............... 0,5 g  \nGlucides ............................... 5,5 g  \ndont sucres ............................ 5,2 g  \nFibres alimentaires .................... 1,3 g  \nProtéines ............................... 1,8 g  \nSel ........................................ 0,71 g"
     },
     {
       "product_id": "off_3307130803004",
       "category": "konserve",
-      "engine": "ocrspace",
-      "ocr_confidence": 0.0,
-      "field_results": {},
-      "n_fields_evaluated": 0,
-      "n_fields_correct": 0
+      "engine": "openai_vision",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 3,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "seconds": 1.9718034999677911,
+      "cost_usd": 0.00036720000000000004,
+      "error": null,
+      "ocr_text": "VALEURS NUTRITIONNELLES\nMOYENNES POUR / PER 100G :\nÉnergie / Energie : 267 kJ (64 kcal),\nmatières grasses / vetten : 3,5 g\ndont acides gras saturés / waarvan\nverzadigde vetzuren : 0,5 g, glucides\n/ koolhydraten : 6,1 g dont sucres\n/ waarvan suikers : 5,2 g, fibres\nalimentaires / vezels : 1,7 g, protéines\n/ eiwitten : 1,2 g, sel / zout : 0,47 g."
     },
     {
       "product_id": "off_3083681001808",
       "category": "konserve",
-      "engine": "ocrspace",
-      "ocr_confidence": 0.0,
-      "field_results": {},
-      "n_fields_evaluated": 0,
-      "n_fields_correct": 0
+      "engine": "openai_vision",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 9,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": false,
+        "fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 2.018102000001818,
+      "cost_usd": 0.00033360000000000003,
+      "error": null,
+      "ocr_text": "VALEURS NUTRITIONNELLES  \nPOUR 100 g  \nEnergie | 322 kJ/77 kcal  \nMatières grasses | 0,6 g  \ndont acides gras saturés | 0,1 g  \nGlucides | 9,7 g  \ndont sucres | 1,2 g  \nFibres alimentaires | 5,2 g  \nProtéines | 5,5 g  \nSel | 0,65 g  \nBELL, La Woestyne, 59173 Renescure"
     },
     {
       "product_id": "off_3083681094923",
       "category": "konserve",
-      "engine": "ocrspace",
-      "ocr_confidence": 0.0,
-      "field_results": {},
-      "n_fields_evaluated": 0,
-      "n_fields_correct": 0
+      "engine": "openai_vision",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 9,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "seconds": 2.0508913999656215,
+      "cost_usd": 0.00030720000000000004,
+      "error": null,
+      "ocr_text": "VALEURS NUTRITIONNELLES  \nPOUR 100g DE PRODUIT  \nÉGOUTTÉ  \nÉnergie | 82 kJ/20 kcal  \nMatières grasses | 0,1g  \ndont acides gras saturés | <0,1g  \nGlucides | 2,3 g  \ndont sucres | 1,3 g  \nFibres alimentaires | 2,4 g  \nProtéines | 1,4 g  \nSel | 0,79 g"
     },
     {
       "product_id": "off_6111246721261",
       "category": "sut_urunu",
-      "engine": "ocrspace",
-      "ocr_confidence": 0.0,
-      "field_results": {},
-      "n_fields_evaluated": 0,
-      "n_fields_correct": 0
+      "engine": "openai_vision",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 3,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": false,
+        "fat_g": true,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "seconds": 1.8753144999500364,
+      "cost_usd": 0.0003596,
+      "error": null,
+      "ocr_text": "Code Couleur & Nutri-Score\n\nD'après ses valeurs (159 kcal et 11g de lipides),\nce produit se situerait probablement en :\n\n• Nutri-Score : C\n\n• Code Couleur : Jaune / Orange clair\n\nPourquoi ? Bien qu'il soit \"nature\", sa teneur\nélevée en matières grasses (11g) et l'ajout\nd'amidon et d'épaississants font monter\nl'apport calorique par rapport à un fromage\nblanc classique à 3% de MG (qui tourne autour\nde 70-80 kcal)."
     },
     {
       "product_id": "off_6111242100992",
       "category": "sut_urunu",
-      "engine": "ocrspace",
-      "ocr_confidence": 0.0,
-      "field_results": {},
-      "n_fields_evaluated": 0,
-      "n_fields_correct": 0
+      "engine": "openai_vision",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": false,
+        "fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "protein_g": true
+      },
+      "seconds": 1.2994619000237435,
+      "cost_usd": 0.00025360000000000004,
+      "error": null,
+      "ocr_text": "القيمة الغذائية ل 100غ | Valeurs nutritionnelles pour 100g  \nالقيمة الحرارية | ككال | Kcal | 97  \nالبروتينات | غ | g | 8,0  \nالكاربوهيدرات | غ | g | 9,4  \nالدهنيات | غ | g | 3,0  \nالكالسيوم | ملغ | mg | 250"
     },
     {
       "product_id": "off_6111242106949",
       "category": "sut_urunu",
-      "engine": "ocrspace",
-      "ocr_confidence": 0.0,
-      "field_results": {},
-      "n_fields_evaluated": 0,
-      "n_fields_correct": 0
+      "engine": "openai_vision",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "protein_g": true,
+        "salt_g": true
+      },
+      "seconds": 1.5684177000075579,
+      "cost_usd": 0.00027160000000000004,
+      "error": null,
+      "ocr_text": "Valeurs nutritionnelles pour 100 g | 100 غ المعلومات الغذائية  \nÉnergie | كيلوجول / كيلوكال  \n972,5/235  \nGraisses | 8,21 غ  \ndont acides gras saturés | 15 غ  \nGlucides | 3,5 غ  \ndont sucres | 8,0 غ  \nProtéines* | 8 غ  \nSel | 0,46 غ"
     },
     {
       "product_id": "off_6111242101180",
       "category": "sut_urunu",
-      "engine": "ocrspace",
-      "ocr_confidence": 0.0,
-      "field_results": {},
-      "n_fields_evaluated": 0,
-      "n_fields_correct": 0
+      "engine": "openai_vision",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 8,
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": false,
+        "fat_g": true,
+        "carbohydrate_g": true,
+        "protein_g": true
+      },
+      "seconds": 1.2855411999626085,
+      "cost_usd": 0.0002456,
+      "error": null,
+      "ocr_text": "Valeurs nutritionnelles pour 100ml  \nValeur énergétique | Kcal | 58  \nProtéines | g | 3,0  \nCarbohydrates | g | 4,8  \nLipides | g | 3,0  \nCalcium | mg | 120"
     },
     {
       "product_id": "off_6111242100985",
       "category": "sut_urunu",
-      "engine": "ocrspace",
-      "ocr_confidence": 0.0,
-      "field_results": {},
-      "n_fields_evaluated": 0,
-      "n_fields_correct": 0
+      "engine": "openai_vision",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": false,
+        "saturated_fat_g": false,
+        "carbohydrate_g": false,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": false,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 0,
+      "number_recall": {
+        "energy_kcal": false,
+        "energy_kj": false,
+        "fat_g": true,
+        "carbohydrate_g": false,
+        "protein_g": false
+      },
+      "seconds": 1.3420427000382915,
+      "cost_usd": 0.000288,
+      "error": null,
+      "ocr_text": "للمكونات\nحليب خال من الدهن\nتخمير حليب طبيعية متزنة\nلمادة الدهنية : 6%\nالوزن الصافي : 80غ\n\nIngrédients:\nlait écrémé, crème,\nferments lactiques.\nMatière grasse: 6%\nPoids net: 80 g"
     },
     {
       "product_id": "off_6111246721278",
       "category": "sut_urunu",
-      "engine": "ocrspace",
-      "ocr_confidence": 0.0,
-      "field_results": {},
-      "n_fields_evaluated": 0,
-      "n_fields_correct": 0
+      "engine": "openai_vision",
+      "ocr_confidence": 100.0,
+      "field_results": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": false,
+        "carbohydrate_g": true,
+        "sugar_g": false,
+        "fiber_g": false,
+        "protein_g": true,
+        "salt_g": false
+      },
+      "n_fields_evaluated": 9,
+      "n_fields_correct": 5,
+      "number_recall": {
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "carbohydrate_g": true,
+        "protein_g": true
+      },
+      "seconds": 1.371818199986592,
+      "cost_usd": 0.0002652,
+      "error": null,
+      "ocr_text": "VALEURS NUTRITIONNELLES ET ENERGETIQUE  \nValeurs Nutritionnelles Moyennes pour 100g  \nProtéines | 10 g  \nGlucides | 3,1 g  \nLipides | 18 g  \nValeurs Energétique Moyennes pour 100g  \n257 kcal / 1061 kJ  \nTempérature de conservation  \nA conserver entre +4°C et +6°C"
     }
   ],
   "summary": {
@@ -1602,19 +4726,71 @@
       "total_fields_evaluated": 265,
       "total_fields_correct": 21,
       "field_accuracy_pct": 7.9245283018867925,
+      "number_recall_pct": 14.427860696517413,
+      "number_recall_fields": 201,
+      "n_images": 30,
+      "n_failed_images": 0,
+      "field_accuracy_on_successful_images_pct": 7.9245283018867925,
+      "median_seconds_per_image": 0.172591749986168,
+      "mean_seconds_per_image": 0.21080396667045231,
+      "total_cost_usd": 0.0,
       "mean_ocr_confidence": 36.996967371368854
     },
     "easyocr": {
       "total_fields_evaluated": 265,
       "total_fields_correct": 43,
       "field_accuracy_pct": 16.22641509433962,
+      "number_recall_pct": 36.318407960199,
+      "number_recall_fields": 201,
+      "n_images": 30,
+      "n_failed_images": 0,
+      "field_accuracy_on_successful_images_pct": 16.22641509433962,
+      "median_seconds_per_image": 0.33433569996850565,
+      "mean_seconds_per_image": 0.6024264466677172,
+      "total_cost_usd": 0.0,
       "mean_ocr_confidence": 51.794781878169715
     },
+    "windows": {
+      "total_fields_evaluated": 265,
+      "total_fields_correct": 25,
+      "field_accuracy_pct": 9.433962264150944,
+      "number_recall_pct": 28.35820895522388,
+      "number_recall_fields": 201,
+      "n_images": 30,
+      "n_failed_images": 0,
+      "field_accuracy_on_successful_images_pct": 9.433962264150944,
+      "median_seconds_per_image": 0.3165906999493018,
+      "mean_seconds_per_image": 0.31516498999359704,
+      "total_cost_usd": 0.0,
+      "mean_ocr_confidence": 83.33333333333333
+    },
     "ocrspace": {
-      "total_fields_evaluated": 176,
-      "total_fields_correct": 89,
-      "field_accuracy_pct": 50.56818181818182,
+      "total_fields_evaluated": 265,
+      "total_fields_correct": 103,
+      "field_accuracy_pct": 38.86792452830189,
+      "number_recall_pct": 58.70646766169154,
+      "number_recall_fields": 201,
+      "n_images": 30,
+      "n_failed_images": 10,
+      "field_accuracy_on_successful_images_pct": 57.54189944134078,
+      "median_seconds_per_image": 2.348664649995044,
+      "mean_seconds_per_image": 2.2607835600036195,
+      "total_cost_usd": 0.0,
       "mean_ocr_confidence": 66.66666666666667
+    },
+    "openai_vision": {
+      "total_fields_evaluated": 265,
+      "total_fields_correct": 134,
+      "field_accuracy_pct": 50.56603773584906,
+      "number_recall_pct": 72.636815920398,
+      "number_recall_fields": 201,
+      "n_images": 30,
+      "n_failed_images": 0,
+      "field_accuracy_on_successful_images_pct": 50.56603773584906,
+      "median_seconds_per_image": 1.8451647999463603,
+      "mean_seconds_per_image": 2.1227027766561757,
+      "total_cost_usd": 0.0111444,
+      "mean_ocr_confidence": 100.0
     }
   }
 }
