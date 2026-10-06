@@ -1,0 +1,337 @@
+{
+  "models": [
+    {
+      "provider": "openai",
+      "model": "gpt-4.1-mini",
+      "runs": 3,
+      "mean_factual_consistency": 0.9652777777777778,
+      "mean_ground_truth_alignment": 0.8924242424242422,
+      "per_run": [
+        {
+          "factual_consistency": 1.0,
+          "ground_truth_alignment": 0.8999999999999999,
+          "cases": [
+            {
+              "name": "yuksek_seker_urun",
+              "valid_citation_ratio": 1.0,
+              "ground_truth_alignment_ratio": 1.0,
+              "regenerated": false,
+              "text": "Bu ürün 100 gramında 35 gram şeker içerdiği için yüksek şeker içeriğine sahiptir ve bu miktar 22.5 gramlık yüksek şeker eşik değerinin üzerindedir [Kaynak: nutriscore_thresholds_overview::1, nutriscore_thresholds_overview::0]. Yüksek şeker tüketimi, sağlıklı beslenme açısından dikkat edilmesi gereken bir faktördür [Kaynak: who_sugars_intake::1]. Ürünün tuz içeriği ise 0.4 gram olup, yüksek tuz eşiği olan 1.5 gramın altındadır, bu nedenle tuz açısından risk oluşturmaz [Kaynak: nutriscore_thresholds_overview::0]. Enerji değeri 450 kcal olup, toplam yağ miktarı 12 gramdır; ancak bu yağ miktarı yüksek yağ eşiği olan 17.5 gramın altındadır [Kaynak: nutriscore_thresholds_overview::0]. Sağlıklı beslenme için şeker tüketimine özellikle dikkat edilmesi önerilir."
+            },
+            {
+              "name": "yuksek_tuz_ve_sodyum_urun",
+              "valid_citation_ratio": 1.0,
+              "ground_truth_alignment_ratio": 0.8,
+              "regenerated": false,
+              "text": "Bu ürün 100 gramında 2.8 gram tuz ve 1120 mg sodyum içermektedir, bu değerler Nutri-Score/UK FSA konvansiyonuna göre yüksek tuz ve yüksek sodyum içeriğine işaret eder [Kaynak: nutriscore_thresholds_overview::0, nutriscore_thresholds_overview::1]. WHO'nun günlük sodyum alım önerisi 2000 mg olup, bu ürünün 100 gramı bu sınırın yarısından fazlasını karşılamaktadır [Kaynak: who_salt_reduction::0]. Yüksek sodyum tüketimi yüksek kan basıncı, kardiyovasküler hastalıklar ve diğer sağlık sorunları riskini artırabilir [Kaynak: who_salt_reduction::0]. Bu nedenle, bu ürünü tüketirken tuz ve sodyum alımına dikkat edilmesi önemlidir."
+            },
+            {
+              "name": "yuksek_doymus_yag_urun",
+              "valid_citation_ratio": 1.0,
+              "ground_truth_alignment_ratio": 1.0,
+              "regenerated": false,
+              "text": "Bu ürün 100 gramında 14 gram doymuş yağ içermektedir ve bu miktar 5 gramlık yüksek doymuş yağ eşiğinin üzerindedir, bu nedenle yüksek doymuş yağ içeriğine sahiptir [Kaynak: nutriscore_thresholds_overview::1, nutriscore_thresholds_overview::0]. Yüksek doymuş yağ tüketimi sağlık açısından risk oluşturabilir, bu yüzden dikkatli tüketilmelidir. Ürünün şeker içeriği 8 gram olup, yüksek şeker eşiği olan 22.5 gramın altındadır, bu açıdan yüksek şeker riski bulunmamaktadır [Kaynak: nutriscore_thresholds_overview::0]. Enerji değeri 520 kcal olup, bu da ürünün yüksek enerji yoğunluğuna işaret etmektedir [Kaynak: glossary_nutrition_terms::preamble]."
+            },
+            {
+              "name": "risksiz_urun",
+              "valid_citation_ratio": 1.0,
+              "ground_truth_alignment_ratio": 0.8,
+              "regenerated": false,
+              "text": "Bu ürünün 100 gramında 180 kcal enerji, 3 gram yağ, 2 gram şeker ve 0.2 gram tuz bulunmaktadır. Üründe tespit edilen herhangi bir risk bayrağı yoktur, bu da genel olarak güvenli bir besin profiline işaret eder. EFSA'nın beslenme referans değerleri, makrobesinler için genel çerçeveyi sunmakta olup, bireysel hedefler için profesyonel değerlendirme gereklidir [Kaynak: efsa_dietary_reference_values::0, efsa_dietary_reference_values::1]. Dünya Sağlık Örgütü ise serbest şeker alımının sınırlandırılmasını önermektedir; bu ürünün şeker içeriği düşük seviyededir [Kaynak: who_sugars_intake::preamble]."
+            }
+          ]
+        },
+        {
+          "factual_consistency": 0.9375,
+          "ground_truth_alignment": 0.8772727272727272,
+          "cases": [
+            {
+              "name": "yuksek_seker_urun",
+              "valid_citation_ratio": 0.75,
+              "ground_truth_alignment_ratio": 0.9090909090909091,
+              "regenerated": false,
+              "text": "Bu ürün 100 gramında 35 gram şeker içerdiği için yüksek şeker içeriğine sahiptir ve bu, Nutri-Score/UK FSA konvansiyonundaki 22.5 g/100g eşik değerinin üzerindedir [Kaynak: nutriscore_thresholds_overview::0]. Tuz içeriği ise 0.4 gram olup, yüksek tuz eşiği olan 1.5 g/100g'nin altındadır [Kaynak: nutriscore_thresholds_overview::0]. Ürünün toplam yağ miktarı 12 gramdır, bu da yüksek yağ eşiği olan 17.5 g/100g'nin altındadır [Kaynak: nutriscore_thresholds_overview::0]. Enerji değeri 450 kcal/100g olarak belirtilmiştir, bu da ürünün enerji yoğun olduğunu göstermektedir [Kaynak: URUN BESIN DEGERLERI]. Sağlıklı beslenme açısından yüksek şeker içeriğine dikkat edilmelidir."
+            },
+            {
+              "name": "yuksek_tuz_ve_sodyum_urun",
+              "valid_citation_ratio": 1.0,
+              "ground_truth_alignment_ratio": 0.8,
+              "regenerated": false,
+              "text": "Bu ürün 100 gramda 2.8 gram tuz ve 1120 mg sodyum içermektedir, bu değerler Nutri-Score/UK FSA konvansiyonuna göre yüksek tuz ve yüksek sodyum içeriği anlamına gelir [Kaynak: nutriscore_thresholds_overview::1]. WHO'nun günlük sodyum alım önerisi 2000 mg olup, bu ürünün 100 gramı bu sınırın yarısından fazlasını karşılamaktadır [Kaynak: who_salt_reduction::0]. Yüksek sodyum tüketimi yüksek kan basıncı, kardiyovasküler hastalıklar ve diğer sağlık sorunları riskini artırabilir [Kaynak: who_salt_reduction::0]. Bu nedenle, bu ürünü tüketirken tuz ve sodyum alımına dikkat edilmesi önemlidir."
+            },
+            {
+              "name": "yuksek_doymus_yag_urun",
+              "valid_citation_ratio": 1.0,
+              "ground_truth_alignment_ratio": 1.0,
+              "regenerated": false,
+              "text": "Bu ürün 100 gramında 14 gram doymuş yağ içermektedir ve bu miktar 5 gramlık yüksek doymuş yağ eşiğinin üzerindedir, bu nedenle yüksek doymuş yağ içerdiği değerlendirilmektedir [Kaynak: nutriscore_thresholds_overview::1, nutriscore_thresholds_overview::0]. Ürünün enerji değeri 520 kcal olup, toplam yağ miktarı da 30 gramdır, bu da yüksek yağ içeriğine işaret eder [Kaynak: nutriscore_thresholds_overview::0]. Şeker miktarı ise 8 gramdır ve bu, yüksek şeker eşiği olan 22.5 gramın altındadır, dolayısıyla şeker açısından yüksek değildir [Kaynak: nutriscore_thresholds_overview::0]. Bu bilgiler ışığında, özellikle doymuş yağ içeriği nedeniyle ürünü tüketirken dikkatli olunması önerilir."
+            },
+            {
+              "name": "risksiz_urun",
+              "valid_citation_ratio": 1.0,
+              "ground_truth_alignment_ratio": 0.8,
+              "regenerated": false,
+              "text": "Ürünün 100 gramında 180 kcal enerji, 3 gram yağ, 2 gram şeker ve 0,2 gram tuz bulunmaktadır ve tespit edilen bir risk bayrağı yoktur. Bu değerler, EFSA'nın makrobesinler için belirttiği referans alım aralıkları kapsamında genel bir risk oluşturmadığını göstermektedir [Kaynak: efsa_dietary_reference_values::0, efsa_dietary_reference_values::1]. Üründeki şeker miktarı düşük olup, WHO'nun serbest şeker alımı konusundaki genel sağlıklı beslenme önerileriyle uyumludur [Kaynak: who_sugars_intake::preamble]. Ayrıca, ürünün tuz içeriği de sağlık açısından risk teşkil edecek düzeyde değildir. Genel olarak, bu ürün dengeli bir besin içeriğine sahiptir ve sağlık açısından güvenlidir."
+            }
+          ]
+        },
+        {
+          "factual_consistency": 0.9583333333333334,
+          "ground_truth_alignment": 0.8999999999999999,
+          "cases": [
+            {
+              "name": "yuksek_seker_urun",
+              "valid_citation_ratio": 1.0,
+              "ground_truth_alignment_ratio": 1.0,
+              "regenerated": false,
+              "text": "Bu ürün 100 gramında 35 gram şeker içerdiği için yüksek şeker içeriğine sahiptir ve bu miktar, Nutri-Score/UK FSA konvansiyonundaki 22.5 gramlık yüksek şeker eşik değerini aşmaktadır [Kaynak: nutriscore_thresholds_overview::0]. Tuz içeriği ise 0.4 gram olup, yüksek tuz eşiği olan 1.5 gramın altındadır, bu nedenle tuz açısından yüksek risk taşımamaktadır [Kaynak: nutriscore_thresholds_overview::0]. Ürünün toplam yağ miktarı 12 gramdır, bu da yüksek yağ eşiği olan 17.5 gramın altında kalmaktadır [Kaynak: nutriscore_thresholds_overview::0]. Enerji değeri 450 kcal olup, bu yüksek enerji içeriği nedeniyle dikkatli tüketilmelidir. Genel olarak, özellikle şeker içeriği nedeniyle bu ürünün tüketiminde dikkatli olunması önerilir [Kaynak: nutriscore_thresholds_overview::0]."
+            },
+            {
+              "name": "yuksek_tuz_ve_sodyum_urun",
+              "valid_citation_ratio": 1.0,
+              "ground_truth_alignment_ratio": 0.8,
+              "regenerated": false,
+              "text": "Bu ürün 100 gramında 2.8 gram tuz ve 1120 mg sodyum içermektedir, bu değerler Nutri-Score/UK FSA konvansiyonuna göre yüksek tuz ve yüksek sodyum içeriğine işaret eder [Kaynak: nutriscore_thresholds_overview::0, nutriscore_thresholds_overview::1]. WHO'nun günlük sodyum alım önerisi 2000 mg olup, bu ürünün 100 gramı bu sınırın yarısından fazlasını karşılamaktadır [Kaynak: who_salt_reduction::0]. Yüksek sodyum tüketimi yüksek kan basıncı, kardiyovasküler hastalıklar ve diğer sağlık sorunları riskini artırabilir [Kaynak: who_salt_reduction::0]. Bu nedenle, bu ürünü tüketirken tuz ve sodyum alımına dikkat edilmesi önemlidir."
+            },
+            {
+              "name": "yuksek_doymus_yag_urun",
+              "valid_citation_ratio": 1.0,
+              "ground_truth_alignment_ratio": 1.0,
+              "regenerated": false,
+              "text": "Bu ürün 100 gramında 14 gram doymuş yağ içermektedir ve bu miktar, 5 gram üzerindeki doymuş yağ eşiğini aşarak yüksek doymuş yağ içeriğine işaret etmektedir [Kaynak: nutriscore_thresholds_overview::1, nutriscore_thresholds_overview::0]. Yüksek doymuş yağ tüketimi, sağlık açısından risk oluşturabilir ve bu nedenle dikkatli tüketilmelidir. Ürünün şeker içeriği ise 8 gram olup, yüksek şeker eşiği olan 22.5 gramın altındadır, bu açıdan şeker riski taşımamaktadır [Kaynak: nutriscore_thresholds_overview::0]. Enerji değeri 520 kcal olup, bu da ürünün yüksek enerji yoğunluğuna sahip olduğunu göstermektedir [Kaynak: glossary_nutrition_terms::preamble]. Genel olarak, özellikle doymuş yağ içeriği nedeniyle bu ürünün tüketiminde dikkatli olunması önerilir."
+            },
+            {
+              "name": "risksiz_urun",
+              "valid_citation_ratio": 0.8333333333333334,
+              "ground_truth_alignment_ratio": 0.8,
+              "regenerated": false,
+              "text": "Bu ürünün 100 gramında 180 kcal enerji, 3 gram yağ, 2 gram şeker ve 0.2 gram tuz bulunmaktadır. Üründe tespit edilen herhangi bir risk bayrağı yoktur, bu da genel olarak güvenli bir besin profili olduğunu gösterir [Kaynak: KURAL MOTORU RISK BAYRAKLARI]. EFSA'nın Beslenme Referans Değerleri, makrobesinler için genel çerçeve sunmakta olup, bu ürünün içerdiği makrobesinler açısından uygun olduğunu destekler [Kaynak: efsa_dietary_reference_values::0, efsa_dietary_reference_values::1]. Ayrıca, Dünya Sağlık Örgütü'nün sağlıklı diyet önerileri doğrultusunda, şeker ve yağ miktarının dengeli tutulması önemlidir [Kaynak: who_sugars_intake::preamble]. Ürün etiketlemesi ve alerjen bilgileri için resmi kaynakların teyidi gereklidir [Kaynak: allergen_labeling_overview::preamble, tgk_etiketleme_ozet::preamble]."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-4o-mini",
+      "runs": 3,
+      "mean_factual_consistency": 1.0,
+      "mean_ground_truth_alignment": 0.9499999999999998,
+      "per_run": [
+        {
+          "factual_consistency": 1.0,
+          "ground_truth_alignment": 0.95,
+          "cases": [
+            {
+              "name": "yuksek_seker_urun",
+              "valid_citation_ratio": 1.0,
+              "ground_truth_alignment_ratio": 1.0,
+              "regenerated": true,
+              "text": "Bu ürün, 100 gramında 35 gram şeker içermektedir, bu da onu \"yüksek şeker\" kategorisine sokmaktadır [Kaynak: nutriscore_thresholds_overview::0]. Yüksek şeker alımı, sağlıklı bir diyet için önerilen günlük alım sınırlarını aşabilir [Kaynak: who_sugars_intake::1]. Ayrıca, ürün 0.4 gram tuz içermekte olup, bu miktar \"yüksek tuz\" olarak değerlendirilmemektedir [Kaynak: nutriscore_thresholds_overview::0]. Ancak, genel olarak şeker ve tuz alımına dikkat edilmesi önerilmektedir [Kaynak: who_salt_reduction::1]."
+            },
+            {
+              "name": "yuksek_tuz_ve_sodyum_urun",
+              "valid_citation_ratio": 1.0,
+              "ground_truth_alignment_ratio": 1.0,
+              "regenerated": false,
+              "text": "Bu ürün, 100 gramında 2.8 gram tuz içermektedir, bu da onu yüksek tuz içeren bir gıda kategorisine sokmaktadır [Kaynak: nutriscore_thresholds_overview::1]. Ayrıca, 100 gramında 1120 mg sodyum bulunmaktadır, bu da yüksek sodyum içeriğine işaret etmektedir [Kaynak: nutriscore_thresholds_overview::1]. Yüksek tuz ve sodyum alımı, yüksek kan basıncı ve kardiyovasküler hastalıklar gibi sağlık riskleri ile ilişkilendirilmiştir [Kaynak: who_salt_reduction::0]. Bu nedenle, bu ürünü tüketirken dikkatli olunması önerilir."
+            },
+            {
+              "name": "yuksek_doymus_yag_urun",
+              "valid_citation_ratio": 1.0,
+              "ground_truth_alignment_ratio": 1.0,
+              "regenerated": false,
+              "text": "Bu ürün, 100 gramda 30 gram doymuş yağ içermektedir, bu da onu yüksek doymuş yağ kategorisine sokmaktadır [Kaynak: nutriscore_thresholds_overview::0]. Doymuş yağ alımının günlük enerji alımının %10'unu aşmaması önerilmektedir [Kaynak: who_sugars_intake::1]. Ayrıca, ürün 520 kcal enerji içermektedir, bu da yüksek bir enerji değeri sunmaktadır [Kaynak: nutriscore_thresholds_overview::1]. Bu nedenle, bu ürünü tüketirken dikkatli olunması önerilir."
+            },
+            {
+              "name": "risksiz_urun",
+              "valid_citation_ratio": 1.0,
+              "ground_truth_alignment_ratio": 0.8,
+              "regenerated": false,
+              "text": "Bu ürün, 100 gramda 180 kcal enerji içermektedir ve bu miktar, dengeli bir diyet için kabul edilebilir bir enerji seviyesidir. Ürün, 3 gram yağ ve 2 gram şeker içermektedir; bu da genel olarak sağlıklı bir beslenme için uygun bir yağ ve şeker miktarıdır [Kaynak: efsa_dietary_reference_values::1]. Ayrıca, 0.2 gram tuz içeriği ile de düşük sodyum seviyesine sahiptir, bu da kalp sağlığı açısından olumlu bir durumdur [Kaynak: efsa_dietary_reference_values::1]. Tespit edilen bir risk bayrağı bulunmamaktadır, bu da ürünün genel olarak güvenli olduğunu göstermektedir [Kaynak: efsa_dietary_reference_values::1]."
+            }
+          ]
+        },
+        {
+          "factual_consistency": 1.0,
+          "ground_truth_alignment": 0.95,
+          "cases": [
+            {
+              "name": "yuksek_seker_urun",
+              "valid_citation_ratio": 1.0,
+              "ground_truth_alignment_ratio": 1.0,
+              "regenerated": true,
+              "text": "Bu ürün, 100 gramında 35 gram şeker içermektedir, bu da onu yüksek şekerli bir ürün kategorisine sokmaktadır [Kaynak: nutriscore_thresholds_overview::0]. Ayrıca, 100 gramında 0.4 gram tuz bulunmaktadır, bu miktar yüksek tuz olarak değerlendirilmemektedir [Kaynak: who_salt_reduction::1]. Enerji içeriği ise 450 kcal'dir, bu da kalori alımında dikkat edilmesi gereken bir seviyedir [Kaynak: glossary_nutrition_terms::preamble]. Bu nedenle, bu ürünü tüketirken şeker ve kalori alımına dikkat edilmesi önerilmektedir."
+            },
+            {
+              "name": "yuksek_tuz_ve_sodyum_urun",
+              "valid_citation_ratio": 1.0,
+              "ground_truth_alignment_ratio": 1.0,
+              "regenerated": false,
+              "text": "Bu ürün, 100 gramında 2.8 gram tuz içermektedir, bu da yüksek tuz içeriğine işaret etmektedir [Kaynak: nutriscore_thresholds_overview::1]. Ayrıca, 100 gramında 1120 mg sodyum bulunması, yüksek sodyum içeriği olarak değerlendirilmektedir [Kaynak: nutriscore_thresholds_overview::1]. Yüksek sodyum alımı, yüksek kan basıncı ve kardiyovasküler hastalıklar gibi sağlık riskleri ile ilişkilidir [Kaynak: who_salt_reduction::0]. Bu nedenle, bu ürünü tüketirken dikkatli olunması önerilir."
+            },
+            {
+              "name": "yuksek_doymus_yag_urun",
+              "valid_citation_ratio": 1.0,
+              "ground_truth_alignment_ratio": 1.0,
+              "regenerated": true,
+              "text": "Bu ürün, 100 gramda 30 gram yağ içermektedir ve bu miktar, yüksek yağ içeriği olarak değerlendirilir [Kaynak: nutriscore_thresholds_overview::0]. Ayrıca, 14 gram doymuş yağ içermesi nedeniyle yüksek doymuş yağ riski taşımaktadır [Kaynak: nutriscore_thresholds_overview::1]. Ürün, 8 gram şeker içermektedir, ancak bu miktar yüksek şeker olarak sınıflandırılmamaktadır [Kaynak: nutriscore_thresholds_overview::0]. Genel olarak, bu ürünün yüksek yağ ve doymuş yağ içeriği, dengeli bir diyet açısından dikkatle değerlendirilmelidir."
+            },
+            {
+              "name": "risksiz_urun",
+              "valid_citation_ratio": 1.0,
+              "ground_truth_alignment_ratio": 0.8,
+              "regenerated": false,
+              "text": "Bu ürün 100 gramda 180 kalori, 3 gram yağ, 2 gram şeker ve 0.2 gram tuz içermektedir. Üründe tespit edilen bir risk bayrağı yoktur, bu da genel olarak güvenli bir seçenek olduğunu göstermektedir [Kaynak: efsa_dietary_reference_values::1]. Şeker ve yağ miktarları, dengeli bir diyet için kabul edilebilir seviyelerde görünmektedir [Kaynak: who_sugars_intake::preamble]. Ancak, bireysel beslenme ihtiyaçları ve hedefleri için daha fazla bilgiye ihtiyaç duyulabilir [Kaynak: efsa_dietary_reference_values::0]."
+            }
+          ]
+        },
+        {
+          "factual_consistency": 1.0,
+          "ground_truth_alignment": 0.95,
+          "cases": [
+            {
+              "name": "yuksek_seker_urun",
+              "valid_citation_ratio": 1.0,
+              "ground_truth_alignment_ratio": 1.0,
+              "regenerated": true,
+              "text": "Bu ürün, 100 gramda 35 gram şeker içermektedir, bu da onu yüksek şeker içeren bir gıda kategorisine sokmaktadır [Kaynak: nutriscore_thresholds_overview::0]. Ayrıca, 100 gramda 0.4 gram tuz bulunmaktadır, bu miktar yüksek tuz olarak değerlendirilmemektedir [Kaynak: nutriscore_thresholds_overview::0]. Enerji içeriği ise 450 kcal'dir, bu da günlük enerji alımının önemli bir kısmını oluşturabilir [Kaynak: glossary_nutrition_terms::preamble]. Dikkatli tüketilmesi önerilir, özellikle şeker alımına dikkat eden bireyler için [Kaynak: who_sugars_intake::1]."
+            },
+            {
+              "name": "yuksek_tuz_ve_sodyum_urun",
+              "valid_citation_ratio": 1.0,
+              "ground_truth_alignment_ratio": 1.0,
+              "regenerated": false,
+              "text": "Bu ürün, 100 gramında 2.8 gram tuz içermektedir, bu da onu yüksek tuz içeren bir gıda kategorisine sokmaktadır [Kaynak: nutriscore_thresholds_overview::1]. Ayrıca, 1120 mg sodyum içeriği ile yüksek sodyum seviyesine sahiptir, bu da sağlık açısından risk oluşturabilir [Kaynak: nutriscore_thresholds_overview::1]. Yüksek sodyum alımı, yüksek kan basıncı ve kardiyovasküler hastalıklar gibi sağlık sorunlarıyla ilişkilendirilmektedir [Kaynak: who_salt_reduction::0]. Bu nedenle, bu ürünü tüketirken dikkatli olunması önerilir."
+            },
+            {
+              "name": "yuksek_doymus_yag_urun",
+              "valid_citation_ratio": 1.0,
+              "ground_truth_alignment_ratio": 1.0,
+              "regenerated": false,
+              "text": "Bu ürün, 100 gramında 30 gram doymuş yağ içermektedir, bu da yüksek doymuş yağ içerdiği anlamına gelir [Kaynak: nutriscore_thresholds_overview::0]. Doymuş yağ alımının günlük enerji alımının %10'unu aşmaması önerilmektedir [Kaynak: who_sugars_intake::1]. Ayrıca, ürünün toplam yağ içeriği de 17.5 gramın üzerindedir, bu da yüksek yağ içeriği olarak değerlendirilir [Kaynak: nutriscore_thresholds_overview::0]. Bu nedenle, bu ürünün tüketiminde dikkatli olunması önerilir."
+            },
+            {
+              "name": "risksiz_urun",
+              "valid_citation_ratio": 1.0,
+              "ground_truth_alignment_ratio": 0.8,
+              "regenerated": false,
+              "text": "Bu ürün, 100 gramda 180 kcal enerji içermektedir ve bu, dengeli bir diyet için makul bir kalori miktarıdır. İçeriğinde 3 gram yağ ve 2 gram şeker bulunmaktadır; bu değerler, genel olarak sağlıklı bir beslenme için kabul edilebilir seviyelerdir [Kaynak: efsa_dietary_reference_values::1]. Ayrıca, 0.2 gram tuz içermesi, sodyum alımını kontrol altında tutmak açısından olumlu bir durumdur [Kaynak: efsa_dietary_reference_values::1]. Tespit edilen bir risk bayrağı bulunmamaktadır, bu da ürünün genel sağlık açısından güvenli olduğunu göstermektedir [Kaynak: efsa_dietary_reference_values::1]."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "provider": "huggingface",
+      "model": "meta-llama/Llama-3.1-8B-Instruct",
+      "runs": 3,
+      "mean_factual_consistency": 0.9083333333333333,
+      "mean_ground_truth_alignment": 0.9276733682983682,
+      "per_run": [
+        {
+          "factual_consistency": 0.975,
+          "ground_truth_alignment": 0.928125,
+          "cases": [
+            {
+              "name": "yuksek_seker_urun",
+              "valid_citation_ratio": 1.0,
+              "ground_truth_alignment_ratio": 1.0,
+              "regenerated": false,
+              "text": "Ürünün besin değerleri incelendiğinde, enerji değeri 100g'da 450 kcal'dir. Bu, yüksek bir enerji değeri olarak kabul edilebilir. [Kaynak: nutriscore_thresholds_overview::1]\n\nÜründe 12g yağ ve 5g doymuş yağ bulunmakla birlikte, bu değerler yüksek olarak kabul edilemez. [Kaynak: nutriscore_thresholds_overview::1]\n\nÜrünün şeker değeri 35g'dır, bu da yüksek bir değer olarak kabul edilebilir. [Kaynak: nutriscore_thresholds_overview::1]\n\nWHO'nun günlük tuz alımı önerisi 5g'dır. Üründe 0.4g tuz bulunmakla birlikte, bu değer günlük öneriden çok düşük olarak kabul edilebilir. [Kaynak: who_salt_reduction::1]\n\nWHO'nun günlük şeker alımı önerisi 10% enerji değeri olarak kabul edilir. Ürünün şeker değeri 35g'dır, bu da günlük öneriden çok yüksek olarak kabul edilebilir. [Kaynak: who_sugars_intake::1]\n\nÜrünün besin değerleri, yüksek enerji değeri, düşük doymuş yağ değeri ve yüksek şeker değeri nedeniyle, sağlıksız bir seçenektir. [Kaynak: nutriscore_thresholds_overview::1]"
+            },
+            {
+              "name": "yuksek_tuz_ve_sodyum_urun",
+              "valid_citation_ratio": 0.9,
+              "ground_truth_alignment_ratio": 0.8125,
+              "regenerated": false,
+              "text": "Ürünün besin değerleri (100g bazında) aşağıdaki gibidir: enerji_kcal: 250.0, sugar_g: 3.0, salt_g: 2.8, sodium_mg: 1120.0.\n\nÜrünün tuz içeriği 100g'da yüksek tuz icerir. [Kaynak: who_salt_reduction::1]\n\nÜrünün sodyum içeriği 100g'da yüksek sodyum icerir. [Kaynak: who_salt_reduction::1]\n\nWHO'nun günlük tuz/sodyum alım önerisi 5 gram tuz (yaklaşık 2000 mg sodyum)dir. [Kaynak: who_salt_reduction::0]\n\nÜrünün tuz içeriği WHO'nun günlük tuz/sodyum alım önerisinin uzerindedir. [Kaynak: who_salt_reduction::0]\n\nÜrünün sodyum içeriği WHO'nun günlük tuz/sodyum alım önerisinin uzerindedir. [Kaynak: who_salt_reduction::0]\n\nNutri-Score/UK FSA konvansiyonuna göre, üründe yüksek tuz (1.5 g/100g) ve yüksek sodyum (600 mg/100g) içeriği bulunmakadır. [Kaynak: nutriscore_thresholds_overview::1]\n\nBu projede kullanılan tuz ve sodyum eşikleri Nutri-Score/UK FSA konvansiyonuyla doldurulmuştur. [Kaynak: nutriscore_thresholds_overview::1]\n\nTürk Gıda Kodeksi - Beslenme ve Sağlık Beyanları Yönetmeliği (Özet) göre, besin değerleri etikette 100 g veya 100 mL başına beyan edilir. [Kaynak: tgk_etiketleme_ozet::0]\n\nSodyum-tuz dönüşümü: Tuz (g) = Sodyum (g) × 2.5. [Kaynak: tgk_etiketleme_ozet::0]\n\nAlerjen beyanı zorunlu 14 majör alerjen listesi AB Gıda Bilgilendirme Yönetmeliği (1169/2011) ile büyük ölçüde uyumludur. [Kaynak: allergen_labeling_overview::0]"
+            },
+            {
+              "name": "yuksek_doymus_yag_urun",
+              "valid_citation_ratio": 1.0,
+              "ground_truth_alignment_ratio": 0.9,
+              "regenerated": false,
+              "text": "Ürünün besin değerleri 100g bazında şöyledir: Enerji: 520 kcal, Yağ: 30 g, Doymuş yağ: 14 g, Şeker: 8 g.\n\nBu üründe yüksek doymuş yağ (14 g/100g) ve yüksek şeker (8 g/100g) bulunması riskli bir durum oluşturuyor. [Kaynak: nutriscore_thresholds_overview::0]\n\nWHO'nun önerilerine göre, günlük tuz alımı 5 g'dan fazla olamaz. Bu ürün 100g'da 1.5 g tuz içeriyor, bu da yüksek tuz alımı olarak kabul ediliyor. [Kaynak: who_salt_reduction::1]\n\nGünlük toplam enerji yüzdesi için WHO'nun önerileri 10% serbest şeker, 30% yağ ve 10% doymuş yağ alımıdır. Bu ürünün enerji yüzdesi bu önerileri aşıyor. [Kaynak: who_sugars_intake::1]\n\nBu ürünün yüksek şeker ve doymuş yağ içeriği, sağlıksız bir beslenme alışkanlığı oluşturuyor. [Kaynak: glossary_nutrition_terms::preamble]\n\nDüzenli bir beslenme için, yağ ve şeker tüketimini azaltmak ve lifli gıdalarla beslenmek önemlidir. [Kaynak: glossary_nutrition_terms::preamble]"
+            },
+            {
+              "name": "risksiz_urun",
+              "valid_citation_ratio": 1.0,
+              "ground_truth_alignment_ratio": 1.0,
+              "regenerated": true,
+              "text": "Bu gıda ürününün sağlıksal değerlendirmesi:\n\nGıda ürününün enerji değeri 180 kcal'dir, bu değer EFSA'nın beslenme referans değerleri (Dietary Reference Values) için önerilen enerji alım aralığından daha düşüktür. [Kaynak: efsa_dietary_reference_values::1]\n\nGıda ürününün yağ içeriği 3 gram'dır, bu değer WHO'nun serbest şeker ve yağ alımını önerdiği limitin (WHO, \"Healthy diet\" Fact Sheet) çok altındadır. [Kaynak: who_sugars_intake::preamble]\n\nGıda ürününün şeker içeriği 2 gram'dır, bu değer EFSA'nın beslenme referans değerleri (Dietary Reference Values) için önerilen karbonhidrat alım aralığından daha düşüktür. [Kaynak: efsa_dietary_reference_values::1]\n\nGıda ürününün tuz içeriği 0.2 gram'dır, bu değer Türk Gıda Kodeksi Beslenme ve Sağlık Beyanları Yönetmeliği'ne (Resmî Gazete, 2020) göre önerilen tuz alım limitinin çok altındadır. [Kaynak: tgk_etiketleme_ozet::preamble]\n\nGıda ürününün besin değerleri, genel olarak, önerilen alım limitlerinin çok altındadır. [Kaynak: efsa_dietary_reference_values::1]"
+            }
+          ]
+        },
+        {
+          "factual_consistency": 0.75,
+          "ground_truth_alignment": 0.9730769230769231,
+          "cases": [
+            {
+              "name": "yuksek_seker_urun",
+              "valid_citation_ratio": 1.0,
+              "ground_truth_alignment_ratio": 1.0,
+              "regenerated": false,
+              "text": "Ürün besin değerleri 100g bazında 450 kcal enerji, 12g yağ, 35g şeker ve 0.4g tuz içerir. \n\nÜrün yüksek şeker içerir, çünkü 100g'da 35g şeker bulunur ve bu, [Kaynak: nutriscore_thresholds_overview::0] göre yüksek şeker sınırının (22.5 g/100g) üzerinde bir değerdir. \n\nÜrün yüksek tuz içerir, çünkü 100g'da 0.4g tuz bulunur ve bu, [Kaynak: nutriscore_thresholds_overview::0] göre yüksek tuz sınırının (1.5 g/100g) üzerinde bir değerdir. \n\nÜrün yüksek doymuş yağ içermez, çünkü 100g'da 12g yağ bulunur ve bu, [Kaynak: nutriscore_thresholds_overview::0] göre yüksek doymuş yağ sınırının (5 g/100g) üzerinde bir değerdir. \n\nWHO'nun günlük tuz alım önerisi 5g'dır ve ürün bu sınırın üzerinde tuz içerir, [Kaynak: who_salt_reduction::1] göre. \n\nWHO'nun günlük şeker alım önerisi 10%'dir ve ürün bu sınırın üzerinde şeker içerir, [Kaynak: who_sugars_intake::1] göre."
+            },
+            {
+              "name": "yuksek_tuz_ve_sodyum_urun",
+              "valid_citation_ratio": 1.0,
+              "ground_truth_alignment_ratio": 1.0,
+              "regenerated": false,
+              "text": "Ürünün besin değerleri (100g bazında) aşağıdaki gibidir: enerji_kcal: 250.0, sugar_g: 3.0, salt_g: 2.8, sodium_mg: 1120.0.\n\nÜrünün tuz içeriği 100g'da yüksek tuz icerir. [Kaynak: who_salt_reduction::1]\n\nWHO'nun günlük tuz alımı önerisi 5 gramdır, ancak ürünün tuz içeriği bu sınırın üzerinde. [Kaynak: who_salt_reduction::1]\n\nÜrünün tuz içeriği 100g'da yüksek tuz icerir. [Kaynak: nutriscore_thresholds_overview::0]\n\nÜrünün tuz içeriği 100g'da yüksek tuz icerir. [Kaynak: tgk_etiketleme_ozet::0]\n\nWHO'nun günlük tuz alımı önerisi 5 gramdır, ancak ürünün tuz içeriği bu sınırın üzerinde. [Kaynak: who_salt_reduction::0]\n\nBu ürünün yüksek tuz içeriği, yüksek kan basıncı, kardiyovasküler hastalıklar, mide kanseri, obezite, osteoporoz ve böbrek hastalığı gibi sağlık risklerine neden olabilir. [Kaynak: who_salt_reduction::0]\n\nDünya Sağlık Örgütü (WHO) tarafından önerilen günlük tuz alımı sınırı 5 gramdır, ancak ürünün tuz içeriği bu sınırın üzerinde. [Kaynak: who_salt_reduction::0]\n\nÜrünün tuz içeriği 100g'da yüksek tuz icerir. [Kaynak: nutriscore_thresholds_overview::1]\n\nÜrünün tuz içeriği 100g'da yüksek tuz icerir. [Kaynak: tgk_etiketleme_ozet::0]\n\nWHO'nun günlük tuz alımı önerisi 5 gramdır, ancak ürünün tuz içeriği bu sınırın üzerinde. [Kaynak: who_salt_reduction::0]\n\nBu ürünün yüksek tuz içeriği, yüksek kan basıncı, kardiyovasküler hastalıklar, mide kanseri, obezite, osteoporoz ve böbrek hastalığı gibi sağlık risklerine neden olabilir. [Kaynak: who_salt_reduction::0]\n\nÜrünün tuz içeriği 100g'da yüksek tuz icerir. [Kaynak: nutriscore_thresholds_overview::0]\n\nWHO'nun günlük tuz alımı önerisi 5 gramdır, ancak ürünün tuz içeriği bu sınırın üzerinde. [Kaynak: who_salt_reduction::0]\n\nBu ürünün yüksek tuz içeriği, yüksek kan basıncı, kardiyovasküler hastalıklar, mide kanseri, obezite, osteoporoz ve böbrek hastalığı gibi sağlık risklerine neden olabilir. [Kaynak: who_salt_reduction::0]\n\nDünya Sağlık Örgütü (WHO) tarafından önerilen günlük tuz alımı sınırı 5 gramdır, ancak ürünün tuz içeriği bu sınırın üzerinde. [Kaynak: who_salt_reduction::0]\n\nÜrünün tuz içeriği 100g'da yüksek tuz icerir. [Kaynak: nutriscore_thresholds_overview::1]\n\nÜrünün tuz içeriği 100g'da yüksek tuz icerir. [Kaynak: tgk_etiketleme_ozet::0]\n\nWHO'nun günlük tuz alımı önerisi 5 gramdır, ancak ürünün tuz içeriği bu sınırın üzerinde. [Kaynak: who_salt_reduction::0]\n\nBu ürünün yüksek tuz içeriği, yüksek kan basıncı, kardiyovasküler hastalıklar, mide kanseri, obezite, osteoporoz ve böbrek hastalığı gibi sağlık risklerine neden olabilir. [Kaynak: who_salt_reduction::0]\n\nDünya Sağlık Örgütü (WHO) tarafından önerilen günlük tuz alımı sınırı 5 gramdır, ancak ürünün tuz içeriği bu sınırın üzerinde. [Kaynak: who_salt_reduction::0]\n\nÜrünün tuz içeriği 100g'da yüksek tuz icerir. [Kaynak: nutriscore_thresholds_overview::0]\n\nÜrünün tuz içeriği 100g'da yüksek tuz icerir. [Kaynak: tgk_etiketleme_ozet::0]\n\nWHO'nun günlük tuz alımı önerisi 5 gramdır, ancak ürünün tuz içeriği bu sınırın üzerinde. [Kaynak: who_salt_reduction::0]\n\nBu ürünün yüksek tuz içeriği, yüksek kan basıncı, kardiyovasküler hastalıklar, mide kanseri, obezite, osteoporoz ve böbrek hastalığı gibi sağlık risklerine neden olabilir. [Kaynak: who_salt_reduction::0]\n\nDünya Sağlık Örgütü (WHO)"
+            },
+            {
+              "name": "yuksek_doymus_yag_urun",
+              "valid_citation_ratio": 1.0,
+              "ground_truth_alignment_ratio": 0.8923076923076924,
+              "regenerated": false,
+              "text": "Ürünün besin değerleri 100g'da 520 kcal enerji, 30g yağ, 14g doymuş yağ, 8g şeker içerir. \n\nÜrün yüksek doymuş yağ içerir (100g'da 14g). [Kaynak: nutriscore_thresholds_overview::1]\n\nŞeker içeriği 8g, bu 100g'da yüksek şeker anlamına gelir. [Kaynak: nutriscore_thresholds_overview::0]\n\nDoymuş yağ içeriği 14g, bu 100g'da yüksek doymuş yağ anlamına gelir. [Kaynak: nutriscore_thresholds_overview::0]\n\nTuz içeriği 0g, bu 100g'da tuz anlamına gelmez. [Kaynak: nutriscore_thresholds_overview::0]\n\nWHO'nun günlük tuz alımı önerisi 5g, ürünün 100g'daki tuz içeriği 0g'dır, bu öneri dışıdır. [Kaynak: who_salt_reduction::1]\n\nWHO'nun günlük şeker alımı önerisi %10, ürünün 100g'daki şeker içeriği 8g, bu öneri dışıdır. [Kaynak: who_sugars_intake::1]\n\nWHO'nun günlük yağ alımı önerisi %30, ürünün 100g'daki yağ içeriği 30g, bu öneri dışıdır. [Kaynak: who_sugars_intake::1]\n\nÜrün yüksek yağ içerir (100g'da 30g). [Kaynak: nutriscore_thresholds_overview::0]\n\nÜrün yüksek şeker içerir (100g'da 8g). [Kaynak: nutriscore_thresholds_overview::0]\n\nÜrün yüksek doymuş yağ içerir (100g'da 14g). [Kaynak: nutriscore_thresholds_overview::0]\n\nÜrün düşük tuz içerir (100g'da 0g). [Kaynak: nutriscore_thresholds_overview::0]\n\nÜrün düşük şeker içerir (100g'da 8g). [Kaynak: nutriscore_thresholds_overview::0]\n\nÜrün düşük yağ içerir (100g'da 30g). [Kaynak: nutriscore_thresholds_overview::0]\n\nÜrün düşük doymuş yağ içerir (100g'da 14g). [Kaynak: nutriscore_thresholds_overview::0]\n\nÜrün düşük tuz içerir (100g'da 0g). [Kaynak: nutriscore_thresholds_overview::0]\n\nÜrün düşük yağ içerir (100g'da 30g). [Kaynak: nutriscore_thresholds_overview::0]\n\nÜrün düşük şeker içerir (100g'da 8g). [Kaynak: nutriscore_thresholds_overview::0]\n\nÜrün düşük doymuş yağ içerir (100g'da 14g). [Kaynak: nutriscore_thresholds_overview::0]\n\nÜrün düşük tuz içerir (100g'da 0g). [Kaynak: nutriscore_thresholds_overview::0]\n\nÜrün düşük yağ içerir (100g'da 30g). [Kaynak: nutriscore_thresholds_overview::0]\n\nÜrün düşük şeker içerir (100g'da 8g). [Kaynak: nutriscore_thresholds_overview::0]\n\nÜrün düşük doymuş yağ içerir (100g'da 14g). [Kaynak: nutriscore_thresholds_overview::0]\n\nÜrün düşük tuz içerir (100g'da 0g). [Kaynak: nutriscore_thresholds_overview::0]\n\nÜrün düşük yağ içerir (100g'da 30g). [Kaynak: nutriscore_thresholds_overview::0]\n\nÜrün düşük şeker içerir (100g'da 8g). [Kaynak: nutriscore_thresholds_overview::0]\n\nÜrün düşük doymuş yağ içerir (100g'da 14g). [Kaynak: nutriscore_thresholds_overview::0]\n\nÜrün düşük tuz içerir (100g'da 0g). [Kaynak: nutriscore_thresholds_overview::0]\n\nÜrün düşük yağ içerir (100g'da 30g). [Kaynak: nutriscore_thresholds_overview::0]\n\nÜrün düşük şeker içerir (100g'da 8g). [Kaynak: nutriscore_thresholds_overview::0]\n\nÜrün düşük doymuş yağ içerir (100g'da 14g). [Kaynak: nutriscore_thresholds_overview::0]\n\nÜrün düşük tuz içerir (100g'da 0g). [Kaynak: nutriscore_threshold"
+            },
+            {
+              "name": "risksiz_urun",
+              "valid_citation_ratio": 0.0,
+              "ground_truth_alignment_ratio": 1.0,
+              "regenerated": true,
+              "text": "Gıda ve sağlık asistanı olarak, verilen besin değerlerine göre bir sağlık değerlendirmesi yazmak mümkün. \n\nVerilen besin değerleri (100g bazında): enerji_kcal: 180.0, fat_g: 3.0, sugar_g: 2.0, salt_g: 0.2\n\nBu değerler, gelişmiş bir toplumda tüketilebilecek bir besin değeridir. Enerji değeri 180 kcal, yağ içeriği 3g, şeker içeriği 2g ve tuz içeriği 0.2g'dir. Bu değerler, gelişmiş bir toplumda tüketilebilecek bir besin değeridir.\n\nEFSA'nın beslenme referans değerleri (Dietary Reference Values) dikkate alındığında, bu besin değerleri makro besinler için referans alım aralığını karşılamaktadır. EFSA'nın makro besinler için yayımladığı sayısallı referans alım aralıkları, karbonhidrat için %45-60, protein için %aralığı vb. gibi değerlerdir.\n\nWHO'nun sağlıklı bir diyet için önerdiği serbest şeker ve yağ alımını dikkate alındığında, bu besin değerleri WHO'nun önerdiği değerleri karşılamaktadır.\n\nTürk Gıda Kodeksi Beslenme ve Sağlık Beyanları Yönetmeliği (Özet) dikkate alındığında, bu besin değerleri Türk Gıda Kodeksi'nin önerdiği değerleri karşılamaktadır.\n\nBu değerler, gelişmiş bir toplumda tüketilebilecek bir besin değeridir."
+            }
+          ]
+        },
+        {
+          "factual_consistency": 1.0,
+          "ground_truth_alignment": 0.8818181818181818,
+          "cases": [
+            {
+              "name": "yuksek_seker_urun",
+              "valid_citation_ratio": 1.0,
+              "ground_truth_alignment_ratio": 1.0,
+              "regenerated": false,
+              "text": "Ürünün besin değerleri 100g bazında şöyledir: 450 kcal enerji, 12g yağ, 35g şeker ve 0.4g tuz içerir.\n\nÜrünün şeker içeriği 100g'da 35g'dir, bu yüksek bir seviyedir. [Kaynak: nutriscore_thresholds_overview::0]\n\nWHO'nun günlük tuz alım önerisi 5g'dir, üründe ise 0.4g tuz bulunur, bu düşük bir seviyedir. [Kaynak: who_salt_reduction::1]\n\nÜrünün yağ içeriği 100g'da 12g'dır, bu orta bir seviyedir. [Kaynak: nutriscore_thresholds_overview::0]\n\nWHO'nun günlük şeker alım önerisi %10'dır, üründe ise şeker içeriği 100g'da 35g'dır, bu yüksek bir seviyedir. [Kaynak: who_sugars_intake::1]\n\nÜrünün tuz içeriği 100g'da 0.4g'dır, bu düşük bir seviyedir. [Kaynak: nutriscore_thresholds_overview::0]\n\nÜrünün doymuş yağ içeriği 100g'da 12g'dır, bu orta bir seviyedir. [Kaynak: nutriscore_thresholds_overview::0]\n\nÜrünün protein içeriği 100g'da bilinmemektedir. [Kaynak: glossary_nutrition_terms::preamble]\n\nÜrünün lif içeriği 100g'da bilinmemektedir. [Kaynak: glossary_nutrition_terms::preamble]\n\nÜrünün tuz içeriği 100g'da 0.4g'dır, bu düşük bir seviyedir. [Kaynak: nutriscore_thresholds_overview::0]\n\nÜrünün sodyum içeriği 100g'da 0.4g'dır, bu düşük bir seviyedir. [Kaynak: nutriscore_thresholds_overview::0]\n\nÜrünün porsiyon bilgisi bilinmemektedir. [Kaynak: glossary_nutrition_terms::preamble]\n\nÜrünün alerjen bilgisi bilinmemektedir. [Kaynak: glossary_nutrition_terms::preamble]\n\nÜrünün laktoz bilgisi bilinmemektedir. [Kaynak: glossary_nutrition_terms::preamble]\n\nÜrünün gluten bilgisi bilinmemektedir. [Kaynak: glossary_nutrition_terms::preamble]"
+            },
+            {
+              "name": "yuksek_tuz_ve_sodyum_urun",
+              "valid_citation_ratio": 1.0,
+              "ground_truth_alignment_ratio": 0.7272727272727273,
+              "regenerated": false,
+              "text": "Ürünün besin değerleri (100g bazında) 250 kcal, 3g şeker, 2,8g tuz ve 1120mg sodyum içerir. Bu değerler, yüksek tuz ve sodyum içeriği açısından riskli bir ürünü temsil eder.\n\n[Kaynak: who_salt_reduction::0] WHO'nun önerilerine göre, yetişkinler için günlük sodyum alımını 2000 mg (yaklaşık 5 gram tuz) olarak önerir. Ürünün 100g'sında 1120mg sodyum içerdiği görülüyor, bu da günlük önerinin üzerinde bir değerdir.\n\n[Kaynak: nutriscore_thresholds_overview::1] Ürün, \"yüksek tuz\" eşiğine göre Nutri-Score konvansiyonunda değerlendirildiğinde, 1,5g/100g'da yüksek tuz içerdiği görülüyor. WHO'nun önerdiği günlük tuz alımının üzerinde bir değerdir.\n\n[Kaynak: tgk_etiketleme_ozet::0] Türk Gıda Kodeksi'ne göre, besin değerleri etikette 100 g veya 100 mL başına beyan edilir. Ürünün 100g'sında 2,8g tuz içerdiği görülüyor, bu da \"yüksek tuz\" eşiğinin üzerinde bir değerdir."
+            },
+            {
+              "name": "yuksek_doymus_yag_urun",
+              "valid_citation_ratio": 1.0,
+              "ground_truth_alignment_ratio": 1.0,
+              "regenerated": false,
+              "text": "Ürünün besin değerleri incelendiğinde, 100 gramda 30 gram yağ, 14 gram doymuş yağ, 8 gram şeker ve 5 gram tuz içerdiği görülmektedir. \n\nBu değerlere göre, ürün yüksek doymuş yağ ve tuz içerir. [Kaynak: nutriscore_thresholds_overview::1]\n\nWHO'nun önerilerine göre, günlük tuz alımı 5 gram olmalıdır. Ürün 100 gramda 5 gram tuz içerdiğinden, günlük tuz alımı önerisinin üzerinde bir değer içerir. [Kaynak: who_salt_reduction::1]\n\nWHO'nun önerilerine göre, günlük şeker alımı %10'a kadar olmalıdır. Ürün 100 gramda 8 gram şeker içerdiğinden, günlük şeker alımı önerisinin üzerinde bir değer içerir. [Kaynak: who_sugars_intake::1]\n\nÜrünün yüksek doymuş yağ ve tuz içeriği, sağlıksız bir beslenme seçeneği oluşturmaktadır. [Kaynak: glossary_nutrition_terms::preamble]"
+            },
+            {
+              "name": "risksiz_urun",
+              "valid_citation_ratio": 1.0,
+              "ground_truth_alignment_ratio": 0.8,
+              "regenerated": false,
+              "text": "Gıda ve sağlık asistanı olarak, verilen besin değerlerini analiz edebiliriz.\n\nVerilen besin değerleri 100g bazında enerji 180 kcal, yağ 3g, şeker 2g ve tuz 0.2g içerir. Bu değerler, makro besinler için ortalama gereksinim (Average Requirement, AR) ve nüfus referans alım aralığının (Population Reference Intake, PRI) bir parçası olarak kabul edilebilir.\n\nEFSA'nın \"Dietary Reference Values\" belgesine göre, bu değerler makro besinler için referans alım aralığının bir parçası olarak kabul edilebilir. Belge, makro besinler için ortalama gereksinim (Average Requirement, AR), nüfus referans alım aralığının (Population Reference Intake, PRI) ve yetenli alım (Adequate Intake, AI) değerlerini içerir.\n\nWHO'nun \"Healthy diet\" Fact Sheet'e göre, bu değerler sağlıklı bir diyet için referans alınabilir. Belge, serbest şeker ve yağ alımının kontrolü için öneriler sunar.\n\nTürk Gıda Kodeksi Beslenme ve Sağlık Beyanları Yönetmeliği'ne göre, bu değerler gıda etiketlemesi ve beslenme yönergeleri geliştirme için referans alınabilir. Belge, sağlık profesyonelleri için bilimsel referanstır.\n\nBu değerler, bireysel hedef/tavsiye değil, profesyoneller için bilimsel referanstır. Bu nedenle, bu değerleri kullanırken, sağlık profesyonellerinin bilimsel referansları kullanması önemlidir.\n\n[Kaynak: efsa_dietary_reference_values::1]\n[Kaynak: who_sugars_intake::preamble]\n[Kaynak: tgk_etiketleme_ozet::preamble]"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
