@@ -4,11 +4,14 @@
 # uretilir (bkz. THRESHOLD_METADATA). Buradaki "value" alanlari tek dogruluk kaynagidir.
 
 llm:
-  # Varsayilan: huggingface (ucretsiz, kart gerektirmez - kullanici karari 2026-07-09).
-  # anthropic/openai odemeli alternatifler olarak korunur (bkz. src/rag/llm_provider.py).
-  provider: huggingface   # anthropic | openai | huggingface
+  # Varsayilan: openai (TUBITAK 2209-A bursuyla API anahtari alindi - kullanici karari 2026-10-06).
+  # huggingface ucretsiz alternatif, anthropic odemeli alternatif olarak korunur
+  # (bkz. src/rag/llm_provider.py, kiyas sonuclari docs/rag_results_notes.md).
+  provider: openai   # anthropic | openai | huggingface
   model_anthropic: claude-sonnet-5
-  model_openai: gpt-4o-mini
+  # gpt-4.1-mini: gpt-4o-mini metrikte yuksek cikti ama "30 g yag"i tutarli bicimde "30 g doymus
+  # yag" diye yanlis aktardi (bkz. docs/rag_results_notes.md, 2026-10-06 kiyasi).
+  model_openai: gpt-4.1-mini
   model_huggingface: meta-llama/Llama-3.1-8B-Instruct
   max_tokens: 1024
   temperature: 0.2
