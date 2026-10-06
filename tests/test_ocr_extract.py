@@ -1,3 +1,5 @@
+import json
+import os
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
@@ -9,7 +11,9 @@ from src.ocr.extract import (
     TESSERACT_EXE,
     extract_text_easyocr,
     extract_text_ocrspace,
+    extract_text_openai_vision,
     extract_text_tesseract,
+    extract_text_windows,
     extract_text_with_ocrspace_fallback,
 )
 
@@ -185,3 +189,84 @@ def test_fallback_uses_easyocr_directly_when_no_api_key(tmp_path, monkeypatch):
 
     assert result.engine == "easyocr"
     assert "450" in result.text
+
+
+@pytest.mark.skipif(os.name != "nt", reason="Windows OCR sadece Windows'ta var")
+def test_extract_text_windows_reads_simple_text_for_real(tmp_path):
+    # Gercek Windows OCR cagrisi (ag/anahtar gerektirmez, Windows'a yerlesik).
+    image_path = _make_text_image(tmp_path, "Energy 450 kcal")
+    result = extract_text_windows(image_path)
+
+    assert result.engine == "windows"
+    assert "450" in result.text
+    assert result.mean_confidence == 100.0
+
+
+def test_extract_text_windows_groups_word_boxes_into_rows(tmp_path):
+    words = [
+        {"text": "450", "x": 120, "y": 10, "height": 12},
+        {"text": "Enerji", "x": 5, "y": 11, "height": 12},
+        {"text": "Seker", "x": 5, "y": 40, "height": 12},
+        {"text": "12", "x": 120, "y": 41, "height": 12},
+    ]
+    completed = MagicMock(returncode=0, stdout=json.dumps(words).encode("utf-8"), stderr=b"")
+    with patch("src.ocr.extract.subprocess.run", return_value=completed):
+        result = extract_text_windows(tmp_path / "x.png")
+
+    assert result.text == "Enerji 450\nSeker 12"
+
+
+def test_extract_text_windows_empty_output_returns_empty_text(tmp_path):
+    completed = MagicMock(returncode=0, stdout=b"[]", stderr=b"")
+    with patch("src.ocr.extract.subprocess.run", return_value=completed):
+        result = extract_text_windows(tmp_path / "x.png")
+
+    assert result.text == ""
+    assert result.mean_confidence == 0.0
+
+
+def test_extract_text_windows_raises_on_powershell_error(tmp_path):
+    completed = MagicMock(returncode=1, stdout=b"", stderr="dil desteklenmiyor".encode("utf-8"))
+    with patch("src.ocr.extract.subprocess.run", return_value=completed):
+        with pytest.raises(ValueError, match="Windows OCR hatasi"):
+            extract_text_windows(tmp_path / "x.png")
+
+
+def _fake_openai_client(text, prompt_tokens=400, completion_tokens=150):
+    client = MagicMock()
+    response = MagicMock()
+    response.choices = [MagicMock()]
+    response.choices[0].message.content = text
+    response.usage.prompt_tokens = prompt_tokens
+    response.usage.completion_tokens = completion_tokens
+    client.chat.completions.create.return_value = response
+    return client
+
+
+def test_extract_text_openai_vision_returns_transcription_and_usage(tmp_path):
+    image_path = _make_text_image(tmp_path, "Energy 450 kcal")
+    client = _fake_openai_client("Enerji | 450 kcal")
+
+    result = extract_text_openai_vision(image_path, model="gpt-4.1-mini", client=client)
+
+    assert result.engine == "openai_vision"
+    assert result.text == "Enerji | 450 kcal"
+    assert result.usage == {"model": "gpt-4.1-mini", "input_tokens": 400, "output_tokens": 150}
+
+
+def test_extract_text_openai_vision_sends_image_as_base64_data_url(tmp_path):
+    image_path = _make_text_image(tmp_path, "Energy 450 kcal")
+    client = _fake_openai_client("x")
+
+    extract_text_openai_vision(image_path, client=client)
+
+    content = client.chat.completions.create.call_args.kwargs["messages"][0]["content"]
+    image_part = next(part for part in content if part["type"] == "image_url")
+    assert image_part["image_url"]["url"].startswith("data:image/png;base64,")
+    assert client.chat.completions.create.call_args.kwargs["temperature"] == 0
+
+
+def test_extract_text_openai_vision_raises_without_api_key(tmp_path, monkeypatch):
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    with pytest.raises(ValueError, match="OPENAI_API_KEY"):
+        extract_text_openai_vision(tmp_path / "x.png")

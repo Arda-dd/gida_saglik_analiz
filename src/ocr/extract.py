@@ -10,11 +10,22 @@ eklendi: kok neden analizinde (bkz. docs/ocr_results_notes.md) asil darbogazin c
 sutunlu tablo yapisi oldugu tespit edilmisti - OCR.space'in isTable parametresi, satirlari
 TAB ile ayirarak (Engine 3'te Markdown tablo olarak) dondurup bu sorunu manuel satir/sutun
 gruplamasi (_group_boxes_into_rows) yapmadan hedefliyor.
+
+OCR motor kiyas raporu icin (2026-10-06, bkz. docs/ocr_comparison_report.md) iki motor daha
+eklendi - ikisi de ek yazilim/model indirmesi gerektirmez:
+- Windows OCR (Windows.Media.Ocr): Windows 10/11'e yerlesik, PowerShell uzerinden cagrilir.
+- OpenAI gorsel modeli (gpt-4.1-mini): bir gorsel-dil modeline (VLM) etiketi oldugu gibi
+  yaziya dokturur; cikti diger motorlarla AYNI regex normalize katmanindan gecer, yani model
+  degerleri yorumlamaz/yapilandirmaz, sadece metni okur (adil kiyas icin).
 """
 
 from __future__ import annotations
 
+import base64
+import json
+import mimetypes
 import os
+import subprocess
 from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
@@ -44,6 +55,7 @@ class OCRResult:
     text: str
     mean_confidence: float  # 0-100 araliginda, motorlar arasi karsilastirilabilir
     engine: str
+    usage: dict | None = None  # ucretli API'lerde token kullanimi (maliyet hesabi icin)
 
 
 def _group_boxes_into_rows(boxes: list[dict]) -> str:
@@ -220,6 +232,98 @@ def extract_text_ocrspace(
     exit_code = results[0].get("FileParseExitCode", 0)
     mean_confidence = 100.0 if exit_code == 1 else 0.0
     return OCRResult(text=text, mean_confidence=mean_confidence, engine="ocrspace")
+
+
+WINDOWS_OCR_SCRIPT = Path(__file__).resolve().parent / "windows_ocr.ps1"
+
+
+def extract_text_windows(image_path: Path, lang: str = "tr") -> OCRResult:
+    """Windows'un yerlesik OCR motoru (Windows.Media.Ocr) ile metin cikarir.
+
+    WinRT API'sine Python'dan ek paket (winrt/winsdk) kurmadan erismek icin PowerShell
+    uzerinden cagrilir (windows_ocr.ps1). Kelime kutulari Tesseract/EasyOCR ile ayni
+    _group_boxes_into_rows mantigiyla satirlara dizilir.
+
+    Not: Windows OCR kelime bazli guven skoru DONDURMEZ - mean_confidence, OCR.space'teki
+    gibi sadece metin cikip cikmadigini gosteren ikili bir vekildir (100.0 / 0.0). Her cagri
+    yeni bir PowerShell sureci baslattigi icin olculen sureye ~0.3-1 sn surec acilisi dahildir.
+    """
+    completed = subprocess.run(
+        [
+            "powershell", "-NoProfile", "-NonInteractive", "-ExecutionPolicy", "Bypass",
+            "-File", str(WINDOWS_OCR_SCRIPT), "-Path", str(Path(image_path).resolve()), "-Lang", lang,
+        ],
+        capture_output=True,
+        timeout=60,
+    )
+    if completed.returncode != 0:
+        error = completed.stderr.decode("utf-8", errors="replace").strip()
+        raise ValueError(f"Windows OCR hatasi: {error[:300]}")
+
+    stdout = completed.stdout.decode("utf-8-sig", errors="replace").strip()
+    words = json.loads(stdout) if stdout else []
+    boxes = [
+        {"ymin": w["y"], "ymax": w["y"] + w["height"], "xmin": w["x"], "height": w["height"], "text": w["text"]}
+        for w in words
+        if w.get("text", "").strip()
+    ]
+    text = _group_boxes_into_rows(boxes)
+    return OCRResult(text=text, mean_confidence=100.0 if text else 0.0, engine="windows")
+
+
+OPENAI_VISION_PROMPT = (
+    "Bu bir gida urunu etiketinin fotografi. Gorseldeki TUM metni, gorundugu gibi, satir satir "
+    "yaz. Besin tablosunda ayni satirdaki hucreleri (ornegin 'Seker' ve '12 g') AYNI satirda "
+    "tut, aralarina ' | ' koy. Hicbir degeri yorumlama, hesaplama, birim cevirme, tercume "
+    "etme veya duzeltme; okunamayan kismi atla. Aciklama ekleme, sadece okudugun metni dondur."
+)
+
+
+def extract_text_openai_vision(
+    image_path: Path,
+    model: str = "gpt-4.1-mini",
+    client=None,
+) -> OCRResult:
+    """OpenAI gorsel-dil modeliyle (VLM) etiketi yaziya doker.
+
+    Model bilerek SADECE transkripsiyon yapar (yapilandirilmis JSON/besin degeri cikarmaz):
+    cikti diger motorlarla ayni extract_and_normalize regex katmanindan gecer, boylece kiyas
+    "metni kim daha iyi okuyor" sorusunu olcer. mean_confidence vekildir (100.0 / 0.0);
+    token kullanimi `usage` alaninda maliyet hesabi icin dondurulur.
+    """
+    if client is None:
+        import openai
+
+        api_key = os.environ.get("OPENAI_API_KEY")
+        if not api_key:
+            raise ValueError("OPENAI_API_KEY bulunamadi (.env dosyasini kontrol edin)")
+        client = openai.OpenAI(api_key=api_key)
+
+    mime = mimetypes.guess_type(str(image_path))[0] or "image/jpeg"
+    encoded = base64.b64encode(Path(image_path).read_bytes()).decode("ascii")
+    response = client.chat.completions.create(
+        model=model,
+        temperature=0,
+        max_tokens=1500,
+        messages=[
+            {
+                "role": "user",
+                "content": [
+                    {"type": "text", "text": OPENAI_VISION_PROMPT},
+                    {"type": "image_url", "image_url": {"url": f"data:{mime};base64,{encoded}", "detail": "high"}},
+                ],
+            }
+        ],
+    )
+    text = response.choices[0].message.content or ""
+    usage = None
+    if response.usage is not None:
+        usage = {
+            "model": model,
+            "input_tokens": response.usage.prompt_tokens,
+            "output_tokens": response.usage.completion_tokens,
+        }
+    return OCRResult(text=text, mean_confidence=100.0 if text.strip() else 0.0, engine="openai_vision", usage=usage)
 
 
 def extract_text_with_ocrspace_fallback(
