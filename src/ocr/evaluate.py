@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import statistics
 import time
 from pathlib import Path
@@ -84,6 +85,28 @@ def _values_match(extracted: float | None, truth: float, rel_tol: float = 0.15, 
     return abs(extracted - truth) <= tolerance
 
 
+NUMBER_IN_TEXT = re.compile(r"\d+(?:[.,]\d+)?")
+
+
+def number_recall_fields(ocr_text: str, truth_fields: dict[str, float]) -> dict[str, bool]:
+    """Ground-truth degeri OCR'in HAM metninde sayi olarak geciyor mu (regex ayristirmasindan
+    bagimsiz, saf "motor bu sayiyi okuyabildi mi" olcusu).
+
+    Alan dogrulugu (field_results) OCR + normalize regex'ini BIRLIKTE olcer: bir motor sayiyi
+    kusursuz okusa bile normalize o etiket formatini tanimiyorsa (ornegin birimin sayidan once
+    geldigi "Proteines g 8,0") alan yanlis sayilir. Bu metrik iki katmani ayirir.
+    Degeri 0 olan alanlar haric tutulur: "0" metinde tesadufen cok sik gecer ve bu alanlar
+    etiketlerde genelde hic yazilmaz. Kucuk sayilar (1, 2, 3) baska bir satirda tesadufen
+    gecebildigi icin bu metrik okuma basarisinin hafif iyimser bir ust sinirdir.
+    """
+    numbers = {float(m.replace(",", ".")) for m in NUMBER_IN_TEXT.findall(ocr_text or "")}
+    return {
+        field: any(abs(number - truth_value) < 0.051 for number in numbers)
+        for field, truth_value in truth_fields.items()
+        if truth_value != 0
+    }
+
+
 def _truth_fields(entry: dict) -> dict[str, float]:
     truth = entry["ground_truth_nutriments"]
     return {
@@ -102,9 +125,10 @@ def evaluate_entry(entry: dict, engine: str) -> dict:
 
     extracted_facts, _basis = extract_and_normalize(ocr_result.text)
 
+    truth_fields = _truth_fields(entry)
     field_results = {
         field: _values_match(getattr(extracted_facts, field), truth_value)
-        for field, truth_value in _truth_fields(entry).items()
+        for field, truth_value in truth_fields.items()
     }
 
     return {
@@ -115,9 +139,11 @@ def evaluate_entry(entry: dict, engine: str) -> dict:
         "field_results": field_results,
         "n_fields_evaluated": len(field_results),
         "n_fields_correct": sum(field_results.values()),
+        "number_recall": number_recall_fields(ocr_result.text, truth_fields),
         "seconds": elapsed,
         "cost_usd": estimate_cost_usd(ocr_result.usage),
         "error": None,
+        "ocr_text": ocr_result.text,
     }
 
 
@@ -137,9 +163,11 @@ def failed_entry_result(entry: dict, engine: str, error: Exception) -> dict:
         "field_results": {field: False for field in truth_fields},
         "n_fields_evaluated": len(truth_fields),
         "n_fields_correct": 0,
+        "number_recall": number_recall_fields("", truth_fields),
         "seconds": None,
         "cost_usd": 0.0,
         "error": str(error)[:300],
+        "ocr_text": None,
     }
 
 
@@ -150,10 +178,13 @@ def summarize_engine(engine_results: list[dict]) -> dict:
     ok_total = sum(r["n_fields_evaluated"] for r in ok_results)
     ok_correct = sum(r["n_fields_correct"] for r in ok_results)
     timings = [r["seconds"] for r in ok_results if r["seconds"] is not None]
+    recall_values = [found for r in engine_results for found in r.get("number_recall", {}).values()]
     return {
         "total_fields_evaluated": total,
         "total_fields_correct": correct,
         "field_accuracy_pct": (correct / total * 100) if total else 0.0,
+        "number_recall_pct": (sum(recall_values) / len(recall_values) * 100) if recall_values else 0.0,
+        "number_recall_fields": len(recall_values),
         "n_images": len(engine_results),
         "n_failed_images": len(engine_results) - len(ok_results),
         "field_accuracy_on_successful_images_pct": (ok_correct / ok_total * 100) if ok_total else 0.0,
@@ -197,7 +228,7 @@ def run_engine(engine: str, manifest: list[dict]) -> list[dict]:
     summary = summarize_engine(results)
     print(
         f"  --> {engine} TOPLAM: {summary['total_fields_correct']}/{summary['total_fields_evaluated']} "
-        f"alan dogru (%{summary['field_accuracy_pct']:.1f}), basarisiz gorsel: "
+        f"alan dogru (%{summary['field_accuracy_pct']:.1f}), sayi yakalama %{summary['number_recall_pct']:.1f}, basarisiz gorsel: "
         f"{summary['n_failed_images']}, medyan {summary['median_seconds_per_image'] or 0:.2f} sn/gorsel, "
         f"maliyet ${summary['total_cost_usd']:.4f}\n"
     )

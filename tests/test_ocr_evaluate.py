@@ -4,6 +4,7 @@ from src.ocr.evaluate import (
     engine_unavailable_reason,
     estimate_cost_usd,
     failed_entry_result,
+    number_recall_fields,
     summarize_engine,
 )
 
@@ -63,3 +64,23 @@ def test_engine_unavailable_reason_requires_api_keys(monkeypatch):
     assert "OPENAI_API_KEY" in engine_unavailable_reason("openai_vision")
     assert "OCR_SPACE_API_KEY" in engine_unavailable_reason("ocrspace")
     assert engine_unavailable_reason("easyocr") is None
+
+
+def test_number_recall_finds_truth_values_in_raw_text_regardless_of_layout():
+    # Birim sayidan once - normalize regex'i bunu ayristiramiyor, ama sayi metinde var.
+    text = "Proteines g 8,0 | Lipides g 3,0\nValeurs energetiques Kcal 97"
+    truth = {"protein_g": 8.0, "fat_g": 3.0, "energy_kcal": 97.0, "sugar_g": 9.4}
+
+    recall = number_recall_fields(text, truth)
+
+    assert recall == {"protein_g": True, "fat_g": True, "energy_kcal": True, "sugar_g": False}
+
+
+def test_number_recall_excludes_zero_truth_values():
+    recall = number_recall_fields("Fibres 0 g", {"fiber_g": 0.0, "salt_g": 0.49})
+    assert recall == {"salt_g": False}
+
+
+def test_number_recall_tolerates_label_rounding_only():
+    recall = number_recall_fields("Sel 0,5 g | Sucres 12 g", {"salt_g": 0.49, "sugar_g": 12.4})
+    assert recall == {"salt_g": True, "sugar_g": False}
