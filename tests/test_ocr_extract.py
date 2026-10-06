@@ -270,3 +270,14 @@ def test_extract_text_openai_vision_raises_without_api_key(tmp_path, monkeypatch
     monkeypatch.delenv("OPENAI_API_KEY", raising=False)
     with pytest.raises(ValueError, match="OPENAI_API_KEY"):
         extract_text_openai_vision(tmp_path / "x.png")
+
+
+def test_extract_text_openai_vision_unreadable_marker_becomes_empty_text(tmp_path):
+    # Okunamayan gorselde model uydurmak yerine isaretci donmeli; bu bos metin sayilir.
+    image_path = _make_text_image(tmp_path, "x")
+    client = _fake_openai_client("[UNREADABLE]")
+
+    result = extract_text_openai_vision(image_path, client=client)
+
+    assert result.text == ""
+    assert result.mean_confidence == 0.0

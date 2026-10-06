@@ -271,11 +271,19 @@ def extract_text_windows(image_path: Path, lang: str = "tr") -> OCRResult:
     return OCRResult(text=text, mean_confidence=100.0 if text else 0.0, engine="windows")
 
 
+# Prompt v2 (2026-10-06). Ilk surum Turkce yazilmisti ve model 30 gorselin 3'unde etikette
+# OLMAYAN Turkce metin uydurdu/cevirdi (okunamayan bir su sisesi icin eksiksiz bir "Besin
+# Degerleri" tablosu dahil) - bkz. docs/ocr_comparison_report.md, docs/ocr_openai_vision_prompt_v1.json.
+# Bu yuzden talimat Ingilizce, orijinal dili koru / cevirme / tahmin etme vurgulu ve okunamayan
+# gorsel icin acik bir cikis (UNREADABLE_MARKER) iceriyor.
+UNREADABLE_MARKER = "[UNREADABLE]"
 OPENAI_VISION_PROMPT = (
-    "Bu bir gida urunu etiketinin fotografi. Gorseldeki TUM metni, gorundugu gibi, satir satir "
-    "yaz. Besin tablosunda ayni satirdaki hucreleri (ornegin 'Seker' ve '12 g') AYNI satirda "
-    "tut, aralarina ' | ' koy. Hicbir degeri yorumlama, hesaplama, birim cevirme, tercume "
-    "etme veya duzeltme; okunamayan kismi atla. Aciklama ekleme, sadece okudugun metni dondur."
+    "You are an OCR engine. Transcribe ONLY the text that is actually legible in this image, "
+    "exactly as printed, in its ORIGINAL language and script. Do NOT translate. Do NOT guess, "
+    "infer, complete or normalize anything, and never write a nutrition table or values that "
+    "are not clearly visible. Keep cells of the same table row on one line, separated by ' | '. "
+    "Skip illegible parts. If no text is legible at all, output exactly "
+    f"{UNREADABLE_MARKER}. Output only the transcription, no comments."
 )
 
 
@@ -316,6 +324,8 @@ def extract_text_openai_vision(
         ],
     )
     text = response.choices[0].message.content or ""
+    if text.strip() == UNREADABLE_MARKER:
+        text = ""
     usage = None
     if response.usage is not None:
         usage = {
