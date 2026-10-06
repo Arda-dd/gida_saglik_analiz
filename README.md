@@ -199,7 +199,7 @@ Her fazın sonucu, hedeflenen metrikle birlikte `docs/` altında **dürüstçe**
 |---|---|---|---|
 | 0-1 | İskelet + veri toplama | Tamamlandı (395 OFF kaydı) | `docs/attribution_off.md` |
 | 2 | Görsel sınıflandırma | **%75 test accuracy** (hedef ≥%85 — veri hacmi kısıtı, bkz. altta) | `docs/vision_results_notes.md` |
-| 3 | OCR + normalizasyon | Canlı pipeline (EasyOCR): **%15.8**. Deneysel OCR.space bulut API'si kısmi örneklemde **%50.6** gösterdi ama henüz tam doğrulanmadı/üretime alınmadı (hedef ≥%90) | `docs/ocr_results_notes.md` |
+| 3 | OCR + normalizasyon | 5 motor kıyası (30 görsel, alan doğruluğu): Tesseract %7.9, Windows OCR %9.4, EasyOCR %16.2, OCR.space %38.9 (ortak 20 görselde **%57.5**), OpenAI gpt-4.1-mini **%50.6** (uydurma riski var). Canlı pipeline: OCR.space → EasyOCR fallback (hedef ≥%90) | `docs/ocr_comparison_report.md` |
 | 4 | RAG | Recall@5 %100, MRR 0.794. LLM: OpenAI gpt-4.1-mini (3 koşu ort.) Factual Consistency **%96.5**, Ground Truth Alignment **%89.2**; metrikte daha yüksek çıkan gpt-4o-mini besin değerini yanlış besin öğesine bağladığı için elendi | `docs/rag_results_notes.md` |
 | 5 | Kişisel profil | Profile Consistency %100, Recommendation Relevance %100 | `docs/health_results_notes.md` |
 | 6 | API + Demo | Gerçek fotoğrafla uçtan uca doğrulandı | `docs/faz6_results_notes.md` |

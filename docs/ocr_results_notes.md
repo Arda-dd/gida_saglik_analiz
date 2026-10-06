@@ -1,5 +1,15 @@
 # Faz 3 Sonuçları ve Sınırlamalar — OCR ve Metin Normalizasyonu
 
+> **Güncelleme (2026-10-06):** 5 OCR motorunun (Tesseract, EasyOCR, Windows OCR, OCR.space,
+> OpenAI gpt-4.1-mini görsel) aynı 30 görsellik setle karşılaştırması ayrı bir raporda:
+> **`docs/ocr_comparison_report.md`**. Özet: alan doğruluğu Tesseract %7.9, Windows OCR %9.4,
+> EasyOCR %16.2, OCR.space %38.9 (10 görsel kotaya takıldı; ortak 20 görselde %57.5), OpenAI
+> %50.6 (ortak 20 görselde %55.9). OpenAI okunamayan görsellerde besin tablosu uydurabiliyor.
+> Ölçüm yöntemi değişti: hata alan görsel artık paydadan düşmüyor. Bu yüzden aşağıdaki
+> Ağustos tarihli OCR.space %50.6 değeri (176 alan üzerinden) yeni rakamlarla doğrudan
+> karşılaştırılamaz. Canlı demo 2026-08-22'den beri OCR.space → EasyOCR fallback kullanıyor
+> (aşağıdaki "üretime alınmadı" ifadesi o tarihten öncesine aittir).
+
 **Durum:** Pipeline uçtan uca çalışıyor (Tesseract + EasyOCR ile metin çıkarımı → regex tabanlı
 besin değeri ayrıştırma → 100g normalizasyonu → risk motoru → alerjen tespiti), tüm modüller
 pytest ile test edilmiş (135+ test). Canlı pipeline hâlâ EasyOCR kullanıyor (%16 civarı alan
