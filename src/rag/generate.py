@@ -84,8 +84,19 @@ def build_prompt(
     )
 
 
+def _split_citation_ids(raw: str) -> list[str]:
+    """Tek etiketteki birden fazla kaynagi ayirir: "[Kaynak: a::0, b::1]" -> ["a::0", "b::1"].
+
+    Daha guclu modeller (gpt-4.1-mini, 2026-10-06 kiyasi) ayni cumleyi iki chunk'a birden
+    dayandirip tek etikette virgulle yazabiliyor; ayrilmazsa "a::0, b::1" tek bir (gecersiz)
+    chunk_id sanilir ve hem kaynak gecerliligi hem sayisal dayanak haksiz yere dusuk cikar.
+    chunk_id'ler virgul/noktali virgul icermez, bu yuzden bu ayrim guvenlidir.
+    """
+    return [part.strip() for part in re.split(r"[,;]", raw) if part.strip()]
+
+
 def _extract_cited_ids(text: str) -> list[str]:
-    return [m.strip() for m in CITATION_PATTERN.findall(text)]
+    return [cid for m in CITATION_PATTERN.findall(text) for cid in _split_citation_ids(m)]
 
 
 def _valid_citation_ratio(cited_ids: list[str], valid_ids: set[str]) -> float:
@@ -95,8 +106,8 @@ def _valid_citation_ratio(cited_ids: list[str], valid_ids: set[str]) -> float:
     return valid_count / len(cited_ids)
 
 
-def _extract_citation_segments(text: str) -> list[tuple[str, str]]:
-    """Her [Kaynak: chunk_id] etiketinden once gelen metin parcasini o chunk_id ile esler.
+def _extract_citation_segments(text: str) -> list[tuple[str, list[str]]]:
+    """Her [Kaynak: ...] etiketinden once gelen metin parcasini o etiketteki chunk_id'lerle esler.
 
     Boylece "hangi cumle hangi kaynaga atif yapiyor" bilgisi korunur - sayisal dayanak
     kontrolu (compute_numeric_grounding) bu eslesmeyi kullanir.
@@ -105,7 +116,7 @@ def _extract_citation_segments(text: str) -> list[tuple[str, str]]:
     last_end = 0
     for match in CITATION_PATTERN.finditer(text):
         segment_text = text[last_end : match.start()]
-        segments.append((segment_text, match.group(1).strip()))
+        segments.append((segment_text, _split_citation_ids(match.group(1))))
         last_end = match.end()
     return segments
 
@@ -141,11 +152,12 @@ def compute_numeric_grounding(
 
     grounded_count = 0
     total_count = 0
-    for segment_text, chunk_id in _extract_citation_segments(text):
+    for segment_text, chunk_ids in _extract_citation_segments(text):
         segment_numbers = _numbers_in(segment_text)
         if not segment_numbers:
             continue
-        chunk_numbers = _numbers_in(chunk_text_by_id.get(chunk_id, ""))
+        # Birden fazla kaynak gosterildiyse sayi bunlardan HERHANGI birinde gecmesi yeterli.
+        chunk_numbers = set().union(*(_numbers_in(chunk_text_by_id.get(cid, "")) for cid in chunk_ids))
         for number in segment_numbers:
             total_count += 1
             if number in chunk_numbers or number in nutrition_numbers:

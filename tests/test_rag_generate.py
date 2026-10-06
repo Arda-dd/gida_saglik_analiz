@@ -41,6 +41,17 @@ def test_extract_cited_ids_returns_empty_list_when_no_citations():
     assert _extract_cited_ids("Hicbir kaynak yok burada.") == []
 
 
+def test_extract_cited_ids_splits_comma_separated_multi_citation():
+    # gpt-4.1-mini gibi modeller tek etikette birden fazla kaynak gosterebiliyor.
+    text = "Doymus yag yuksek [Kaynak: doc_a::0, doc_a::1]. Seker dusuk [Kaynak: doc_b::0]."
+    assert _extract_cited_ids(text) == ["doc_a::0", "doc_a::1", "doc_b::0"]
+
+
+def test_valid_citation_ratio_multi_citation_counts_each_id_separately():
+    cited = _extract_cited_ids("Riskli [Kaynak: a::0, uydurma::9].")
+    assert _valid_citation_ratio(cited, {"a::0", "b::1"}) == pytest.approx(0.5)
+
+
 def test_valid_citation_ratio_all_valid():
     ratio = _valid_citation_ratio(["a::0", "b::1"], {"a::0", "b::1", "c::2"})
     assert ratio == 1.0
@@ -125,8 +136,13 @@ def test_extract_citation_segments_pairs_preceding_text_with_chunk_id():
     segments = _extract_citation_segments(text)
 
     assert len(segments) == 2
-    assert segments[0] == ("Once bu var ", "a::0")
-    assert segments[1] == (". Sonra bu var ", "b::1")
+    assert segments[0] == ("Once bu var ", ["a::0"])
+    assert segments[1] == (". Sonra bu var ", ["b::1"])
+
+
+def test_extract_citation_segments_keeps_all_ids_of_multi_citation():
+    segments = _extract_citation_segments("Ikisi de soyler [Kaynak: a::0; b::1].")
+    assert segments == [("Ikisi de soyler ", ["a::0", "b::1"])]
 
 
 def test_extract_citation_segments_empty_when_no_citations():
@@ -170,6 +186,29 @@ def test_compute_numeric_grounding_flags_misattributed_number_from_wrong_chunk()
     text = "Gunluk tuz alimi 5g'dan az olmali [Kaynak: a::0]."
     chunk_a = make_retrieval_result("a::0")
     chunk_a.chunk.text = "Bu bolumde sayisal bir deger yok."
+    chunk_b = make_retrieval_result("b::0")
+    chunk_b.chunk.text = "WHO gunluk 5g'dan az tuz onerir."
+
+    ratio = compute_numeric_grounding(text, [chunk_a, chunk_b], NutritionFacts())
+    assert ratio == 0.0
+
+
+def test_compute_numeric_grounding_multi_citation_accepts_number_from_any_cited_chunk():
+    # Sayi (5) sadece b::0'da geciyor ama cumle hem a::0'a hem b::0'a atif yapiyor - dayanakli.
+    text = "Gunluk tuz alimi 5g'dan az olmali [Kaynak: a::0, b::0]."
+    chunk_a = make_retrieval_result("a::0")
+    chunk_a.chunk.text = "Bu bolumde sayisal bir deger yok."
+    chunk_b = make_retrieval_result("b::0")
+    chunk_b.chunk.text = "WHO gunluk 5g'dan az tuz onerir."
+
+    ratio = compute_numeric_grounding(text, [chunk_a, chunk_b], NutritionFacts())
+    assert ratio == 1.0
+
+
+def test_compute_numeric_grounding_multi_citation_still_flags_number_in_none_of_them():
+    text = "WHO gunluk 25 gram onerir [Kaynak: a::0, b::0]."
+    chunk_a = make_retrieval_result("a::0")
+    chunk_a.chunk.text = "Serbest seker enerjinin %10'undan az olmali."
     chunk_b = make_retrieval_result("b::0")
     chunk_b.chunk.text = "WHO gunluk 5g'dan az tuz onerir."
 
