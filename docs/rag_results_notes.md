@@ -7,6 +7,11 @@ retrieval + generation değerlendirmesi de çalıştırıldı** (ücretsiz Huggi
 Alignment **%86.4** (2026-07-12'de self-consistency katmanı sayısal-dayanak kontrolüyle
 güçlendirildikten sonra %38.2'den %86.4'e çıktı — bkz. "Sayısal Dayanak Kontrolü Eklendi" bölümü).
 
+**Güncelleme (2026-10-06):** Varsayılan LLM ücretsiz HuggingFace Llama-3.1-8B'den **OpenAI
+`gpt-4.1-mini`**'ye geçirildi (3 koşu ortalaması: Factual Consistency %96.5, Ground Truth
+Alignment %89.2). Metrikte daha yüksek çıkan `gpt-4o-mini`, besin değerlerini sistematik olarak
+yanlış besin öğesine bağladığı için seçilmedi — bkz. "OpenAI'a Geçiş ve Model Kıyası" bölümü.
+
 ## Neden API tabanlı embedding'e geçildi (mimari değişiklik #1)
 
 İlk uygulama `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2` modelini yerel
@@ -135,15 +140,74 @@ sorunu **doğru şekilde tespit etti** ve yeniden üretimi tetikledi (`regenerat
 ama küçük/ücretsiz modelin kendini düzeltme kapasitesi sınırlı. Bu, aşağıdaki "güçlü model"
 önerisinin somut, ölçülmüş bir kanıtıdır.
 
+## OpenAI'a Geçiş ve Model Kıyası (2026-10-06)
+
+TÜBİTAK 2209-A bursuyla OpenAI API anahtarı alındı; `config.yaml`'da `llm.provider: openai`
+yapıldı. Embedding ve FAISS index **değişmedi** (HuggingFace `paraphrase-multilingual-MiniLM-L12-v2`
+— yeniden index gerektirmemek için), yani retrieval sonuçları aynı kaldı (Recall@5 %100, MRR 0.794);
+sadece metni üreten LLM değişti.
+
+**Yöntem:** 4 senaryoluk tek bir `evaluate` koşusu çok oynak çıktı (aynı HuggingFace modeli aynı
+gün Ground Truth Alignment'ta %76.3 ile %97.3 arası değerler verdi), bu yüzden her model 3 kez
+çalıştırılıp ortalaması alındı: `python -m src.rag.compare_providers --runs 3 --model
+openai:gpt-4.1-mini --model openai:gpt-4o-mini --model huggingface`
+(`docs/rag_llm_comparison_report.json`, üretilen tüm metinler dahil). Ayrıca **metinler tek tek
+elle okundu** — aşağıdaki "İçerik doğruluğu" sütunu metriklerin göremediği bir hatayı gösteriyor.
+
+| Model | Factual Consistency (3 koşu ort.) | Ground Truth Alignment (3 koşu ort.) | İçerik doğruluğu (elle kontrol, 9 koşu) |
+|---|---|---|---|
+| **OpenAI `gpt-4.1-mini` (seçilen)** | %96.5 | %89.2 | ✅ 9/9 koşuda "14 g doymuş yağ, 30 g toplam yağ" doğru; eşikleri (5 g / 17.5 g / 22.5 g) kaynaktan doğru alıp açıklıyor |
+| OpenAI `gpt-4o-mini` | **%100.0** | **%95.0** | ❌ 9 koşunun 8'inde 30 g **toplam** yağı "30 g **doymuş** yağ" diye aktarıyor (doğrusu 14 g) |
+| HuggingFace `Llama-3.1-8B-Instruct` | %90.8 | %92.8 | ✅ değerler doğru, ama koşular arası çok oynak (FC %75–100); bir koşuda `risksiz_urun` için hiç kaynak etiketi üretmedi |
+
+(Aynı gün, parser düzeltmesinden sonra yapılan bağımsız ikinci bir 3'er koşuluk ölçüm benzer
+sonuç verdi: gpt-4.1-mini %96.9 / %93.6, gpt-4o-mini %100 / %95.0, Llama %89.6 / %92.6.)
+
+**Neden metrikte en yüksek olan gpt-4o-mini seçilmedi:** Ground Truth Alignment bir sayının
+kaynakta ya da ürün verisinde *geçip geçmediğine* bakıyor, **hangi besin öğesine bağlandığına
+bakmıyor**. "30 g doymuş yağ" cümlesindeki 30 ürün verisinde (`fat_g=30`) geçtiği için %100
+dayanaklı sayıldı — oysa kullanıcıya yanlış bir sağlık bilgisi veriyor ve self-consistency
+katmanı bunu yakalayamıyor. gpt-4o-mini temperature=0.2'de neredeyse deterministik çalıştığı
+için bu hata rastlantısal değil, sistematik. gpt-4.1-mini'nin maliyeti gpt-4o-mini'nin ~2.7
+katı, ama analiz başına hâlâ 1 sentin çok altında.
+
+**Ölçüm sırasında bulunan ve düzeltilen metrik hatası (`28d495f`):** gpt-4.1-mini aynı cümleyi
+iki kaynağa birden dayandırıp `[Kaynak: a::0, a::1]` yazabiliyor. Parser bunu tek bir (geçersiz)
+chunk_id sanıyordu; hem kaynak geçerliliği hem sayısal dayanak haksız yere düşüyordu (düzeltme
+öncesi gpt-4.1-mini: FC %86.8 / GTA %89.3). Artık virgül/noktalı virgülle ayrılan kaynaklar ayrı
+sayılıyor ve bir sayı, atıf yapılan kaynaklardan herhangi birinde geçiyorsa dayanaklı kabul
+ediliyor (5 yeni birim testi).
+
+**Kalan bulgular (dürüstçe not edilmeli):**
+- gpt-4.1-mini'nin kalan FC kaybının tamamı, prompt'taki `URUN BESIN DEGERLERI` ve `KURAL MOTORU
+  RISK BAYRAKLARI` **bölüm başlıklarını kaynak etiketi gibi kullanmasından** geliyor (gerçek
+  ama zararsız bir format hatası — bilgi doğru, etiket yanlış). Self-consistency bunu doğru
+  yakalıyor.
+- Tüm modellerde `risksiz_urun` GTA'sı 0.80'de takılıyor: "100 gramında" ifadesindeki **100**
+  (ölçü bazı) ne kaynakta ne ürün verisinde geçtiği için dayanaksız sayılıyor — gerçek bir
+  uydurma değil, metrik artefaktı.
+- Tek resmi `evaluate` koşusu (gpt-4.1-mini, `docs/rag_evaluation_report.json`): FC %89.6, GTA
+  %90.0 — yukarıdaki 3 koşuluk aralığın içinde.
+
 ## Önerilen Yol Haritası
 
 1. ~~Self-consistency katmanını genişlet~~ **✅ Tamamlandı (2026-07-12)** — sayısal dayanak
    kontrolü eklendi, Ground Truth Alignment %38.2→%86.4.
-2. **Üretim kalitesi için güçlü model:** Kritik/nihai kullanıcıya sunulacak çıktılarda
-   `config.yaml`'da `llm.provider: anthropic` (Claude) seçeneğine geçilmesi önerilir — arayüz
-   zaten hazır, tek satır config değişikliği yeterli. `risksiz_urun` senaryosu, self-consistency
-   doğru tespit etse bile küçük modelin düzeltmeyi tam uygulayamadığını gösteriyor — bu, güçlü
-   modelin sadece "daha iyi" değil, bu spesifik sorun için gerekli olduğunu kanıtlıyor. Ücretsiz
-   HuggingFace modeli geliştirme/test aşaması için uygundur.
-3. **Retrieval ince ayarı:** MRR'yi 1.0'a yaklaştırmak için dense/BM25 ağırlıkları (0.6/0.4)
+2. ~~Üretim kalitesi için güçlü model~~ **✅ Tamamlandı (2026-10-06)** — Anthropic yerine
+   OpenAI `gpt-4.1-mini`'ye geçildi (burs ile API anahtarı alındı); model seçiminin gerekçesi
+   ve ölçümler için yukarıdaki "OpenAI'a Geçiş ve Model Kıyası" bölümüne bakınız.
+3. **Bölüm başlıklarını kaynak gibi gösterme:** gpt-4.1-mini'nin kalan Factual Consistency
+   kaybının tamamı, prompt'taki `URUN BESIN DEGERLERI` / `KURAL MOTORU RISK BAYRAKLARI`
+   başlıklarını `[Kaynak: ...]` etiketi olarak kullanmasından geliyor. Prompt'a "ürünün kendi
+   değerleri ve risk bayrakları için kaynak etiketi gerekmez" talimatı eklenmesi muhtemelen
+   yeterli (kod-only, küçük iş).
+4. **Besin öğesi tutarlılık kontrolü:** Ground Truth Alignment bir sayının ürün verisinde
+   geçip geçmediğine bakıyor, **doğru besin öğesine** bağlanıp bağlanmadığına bakmıyor
+   (gpt-4o-mini'nin "30 g doymuş yağ" hatası %100 dayanaklı sayıldı). Self-consistency'e
+   "X g <besin öğesi>" kalıplarını ürün verisindeki ilgili alanla karşılaştıran üçüncü bir
+   kontrol eklenmesi, modelden bağımsız bir güvence sağlar.
+5. **"100 g" bazının cezalandırılması:** "100 gramında" ifadesindeki 100, ne kaynakta ne
+   ürün verisinde geçtiği için dayanaksız sayılıyor — tüm modellerde `risksiz_urun`'u
+   0.80'e sabitleyen bir metrik artefaktı. Ölçü bazı (100 g/100 mL) dayanaklı kabul edilmeli.
+6. **Retrieval ince ayarı:** MRR'yi 1.0'a yaklaştırmak için dense/BM25 ağırlıkları (0.6/0.4)
    üzerinde küçük bir grid search denenebilir (Faz 8 kapsamlı değerlendirmesine bırakıldı).
