@@ -19,7 +19,7 @@ from pathlib import Path
 
 from src.common.schema import NutritionFacts
 from src.rag.generate import GenerationResult, generate_explanation
-from src.rag.llm_provider import get_llm_provider
+from src.rag.llm_provider import LLMProvider, get_llm_provider
 from src.rag.retriever import Retriever
 
 QUERIES_PATH = Path(__file__).resolve().parents[2] / "data" / "rag_eval" / "queries.json"
@@ -106,10 +106,12 @@ def evaluate_generation(
     retriever: Retriever,
     cases: list[GenerationEvalCase] = DEFAULT_GENERATION_CASES,
     top_k: int = 5,
+    llm: LLMProvider | None = None,
 ) -> tuple[list[dict], float, float]:
     """Her senaryo icin generate_explanation calistirir; Factual Consistency + Ground Truth
-    Alignment ortalamalarini doner (gercek LLM API cagrisi gerektirir)."""
-    llm = get_llm_provider()
+    Alignment ortalamalarini doner (gercek LLM API cagrisi gerektirir). `llm` verilmezse
+    config.yaml'daki saglayici kullanilir (bkz. src/rag/compare_providers.py)."""
+    llm = llm or get_llm_provider()
     rows = []
     for case in cases:
         result: GenerationResult = generate_explanation(
