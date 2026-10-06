@@ -4,6 +4,7 @@ from src.ocr.evaluate import (
     engine_unavailable_reason,
     estimate_cost_usd,
     failed_entry_result,
+    merge_results,
     number_recall_fields,
     summarize_engine,
 )
@@ -84,3 +85,16 @@ def test_number_recall_excludes_zero_truth_values():
 def test_number_recall_tolerates_label_rounding_only():
     recall = number_recall_fields("Sel 0,5 g | Sucres 12 g", {"salt_g": 0.49, "sugar_g": 12.4})
     assert recall == {"salt_g": True, "sugar_g": False}
+
+
+def test_merge_results_replaces_same_engine_product_and_keeps_others():
+    existing = [
+        {"engine": "tesseract", "product_id": "a", "v": 1},
+        {"engine": "ocrspace", "product_id": "a", "v": "eski"},
+        {"engine": "ocrspace", "product_id": "b", "v": "eski"},
+    ]
+    new = [{"engine": "ocrspace", "product_id": "b", "v": "yeni"}, {"engine": "windows", "product_id": "a", "v": 2}]
+
+    merged = merge_results(existing, new)
+
+    assert [r["v"] for r in merged] == [1, "eski", "yeni", 2]

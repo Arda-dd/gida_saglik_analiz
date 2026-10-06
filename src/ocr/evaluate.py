@@ -235,16 +235,49 @@ def run_engine(engine: str, manifest: list[dict]) -> list[dict]:
     return results
 
 
+def merge_results(existing: list[dict], new: list[dict]) -> list[dict]:
+    """Ayni (motor, urun) satirlarini yenileriyle degistirir, digerlerini korur.
+
+    Bir motoru (ornegin prompt'u degisen openai_vision) ya da sadece kotaya takilan gorselleri
+    yeniden olcerken diger motorlari bastan calistirmamak icin (OCR.space ucretsiz kotasi gun
+    icinde ikinci tam kosuda 30 gorselin 10'unda 429 verdi).
+    """
+    new_by_key = {(r["engine"], r["product_id"]): r for r in new}
+    merged = [new_by_key.pop((r["engine"], r["product_id"]), r) for r in existing]
+    return merged + list(new_by_key.values())
+
+
+def build_report(rows: list[dict]) -> dict:
+    engines = [engine for engine in ENGINES if any(r["engine"] == engine for r in rows)]
+    return {
+        "per_image_results": rows,
+        "summary": {engine: summarize_engine([r for r in rows if r["engine"] == engine]) for engine in engines},
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Gercek besin tablosu gorsellerinde OCR motor kiyasi")
     parser.add_argument(
         "--engines", nargs="+", choices=ENGINES, default=ENGINES,
         help="degerlendirilecek motorlar (varsayilan: hepsi)",
     )
+    parser.add_argument(
+        "--merge", action="store_true",
+        help="mevcut raporu silme, sadece secilen motorlarin satirlarini guncelle",
+    )
+    parser.add_argument(
+        "--retry-failed", action="store_true",
+        help="mevcut raporda HATA almis gorselleri (secilen motorlar icin) yeniden dene ve birlestir",
+    )
     args = parser.parse_args()
 
     with MANIFEST_PATH.open("r", encoding="utf-8") as f:
         manifest = json.load(f)
+
+    existing_rows: list[dict] = []
+    if args.merge or args.retry_failed:
+        with REPORT_PATH.open("r", encoding="utf-8") as f:
+            existing_rows = json.load(f)["per_image_results"]
 
     engines = []
     for engine in args.engines:
@@ -254,18 +287,23 @@ def main() -> None:
         else:
             engines.append(engine)
 
-    print(f"{len(manifest)} gercek besin tablosu gorseli degerlendiriliyor ({len(engines)} motor)...\n")
-
-    all_results = []
+    new_rows = []
     for engine in engines:
-        all_results.extend(run_engine(engine, manifest))
+        entries = manifest
+        if args.retry_failed:
+            failed_ids = {r["product_id"] for r in existing_rows if r["engine"] == engine and r["error"]}
+            entries = [e for e in manifest if e["product_id"] in failed_ids]
+            print(f"{engine}: {len(entries)} hatali gorsel yeniden deneniyor")
+            if not entries:
+                continue
+        new_rows.extend(run_engine(engine, entries))
 
-    report = {
-        "per_image_results": all_results,
-        "summary": {
-            engine: summarize_engine([r for r in all_results if r["engine"] == engine]) for engine in engines
-        },
-    }
+    report = build_report(merge_results(existing_rows, new_rows))
+    for engine, summary in report["summary"].items():
+        print(
+            f"[rapor] {engine}: alan dogrulugu %{summary['field_accuracy_pct']:.1f}, sayi yakalama "
+            f"%{summary['number_recall_pct']:.1f}, basarisiz gorsel {summary['n_failed_images']}"
+        )
 
     REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
     with REPORT_PATH.open("w", encoding="utf-8") as f:
