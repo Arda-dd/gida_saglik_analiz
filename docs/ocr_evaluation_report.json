@@ -3487,7 +3487,7 @@
       },
       "seconds": null,
       "cost_usd": 0.0,
-      "error": "429 Client Error: Too Many Requests for url: https://api.ocr.space/parse/image",
+      "error": "HTTPSConnectionPool(host='api.ocr.space', port=443): Read timed out. (read timeout=30)",
       "ocr_text": null
     },
     {
@@ -3561,45 +3561,45 @@
       "product_id": "off_3083681094923",
       "category": "konserve",
       "engine": "ocrspace",
-      "ocr_confidence": 0.0,
+      "ocr_confidence": 100.0,
       "field_results": {
-        "energy_kcal": false,
-        "energy_kj": false,
-        "fat_g": false,
-        "saturated_fat_g": false,
-        "carbohydrate_g": false,
-        "sugar_g": false,
-        "fiber_g": false,
-        "protein_g": false,
-        "salt_g": false
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0,
+      "n_fields_correct": 9,
       "number_recall": {
-        "energy_kcal": false,
-        "energy_kj": false,
-        "fat_g": false,
-        "saturated_fat_g": false,
-        "carbohydrate_g": false,
-        "sugar_g": false,
-        "fiber_g": false,
-        "protein_g": false,
-        "salt_g": false
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "saturated_fat_g": true,
+        "carbohydrate_g": true,
+        "sugar_g": true,
+        "fiber_g": true,
+        "protein_g": true,
+        "salt_g": true
       },
-      "seconds": null,
+      "seconds": 2.2169250999577343,
       "cost_usd": 0.0,
-      "error": "429 Client Error: Too Many Requests for url: https://api.ocr.space/parse/image",
-      "ocr_text": null
+      "error": null,
+      "ocr_text": "VALEURS NUTRITIONNELLES\nPOUR 100g DE PRODUIT\nÉGOUTTÉ\n\n| | |\n|---|---|\n| Énergie | 82 kJ/20 kcal |\n| Matières grasses | <0,1g |\n| dont acides gras saturés | <0,1g |\n| Glucides | 2,3 g |\n| dont sucres | 1,3 g |\n| Fibres alimentaires | 2,4 g |\n| Protéines | 1,4g |\n| Sel | 0,79 g |"
     },
     {
       "product_id": "off_6111246721261",
       "category": "sut_urunu",
       "engine": "ocrspace",
-      "ocr_confidence": 0.0,
+      "ocr_confidence": 100.0,
       "field_results": {
-        "energy_kcal": false,
-        "energy_kj": false,
-        "fat_g": false,
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
         "saturated_fat_g": false,
         "carbohydrate_g": false,
         "sugar_g": false,
@@ -3608,27 +3608,27 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0,
+      "n_fields_correct": 3,
       "number_recall": {
-        "energy_kcal": false,
+        "energy_kcal": true,
         "energy_kj": false,
-        "fat_g": false,
+        "fat_g": true,
         "saturated_fat_g": false,
         "carbohydrate_g": false,
         "sugar_g": false,
         "protein_g": false,
         "salt_g": false
       },
-      "seconds": null,
+      "seconds": 2.091867799987085,
       "cost_usd": 0.0,
-      "error": "429 Client Error: Too Many Requests for url: https://api.ocr.space/parse/image",
-      "ocr_text": null
+      "error": null,
+      "ocr_text": "Code Couleur & Nutri-Score\nD'après ses valeurs (159 kcal et 11g de lipides),\nce produit se situerait probablement en:\n• Nutri-Score: C\n• Code Couleur: Jaune / Orange clair\nPourquoi? Bien qu'il soit \"nature\", sa teneur\nélevée en matières grasses (11g) et l'ajout\nd'amidon et d'épaississants font monter\nl'apport calorique par rapport à un fromage\nblanc classique à 3% de MG (qui tourne autour\nde 70-80 kcal)."
     },
     {
       "product_id": "off_6111242100992",
       "category": "sut_urunu",
       "engine": "ocrspace",
-      "ocr_confidence": 0.0,
+      "ocr_confidence": 100.0,
       "field_results": {
         "energy_kcal": false,
         "energy_kj": false,
@@ -3643,23 +3643,23 @@
       "n_fields_evaluated": 9,
       "n_fields_correct": 0,
       "number_recall": {
-        "energy_kcal": false,
+        "energy_kcal": true,
         "energy_kj": false,
-        "fat_g": false,
+        "fat_g": true,
         "carbohydrate_g": false,
         "sugar_g": false,
-        "protein_g": false
+        "protein_g": true
       },
-      "seconds": null,
+      "seconds": 2.46950799995102,
       "cost_usd": 0.0,
-      "error": "429 Client Error: Too Many Requests for url: https://api.ocr.space/parse/image",
-      "ocr_text": null
+      "error": null,
+      "ocr_text": "القيمة الغذائية ل 100غ\nValeurs nutritionnelles pour 100g\nValeurs énergétiques kcal 97 القيمة الحرارية ككل\nProtéines\nCarbohydrates\nLipides\nCalcium\nالبروتينات\n8,0 و\nالكاربوهيدرات 94 و\nالدهنيات\nالكالسيوم\n9 3,0\nmg 250 ملغ"
     },
     {
       "product_id": "off_6111242106949",
       "category": "sut_urunu",
       "engine": "ocrspace",
-      "ocr_confidence": 0.0,
+      "ocr_confidence": 100.0,
       "field_results": {
         "energy_kcal": false,
         "energy_kj": false,
@@ -3674,24 +3674,24 @@
       "n_fields_evaluated": 9,
       "n_fields_correct": 0,
       "number_recall": {
-        "energy_kcal": false,
+        "energy_kcal": true,
         "energy_kj": false,
-        "fat_g": false,
-        "saturated_fat_g": false,
+        "fat_g": true,
+        "saturated_fat_g": true,
         "carbohydrate_g": false,
         "protein_g": false,
         "salt_g": false
       },
-      "seconds": null,
+      "seconds": 2.0379459999967366,
       "cost_usd": 0.0,
-      "error": "429 Client Error: Too Many Requests for url: https://api.ocr.space/parse/image",
-      "ocr_text": null
+      "error": null,
+      "ocr_text": "Valeurs nutritionnelles pour 100g المعلومات الغذائية ل 100 غ\nEnergie\nGraisses\nKJ/kcal 972,5/235 الطاقة ككال / كجول\ng 21\nالدهنيات\nبما فيها أحماض دهنية مشبعة 15 dont acides gras satures\nGlucides\n83,5 €\ndont sucres\n806\nMe\nProtéines\n88\ncolle Sel\n80,46 €\nالسكريات\nبما فيها السكر\nالبروتينات\nملح"
     },
     {
       "product_id": "off_6111242101180",
       "category": "sut_urunu",
       "engine": "ocrspace",
-      "ocr_confidence": 0.0,
+      "ocr_confidence": 100.0,
       "field_results": {
         "energy_kcal": false,
         "energy_kj": false,
@@ -3705,22 +3705,22 @@
       "n_fields_evaluated": 8,
       "n_fields_correct": 0,
       "number_recall": {
-        "energy_kcal": false,
+        "energy_kcal": true,
         "energy_kj": false,
-        "fat_g": false,
-        "carbohydrate_g": false,
-        "protein_g": false
+        "fat_g": true,
+        "carbohydrate_g": true,
+        "protein_g": true
       },
-      "seconds": null,
+      "seconds": 2.5817637000000104,
       "cost_usd": 0.0,
-      "error": "429 Client Error: Too Many Requests for url: https://api.ocr.space/parse/image",
-      "ocr_text": null
+      "error": null,
+      "ocr_text": "LE LAIT UHT JAOUDA\nValeurs nutritionnelles pour 100ml\n| Valeur énérgétique | Kcal | 58 |\n|---|---|---|\n| Protéines | g | 3,0 |\n| Carbohydrates | g | 4,8 |\n| Lipides | g | 3,0 |\n| Calcium | mg | 120 |"
     },
     {
       "product_id": "off_6111242100985",
       "category": "sut_urunu",
       "engine": "ocrspace",
-      "ocr_confidence": 0.0,
+      "ocr_confidence": 100.0,
       "field_results": {
         "energy_kcal": false,
         "energy_kj": false,
@@ -3737,23 +3737,23 @@
       "number_recall": {
         "energy_kcal": false,
         "energy_kj": false,
-        "fat_g": false,
+        "fat_g": true,
         "carbohydrate_g": false,
         "protein_g": false
       },
-      "seconds": null,
+      "seconds": 2.405085499980487,
       "cost_usd": 0.0,
-      "error": "429 Client Error: Too Many Requests for url: https://api.ocr.space/parse/image",
-      "ocr_text": null
+      "error": null,
+      "ocr_text": "# NATURALITE\n# ET BIEN-ETRE\n\nالمكونات:\nحليب خال من الدهن\nقشدة خمائر حليبية مختارة\nالمادة الدهنية : 6%\nالوزن الصافي : 80 غ\n\nIngrédients:\nlait écrémé, crème,\nferments lactiques.\nMatière grasse: 6%\nPoids net: 80g\n\nتمتعوا بالنوق\nالفريد لجبنكم\nالطبيعي.\n\n+6c\nعلى الأكثر\n\nJaouda à\nvotre écoute...\ndu lundi au vendredi\nde 8h à 12h et de 14h à 18h\nN° Eco 0801 000 111\nPrix d'une communication locale\n\nدوبات\nم ب 200 تارودانت\nwww.copag.ma\n\nمصنع أيت إعزة تارودانت"
     },
     {
       "product_id": "off_6111246721278",
       "category": "sut_urunu",
       "engine": "ocrspace",
-      "ocr_confidence": 0.0,
+      "ocr_confidence": 100.0,
       "field_results": {
-        "energy_kcal": false,
-        "energy_kj": false,
+        "energy_kcal": true,
+        "energy_kj": true,
         "fat_g": false,
         "saturated_fat_g": false,
         "carbohydrate_g": false,
@@ -3763,18 +3763,18 @@
         "salt_g": false
       },
       "n_fields_evaluated": 9,
-      "n_fields_correct": 0,
+      "n_fields_correct": 2,
       "number_recall": {
-        "energy_kcal": false,
-        "energy_kj": false,
-        "fat_g": false,
-        "carbohydrate_g": false,
-        "protein_g": false
+        "energy_kcal": true,
+        "energy_kj": true,
+        "fat_g": true,
+        "carbohydrate_g": true,
+        "protein_g": true
       },
-      "seconds": null,
+      "seconds": 2.3666727000381798,
       "cost_usd": 0.0,
-      "error": "429 Client Error: Too Many Requests for url: https://api.ocr.space/parse/image",
-      "ocr_text": null
+      "error": null,
+      "ocr_text": "VALEURS NUTRITIONNELLES ET ENERGÉTIQUE\nValeurs Nutritionnelles Moyennes pour 100g\nProtéines\nGlucides\nLipides\n10 g\n3,1 g\n18 g\nValeurs Energétique Moyennes pour 100g\n257 kcal/1061 kJ\nTempérature de conservation\nA conserver entre +4°C et +6°C"
     },
     {
       "product_id": "off_7622210449283",
@@ -4766,17 +4766,17 @@
     },
     "ocrspace": {
       "total_fields_evaluated": 265,
-      "total_fields_correct": 103,
-      "field_accuracy_pct": 38.86792452830189,
-      "number_recall_pct": 58.70646766169154,
+      "total_fields_correct": 117,
+      "field_accuracy_pct": 44.15094339622642,
+      "number_recall_pct": 72.13930348258707,
       "number_recall_fields": 201,
       "n_images": 30,
-      "n_failed_images": 10,
-      "field_accuracy_on_successful_images_pct": 57.54189944134078,
-      "median_seconds_per_image": 2.348664649995044,
-      "mean_seconds_per_image": 2.2607835600036195,
+      "n_failed_images": 3,
+      "field_accuracy_on_successful_images_pct": 48.54771784232365,
+      "median_seconds_per_image": 2.3666727000381798,
+      "mean_seconds_per_image": 2.273534814814209,
       "total_cost_usd": 0.0,
-      "mean_ocr_confidence": 66.66666666666667
+      "mean_ocr_confidence": 90.0
     },
     "openai_vision": {
       "total_fields_evaluated": 265,
