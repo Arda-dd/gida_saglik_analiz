@@ -1,7 +1,7 @@
 # OCR Motorlarının Karşılaştırmalı Değerlendirmesi
 
-**Proje:** Gıda Etiketi Görüntülerinden Sağlık Analizi (TÜBİTAK 2209-A)
-**Tarih:** 7 Ekim 2026
+**Proje:** Gıda Etiketi Görüntülerinden Sağlık Analizi (TÜBİTAK 2209-A)\
+**Tarih:** 7 Ekim 2026\
 **Kapsam:** Besin değeri tablosu fotoğraflarından metin çıkarımı için 5 OCR motorunun aynı test
 seti ve aynı ölçütlerle karşılaştırılması (öneri formu 2.1 ve 2.6)
 
@@ -20,6 +20,7 @@ seti ve aynı ölçütlerle karşılaştırılması (öneri formu 2.1 ve 2.6)
 \* OCR.space 3 görselde üç ayrı denemede de hata verdi (ikisinde HTTP 429, birinde 30 sn zaman
 aşımı). Bu görsellerin alanları yanlış sayıldı. Hata vermediği 27 görselde alan doğruluğu
 %48.5'tir.
+
 † Bu değerin 6 alanı, modelin okunamayan bir görsel için **uydurduğu** besin tablosundan gelir
 (bkz. Bölüm 5). Uydurma hariç: 128/265 = %48.3.
 
