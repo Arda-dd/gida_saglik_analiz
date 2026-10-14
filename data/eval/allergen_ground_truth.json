@@ -1,0 +1,258 @@
+{
+ "kaynak": "Open Food Facts api/v2/product (allergens_tags = icerir, traces_tags = eser miktarda icerebilir)",
+ "cekilme_tarihi": "2026-10-14",
+ "urunler": {
+  "off_7622210449283": {
+   "allergens_tags": [
+    "en:eggs",
+    "en:gluten",
+    "en:milk",
+    "en:soybeans"
+   ],
+   "traces_tags": [
+    "en:eggs"
+   ],
+   "has_ingredients_text": true
+  },
+  "off_3046920029759": {
+   "allergens_tags": [],
+   "traces_tags": [
+    "en:nuts"
+   ],
+   "has_ingredients_text": true
+  },
+  "off_06175700": {
+   "allergens_tags": [
+    "en:none"
+   ],
+   "traces_tags": [
+    "en:none"
+   ],
+   "has_ingredients_text": true
+  },
+  "off_3175680011480": {
+   "allergens_tags": [
+    "en:gluten",
+    "en:sesame-seeds"
+   ],
+   "traces_tags": [
+    "en:eggs",
+    "en:lupin",
+    "en:milk",
+    "en:mustard",
+    "en:nuts",
+    "en:soybeans"
+   ],
+   "has_ingredients_text": true
+  },
+  "off_3046920022651": {
+   "allergens_tags": [],
+   "traces_tags": [
+    "en:milk",
+    "en:nuts",
+    "en:sesame-seeds",
+    "en:soybeans"
+   ],
+   "has_ingredients_text": true
+  },
+  "off_3046920022606": {
+   "allergens_tags": [],
+   "traces_tags": [
+    "en:milk",
+    "en:nuts",
+    "en:sesame-seeds",
+    "en:soybeans"
+   ],
+   "has_ingredients_text": true
+  },
+  "off_3242274030056": {
+   "allergens_tags": [
+    "en:eggs",
+    "en:gluten",
+    "en:milk",
+    "en:soybeans",
+    "en:sulphur-dioxide-and-sulphites"
+   ],
+   "traces_tags": [
+    "en:crustaceans",
+    "en:fish",
+    "en:gluten",
+    "en:mustard",
+    "en:nuts",
+    "en:soybeans"
+   ],
+   "has_ingredients_text": true
+  },
+  "off_7613035937420": {
+   "allergens_tags": [
+    "en:eggs",
+    "en:gluten"
+   ],
+   "traces_tags": [
+    "en:milk",
+    "en:soybeans"
+   ],
+   "has_ingredients_text": true
+  },
+  "off_3175681170872": {
+   "allergens_tags": [
+    "en:gluten",
+    "en:soybeans"
+   ],
+   "traces_tags": [
+    "en:celery",
+    "en:eggs",
+    "en:milk",
+    "en:mustard",
+    "en:nuts",
+    "en:sesame-seeds"
+   ],
+   "has_ingredients_text": true
+  },
+  "off_3083681148640": {
+   "allergens_tags": [
+    "en:celery",
+    "en:crustaceans",
+    "en:eggs",
+    "en:fish",
+    "en:gluten",
+    "en:milk",
+    "en:mustard"
+   ],
+   "traces_tags": [
+    "en:crustaceans",
+    "en:fish",
+    "en:nuts",
+    "en:soybeans",
+    "en:Cereals with Gluten",
+    "en:Crustaceans and shellfish"
+   ],
+   "has_ingredients_text": true
+  },
+  "off_3281780893915": {
+   "allergens_tags": [
+    "en:gluten"
+   ],
+   "traces_tags": [
+    "en:celery",
+    "en:crustaceans",
+    "en:eggs",
+    "en:fish",
+    "en:gluten",
+    "en:milk",
+    "en:mustard",
+    "en:nuts",
+    "en:peanuts",
+    "en:sesame-seeds",
+    "en:soybeans"
+   ],
+   "has_ingredients_text": true
+  },
+  "off_3021690201123": {
+   "allergens_tags": [
+    "en:celery",
+    "en:gluten"
+   ],
+   "traces_tags": [
+    "en:eggs",
+    "en:milk",
+    "en:mustard"
+   ],
+   "has_ingredients_text": true
+  },
+  "off_6111035000430": {
+   "allergens_tags": [],
+   "traces_tags": [],
+   "has_ingredients_text": false
+  },
+  "off_6111035000058": {
+   "allergens_tags": [],
+   "traces_tags": [],
+   "has_ingredients_text": false
+  },
+  "off_6111128000071": {
+   "allergens_tags": [],
+   "traces_tags": [],
+   "has_ingredients_text": false
+  },
+  "off_6111252421568": {
+   "allergens_tags": [],
+   "traces_tags": [],
+   "has_ingredients_text": false
+  },
+  "off_6111035000027": {
+   "allergens_tags": [],
+   "traces_tags": [],
+   "has_ingredients_text": false
+  },
+  "off_6111035502828": {
+   "allergens_tags": [],
+   "traces_tags": [],
+   "has_ingredients_text": true
+  },
+  "off_3083681095296": {
+   "allergens_tags": [],
+   "traces_tags": [],
+   "has_ingredients_text": false
+  },
+  "off_20004132": {
+   "allergens_tags": [],
+   "traces_tags": [],
+   "has_ingredients_text": false
+  },
+  "off_3083681094459": {
+   "allergens_tags": [],
+   "traces_tags": [],
+   "has_ingredients_text": false
+  },
+  "off_3307130803004": {
+   "allergens_tags": [],
+   "traces_tags": [],
+   "has_ingredients_text": false
+  },
+  "off_3083681001808": {
+   "allergens_tags": [],
+   "traces_tags": [],
+   "has_ingredients_text": false
+  },
+  "off_3083681094923": {
+   "allergens_tags": [],
+   "traces_tags": [],
+   "has_ingredients_text": false
+  },
+  "off_6111246721261": {
+   "allergens_tags": [
+    "en:milk"
+   ],
+   "traces_tags": [
+    "en:milk"
+   ],
+   "has_ingredients_text": true
+  },
+  "off_6111242100992": {
+   "allergens_tags": [],
+   "traces_tags": [],
+   "has_ingredients_text": false
+  },
+  "off_6111242106949": {
+   "allergens_tags": [],
+   "traces_tags": [],
+   "has_ingredients_text": false
+  },
+  "off_6111242101180": {
+   "allergens_tags": [],
+   "traces_tags": [],
+   "has_ingredients_text": false
+  },
+  "off_6111242100985": {
+   "allergens_tags": [],
+   "traces_tags": [],
+   "has_ingredients_text": false
+  },
+  "off_6111246721278": {
+   "allergens_tags": [],
+   "traces_tags": [],
+   "has_ingredients_text": false
+  }
+ }
+}
