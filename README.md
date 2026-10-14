@@ -195,10 +195,11 @@ Her fazın sonucu, hedeflenen metrikle birlikte `docs/` altında **dürüstçe**
 | Faz | Konu | Durum | Detay |
 |---|---|---|---|
 | 0-1 | İskelet + veri toplama | Tamamlandı (395 OFF kaydı) | `docs/attribution_off.md` |
-| 2 | Görsel sınıflandırma | **%75 test accuracy** (hedef ≥%85 — veri hacmi kısıtı, bkz. altta) | `docs/vision_results_notes.md` |
+| 2 | Görsel sınıflandırma | CNN tek başına **%73.3** (60 test görseli, hedef ≥%85 — veri hacmi kısıtı); canlıda CNN + OpenAI oylaması **%95.0** (aynı test görselleri, ürün ön yüzü). Barkod bulunursa kategori Open Food Facts'ten | `docs/accuracy_improvements_2026-10.md` |
 | 3 | OCR + normalizasyon | Canlı motor: **OpenAI gpt-4.1-mini görsel** (yedek: OCR.space → EasyOCR). Alan doğruluğu (30 görsel): OpenAI **%66.8**, OCR.space %56.6, EasyOCR %19.2, Windows OCR %13.2, Tesseract %10.2 (14 Ekim ayrıştırıcı iyileştirmesiyle; önce %50.6 / %44.2). OpenAI okunamayan görselde uydurma riski taşıyor (hedef ≥%90) | `docs/ocr_comparison_report.md` |
 | 4 | RAG | Recall@5 %100, MRR 0.800 (OpenAI embedding). LLM: OpenAI gpt-4.1-mini (3 koşu ort.) Factual Consistency **%100**, Ground Truth Alignment **%100** (14 Ekim: ürün verisi ve kural motoru kaynak kimliği aldı, '100 g' ölçü bazı artefaktı giderildi); gpt-4o-mini besin değerini yanlış besin öğesine bağladığı için elendi | `docs/rag_results_notes.md` |
 | 5 | Kişisel profil | Profile Consistency %100, Recommendation Relevance %100 | `docs/health_results_notes.md` |
+| — | Alerjen tespiti | 30 içindekiler görseli (OpenAI OCR): "içerir" alerjenleri **%100** (20/20, önce %25), "eser miktarda" **%100** (27/27); barkodla veritabanı alerjenleri de ekleniyor | `docs/accuracy_improvements_2026-10.md` |
 | 6 | API + Demo | Gerçek fotoğrafla uçtan uca doğrulandı | `docs/faz6_results_notes.md` |
 
 ## Bilinen Sınırlamalar (Mobil Aşamadan Önce Öncelik: Doğruluğu Artırmak)
