@@ -35,7 +35,11 @@ vision:
   backbone_secondary: efficientnet_b3
 
 ocr:
-  engines: [easyocr, tesseract]
+  # Canli pipeline'in (api/pipeline.py) sirayla denedigi motorlar: hata verirse, anahtari yoksa
+  # ya da metin okuyamazsa bir sonrakine gecilir. OpenAI gorsel modeli 2026-10-14'ten beri
+  # birincil (kullanici karari; 5 motor kiyasi: docs/ocr_comparison_report.md).
+  live_engines: [openai_vision, ocrspace, easyocr]
+  openai_vision_model: gpt-4.1-mini
   languages: [tr, en]
 
 # 100g/100mL bazinda urun-seviyesi "yuksek" esikleri (Nutri-Score/UK FSA front-of-pack

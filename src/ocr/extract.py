@@ -289,9 +289,34 @@ OPENAI_VISION_PROMPT = (
 )
 
 
+VLM_MAX_IMAGE_SIDE = 2048
+
+
+def _encode_image_for_vlm(image_path: Path, max_side: int = VLM_MAX_IMAGE_SIDE) -> tuple[str, str]:
+    """Gorseli (mime, base64) olarak hazirlar; uzun kenari max_side'i asiyorsa kucultur.
+
+    OpenAI "detail: high" gorseli zaten 2048 piksele indirir - telefon fotograflarini (~4000 px,
+    birkac MB) oldugu gibi gondermek dogruluga katki saglamadan yuklemeyi ve gecikmeyi artirir.
+    """
+    import numpy as np
+
+    raw = Path(image_path).read_bytes()
+    image = cv2.imdecode(np.frombuffer(raw, dtype=np.uint8), cv2.IMREAD_COLOR)
+    if image is None or max(image.shape[:2]) <= max_side:
+        mime = mimetypes.guess_type(str(image_path))[0] or "image/jpeg"
+        return mime, base64.b64encode(raw).decode("ascii")
+
+    scale = max_side / max(image.shape[:2])
+    resized = cv2.resize(image, None, fx=scale, fy=scale, interpolation=cv2.INTER_AREA)
+    ok, buffer = cv2.imencode(".jpg", resized, [cv2.IMWRITE_JPEG_QUALITY, 90])
+    if not ok:
+        raise ValueError(f"Gorsel JPEG'e kodlanamadi: {image_path}")
+    return "image/jpeg", base64.b64encode(buffer.tobytes()).decode("ascii")
+
+
 def extract_text_openai_vision(
     image_path: Path,
-    model: str = "gpt-4.1-mini",
+    model: str | None = None,
     client=None,
 ) -> OCRResult:
     """OpenAI gorsel-dil modeliyle (VLM) etiketi yaziya doker.
@@ -299,18 +324,22 @@ def extract_text_openai_vision(
     Model bilerek SADECE transkripsiyon yapar (yapilandirilmis JSON/besin degeri cikarmaz):
     cikti diger motorlarla ayni extract_and_normalize regex katmanindan gecer, boylece kiyas
     "metni kim daha iyi okuyor" sorusunu olcer. mean_confidence vekildir (100.0 / 0.0);
-    token kullanimi `usage` alaninda maliyet hesabi icin dondurulur.
+    token kullanimi `usage` alaninda maliyet hesabi icin dondurulur. model verilmezse
+    config.yaml -> ocr.openai_vision_model kullanilir.
     """
+    if model is None:
+        from src.common.config import get_config
+
+        model = get_config().get("ocr", {}).get("openai_vision_model", "gpt-4.1-mini")
     if client is None:
         import openai
 
         api_key = os.environ.get("OPENAI_API_KEY")
         if not api_key:
             raise ValueError("OPENAI_API_KEY bulunamadi (.env dosyasini kontrol edin)")
-        client = openai.OpenAI(api_key=api_key)
+        client = openai.OpenAI(api_key=api_key, timeout=60)
 
-    mime = mimetypes.guess_type(str(image_path))[0] or "image/jpeg"
-    encoded = base64.b64encode(Path(image_path).read_bytes()).decode("ascii")
+    mime, encoded = _encode_image_for_vlm(image_path)
     response = client.chat.completions.create(
         model=model,
         temperature=0,
@@ -338,21 +367,60 @@ def extract_text_openai_vision(
     return OCRResult(text=text, mean_confidence=100.0 if text.strip() else 0.0, engine="openai_vision", usage=usage)
 
 
+REQUIRED_API_KEYS = {"openai_vision": "OPENAI_API_KEY", "ocrspace": "OCR_SPACE_API_KEY"}
+
+
+def _live_engine_order() -> tuple[str, ...]:
+    from src.common.config import get_config
+
+    return tuple(get_config().get("ocr", {}).get("live_engines", ["ocrspace", "easyocr"]))
+
+
+def extract_text_live(
+    image_path: Path,
+    engines: tuple[str, ...] | None = None,
+    langs: tuple[str, ...] = ("tr", "en"),
+) -> OCRResult:
+    """Canli pipeline icin: motorlari sirayla dener (varsayilan sira config.yaml -> ocr.live_engines,
+    2026-10-14'ten beri OpenAI gorsel -> OCR.space -> EasyOCR).
+
+    Bir motor atlanir ya da bir sonrakine gecilir: API anahtari yoksa, hata verirse (kota/429,
+    ag hatasi, zaman asimi) ya da hic metin okuyamazsa (OpenAI'in [UNREADABLE] cevabi dahil).
+    Boylece kullanicinin istegi bulut motorlarindan biri basarisiz olsa bile COKMEZ - en kotu
+    durumda yerel EasyOCR'in sonucuna duser (pipeline'in "opsiyonel katman basarisiz olursa
+    devam et" felsefesi, bkz. api/pipeline.py). Hangi motorun sonucu kullanildigi
+    OCRResult.engine'de doner. Hepsi hata verirse son hata yukari firlatilir.
+    """
+    extractors = {
+        "openai_vision": extract_text_openai_vision,
+        "ocrspace": extract_text_ocrspace,
+        "easyocr": lambda path: extract_text_easyocr(path, langs=langs),
+        "tesseract": extract_text_tesseract,
+        "windows": extract_text_windows,
+    }
+    last_result: OCRResult | None = None
+    last_error: Exception | None = None
+    for engine in engines or _live_engine_order():
+        key_name = REQUIRED_API_KEYS.get(engine)
+        if key_name and not os.environ.get(key_name):
+            continue
+        try:
+            result = extractors[engine](image_path)
+        except Exception as exc:
+            last_error = exc
+            continue
+        if result.text.strip():
+            return result
+        last_result = result
+    if last_result is not None:
+        return last_result
+    if last_error is not None:
+        raise last_error
+    raise ValueError("Hicbir OCR motoru kullanilamadi (API anahtarlari ve config.yaml ocr.live_engines)")
+
+
 def extract_text_with_ocrspace_fallback(
     image_path: Path, langs: tuple[str, ...] = ("tr", "en")
 ) -> OCRResult:
-    """Canli pipeline icin: once OCR.space'i dener (gercek degerlendirmede EasyOCR'in ~3
-    kati alan dogrulugu, bkz. docs/ocr_results_notes.md), basarisiz olursa (API anahtari
-    yok, ucretsiz kota siniri/429, ag hatasi) SESSIZCE EasyOCR'a duser.
-
-    Boylece kullanicinin istegi OCR.space'in kota sinirina takilsa bile hicbir zaman
-    basarisiz olmaz - sadece dogruluk EasyOCR seviyesine iner (analiz pipeline'inin genel
-    "opsiyonel katman basarisiz olursa kural tabanli sonuca devam et" felsefesiyle tutarli,
-    bkz. api/pipeline.py generate_explanation try/except).
-    """
-    if os.environ.get("OCR_SPACE_API_KEY"):
-        try:
-            return extract_text_ocrspace(image_path)
-        except Exception:
-            pass
-    return extract_text_easyocr(image_path, langs=langs)
+    """Eski canli sira (2026-08-22 - 2026-10-14): once OCR.space, olmazsa EasyOCR."""
+    return extract_text_live(image_path, engines=("ocrspace", "easyocr"), langs=langs)

@@ -14,7 +14,9 @@ from src.ocr.extract import (
     extract_text_openai_vision,
     extract_text_tesseract,
     extract_text_windows,
+    extract_text_live,
     extract_text_with_ocrspace_fallback,
+    _encode_image_for_vlm,
 )
 
 FONT_PATH = Path(r"C:\Windows\Fonts\arial.ttf")
@@ -281,3 +283,86 @@ def test_extract_text_openai_vision_unreadable_marker_becomes_empty_text(tmp_pat
 
     assert result.text == ""
     assert result.mean_confidence == 0.0
+
+
+def _ok(engine, text="Enerji 450 kcal"):
+    return OCRResult(text=text, mean_confidence=100.0, engine=engine)
+
+
+def test_live_ocr_uses_openai_first_when_key_present(tmp_path, monkeypatch):
+    monkeypatch.setenv("OPENAI_API_KEY", "fake")
+    monkeypatch.setenv("OCR_SPACE_API_KEY", "fake")
+    with patch("src.ocr.extract.extract_text_openai_vision", return_value=_ok("openai_vision")), patch(
+        "src.ocr.extract.extract_text_ocrspace"
+    ) as ocrspace:
+        result = extract_text_live(tmp_path / "x.jpg", engines=("openai_vision", "ocrspace", "easyocr"))
+
+    assert result.engine == "openai_vision"
+    ocrspace.assert_not_called()
+
+
+def test_live_ocr_falls_back_when_openai_errors_or_reads_nothing(tmp_path, monkeypatch):
+    monkeypatch.setenv("OPENAI_API_KEY", "fake")
+    monkeypatch.setenv("OCR_SPACE_API_KEY", "fake")
+    engines = ("openai_vision", "ocrspace", "easyocr")
+    with patch("src.ocr.extract.extract_text_openai_vision", side_effect=TimeoutError()), patch(
+        "src.ocr.extract.extract_text_ocrspace", return_value=_ok("ocrspace")
+    ):
+        assert extract_text_live(tmp_path / "x.jpg", engines=engines).engine == "ocrspace"
+
+    # [UNREADABLE] -> bos metin: bir sonraki motor denenir.
+    with patch("src.ocr.extract.extract_text_openai_vision", return_value=_ok("openai_vision", "")), patch(
+        "src.ocr.extract.extract_text_ocrspace", return_value=_ok("ocrspace")
+    ):
+        assert extract_text_live(tmp_path / "x.jpg", engines=engines).engine == "ocrspace"
+
+
+def test_live_ocr_skips_engines_without_api_key(tmp_path, monkeypatch):
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    monkeypatch.delenv("OCR_SPACE_API_KEY", raising=False)
+    with patch("src.ocr.extract.extract_text_openai_vision") as openai_call, patch(
+        "src.ocr.extract.extract_text_easyocr", return_value=_ok("easyocr")
+    ):
+        result = extract_text_live(tmp_path / "x.jpg", engines=("openai_vision", "ocrspace", "easyocr"))
+
+    openai_call.assert_not_called()
+    assert result.engine == "easyocr"
+
+
+def test_live_ocr_returns_empty_result_when_no_engine_reads_text(tmp_path, monkeypatch):
+    monkeypatch.setenv("OPENAI_API_KEY", "fake")
+    with patch("src.ocr.extract.extract_text_openai_vision", return_value=_ok("openai_vision", "")), patch(
+        "src.ocr.extract.extract_text_easyocr", return_value=_ok("easyocr", "  ")
+    ):
+        result = extract_text_live(tmp_path / "x.jpg", engines=("openai_vision", "easyocr"))
+
+    assert result.engine == "easyocr"
+    assert result.text.strip() == ""
+
+
+def test_live_ocr_default_order_comes_from_config():
+    from src.common.config import get_config
+
+    assert get_config()["ocr"]["live_engines"][0] == "openai_vision"
+
+
+def test_encode_image_for_vlm_downscales_large_photos(tmp_path):
+    import base64
+
+    import cv2
+    import numpy as np
+
+    path = tmp_path / "big.png"
+    Image.new("RGB", (4000, 3000), color=(255, 255, 255)).save(path)
+
+    mime, encoded = _encode_image_for_vlm(path, max_side=2048)
+
+    decoded = cv2.imdecode(np.frombuffer(base64.b64decode(encoded), np.uint8), cv2.IMREAD_COLOR)
+    assert mime == "image/jpeg"
+    assert max(decoded.shape[:2]) == 2048
+
+
+def test_encode_image_for_vlm_keeps_small_images_as_is(tmp_path):
+    path = _make_text_image(tmp_path, "x")
+    mime, _encoded = _encode_image_for_vlm(path, max_side=2048)
+    assert mime == "image/png"
