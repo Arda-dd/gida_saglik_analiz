@@ -222,3 +222,95 @@ def test_extract_and_normalize_handles_us_style_milk_label():
     assert facts.sugar_g == pytest.approx(5.0)
     assert facts.protein_g == pytest.approx(3.333, rel=1e-3)
     assert facts.sodium_mg == pytest.approx(47.917, rel=1e-3)
+
+
+# --- 2026-10-14 genisletmesi: OCR motorlarinin dogru okudugu ama ayristiricinin kacirdigi formatlar ---
+
+
+def test_long_gap_between_multilingual_keyword_and_value():
+    assert extract_fat("Matières grasses / Vetten / Fat ............ 3,5 g") == pytest.approx(3.5)
+    assert extract_salt("Sel .................................. 0,71 g") == pytest.approx(0.71)
+
+
+def test_value_on_next_line_is_read():
+    assert extract_fat("Fett/Rasvaa/Fedt/Fett\n55 g") == 55
+
+
+def test_value_on_next_line_does_not_steal_other_nutrients_row():
+    facts = extract_nutrition_facts("Glucides\ndont sucres 5 g")
+    assert facts.carbohydrate_g is None
+    assert facts.sugar_g == 5
+
+
+def test_multi_column_row_takes_first_column_per_100g():
+    facts = extract_nutrition_facts("Pour 100 g | Par portion 30 g\nSucres | 12 g | 3,6 g")
+    assert facts.sugar_g == 12
+
+
+def test_unit_before_number_formats():
+    facts = extract_nutrition_facts("Protéines | g | 3,0\nLipides g 2,5\nFat (g) 7.5")
+    assert facts.protein_g == pytest.approx(3.0)
+    assert facts.fat_g == pytest.approx(2.5)
+
+
+def test_bilingual_unit_column_and_arabic_gram_unit():
+    facts = extract_nutrition_facts("البروتينات | غ | g | 8,0\nGlucides | 3,5 غ")
+    assert facts.protein_g == pytest.approx(8.0)
+    assert facts.carbohydrate_g == pytest.approx(3.5)
+
+
+def test_energy_unit_pair_before_values():
+    kcal, kj = extract_energy("Énergie KJ/kcal 972,5/235")
+    assert kcal == 235
+    assert kj == pytest.approx(972.5)
+
+
+def test_energy_kcal_unit_before_value():
+    kcal, _ = extract_energy("Valeur énergétique | Kcal | 58")
+    assert kcal == 58
+
+
+def test_german_and_dutch_label_keywords():
+    text = (
+        "Fett 12 g\ndavon gesättigte Fettsäuren 4,5 g\nKohlenhydrate 30 g\ndavon Zucker 10 g\n"
+        "Ballaststoffe 2 g\nEiweiß 8 g\nSalz 1,2 g"
+    )
+    facts = extract_nutrition_facts(text)
+    assert facts.fat_g == 12
+    assert facts.saturated_fat_g == pytest.approx(4.5)
+    assert facts.carbohydrate_g == 30
+    assert facts.sugar_g == 10
+    assert facts.fiber_g == 2
+    assert facts.protein_g == 8
+    assert facts.salt_g == pytest.approx(1.2)
+
+    dutch = extract_nutrition_facts("Vetten 9 g\nwaarvan verzadigde vetzuren 3 g\nKoolhydraten 20 g")
+    assert dutch.fat_g == 9
+    assert dutch.saturated_fat_g == 3
+    assert dutch.carbohydrate_g == 20
+
+
+def test_multilingual_saturated_line_is_not_taken_as_total_fat():
+    text = "Fett 20 g\ndont acides gras saturés/waarvan verzadigde vetzuren/davon gesättigte Fettsäuren 0,6 g"
+    assert extract_fat(text) == 20
+    assert extract_saturated_fat(text) == pytest.approx(0.6)
+
+
+def test_column_table_labels_then_values_are_realigned():
+    text = "Valeurs pour 100g\nProtéines\nGlucides\nLipides\n10 g\n3,1 g\n18 g"
+    facts = extract_nutrition_facts(text)
+    assert facts.protein_g == 10
+    assert facts.carbohydrate_g == pytest.approx(3.1)
+    assert facts.fat_g == 18
+
+
+def test_column_table_with_mismatched_counts_is_left_alone():
+    # 3 etiket, 2 deger: hangi degerin hangi etikete ait oldugu belirsiz - tahmin yurutulmez.
+    facts = extract_nutrition_facts("Protéines\nGlucides\nLipides\n10 g\n3,1 g")
+    assert facts.protein_g is None
+    assert facts.carbohydrate_g is None
+
+
+def test_turkish_fiber_suffix_and_no_false_match_inside_words():
+    assert extract_nutrition_facts("Diyet lifi 3 g").fiber_g == 3
+    assert extract_nutrition_facts("Made in California 5 g").fiber_g is None
