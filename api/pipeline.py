@@ -25,7 +25,7 @@ from src.data.image_preprocessing import preprocess_label_image
 from src.health.profile import HealthProfile
 from src.health.recommend import HealthAssessment, build_health_assessment, recommend_alternatives
 from src.ocr.allergens import detect_allergens
-from src.ocr.extract import extract_text_with_ocrspace_fallback
+from src.ocr.extract import extract_text_live
 from src.ocr.normalize import extract_and_normalize
 from src.ocr.risk_engine import assess_risks, describe_risks
 from src.rag.generate import GenerationResult, generate_explanation
@@ -45,6 +45,7 @@ class AnalysisResult:
     risk_flags: list[str]
     risk_messages: list[str]
     ocr_confidence: float
+    ocr_engine: str | None = None
     explanation: GenerationResult | None = None
     health_assessment: HealthAssessment | None = None
     alternatives: list[ProductRecord] = field(default_factory=list)
@@ -133,7 +134,7 @@ def analyze_label_image(
         model, categories = _get_vision_model()
         category, category_confidence = predict_category(model, processed_path, categories)
 
-        ocr_result = extract_text_with_ocrspace_fallback(processed_path)
+        ocr_result = extract_text_live(processed_path)
         nutrition, _basis = extract_and_normalize(ocr_result.text)
         detected_allergens = detect_allergens(ocr_result.text)
 
@@ -179,6 +180,7 @@ def analyze_label_image(
         risk_flags=risk_flags,
         risk_messages=risk_messages,
         ocr_confidence=ocr_result.mean_confidence,
+        ocr_engine=ocr_result.engine,
         explanation=explanation,
         health_assessment=health_assessment,
         alternatives=alternatives,

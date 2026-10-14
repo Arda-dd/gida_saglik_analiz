@@ -169,6 +169,7 @@ def _serialize_result(result: AnalysisResult) -> dict:
         "risk_flags": result.risk_flags,
         "risk_messages": result.risk_messages,
         "ocr_confidence": result.ocr_confidence,
+        "ocr_engine": result.ocr_engine,
     }
 
     if result.explanation is not None:

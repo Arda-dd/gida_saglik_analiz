@@ -106,7 +106,7 @@ def mocked_pipeline_dependencies(monkeypatch):
     )
     monkeypatch.setattr(
         pipeline_module,
-        "extract_text_with_ocrspace_fallback",
+        "extract_text_live",
         lambda path: OCRResult(text="Seker: 35 g Tuz: 2 g Findik icerir", mean_confidence=82.0, engine="easyocr"),
     )
     yield
@@ -123,6 +123,7 @@ class TestAnalyzeLabelImage:
         assert result.category == "atistirmalik"
         assert result.category_confidence == pytest.approx(0.91)
         assert result.nutrition.sugar_g == pytest.approx(35.0)
+        assert result.ocr_engine == "easyocr"
         assert "yuksek_seker" in result.risk_flags
         assert Allergen.FINDIK in result.detected_allergens
         assert result.health_assessment is None
