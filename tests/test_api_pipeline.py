@@ -98,6 +98,8 @@ def mocked_pipeline_dependencies(monkeypatch):
     monkeypatch.setattr(pipeline_module, "preprocess_label_image", lambda src, dest: dest)
     monkeypatch.setattr(pipeline_module, "decode_barcodes", lambda path: [])
     monkeypatch.setattr(pipeline_module, "lookup_barcode", lambda code: None)
+    monkeypatch.setattr(pipeline_module, "_reference_ocr", lambda path: (None, None))
+    monkeypatch.setattr(pipeline_module, "assess_image_quality", lambda path: [])
     monkeypatch.setattr(
         pipeline_module,
         "_get_vision_model",
@@ -301,3 +303,53 @@ class TestBarcodePath:
         result = pipeline_module.analyze_label_image(Path("fake.jpg"), generate_llm_explanation=False)
         assert result.nutrition_source == "ocr"
         assert result.category_source == "open_food_facts"  # kategori yine de kullanilabilir
+
+
+class TestCrossCheck:
+    def _openai(self, monkeypatch, text="Seker 35 g\nTuz 2 g"):
+        monkeypatch.setattr(
+            pipeline_module, "extract_text_live",
+            lambda path: OCRResult(text=text, mean_confidence=100.0, engine="openai_vision"),
+        )
+
+    def test_values_missing_from_reference_text_are_flagged(self, mocked_pipeline_dependencies, monkeypatch):
+        self._openai(monkeypatch)
+        monkeypatch.setattr(pipeline_module, "_reference_ocr", lambda path: ("Sucres 35 g", None))
+        result = pipeline_module.analyze_label_image(Path("fake.jpg"), generate_llm_explanation=False)
+
+        assert result.nutrition_verification == {"sugar_g": True, "salt_g": False}
+        assert any("dogrulanamadi" in w and "tuz (2)" in w for w in result.warnings)
+
+    def test_mostly_unverified_asks_for_better_photo(self, mocked_pipeline_dependencies, monkeypatch):
+        self._openai(monkeypatch, "Seker 35 g\nTuz 2 g\nYag 12 g\nProtein 4 g")
+        monkeypatch.setattr(pipeline_module, "_reference_ocr", lambda path: ("Protein 4 g", None))
+        result = pipeline_module.analyze_label_image(Path("fake.jpg"), generate_llm_explanation=False)
+        assert any("yarisindan fazlasi" in w for w in result.warnings)
+
+    def test_reference_failure_is_reported(self, mocked_pipeline_dependencies, monkeypatch):
+        self._openai(monkeypatch)
+        monkeypatch.setattr(pipeline_module, "_reference_ocr", lambda path: (None, "ocrspace: HTTPError"))
+        result = pipeline_module.analyze_label_image(Path("fake.jpg"), generate_llm_explanation=False)
+        assert result.nutrition_verification is None
+        assert any("dogrulanamadi (ocrspace: HTTPError)" in w for w in result.warnings)
+
+    def test_no_cross_check_for_non_vlm_engines(self, mocked_pipeline_dependencies, monkeypatch):
+        # Fikstur OCR'i easyocr - uydurma riski yok, dogrulama yapilmaz.
+        monkeypatch.setattr(pipeline_module, "_reference_ocr", lambda path: ("bambaska metin", None))
+        result = pipeline_module.analyze_label_image(Path("fake.jpg"), generate_llm_explanation=False)
+        assert result.nutrition_verification is None
+        assert not any("dogrulanamadi" in w for w in result.warnings)
+
+    def test_image_quality_warnings_are_included(self, mocked_pipeline_dependencies, monkeypatch):
+        monkeypatch.setattr(pipeline_module, "assess_image_quality", lambda path: ["Fotograf bulanik"])
+        result = pipeline_module.analyze_label_image(Path("fake.jpg"), generate_llm_explanation=False)
+        assert "Fotograf bulanik" in result.warnings
+
+
+def test_text_without_nutrition_values_warns(mocked_pipeline_dependencies, monkeypatch):
+    monkeypatch.setattr(
+        pipeline_module, "extract_text_live",
+        lambda path: OCRResult(text="Icindekiler: domates, tuz", mean_confidence=100.0, engine="easyocr"),
+    )
+    result = pipeline_module.analyze_label_image(Path("fake.jpg"), generate_llm_explanation=False)
+    assert any("besin degeri cikarilamadi" in w for w in result.warnings)

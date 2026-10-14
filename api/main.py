@@ -176,6 +176,7 @@ def _serialize_result(result: AnalysisResult) -> dict:
         "product_name": result.product_name,
         "nutrition_source": result.nutrition_source,
         "category_source": result.category_source,
+        "nutrition_verification": result.nutrition_verification,
     }
 
     if result.explanation is not None:
