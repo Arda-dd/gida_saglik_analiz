@@ -255,6 +255,30 @@ def build_report(rows: list[dict]) -> dict:
     }
 
 
+def reparse_rows(rows: list[dict], manifest: list[dict]) -> list[dict]:
+    """Kayitli ham OCR metinlerini GUNCEL ayristiriciyla yeniden puanlar (OCR/API cagrisi yok).
+
+    Ayristirici (normalize) degistiginde motorlari yeniden calistirmadan etkisini olcmek icin:
+    sayi yakalama (number_recall) OCR'in kendisine bagli oldugundan degismez, sadece alan
+    dogrulugu yeniden hesaplanir. Hata almis (ocr_text'i olmayan) satirlar oldugu gibi kalir.
+    """
+    entries = {e["product_id"]: e for e in manifest}
+    reparsed = []
+    for row in rows:
+        if row["error"] is not None or row.get("ocr_text") is None:
+            reparsed.append(row)
+            continue
+        facts, _basis = extract_and_normalize(row["ocr_text"])
+        field_results = {
+            field: _values_match(getattr(facts, field), truth_value)
+            for field, truth_value in _truth_fields(entries[row["product_id"]]).items()
+        }
+        reparsed.append(
+            {**row, "field_results": field_results, "n_fields_correct": sum(field_results.values())}
+        )
+    return reparsed
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Gercek besin tablosu gorsellerinde OCR motor kiyasi")
     parser.add_argument(
@@ -269,10 +293,30 @@ def main() -> None:
         "--retry-failed", action="store_true",
         help="mevcut raporda HATA almis gorselleri (secilen motorlar icin) yeniden dene ve birlestir",
     )
+    parser.add_argument(
+        "--reparse", action="store_true",
+        help="OCR calistirmadan, kayitli ham metinleri guncel ayristiriciyla yeniden puanla",
+    )
     args = parser.parse_args()
 
     with MANIFEST_PATH.open("r", encoding="utf-8") as f:
         manifest = json.load(f)
+
+    if args.reparse:
+        with REPORT_PATH.open("r", encoding="utf-8") as f:
+            old_report = json.load(f)
+        report = build_report(reparse_rows(old_report["per_image_results"], manifest))
+        for engine, summary in report["summary"].items():
+            before = old_report["summary"][engine]["field_accuracy_pct"]
+            print(
+                f"[yeniden ayristirma] {engine}: alan dogrulugu %{before:.1f} -> "
+                f"%{summary['field_accuracy_pct']:.1f} ({summary['total_fields_correct']}/"
+                f"{summary['total_fields_evaluated']})"
+            )
+        with REPORT_PATH.open("w", encoding="utf-8") as f:
+            json.dump(report, f, ensure_ascii=False, indent=2)
+        print(f"Rapor kaydedildi: {REPORT_PATH}")
+        return
 
     existing_rows: list[dict] = []
     if args.merge or args.retry_failed:

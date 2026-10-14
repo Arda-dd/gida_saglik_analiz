@@ -6,6 +6,7 @@ from src.ocr.evaluate import (
     failed_entry_result,
     merge_results,
     number_recall_fields,
+    reparse_rows,
     summarize_engine,
 )
 
@@ -98,3 +99,19 @@ def test_merge_results_replaces_same_engine_product_and_keeps_others():
     merged = merge_results(existing, new)
 
     assert [r["v"] for r in merged] == [1, "eski", "yeni", 2]
+
+
+def test_reparse_rows_rescores_stored_text_and_keeps_failed_rows():
+    manifest = [{**ENTRY, "ground_truth_nutriments": {"sugars_100g": 32, "fat_100g": 17}}]
+    ok_row = {
+        "engine": "openai_vision", "product_id": "off_1", "error": None,
+        "ocr_text": "Seker 32 g\nYag 17 g", "field_results": {"sugar_g": False, "fat_g": False},
+        "n_fields_correct": 0,
+    }
+    failed_row = {**ok_row, "engine": "ocrspace", "error": "429", "ocr_text": None}
+
+    reparsed = reparse_rows([ok_row, failed_row], manifest)
+
+    assert reparsed[0]["field_results"] == {"sugar_g": True, "fat_g": True}
+    assert reparsed[0]["n_fields_correct"] == 2
+    assert reparsed[1] is failed_row
