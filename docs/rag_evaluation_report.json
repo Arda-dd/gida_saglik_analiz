@@ -1,7 +1,7 @@
 {
   "retrieval": {
     "mean_recall_at_5": 1.0,
-    "mrr": 0.7944444444444444,
+    "mrr": 0.8,
     "per_query": [
       {
         "query": "Günlük tuz alımı için WHO önerisi nedir?",
@@ -10,8 +10,8 @@
         "retrieved_ids": [
           "who_salt_reduction::0",
           "who_salt_reduction::1",
-          "tgk_etiketleme_ozet::0",
           "who_sugars_intake::0",
+          "who_sugars_intake::preamble",
           "who_sugars_intake::1"
         ]
       },
@@ -21,9 +21,9 @@
         "reciprocal_rank": 1.0,
         "retrieved_ids": [
           "who_salt_reduction::0",
-          "tgk_etiketleme_ozet::0",
-          "who_salt_reduction::1",
           "glossary_nutrition_terms::0",
+          "who_salt_reduction::1",
+          "tgk_etiketleme_ozet::0",
           "nutriscore_thresholds_overview::0"
         ]
       },
@@ -35,8 +35,8 @@
           "who_sugars_intake::0",
           "who_sugars_intake::1",
           "who_sugars_intake::preamble",
-          "efsa_dietary_reference_values::1",
-          "nutriscore_thresholds_overview::1"
+          "nutriscore_thresholds_overview::1",
+          "nutriscore_thresholds_overview::0"
         ]
       },
       {
@@ -46,20 +46,20 @@
         "retrieved_ids": [
           "who_sugars_intake::1",
           "who_sugars_intake::0",
-          "glossary_nutrition_terms::preamble",
-          "nutriscore_thresholds_overview::0",
-          "who_salt_reduction::0"
+          "who_sugars_intake::preamble",
+          "who_salt_reduction::0",
+          "glossary_nutrition_terms::preamble"
         ]
       },
       {
         "query": "Ürün etiketinde yüksek şeker eşiği kaç gramdır?",
         "recall_at_5": 1.0,
-        "reciprocal_rank": 0.25,
+        "reciprocal_rank": 0.3333333333333333,
         "retrieved_ids": [
-          "who_sugars_intake::1",
-          "who_salt_reduction::1",
           "nutriscore_thresholds_overview::1",
+          "who_sugars_intake::1",
           "nutriscore_thresholds_overview::0",
+          "who_salt_reduction::1",
           "who_sugars_intake::0"
         ]
       },
@@ -71,8 +71,8 @@
           "who_salt_reduction::1",
           "tgk_etiketleme_ozet::0",
           "nutriscore_thresholds_overview::0",
-          "who_salt_reduction::0",
-          "nutriscore_thresholds_overview::1"
+          "nutriscore_thresholds_overview::1",
+          "who_salt_reduction::0"
         ]
       },
       {
@@ -82,45 +82,45 @@
         "retrieved_ids": [
           "allergen_labeling_overview::0",
           "allergen_labeling_overview::1",
-          "allergen_labeling_overview::preamble",
           "tgk_etiketleme_ozet::0",
-          "tgk_etiketleme_ozet::1"
+          "allergen_labeling_overview::preamble",
+          "nutriscore_thresholds_overview::0"
         ]
       },
       {
         "query": "Fındık alerjeni bu sistemde nasıl tespit edilir?",
         "recall_at_5": 1.0,
-        "reciprocal_rank": 0.5,
+        "reciprocal_rank": 0.3333333333333333,
         "retrieved_ids": [
           "allergen_labeling_overview::0",
+          "tgk_etiketleme_ozet::0",
           "allergen_labeling_overview::1",
           "allergen_labeling_overview::preamble",
-          "tgk_etiketleme_ozet::0",
-          "tgk_etiketleme_ozet::1"
+          "efsa_dietary_reference_values::1"
         ]
       },
       {
         "query": "EFSA beslenme referans değerleri neyi kapsar?",
         "recall_at_5": 1.0,
-        "reciprocal_rank": 1.0,
+        "reciprocal_rank": 0.5,
         "retrieved_ids": [
+          "efsa_dietary_reference_values::preamble",
           "efsa_dietary_reference_values::0",
           "efsa_dietary_reference_values::1",
-          "efsa_dietary_reference_values::preamble",
-          "glossary_nutrition_terms::preamble",
-          "tgk_etiketleme_ozet::1"
+          "tgk_etiketleme_ozet::0",
+          "glossary_nutrition_terms::preamble"
         ]
       },
       {
         "query": "Türk Gıda Kodeksi etiketleme yönetmeliğinde besin değerleri nasıl beyan edilir?",
         "recall_at_5": 1.0,
-        "reciprocal_rank": 0.3333333333333333,
+        "reciprocal_rank": 1.0,
         "retrieved_ids": [
+          "tgk_etiketleme_ozet::0",
           "tgk_etiketleme_ozet::preamble",
           "tgk_etiketleme_ozet::1",
-          "tgk_etiketleme_ozet::0",
-          "allergen_labeling_overview::preamble",
-          "efsa_dietary_reference_values::0"
+          "efsa_dietary_reference_values::0",
+          "nutriscore_thresholds_overview::0"
         ]
       },
       {
@@ -129,10 +129,10 @@
         "reciprocal_rank": 1.0,
         "retrieved_ids": [
           "glossary_nutrition_terms::0",
-          "who_salt_reduction::0",
-          "efsa_dietary_reference_values::1",
+          "glossary_nutrition_terms::preamble",
           "who_sugars_intake::0",
-          "glossary_nutrition_terms::preamble"
+          "efsa_dietary_reference_values::1",
+          "who_sugars_intake::1"
         ]
       },
       {
@@ -141,10 +141,10 @@
         "reciprocal_rank": 1.0,
         "retrieved_ids": [
           "glossary_nutrition_terms::preamble",
+          "glossary_nutrition_terms::0",
+          "tgk_etiketleme_ozet::0",
           "efsa_dietary_reference_values::1",
-          "efsa_dietary_reference_values::0",
-          "allergen_labeling_overview::0",
-          "glossary_nutrition_terms::0"
+          "nutriscore_thresholds_overview::preamble"
         ]
       },
       {
@@ -153,10 +153,10 @@
         "reciprocal_rank": 1.0,
         "retrieved_ids": [
           "nutriscore_thresholds_overview::preamble",
+          "nutriscore_thresholds_overview::0",
+          "nutriscore_thresholds_overview::1",
           "allergen_labeling_overview::preamble",
-          "who_salt_reduction::1",
-          "tgk_etiketleme_ozet::1",
-          "nutriscore_thresholds_overview::1"
+          "efsa_dietary_reference_values::1"
         ]
       },
       {
@@ -165,10 +165,10 @@
         "reciprocal_rank": 1.0,
         "retrieved_ids": [
           "who_salt_reduction::0",
-          "tgk_etiketleme_ozet::0",
           "who_salt_reduction::1",
-          "nutriscore_thresholds_overview::0",
-          "efsa_dietary_reference_values::0"
+          "who_sugars_intake::0",
+          "glossary_nutrition_terms::0",
+          "tgk_etiketleme_ozet::0"
         ]
       },
       {
@@ -178,44 +178,44 @@
         "retrieved_ids": [
           "allergen_labeling_overview::preamble",
           "allergen_labeling_overview::0",
-          "allergen_labeling_overview::1",
           "tgk_etiketleme_ozet::0",
-          "tgk_etiketleme_ozet::1"
+          "tgk_etiketleme_ozet::1",
+          "allergen_labeling_overview::1"
         ]
       }
     ]
   },
   "generation": {
-    "mean_factual_consistency_score": 0.8958333333333334,
-    "mean_ground_truth_alignment_ratio": 0.8999999999999999,
+    "mean_factual_consistency_score": 1.0,
+    "mean_ground_truth_alignment_ratio": 1.0,
     "cases": [
       {
         "name": "yuksek_seker_urun",
-        "valid_citation_ratio": 0.8333333333333334,
+        "valid_citation_ratio": 1.0,
         "ground_truth_alignment_ratio": 1.0,
         "regenerated": false,
-        "text": "Bu ürün 100 gramda 35 gram şeker içermektedir ve bu miktar, 22.5 gram üzerindeki \"yüksek şeker\" eşiğini aşmaktadır; dolayısıyla yüksek şeker içerdiği değerlendirilmektedir [Kaynak: nutriscore_thresholds_overview::1, nutriscore_thresholds_overview::0]. Tuz içeriği ise 0.4 gram olup, 1.5 gram üzerindeki \"yüksek tuz\" eşiğinin altındadır, bu nedenle tuz açısından yüksek risk taşımamaktadır [Kaynak: nutriscore_thresholds_overview::1, nutriscore_thresholds_overview::0]. Ürünün toplam yağ miktarı 12 gramdır, ancak bu değer yüksek yağ eşiği olan 17.5 gramın altındadır ve doymuş yağ bilgisi verilmemiştir [Kaynak: nutriscore_thresholds_overview::0]. Enerji değeri 450 kcal olup, bu ürünün enerji yoğun bir gıda olduğunu göstermektedir [Kaynak: URUN BESIN DEGERLERI]. Genel olarak, özellikle yüksek şeker içeriği nedeniyle dikkatli tüketilmesi önerilir."
+        "text": "Bu ürün 100 gramında 35 gram şeker içerdiği için yüksek şeker içeriğine sahiptir ve bu durum sağlık açısından dikkat edilmesi gereken bir noktadır [Kaynak: urun_etiketi], [Kaynak: kural_motoru], [Kaynak: nutriscore_thresholds_overview::0]. Yağ miktarı 12 gram olup, yüksek yağ sınırının altında kalmaktadır ancak doymuş yağ içeriği belirtilmemiştir [Kaynak: urun_etiketi], [Kaynak: nutriscore_thresholds_overview::0]. Tuz içeriği 0.4 gramdır ve bu miktar yüksek tuz sınırının altındadır, bu nedenle tuz açısından risk oluşturmaz [Kaynak: urun_etiketi], [Kaynak: nutriscore_thresholds_overview::0]. Genel olarak, özellikle yüksek şeker içeriği nedeniyle bu ürünü tüketirken şeker alımına dikkat edilmesi önerilir [Kaynak: kural_motoru]."
       },
       {
         "name": "yuksek_tuz_ve_sodyum_urun",
         "valid_citation_ratio": 1.0,
-        "ground_truth_alignment_ratio": 0.8,
+        "ground_truth_alignment_ratio": 1.0,
         "regenerated": false,
-        "text": "Bu ürün 100 gramında 2.8 gram tuz ve 1120 mg sodyum içermektedir, bu değerler Nutri-Score/UK FSA konvansiyonuna göre yüksek tuz ve yüksek sodyum içeriği anlamına gelir [Kaynak: nutriscore_thresholds_overview::1]. WHO'nun günlük sodyum alım önerisi 2000 mg olup, bu ürünün 100 gramı bu sınırın yarısından fazlasını karşılamaktadır [Kaynak: who_salt_reduction::0]. Yüksek sodyum tüketimi yüksek kan basıncı, kardiyovasküler hastalıklar ve diğer sağlık sorunları riskini artırmaktadır [Kaynak: who_salt_reduction::0]. Bu nedenle, bu ürünü tüketirken tuz ve sodyum alımına dikkat edilmesi önemlidir."
+        "text": "Bu ürün 100 gramında 2.8 gram tuz ve 1120 mg sodyum içermektedir, bu değerler yüksek tuz ve yüksek sodyum içeriği sınırlarının üzerindedir [Kaynak: urun_etiketi, kural_motoru]. Dünya Sağlık Örgütü (WHO) yetişkinler için günlük 5 gramdan az tuz (yaklaşık 2000 mg sodyum) tüketilmesini önermektedir; bu ürünün yüksek tuz ve sodyum içeriği, günlük alım sınırlarına dikkat edilmesi gerektiğini gösterir [Kaynak: who_salt_reduction::0, who_salt_reduction::1]. Yüksek sodyum tüketimi yüksek kan basıncı, kardiyovasküler hastalıklar ve diğer sağlık sorunları ile ilişkilidir [Kaynak: who_salt_reduction::0]. Ürünün şeker içeriği ise 3 gram olup, düşük şeker sınırının altındadır ve bu açıdan risk oluşturmaz [Kaynak: urun_etiketi, nutriscore_thresholds_overview::0]. Sağlıklı beslenme açısından bu ürünü tüketirken tuz ve sodyum alımına dikkat etmek önemlidir."
       },
       {
         "name": "yuksek_doymus_yag_urun",
         "valid_citation_ratio": 1.0,
         "ground_truth_alignment_ratio": 1.0,
         "regenerated": false,
-        "text": "Bu ürün 100 gramda 14 gram doymuş yağ içermektedir ve bu miktar, 5 gram üzerindeki \"yüksek doymuş yağ\" eşiğini aşmaktadır; bu nedenle yüksek doymuş yağ içeriğine sahiptir [Kaynak: nutriscore_thresholds_overview::1, nutriscore_thresholds_overview::0]. Doymuş yağın yüksek olması, kalp sağlığı açısından risk oluşturabilir. Ürünün şeker içeriği ise 8 gram olup, 22.5 gram üzerindeki yüksek şeker eşiğinin altında kalmaktadır [Kaynak: nutriscore_thresholds_overview::0]. Enerji değeri 520 kcal olup, bu enerji miktarının doymuş yağ oranı WHO'nun günlük doymuş yağ enerji yüzdesi sınırlarıyla karşılaştırılmalıdır ancak burada sadece ürün bazlı eşik değerlendirmesi yapılmıştır [Kaynak: who_sugars_intake::1]. Genel olarak, yüksek doymuş yağ içeriği nedeniyle bu ürünün tüketiminde dikkatli olunması önerilir."
+        "text": "Bu ürün 100 gramında 14 gram doymuş yağ içermektedir ve bu miktar Nutri-Score/UK FSA konvansiyonuna göre yüksek doymuş yağ içeriği anlamına gelmektedir [Kaynak: kural_motoru], [Kaynak: nutriscore_thresholds_overview::0]. Doymuş yağın yüksek olması, kalp sağlığı açısından risk oluşturabilir ve tüketiminin sınırlanması önerilir [Kaynak: who_sugars_intake::1]. Ürünün şeker içeriği ise 8 gram olup, yüksek şeker sınırının altında kalmaktadır [Kaynak: urun_etiketi], [Kaynak: nutriscore_thresholds_overview::0]. Toplam yağ miktarı da 30 gramdır, bu da yüksek yağ içeriğine işaret etmektedir [Kaynak: urun_etiketi], [Kaynak: nutriscore_thresholds_overview::0]. Bu nedenle, ürün doymuş yağ açısından dikkatle tüketilmelidir."
       },
       {
         "name": "risksiz_urun",
-        "valid_citation_ratio": 0.75,
-        "ground_truth_alignment_ratio": 0.8,
+        "valid_citation_ratio": 1.0,
+        "ground_truth_alignment_ratio": 1.0,
         "regenerated": false,
-        "text": "Bu ürünün 100 gramında 180 kcal enerji, 3 gram yağ, 2 gram şeker ve 0.2 gram tuz bulunmaktadır. Üründe tespit edilen herhangi bir risk bayrağı yoktur, bu da genel beslenme açısından olumsuz bir uyarı olmadığını gösterir [Kaynak: KURAL MOTORU RISK BAYRAKLARI]. EFSA'nın beslenme referans değerleri, makrobesinler için genel çerçeveyi sunmakta olup, bireysel hedefler için profesyonel değerlendirme gereklidir [Kaynak: efsa_dietary_reference_values::0]. Ayrıca, Dünya Sağlık Örgütü serbest şeker alımına dikkat çekmekte, bu ürünün şeker içeriği düşük seviyededir [Kaynak: who_sugars_intake::preamble]. Ürün etiketlemesi ve sağlık beyanları için resmi düzenlemeler henüz tam olarak doğrulanmamıştır [Kaynak: tgk_etiketleme_ozet::preamble]."
+        "text": "Bu ürünün 100 gramında 180 kcal enerji, 3 gram yağ, 2 gram şeker ve 0.2 gram tuz bulunmaktadır [Kaynak: urun_etiketi]. Üründe tespit edilen herhangi bir risk bayrağı yoktur, bu da besin değerlerinin genel olarak dengeli olduğunu göstermektedir [Kaynak: kural_motoru]. Tuz miktarı, WHO'nun sodyum-tuz dönüşüm formülüne uygun şekilde düşük seviyededir [Kaynak: tgk_etiketleme_ozet::0]. Ürün etiketlemesi, Türk Gıda Kodeksi ve AB mevzuatıyla uyumlu olarak 100 gram bazında yapılmıştır [Kaynak: tgk_etiketleme_ozet::0]. Sağlıklı beslenme açısından, ürünün şeker ve yağ içeriği makul seviyelerde olup, aşırı tüketim riskine işaret eden bir durum bulunmamaktadır [Kaynak: who_sugars_intake::preamble, kural_motoru]."
       }
     ]
   }
