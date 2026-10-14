@@ -33,6 +33,10 @@ vision:
   image_size: 224
   backbone_primary: mobilenetv3
   backbone_secondary: efficientnet_b3
+  # CNN'e ek olarak OpenAI gorsel modelinden kategori gorusu alinir (CNN test %73.3, OpenAI
+  # %95.0, ayni 60 gorsel - docs/category_ensemble_report.json). Hemfikirlerse karar guclenir,
+  # ayrisirlarsa OpenAI'in kategorisi kullanilir; OpenAI yoksa CNN tek basina calisir.
+  vlm_category: true
 
 ocr:
   # Canli pipeline'in (api/pipeline.py) sirayla denedigi motorlar: hata verirse, anahtari yoksa

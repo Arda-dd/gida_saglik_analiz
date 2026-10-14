@@ -100,6 +100,7 @@ def mocked_pipeline_dependencies(monkeypatch):
     monkeypatch.setattr(pipeline_module, "lookup_barcode", lambda code: None)
     monkeypatch.setattr(pipeline_module, "_reference_ocr", lambda path: (None, None))
     monkeypatch.setattr(pipeline_module, "assess_image_quality", lambda path: [])
+    monkeypatch.setattr(pipeline_module, "_vlm_category", lambda path: None)
     monkeypatch.setattr(
         pipeline_module,
         "_get_vision_model",
@@ -353,3 +354,34 @@ def test_text_without_nutrition_values_warns(mocked_pipeline_dependencies, monke
     )
     result = pipeline_module.analyze_label_image(Path("fake.jpg"), generate_llm_explanation=False)
     assert any("besin degeri cikarilamadi" in w for w in result.warnings)
+
+
+class TestCategoryVote:
+    def test_vlm_overrides_cnn_when_they_disagree(self, mocked_pipeline_dependencies, monkeypatch):
+        monkeypatch.setattr(pipeline_module, "_vlm_category", lambda path: "hazir_gida")
+        result = pipeline_module.analyze_label_image(Path("fake.jpg"), generate_llm_explanation=False)
+        assert result.category == "hazir_gida"
+        assert result.category_source == "vlm"
+
+    def test_agreement_strengthens_cnn_decision(self, mocked_pipeline_dependencies, monkeypatch):
+        monkeypatch.setattr(pipeline_module, "_vlm_category", lambda path: "atistirmalik")
+        result = pipeline_module.analyze_label_image(Path("fake.jpg"), generate_llm_explanation=False)
+        assert result.category == "atistirmalik"
+        assert result.category_source == "cnn+vlm"
+        assert result.category_confidence > 0.91
+
+    def test_cnn_alone_when_vlm_unavailable(self, mocked_pipeline_dependencies):
+        result = pipeline_module.analyze_label_image(Path("fake.jpg"), generate_llm_explanation=False)
+        assert result.category_source == "cnn"
+        assert result.category_confidence == pytest.approx(0.91)
+
+    def test_barcode_category_beats_both_models(self, mocked_pipeline_dependencies, monkeypatch):
+        monkeypatch.setattr(pipeline_module, "_vlm_category", lambda path: "hazir_gida")
+        monkeypatch.setattr(pipeline_module, "decode_barcodes", lambda path: ["3046920022606"])
+        monkeypatch.setattr(
+            pipeline_module, "lookup_barcode",
+            lambda code: _barcode_product({"energy_kcal": 1}, category=ProductCategory.ICECEK),
+        )
+        result = pipeline_module.analyze_label_image(Path("fake.jpg"), generate_llm_explanation=False)
+        assert result.category == "icecek"
+        assert result.category_source == "open_food_facts"

@@ -39,6 +39,7 @@ from src.rag.generate import GenerationResult, generate_explanation
 from src.rag.llm_provider import get_llm_provider
 from src.rag.retriever import Retriever
 from src.vision.infer import load_best_model_from_report, predict_category
+from src.vision.vlm_classify import classify_with_openai, combine_category_predictions
 
 logger = logging.getLogger(__name__)
 
@@ -65,7 +66,7 @@ class AnalysisResult:
     barcode: str | None = None
     product_name: str | None = None
     nutrition_source: str = "ocr"  # "ocr" | "open_food_facts"
-    category_source: str = "cnn"  # "cnn" | "open_food_facts"
+    category_source: str = "cnn"  # "cnn" | "cnn+vlm" | "vlm" | "open_food_facts"
     # OpenAI OCR'in okudugu her alan ikinci motorla dogrulandi mi (None: dogrulama yapilmadi).
     nutrition_verification: dict[str, bool] | None = None
 
@@ -164,6 +165,20 @@ def _reference_ocr(image_path: Path) -> tuple[str | None, str | None]:
         return None, f"{engine}: {type(exc).__name__}"
 
 
+def _vlm_category(image_path: Path) -> str | None:
+    """OpenAI'in kategori gorusu (config.yaml -> vision.vlm_category); kapaliysa, anahtar
+    yoksa ya da hata olursa None - kategori o zaman yalnizca CNN'den gelir."""
+    from src.common.config import get_config
+
+    if not get_config().get("vision", {}).get("vlm_category", False) or not os.environ.get("OPENAI_API_KEY"):
+        return None
+    try:
+        return classify_with_openai(image_path)
+    except Exception as exc:
+        logger.warning("OpenAI kategori tahmini basarisiz, yalnizca CNN kullaniliyor: %s", exc)
+        return None
+
+
 def _verification_warnings(verification: dict[str, bool], nutrition: NutritionFacts) -> list[str]:
     unverified = [f for f, ok in verification.items() if not ok]
     if not unverified:
@@ -205,18 +220,24 @@ def analyze_label_image(
     with tempfile.TemporaryDirectory() as tmp_dir:
         processed_path = preprocess_label_image(image_path, Path(tmp_dir) / "processed.jpg")
 
-        model, categories = _get_vision_model()
-        category, category_confidence = predict_category(model, processed_path, categories)
-
-        # Barkod once ORIJINAL gorselde aranir (on isleme perspektifi/kontrasti degistirir).
-        barcodes = decode_barcodes(image_path)
-
-        # Birincil OCR (OpenAI) ile capraz dogrulama motoru (OCR.space) PARALEL calisir.
-        with ThreadPoolExecutor(max_workers=2) as pool:
+        # Ag cagrilari (birincil OCR, capraz dogrulama OCR'i, OpenAI kategori gorusu) PARALEL
+        # calisir; bu sirada yerel isler (CNN, barkod cozme) ana is parcaciginda yapilir.
+        with ThreadPoolExecutor(max_workers=3) as pool:
             primary_future = pool.submit(extract_text_live, processed_path)
             reference_future = pool.submit(_reference_ocr, processed_path)
+            vlm_category_future = pool.submit(_vlm_category, processed_path)
+
+            model, categories = _get_vision_model()
+            cnn_category, cnn_confidence = predict_category(model, processed_path, categories)
+            # Barkod once ORIJINAL gorselde aranir (on isleme perspektifi/kontrasti degistirir).
+            barcodes = decode_barcodes(image_path)
+
             ocr_result = primary_future.result()
             reference_text, reference_error = reference_future.result()
+            vlm_category = vlm_category_future.result()
+        category, category_confidence, category_source = combine_category_predictions(
+            cnn_category, cnn_confidence, vlm_category
+        )
         nutrition, _basis = extract_and_normalize(ocr_result.text)
         detected_allergens = detect_allergens(ocr_result.text)
 
@@ -242,7 +263,7 @@ def analyze_label_image(
     if not barcodes:
         barcodes = barcodes_from_text(ocr_result.text)
     barcode_product = _lookup_first(barcodes, warnings)
-    nutrition_source, category_source = "ocr", "cnn"
+    nutrition_source = "ocr"
     if barcode_product is not None and barcode_product.has_usable_nutrition:
         nutrition, _filled, conflicts = merge_nutrition(barcode_product.record.nutrition, nutrition)
         nutrition_source = "open_food_facts"

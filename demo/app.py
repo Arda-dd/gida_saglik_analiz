@@ -387,6 +387,10 @@ with tab_scan:
                             "ocr_confidence": result.ocr_confidence,
                             "explanation_text": result.explanation.text if result.explanation else None,
                             "warnings": result.warnings,
+                            "category_source": result.category_source,
+                            "nutrition_source": result.nutrition_source,
+                            "barcode": result.barcode,
+                            "product_name": result.product_name,
                         }
 
                         # Veritabanına kaydet
@@ -447,7 +451,25 @@ with tab_scan:
             )
 
         st.subheader("Kategori ve Besin Değerleri")
-        st.write(f"Tahmin edilen kategori: **{category_label}** (model güveni: %{result_data['category_confidence'] * 100:.0f})")
+        category_source_labels = {
+            "open_food_facts": "barkoddan, Open Food Facts",
+            "cnn+vlm": "CNN ve yapay zekâ hemfikir",
+            "vlm": "yapay zekâ (CNN farklı tahmin etti)",
+            "cnn": "CNN",
+        }
+        source_label = category_source_labels.get(result_data.get("category_source"), "CNN")
+        st.write(
+            f"Tahmin edilen kategori: **{category_label}** "
+            f"(kaynak: {source_label}, güven: %{result_data['category_confidence'] * 100:.0f})"
+        )
+        if result_data.get("barcode"):
+            product = f" — {result_data['product_name']}" if result_data.get("product_name") else ""
+            nutrition_note = (
+                "besin değerleri ürün veritabanından alındı"
+                if result_data.get("nutrition_source") == "open_food_facts"
+                else "üründe veritabanı kaydı bulunamadı, besin değerleri etiketten okundu"
+            )
+            st.caption(f"Barkod: {result_data['barcode']}{product} ({nutrition_note})")
 
         if result_data["nutrition"]:
             st.caption("Aşağıdaki değerler 100 gram/100 mL bazına normalize edilmiştir.")
