@@ -172,6 +172,10 @@ def _serialize_result(result: AnalysisResult) -> dict:
         "ocr_confidence": result.ocr_confidence,
         "ocr_engine": result.ocr_engine,
         "warnings": result.warnings,
+        "barcode": result.barcode,
+        "product_name": result.product_name,
+        "nutrition_source": result.nutrition_source,
+        "category_source": result.category_source,
     }
 
     if result.explanation is not None:

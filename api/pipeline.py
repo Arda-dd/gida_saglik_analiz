@@ -21,6 +21,9 @@ from pathlib import Path
 
 import pandas as pd
 
+from src.barcode.detect import barcodes_from_text, decode_barcodes
+from src.barcode.lookup import BarcodeProduct, lookup_barcode
+from src.barcode.merge import merge_nutrition
 from src.common.schema import Allergen, NutritionFacts, ProductCategory, ProductRecord
 from src.data.image_preprocessing import preprocess_label_image
 from src.health.profile import HealthProfile
@@ -55,6 +58,11 @@ class AnalysisResult:
     explanation: GenerationResult | None = None
     health_assessment: HealthAssessment | None = None
     alternatives: list[ProductRecord] = field(default_factory=list)
+    # Barkod bulunup urun Open Food Facts'te varsa besin/kategori/alerjen oradan gelir.
+    barcode: str | None = None
+    product_name: str | None = None
+    nutrition_source: str = "ocr"  # "ocr" | "open_food_facts"
+    category_source: str = "cnn"  # "cnn" | "open_food_facts"
 
 
 @lru_cache(maxsize=1)
@@ -126,6 +134,22 @@ def get_candidate_products() -> tuple[ProductRecord, ...]:
     return tuple(records)
 
 
+def _lookup_first(barcodes: list[str], warnings: list[str]) -> BarcodeProduct | None:
+    """Bulunan barkodlari sirayla Open Food Facts'te arar; ilk bulunan urunu doner.
+
+    Ag/API hatasi pipeline'i durdurmaz (OCR sonucuyla devam edilir) ama uyari olarak eklenir."""
+    for barcode in barcodes:
+        try:
+            product = lookup_barcode(barcode)
+        except Exception as exc:
+            logger.warning("Barkod sorgusu basarisiz (%s): %s", barcode, exc)
+            warnings.append(f"Barkod {barcode} sorgulanamadi ({type(exc).__name__}) - etiket okumasi kullanildi.")
+            continue
+        if product is not None:
+            return product
+    return None
+
+
 def analyze_label_image(
     image_path: Path,
     profile: HealthProfile | None = None,
@@ -140,6 +164,9 @@ def analyze_label_image(
         model, categories = _get_vision_model()
         category, category_confidence = predict_category(model, processed_path, categories)
 
+        # Barkod once ORIJINAL gorselde aranir (on isleme perspektifi/kontrasti degistirir).
+        barcodes = decode_barcodes(image_path)
+
         ocr_result = extract_text_live(processed_path)
         nutrition, _basis = extract_and_normalize(ocr_result.text)
         detected_allergens = detect_allergens(ocr_result.text)
@@ -152,6 +179,32 @@ def analyze_label_image(
         )
     if not ocr_result.text.strip():
         warnings.append("Etiketten metin okunamadi - daha yakindan ve net bir fotograf cekin.")
+
+    if not barcodes:
+        barcodes = barcodes_from_text(ocr_result.text)
+    barcode_product = _lookup_first(barcodes, warnings)
+    nutrition_source, category_source = "ocr", "cnn"
+    if barcode_product is not None and barcode_product.has_usable_nutrition:
+        nutrition, _filled, conflicts = merge_nutrition(barcode_product.record.nutrition, nutrition)
+        nutrition_source = "open_food_facts"
+        if conflicts:
+            warnings.append(
+                "Etiketten okunan degerler urun veritabanindan farkli (" + "; ".join(conflicts)
+                + ") - veritabani degeri kullanildi; tarif degismis olabilir, etiketi kontrol edin."
+            )
+    if barcode_product is not None and barcode_product.record.category != ProductCategory.BILINMIYOR:
+        category, category_confidence = barcode_product.record.category.value, 1.0
+        category_source = "open_food_facts"
+    if barcode_product is not None:
+        # Alerjende guvenli taraf: etiket + veritabani + "eser miktarda icerebilir" birlesimi.
+        detected_allergens = sorted(
+            set(detected_allergens) | set(barcode_product.record.allergens) | set(barcode_product.traces),
+            key=lambda a: a.value,
+        )
+        if barcode_product.traces:
+            warnings.append(
+                "Eser miktarda icerebilir: " + ", ".join(a.value for a in barcode_product.traces) + "."
+            )
 
     risk_flags = assess_risks(nutrition)
     risk_messages = describe_risks(risk_flags)
@@ -200,6 +253,10 @@ def analyze_label_image(
         ocr_confidence=ocr_result.mean_confidence,
         ocr_engine=ocr_result.engine,
         warnings=warnings,
+        barcode=barcode_product.barcode if barcode_product else (barcodes[0] if barcodes else None),
+        product_name=barcode_product.product_name if barcode_product else None,
+        nutrition_source=nutrition_source,
+        category_source=category_source,
         explanation=explanation,
         health_assessment=health_assessment,
         alternatives=alternatives,

@@ -96,6 +96,8 @@ def mocked_pipeline_dependencies(monkeypatch):
     orkestrasyon mantigini (dogru veri akisi, opsiyonel katmanlarin dogru dallanmasi) test
     etmeyi saglar."""
     monkeypatch.setattr(pipeline_module, "preprocess_label_image", lambda src, dest: dest)
+    monkeypatch.setattr(pipeline_module, "decode_barcodes", lambda path: [])
+    monkeypatch.setattr(pipeline_module, "lookup_barcode", lambda code: None)
     monkeypatch.setattr(
         pipeline_module,
         "_get_vision_model",
@@ -221,3 +223,81 @@ class TestAnalyzeLabelImage:
         )
 
         assert result.explanation is fake_result
+
+
+def _barcode_product(nutrition, category=ProductCategory.ATISTIRMALIK, allergens=(), traces=()):
+    from src.barcode.lookup import BarcodeProduct
+    from src.common.schema import NutritionFacts, ProductRecord
+
+    return BarcodeProduct(
+        barcode="3046920022606",
+        record=ProductRecord(
+            product_id="off_3046920022606", category=category,
+            nutrition=NutritionFacts(**nutrition), allergens=list(allergens),
+        ),
+        product_name="Test cikolata",
+        traces=list(traces),
+    )
+
+
+class TestBarcodePath:
+    def test_barcode_product_overrides_ocr_nutrition_and_category(self, mocked_pipeline_dependencies, monkeypatch):
+        # OCR (fikstur): "Seker: 35 g Tuz: 2 g Findik icerir"; CNN: atistirmalik.
+        monkeypatch.setattr(pipeline_module, "decode_barcodes", lambda path: ["3046920022606"])
+        monkeypatch.setattr(
+            pipeline_module, "lookup_barcode",
+            lambda code: _barcode_product(
+                {"energy_kcal": 120, "sugar_g": 34, "fat_g": 1, "salt_g": 2.1},
+                category=ProductCategory.ICECEK, allergens=[Allergen.LAKTOZ], traces=[Allergen.SOYA],
+            ),
+        )
+        result = pipeline_module.analyze_label_image(Path("fake.jpg"), generate_llm_explanation=False)
+
+        assert result.barcode == "3046920022606"
+        assert result.product_name == "Test cikolata"
+        assert result.nutrition_source == "open_food_facts"
+        assert result.nutrition.energy_kcal == 120
+        assert result.nutrition.sugar_g == 34  # 35 (etiket) ile uyumlu -> uyari yok
+        assert result.category == "icecek" and result.category_source == "open_food_facts"
+        # Alerjen: etiket (findik) + veritabani (laktoz) + eser (soya) birlesimi
+        assert set(result.detected_allergens) == {Allergen.FINDIK, Allergen.LAKTOZ, Allergen.SOYA}
+        assert any("Eser miktarda" in w for w in result.warnings)
+        assert not any("farkli" in w for w in result.warnings)
+
+    def test_label_database_conflict_is_warned(self, mocked_pipeline_dependencies, monkeypatch):
+        monkeypatch.setattr(pipeline_module, "decode_barcodes", lambda path: ["3046920022606"])
+        monkeypatch.setattr(
+            pipeline_module, "lookup_barcode",
+            lambda code: _barcode_product({"energy_kcal": 120, "sugar_g": 10, "fat_g": 1}),
+        )
+        result = pipeline_module.analyze_label_image(Path("fake.jpg"), generate_llm_explanation=False)
+        assert result.nutrition.sugar_g == 10
+        assert any("seker: etiket 35, veritabani 10" in w for w in result.warnings)
+
+    def test_lookup_failure_falls_back_to_ocr_with_warning(self, mocked_pipeline_dependencies, monkeypatch):
+        def _raise(code):
+            raise TimeoutError("OFF yavas")
+
+        monkeypatch.setattr(pipeline_module, "decode_barcodes", lambda path: ["3046920022606"])
+        monkeypatch.setattr(pipeline_module, "lookup_barcode", _raise)
+        result = pipeline_module.analyze_label_image(Path("fake.jpg"), generate_llm_explanation=False)
+        assert result.nutrition_source == "ocr"
+        assert result.nutrition.sugar_g == 35
+        assert any("sorgulanamadi" in w for w in result.warnings)
+
+    def test_barcode_read_from_ocr_text_when_image_decoder_finds_none(self, mocked_pipeline_dependencies, monkeypatch):
+        monkeypatch.setattr(
+            pipeline_module, "extract_text_live",
+            lambda path: OCRResult(text="Seker 35 g\n3 046920 022606", mean_confidence=100.0, engine="openai_vision"),
+        )
+        seen = []
+        monkeypatch.setattr(pipeline_module, "lookup_barcode", lambda code: seen.append(code))
+        pipeline_module.analyze_label_image(Path("fake.jpg"), generate_llm_explanation=False)
+        assert seen == ["3046920022606"]
+
+    def test_sparse_database_record_does_not_replace_ocr(self, mocked_pipeline_dependencies, monkeypatch):
+        monkeypatch.setattr(pipeline_module, "decode_barcodes", lambda path: ["3046920022606"])
+        monkeypatch.setattr(pipeline_module, "lookup_barcode", lambda code: _barcode_product({"energy_kcal": 120}))
+        result = pipeline_module.analyze_label_image(Path("fake.jpg"), generate_llm_explanation=False)
+        assert result.nutrition_source == "ocr"
+        assert result.category_source == "open_food_facts"  # kategori yine de kullanilabilir
