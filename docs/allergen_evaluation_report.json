@@ -1,0 +1,341 @@
+{
+  "summary": {
+    "easyocr": {
+      "contains_recall_pct": 65.0,
+      "contains_tp": 13,
+      "contains_fn": 7,
+      "traces_recall_pct": 48.148148148148145,
+      "traces_found": 13,
+      "traces_total": 27,
+      "false_positives_on_reliable_products": 1,
+      "missed": [
+        "off_7622210449283:yumurta",
+        "off_7622210449283:laktoz",
+        "off_3242274030056:yumurta",
+        "off_3242274030056:soya",
+        "off_7613035937420:gluten",
+        "off_7613035937420:yumurta",
+        "off_3083681148640:yumurta"
+      ],
+      "false_positive_examples": [
+        "off_3175681170872:balik"
+      ]
+    },
+    "openai_vision": {
+      "contains_recall_pct": 100.0,
+      "contains_tp": 20,
+      "contains_fn": 0,
+      "traces_recall_pct": 100.0,
+      "traces_found": 27,
+      "traces_total": 27,
+      "false_positives_on_reliable_products": 2,
+      "missed": [],
+      "false_positive_examples": [
+        "off_7613035937420:findik",
+        "off_3175681170872:balik"
+      ]
+    }
+  },
+  "per_image_results": [
+    {
+      "engine": "openai_vision",
+      "product_id": "off_7622210449283",
+      "ocr_text": "BISCUITS FOURRÉS (35 %) PARFUM CHOCOLAT.  \nIngrédients : Céréale 50 % (Farine de BLÉ 34,8 %, farine de  \nBLÉ complète 15,2 %), sucre, huiles végétales (palme, colza),  \ncacao maigre en poudre 4,5 %, sirop de glucose, amidon de  \nBLÉ, poudres à lever (carbonates d'ammonium, carbonates  \nde sodium), émulsifiant (lécithines de SOJA), sel, LAIT écrémé  \nen poudre, permeat de lactosérum (de LAIT), arômes.  \nPEUT CONTENIR OEUF."
+    },
+    {
+      "engine": "openai_vision",
+      "product_id": "off_3046920029759",
+      "ocr_text": "en Dark chocolate\nCocoa solids: 90% minimum\nIngredients: cocoa mass, cocoa\nbutter, low fat cocoa powder, sugar.\nMay contain hazelnuts,"
+    },
+    {
+      "engine": "openai_vision",
+      "product_id": "off_06175700",
+      "ocr_text": "Le Pain des fleurs  \nFR TARTINES CROQUANTES BIO AU SARRASIN  \nSANS SEL NI SUCRES AJOUTÉS(1)  \nIngrédient : farine de sarrasin*  \n*issue de l'agriculture biologique.  \n(1) riche en magnésium • source de fibres  \n• source de fer • source de protéines  \n(2) contient des sucres naturellement présents.  \nNL BIO KROKANTE CRACKERS MET BOEKWEIT  \nZONDER ZOUT EN ZONDER TOEGEVOEGDE SUIKERS(1)  \nIngrediënt: boekweitmeel*  \n*ingrediënten afkomstig van biologische landbouw.  \n• rijk aan magnesium • bron van vezels  \n• bron van ijzer • bron van eiwitten  \n(2) dit product bevat van nature aanwezige suikers."
+    },
+    {
+      "engine": "openai_vision",
+      "product_id": "off_3175680011480",
+      "ocr_text": "et magnésium.  \nINGRÉDIENTS : Farine de blé 57%, sucre de canne roux, huile de colza, sésame toasté 10,6%, germe de blé 5,4%, farine complète de blé 5,4%, arôme naturel, magnésium, émulsifiant : lécithines, poudres à lever (tartrates de potassium, carbonates de sodium, carbonates d'ammonium), sel de mer, amidon de blé, vitamines (E, PP, B6, B1, B9).  \nFabriqué dans un atelier qui utilise des fruits à coque, du lait, du lupin, de la moutarde, des œufs et du soja."
+    },
+    {
+      "engine": "openai_vision",
+      "product_id": "off_3046920022651",
+      "ocr_text": "Chocolat noir, extra-fin traditionnel.  \nCacao : 70% minimum.  \nIngrédients : pâte de cacao, sucre, beurre de cacao, vanille.  \nPeut contenir des fruits à coque, du lait, du soja et des graines de sésame."
+    },
+    {
+      "engine": "openai_vision",
+      "product_id": "off_3046920022606",
+      "ocr_text": "Chocolat noir, extra-fin traditionnel.  \nCacao : 85% minimum.  \nIngrédients : pâte de cacao, cacao maigre, beurre de cacao, cassonade, vanille.  \nPeut contenir du lait, des fruits à coque, du soja et des graines de sésame."
+    },
+    {
+      "engine": "openai_vision",
+      "product_id": "off_3242274030056",
+      "ocr_text": "Salade composée préparée avec des spécialités céréalières cuites (29%), de l'oeuf (14%), du poulet rôti traité en salaison (11%) et du fromage (2%), accompagnée d'une sauce vinaigrette avec du vinaigre balsamique (2%), d'un cookie avec des morceaux de chocolat (2%), de gressins et d'une fourchette à la farine de blé (0,8%).\n\nIngrédients\nSalade composée 80% ; spécialités céréalières cuites (eau, semoule de BLE dur, OEUF, sel, curcuma), OEUF, salade 11%, viande de poulet, carottes, FROMAGE à pâte dure, riz de citron, huile de colza, eau, amidon d'avoine, dextrose, ferments, sel, arôme naturel, persil.\nSauce vinaigrette balsamique 7% ; huile de colza, huile d'olive vierge, vinaigre de vin (SULFITES), mout de raisin, sel.\nCookie au chocolat 7% ; sucre, farine de BLE, OEUF, BEURRE, huile de colza, pâte et beurre de cacao, poudre de cacao maigre, poudre à lever (bicarbonate de sodium, émulsifiants (LECITHINES (SOJA)), arôme naturel, sel.\nGressins 4% et fourchette 2% ; farine de BLE, son de BLE, fibre de BLE, semoule de BLE dur, BEURRE, huile d'olive vierge, huile de colza, eau, levure boulangère, sucre, amidon d'avoine, sel, graines de pavot, arôme naturel.\nCe produit peut contenir du poisson, du soja, de la moutarde, des fruits à coque et d'autres céréales contenant du gluten.\n\nPoulet : origine UE\nConditionné sous atmosphère protectrice. A conserver entre 0°C et +4°C y compris pour la vinaigrette et le cookie pour conserver son moelleux.\nNe pas congeler ce produit."
+    },
+    {
+      "engine": "openai_vision",
+      "product_id": "off_7613035937420",
+      "ocr_text": "Läckerer Wiener gober.\n\nPour les enfants de moins de 4 ans, couper la saucisse dans le sens de la longueur puis en tout petits morceaux afin de prevenir le risque d'étouffement. Pour\nKinderen onder 4 jaar, snij de worst eerst overlangs en versnijden in kleine stukjes, om de\nverstikking te voorkomen. / Für Kinder unter 4 Jahren die Wurst der Länge nach zerschneiden\nund in kleine Stücke schneiden, um einer Erstickungsgefahr vorzubeugen.\n\nSpécialité végétarienne fumée à base de protéines de blé (14,9%), de blanc\nd'œuf (4,1%) et protéines de pois (0,4%), ingrédients : eau, huile de colza, gluten\nde blé (13,9%), blanc d'œuf en poudre (4,2%), protéines soya, Conservateurs : lactate de\npotassium, extrait de poivron, épices, arômes, levure de céréales, de pois chiche, sel,\nvinaigre à alcool, isolat de protéines de pois (0,1% épice, épaissement : gomme xanthane,\ngélifiant : gomme guar, tomate en poudre, amande de blé, onhydroxyl - iodure de sodium,\npoivre, piment, épices, poudre d'oignon : paprika, Poids contenu : 50g. Lait. A conserver à max.\n+4°C à consommer dans les 3 jours après ouverture.\n\nGecroonde vegetarische specialiteit gemaakt van tarwe-eiwit (14,9%), ei-eiwit\n(4,2%) en erwteneiwit (0,4%). Ingrediënten: Water, koolzaadolie, tarwegluten,\n(13,9%), ei-eiwitpoeder (4,2%), natuurlijke aroma's, sojaproteïne-isolaat, kaliumlactaat,\nkaliumlactaat, geleringsmiddel: methylcellulose, johannesbroodpitmeel; zout, natuurlijke,\naromaverrijkstof (0,3%), specerijen, verkruimelde kikkererwt - knoflookpoeder, stabilisator:\nguargom, tomatenpoeder, tarwe-eiwit, amandelpoeder, xanthaangom, piment, poeder,\nuienpoeder, paprika, peper, kruiden. Gewicht: 50g. Koel bewaren bij max. +4°C. Consumseren binnen 3 dagen na opening.\n\nVleesvervanger Specialiteit gerookt, uit Basis von Weizeneiweiss (14,9%), Ei-Ei\n(4,2%) und Erbseneiweiß (0,1%). Zutaten: Wasser, Rapsöl, Weizengluten (13,9%),\nEi-Eiweißpulver (4,2%), natürliche Aromen, Sojaproteinisolat, Kaliumlactat, Methylcellulose,\nGeliermittel: Mehlcellulose, Johannisbrotkernmehl, Salz, Bromelaingewürz,\nErsatzgeschmack (0,3%), Gewürze, Tomatenpulver, Mandelpulver, Xanthan, Pfeffer,\nZwiebelpulver, Paprika, Pfeffer, Kräuter. Gewicht: 50g. Kühl lagern bei max. +4°C.\nNach dem Öffnen innerhalb von 3 Tagen verbrauchen.\n\n27-28-001\nUE\n\nSACHET\nPLASTIQUE"
+    },
+    {
+      "engine": "openai_vision",
+      "product_id": "off_3175681170872",
+      "ocr_text": "LÉGUMES, LENTILLES, RIZ ET SOJA, ISSUS DE L'AGRICULTURE BIOLOGIQUE. Ingrédients : Carottes* 24%, eau, lentilles vertes* 14%, riz basmati* complet 12%, oignons* 12%, huile de tournesol*, protéines de soja* texturées réhydratées 6%, sauce soja* (eau, soja*, blé*, sel de mer, alcool*), sel de mer.\n*Ingrédients issus de l'agriculture biologique.\n*Soja français sans OGM.\nFabriqué dans un atelier qui utilise : céleri, crustacés, poissons, fruits à coque, lait, moutarde, œuf et sésame."
+    },
+    {
+      "engine": "openai_vision",
+      "product_id": "off_3083681148640",
+      "ocr_text": "SALADE DE CÉLERI RÂPÉ AU FROMAGE BLANC.  \nINGRÉDIENTS : CÉLERI 70%, huile de colza, eau, FROMAGE blanc 0% de matières grasses 6,5% (LAIT écrémé pasteurisé, ferments LACTIQUES), vinaigre d’alcool, sel, MOUTARDE de Dijon, sucre, ŒUF en poudre, épaississant : gomme de xanthane.  \nFabriqué dans un atelier utilisant également : gluten, crustacé, poisson, soja, fruits à coque. Conditionné sous atmosphère protectrice."
+    },
+    {
+      "engine": "openai_vision",
+      "product_id": "off_3281780893915",
+      "ocr_text": "Ingrédients : semoule de blé réhydratée 56% (semoule de blé, eau), légumes (poivrons, tomates, oignons), jus de citron à base de concentré, huile d'olive vierge extra, huile de colza, raisins secs, menthe, épices, vinaigre d'alcool, sel, conservateur : sorbate de potassium. Peut contenir arachides, céleri, toutes céréales contenant du gluten, crustacés, fruits à coque, graines de sésame, lait, moutarde, oeuf, poissons et soja.  \n0 809 400 708 Service gratuit + prix appel  \nmartinet.fr"
+    },
+    {
+      "engine": "openai_vision",
+      "product_id": "off_3021690201123",
+      "ocr_text": "Lentilles cuisinées  \nà l'Auvergnate  \nINGRÉDIENTS : Eau, lentilles précuites  \n28%, couenne de porc, saindoux, oignons  \n1%, arôme naturel, farine de BLE, carottes  \n0,7%, graisse de canard, plante aromatique,  \narôme naturel de poivre avec autres  \narômes naturels, affermissant: chlorure de  \ncalcium, arôme naturel de CELERI. Traces  \néventuelles de : œuf, lait, moutarde."
+    },
+    {
+      "engine": "openai_vision",
+      "product_id": "off_6111035000430",
+      "ocr_text": "Depuis 1978, Sidi Ali vous offre une\neau minérale naturelle d'une pureté incomparable\nSource de bien-être et d'hydratation au quotidien\nSidi Ali prend soin de vous.\n\n1978\nComposition minérale en mg/l\nRésidu sec à 110°C : 186\nSodium 26 | Bicarbonates 104\nCalcium 12 | Sulfates 42\nMagnesium 9 | Chlorures 14\nPotassium 3 | Nitrates 0\nAnalyse INH 80/98 du 15-04-98\n\n0800 00 34 34"
+    },
+    {
+      "engine": "openai_vision",
+      "product_id": "off_6111035000058",
+      "ocr_text": "Composition minérales en mg/l\nRésidu sec à 110°C ± 10°\nSodium 26\nCalcium 12\nMagnesium 9\nPotassium 3\nBicarbonates 104\nSulfates 42\nChlorures 14\nNitrites 0\nAnalyse INH 80/98 du 15-04-98"
+    },
+    {
+      "engine": "openai_vision",
+      "product_id": "off_6111128000071",
+      "ocr_text": "تاريخ الإنتاج :* يستهلك قبل :  \nأنظر القنينة :  \nيحفظ به في مكان جاف بعيداً عن الشمس و الروائح  \nComposition de l’eau en mg/L  \nتركيبة الماء مع/ل  \nCalcium 63,5  كالسيوم  \nMagnésium 35,5  مغنيسيوم  \nNitrate 7  نترات  \nSodium 8  صوديوم  \nChlorures 19,8  كلورور  \nSulfate 3,8  سرفلات  \nBicarbonate 372  بيكربونات  \nPotassium 1  بوتاسيوم  \nمعاً في عين سايس من طرف  \nصوطرها ضب 2210 فاس الغرب  \n05 38 90 00 00"
+    },
+    {
+      "engine": "openai_vision",
+      "product_id": "off_6111252421568",
+      "ocr_text": "6 111252 421568"
+    },
+    {
+      "engine": "openai_vision",
+      "product_id": "off_6111035000027",
+      "ocr_text": "Depuis 1978, Sidi Ali vous offre une  \neau minérale naturelle d'une pureté incomparable  \nSource de bien-être et d'hydratation au quotidien,  \nSidi Ali prend soin de vous.  \n\nDepuis 1978, Sidi Ali يقدم لكم ماء معدني  \nطبيعي ذو صفاء لا مثيل له، مصدر عناية  \nواشتغال لكل يوم، سيدي علي يهتم بكم.  \n\nComposition minérale en mg/l  \nRésidu sec à 110°C : 186  \nSodium 26 صوديوم  \nCalcium 12 كالسيوم  \nMagnesium 9 مغنيسيوم  \nPotassium 3 بوتاسيوم  \nBicarbonates 104 بيكربونات  \nSulfates 42 كبريتات  \nChlorures 14 كلورور  \nNitrates 0 نترات  \n\nAnalyse NFH 80/98 du 15-04-96  \n\n0800 00 34 34  \nرقم الأخضر  \nمجاناً محلي"
+    },
+    {
+      "engine": "openai_vision",
+      "product_id": "off_6111035502828",
+      "ocr_text": "Aïn Atlas  \nEAU MINÉRALE NATURELLE  \nPOUR ACCOMPAGNER  \nVOTRE CAFÉ"
+    },
+    {
+      "engine": "openai_vision",
+      "product_id": "off_3083681095296",
+      "ocr_text": "À L'HUILE D'OLIVE  \nINGRÉDIENTS : Dés d'auber-  \ngines préfrites (aubergines,  \nhuile de tournesol), dés de  \ncourgettes, purée de tomates  \nmi-réduite 20% (acidifiant :  \nacide citrique), dés d'oignons,  \ndés de poivrons rouges,  \ndouble concentré de tomates  \n3%, huile d'olive vierge extra  \n2%, sucre 1,5%, sel, ail, jus con-  \ncentré de citron, farine de  \nBLÉ, thym 0,1%."
+    },
+    {
+      "engine": "openai_vision",
+      "product_id": "off_20004132",
+      "ocr_text": "Tomate em pedaços em sumo de tomate. Ingredientes: to\nConsumir de preferência antes de: ver topo ou fundo. Depois de ab\nno prazo de 3 dias."
+    },
+    {
+      "engine": "openai_vision",
+      "product_id": "off_3083681094459",
+      "ocr_text": "INGRÉDIENTS : Courgettes préfrites 52% (courgettes 49%, huile de tournesol), tomates pelées concassées au jus 22% (tomates, jus de tomates), oignons 11%, purée de tomates mi-réduite 3,7%, double concentré de tomates 3%, sucre 2%, huile d’olive vierge extra 1,9%, jus concentré de citron, sel, basilic 0,7%, ail, farine de BLÉ, fenouil moulu. Peut contenir CÉLERI."
+    },
+    {
+      "engine": "openai_vision",
+      "product_id": "off_3307130803004",
+      "ocr_text": "INGRÉDIENTS  \nlégumes* en morceaux 87% (pulpe de tomates*, courgettes*, aubergines*, oignons*, poivrons* rouges, poivrons* verts), double concentré de tomates* à 28%, huile d’olive* vierge extra, sucre de canne*, huile de tournesol*, sel marin, plantes aromatiques*, purée d’ail*, jus concentré de citron*, poivre noir*.  \n*Produits issus de l’agriculture biologique"
+    },
+    {
+      "engine": "openai_vision",
+      "product_id": "off_3083681001808",
+      "ocr_text": "INGRÉDIENTS : Eau, haricots blancs secs trempés 37%, tomates 11%, purée de tomates mi-réduite 8%, sel, sucre, extrait de levure, ail en poudre, sauge 0,1%, persil 0,05%, arôme naturel, carottes en poudre, tomates en poudre, oignons en poudre, safran, arôme naturel de thym, une feuille de laurier."
+    },
+    {
+      "engine": "openai_vision",
+      "product_id": "off_3083681094923",
+      "ocr_text": "INGRÉDIENTS : Haricots verts extra-fins 54%, eau, sel, oignon grelot 0,2%."
+    },
+    {
+      "engine": "openai_vision",
+      "product_id": "off_6111246721261",
+      "ocr_text": "Tableau Nutritionnel (pour 100g)\nÉlément | Valeur | Analyse\nÉnergie | 159 Kcal (662 kJ) | Élevé pour un produit laitier nature classique.\nLipides (Matières grasses) | 11 g | Riche. Cela correspond à un produit type \"grec\" ou enrichi en crème.\nGlucides | 10 g | Présence notable d'amidon (indiqué dans les ingrédients).\nProtéines | 5 g | Correct, mais plus bas que certains yaourts protéinés (type Skyr)."
+    },
+    {
+      "engine": "openai_vision",
+      "product_id": "off_6111242100992",
+      "ocr_text": "جبن طري بالسكر  \nFromage frais sucré  \nالقيمة الغذائية ل 100 غ  \nValeurs nutritionnelles pour 100g  \nقيمة الطاقة  Kcal  97  كيلكال  \nبروتينات  8,0 غ  9  \nكربوهيدرات  9,4 غ  9  \nدهنيات  3,0 غ  9  \nكالسيوم  250 mg  مغ"
+    },
+    {
+      "engine": "openai_vision",
+      "product_id": "off_6111242106949",
+      "ocr_text": "Jaouda\njben\nde Jaouda\n12.00 DHS par unité\n100% Frais\nTartine & Cuisine\nNouvelle recette\nSANS GLUTEN\nAgriculture Biologique"
+    },
+    {
+      "engine": "openai_vision",
+      "product_id": "off_6111242101180",
+      "ocr_text": "Le lait UHT Jaouda ne contient pas de conservateurs.  \nSi le lait UHT se conserve à température ambiante  \npendant 6 mois, c'est parce que :  \n- Il subit un traitement thermique UHT (Ultra Haute  \nTempérature) qui détruit tous les micro-organismes.  \n- Il est conditionné dans un emballage aseptique de 6  \ncouches le protégeant de toute contamination extérieure"
+    },
+    {
+      "engine": "openai_vision",
+      "product_id": "off_6111242100985",
+      "ocr_text": "جبن طازج طبيعي\nFromage frais nature\nالقيمة الغذائية لـ 100غ\nValeurs nutritionnelles pour 100g\nالقيمة الطاقوية Kcal 101\nProtéines غ 7,6\nCarbohydrates غ 4,2\nLipides غ 6,0\nCalcium مغ 240\nتاريخ نهاية الصلاحية : انظر أعلى الغطاء\nتاريخ الإنتاج : تاريخ الانتهاء - 30 يوم"
+    },
+    {
+      "engine": "openai_vision",
+      "product_id": "off_6111246721278",
+      "ocr_text": "القشدة\nحليب بقر مبستر، قشطة طازجة مستخلصة\nخمائر طبيعية، ملح.\nIngredients:\nLait de Vache pasteurisé, Crème fraîche pasteurisé\nferments lactiques, Péture, Sel.\n\nVALEURS NUTRITIONNELLES ET ENERGETIQUE\nValeurs Nutritionnelles Moyennes pour 100g\nProtéines 3.1g\nGlucides 1.8g\nLipides 18g"
+    },
+    {
+      "engine": "easyocr",
+      "product_id": "off_7622210449283",
+      "ocr_text": "biscuits fourres (35 Parfum (hocoli,\nInoredients : (ereale 50 Fare de Ble 34,8*farne \nBL cmplete 15,20sh suaesndes vegetales (palme, cual\ncao maigre en poudre 85 roo de glucose, amidon d\nBLf  poudres & lever (cbones Ommonium , (arbonatss\nesoduum / emulsinant (canines 02 SOIA), sel, LAlT qen\nIpudre, permeat debscoserum (de UIT), aromes\nPevi contenir @euF,"
+    },
+    {
+      "engine": "easyocr",
+      "product_id": "off_3046920029759",
+      "ocr_text": "Dark chocolate\nCocoa solids: 90% minimum\nIngredients: cocoa mass, cocoa butter, low fat cocoa powder, sugar.\nMay contain hazelnuts, _"
+    },
+    {
+      "engine": "easyocr",
+      "product_id": "off_06175700",
+      "ocr_text": "LePaindesfleurs\nIartines Craquanies Bio Au sarrasin\nSans sel Nisucres Ajouies\nIngredient : farine de sarrasin*\nFissue de Fagriculture biologique,\nriche en magnesium source de fibres\nsource de fer source de proteines\nconcent des sucres naturellement Pseoi\nBIO KRoKanTE CRACKERS MeT BOEKWEIT\nZONDER ZOUT EN ZONDER TOEGEVOEGDE SUIKERS \"\nIngredicnt: boekweltmeel- \"gr cuienren afkomstig van biologische lanubouw;\naan mogneslum bron van vezels\nbron van Ilze 'bron van eiwitten\nproduct Devor vannature aanwezigu sulkers"
+    },
+    {
+      "engine": "easyocr",
+      "product_id": "off_3175680011480",
+      "ocr_text": "efmaanesium INGREDIENIS Farine de ble 579, suce de canne roux, huile de colza, sesame toarte 10,010,\ngerme de ble 413, farine complete de blg 49, arome nalure magnesium , emulsifart\nlecthines; poudtes (tartrates de polassium , (aıbonates ' sodium, (aiponates Lammcnrumk\nsel de mer emidon de ble vitamines PP; B6, B1, B9). coque; du lait, du lupin; de moutarce\nFaonque dans atelier qui utlise des Iuits\nculs etdu soja ."
+    },
+    {
+      "engine": "easyocr",
+      "product_id": "off_3046920022651",
+      "ocr_text": "Chocolat noir , extra-fin traditionnel.\nCacao 70% minimum.\nIngredients : pate de cacao, sucre, beurre\nde cacao, vanille.\nPeut contenir des fruits > coque, du lait, du soja et des graines de sesame."
+    },
+    {
+      "engine": "easyocr",
+      "product_id": "off_3046920022606",
+      "ocr_text": "Chocolat noir, extra-fin traditionnel.\nCacao 85% minimum\nIngredients : pPte de cacao, cacao\nmaigre, beurre de cacao, cassonade,\nvanille.\nPeut contenir du lait, des fruits > coque,\ndu soja et des graines  de sesame-"
+    },
+    {
+      "engine": "easyocr",
+      "product_id": "off_3242274030056",
+      "ocr_text": "Salade composee preparee avec des specialites cerealieres cuites\n(2940] de Vouf (1406), du poulet röti traite en salaison (1196]\nfromage (296) accompagnee une sauce vinalgrette avec du olainaz?re\nbalsamique dun cookie avec des morceaux de chacolat\nde gressins etd' 'une iourchette la larine de ble (0,89) .\nInquqine\nSalpox_conpnsze 804 Soeca mas circalieres cultes (eau Iea BLEdr\neana FEUF salade 119 Viande de Doxet carostes, Fromage _ pite dune15\nDuion, huile  colza Peul aitiioon cVou lecuke {#rtcs: torneru€ rome naluf2\nUAMnannte balsAmiqun_73 de colza, hude: d0wve vlerge,\nSIFMTES mout d2 Tasin, sel\nchcna70 Suce larine de BLE (UF beurae colz\nCa Cefad Oq hoa Maxglru Quvore bicabonate 01\nTjsial Ecihines (S0JA Jrumenalnu\nLu tarine de BLE son de BLE Mve de BLE ssmoue (e GLE\nBEUAIRE, 0 0 40 viete da Cza evure boulangere sucte\n9cuie Onules pavolaume natufc\nPodui peul conicnls 6us0,4 mnoulafoe, des truts & coqus ef d'uctre\nontenenl Qu glutan\nn Coute NE\nhe atsphhre pruteclırco consarvrr untru 0 Cet +4*Cy €omgrs\nFlkn coore @ pour cungarvor Don moaliocis\npas Conu Mwn"
+    },
+    {
+      "engine": "easyocr",
+      "product_id": "off_7613035937420",
+      "ocr_text": "SLoti\nAich"
+    },
+    {
+      "engine": "easyocr",
+      "product_id": "off_3175681170872",
+      "ocr_text": "LECUMES LEnIILLES RIz ET SoJA ISSus DE L'AGRICULTURE\nBIOLOCIQUE (ngredients3 Carottes' 24%, eau; lentilles vertes' 143,\nFiz basmaticompi Dlet 72% oignons' 12%, huile de tournesol ;, proteines\nde soja 'texturees rehydratees 6%, sauce soja' (eau; soja \", ble ,\nsel de mer; alcool ), sel de mer:\n'Ingredients issus de |'agriculture 'biologique.\n@Soja français sans OCM\nFabrique dans un atelier qui utilise : celeri crustaces, poissons;, fruits\nIcoque, lait; moutarde; cuf et sesame."
+    },
+    {
+      "engine": "easyocr",
+      "product_id": "off_3083681148640",
+      "ocr_text": "Salade de celeri Rape Au froMaGE BlaNC\nIMGREDIENTS < CELERI 70%,huile de colza,eau FROMAGE blanc 0%  matieres grasses 6,5% (LAIT ecreme pasteurise, ferments LACTIQUES) ,\nvinaigre d'alcool sel, MOUTARDE de Dijon sucre GUF en poucre,\nepaississant : gomme de xanthane;\nFabrique dans unatelier utilisant egalement: gluten crustace poisson, soja fruits a coque Conditionne sous atmosphere protectrice,"
+    },
+    {
+      "engine": "easyocr",
+      "product_id": "off_3281780893915",
+      "ocr_text": "Ingredients : semoule de ble rghydratee 56% (semoule de ble, eau) , 'Segemeslepoevoncengurates oignons), jus de\ncitronda' baseude 'concentre'' huiledd olive_ vierge extra;\nhuile de colza, raisins secs sorbate de potassium. Peut menthe, epices; . vinaigre\ndalcool, contenir arachides; celeri, sel, conservateur tosoebacercaleotcostenant u\ngluten, crustaces; (ruits &'coque; graines de sesame; iait,\nmoutarde, oeuf, poissons et soja.\n0809400 708 Service Gratuit aPFcl martinet fr"
+    },
+    {
+      "engine": "easyocr",
+      "product_id": "off_3021690201123",
+      "ocr_text": "Lentilles cvisinges\n0 /Auvergnete\nINGREDIENTS Eau, lentilles prgcuiles\n28%, couenne d porc; sqindoux oignons 1, arome noturel, forine de BLE, carottes\n0,7%, groisse € de conard, plonte uromotique;\nor^me naturel de poivre avec autres\narsmes noturels, affermissant: chlorure d\ncolcium , orime naturel de CELERL Traces\neventuelles de : cuf, ait, moutarde"
+    },
+    {
+      "engine": "easyocr",
+      "product_id": "off_6111035000430",
+      "ocr_text": "Depuis 1976. Sidi Ati voust ofnec une purete incomparaoi une\nEau nineral Dicn-cte ci naturelle @hydratation au quoodie\nSource oe Sidi Ali prend Soin Oe Yous\nA1l8+464 1976\n44)4 '(doltja; J2y>\n(\nComposition minerale en mg/\nResidu sec 1io-C 186\nSccum 26 Fjl Hy Bicarbonates 104Cux4< 42 2\nGloum Fy suates\nKegnesum chlorures\nPoussum 3 ply Nruates\nNH 60/98 04 15-04-96\n0800 00"
+    },
+    {
+      "engine": "easyocr",
+      "product_id": "off_6111035000058",
+      "ocr_text": "Conpothlon m aqva Onc(\ncoqu\nOkhn\nKaqoeiur k\nPolaeon\nCiDonale\nChionn\nAbtor\nAte 'nk8gy8i81404+"
+    },
+    {
+      "engine": "easyocr",
+      "product_id": "off_6111128000071",
+      "ocr_text": "'JalaiuP* 4i e öl\noclvuuLsolso$4 Jiai\ncflşHİ9 uanji\nComposition de Teau en mg/L\nE6l4\nCalcium 63,5 As:WI\nMagnesium 35,5 Asjti\nNitrate 0lj\nSodium Axye\nChlorures 19,8 Jss\nSulfate 3,8 Wx\nPotassium Bicarbonate 372 alyl\nAstulby\nUyL ':xul\nYLi 2210 _ue Loribyo\no5 ^0009 7o"
+    },
+    {
+      "engine": "easyocr",
+      "product_id": "off_6111252421568",
+      "ocr_text": "u"
+    },
+    {
+      "engine": "easyocr",
+      "product_id": "off_6111035000027",
+      "ocr_text": "Gau ninerale naturelle d une purete incomparable Dequis 1978,Sidi Ali vous oftre une\nSource de bien-etre et dhydratation au quotidien ,\nSidi Ali prend soin de vous .\nALnaddle!_~;1978 _\n4x4 ~Lylay 4\n~5=ck}+ \"#xJr l\nComposition minerale en m9/1\nResidu sec IoeC : 186\nSoaum Bicarbonates 104 2Lxl\nCaoum Sullates\nMegnedum 9 f Croruros\n\"ey Nitatcs\nAune I80/5d 0 15-0486\n0Boo 0o 3434 s\nJa2l"
+    },
+    {
+      "engine": "easyocr",
+      "product_id": "off_6111035502828",
+      "ocr_text": "Ain Atla"
+    },
+    {
+      "engine": "easyocr",
+      "product_id": "off_3083681095296",
+      "ocr_text": "ld\nINGREDIENTS : Des d'auber -\ngines prefrites (aubergines ,\nhuile de tournesol) , des de\ncourgettes, puree detomates\nmi-reduite 20% (acidifiant\nacide citrique) , des d'oignons;\ndes de poivrons rouges ,\ndouble concentredetomates\n39, huile d'olive vierge extra\n2% , sucre |,5%, sel, ail, jus con-\ncentre de citron, farine de\nBLE, thym 0,1%."
+    },
+    {
+      "engine": "easyocr",
+      "product_id": "off_20004132",
+      "ocr_text": "Consumir € Tomate em pedaços em sumo de tomate - Ingrediener x Densidt\n'de preferencia antes de: ver topo ou [ fundo\nno prazo de dias"
+    },
+    {
+      "engine": "easyocr",
+      "product_id": "off_3083681094459",
+      "ocr_text": "INGREDIENTS Courgettes\nprefrites 52% (courgettes 49%,\nhuile de tournesol), tomates\npelees concassees au jus 22%\n(tomates, jusde tomates) oignons\n11%,pureede tomates mi-reduite\n3,7%, double concentre de\ntomates 3%, sucre 2%, huile\ndolive vierge extra 1,9%, jus\nconcentrede citron; sel, basilic\n0,7%,ail, farinede BLE, fenouil\nmoulu Peutcontenir CELERL"
+    },
+    {
+      "engine": "easyocr",
+      "product_id": "off_3307130803004",
+      "ocr_text": "INGREDIENTS\nlegumes* en morceaux 87% (pulpe de\ntomates* , courgettes* , aubergines* ,\noignons* , poivrons* rouges, poivrons*\nverts) , double concentre de tomates* &\n28%, huile dolive* vierge extra; sucre de\ncanne* , huile de tournesol* , sel marin;\nplantes aromatiques* , purge dail* , jus\nconcentre de citron* , poivre noir*\n*Produits issus de l'agriculture biologique"
+    },
+    {
+      "engine": "easyocr",
+      "product_id": "off_3083681001808",
+      "ocr_text": "INGREDIENTS:Eau, haricots\nblancs secs trempes 37%,\ntomates 11%, puree de\ntomates mi-reduite 8%, sel\nsucre, extrait de levure, ail\nen poudre, sauge 0,1%,\npersil 0,05%, arme naturel\ncarottes en poudre tomates\nen poudre,   oignons en\npoudre, safran, arime\nnatureldethym une feuille\ndelaurier."
+    },
+    {
+      "engine": "easyocr",
+      "product_id": "off_3083681094923",
+      "ocr_text": "INGREDIENTS : Haricots verts\nextra-fins 54%, eau; sel, oignon\ngrelot . 0,29"
+    },
+    {
+      "engine": "easyocr",
+      "product_id": "off_6111246721261",
+      "ocr_text": "Tableau Nutritionnel (pour\n1O0g)\nElement Valeur Analyse\nEnergie 159 Kcal Eleve pour un produit\n662 kJ) laitier nature\nclassique.\nLipides 11g Riche. Cela\n(Matieres correspond\ngrasses) produit type \"grec\"\nenrichi en creme.\nGlucides Presence notable\ndamidon (indique\ndans les ingredients)_\nProteines Correct, mais plus\nbas que certains\nyaourts proteines\n(type Skyr)"
+    },
+    {
+      "engine": "easyocr",
+      "product_id": "off_6111242100992",
+      "ocr_text": "Klgjn\nFromage hrois  sucre\n(100 Javni\nValevr nutrmonneles pou 1oa\nValounceosad 97 de 9\nAroa 80\nCorbohydroicg 96\nGoges 206\nColoum 250"
+    },
+    {
+      "engine": "easyocr",
+      "product_id": "off_6111242106949",
+      "ocr_text": "jben Jaouda) 7leug\n8003s Frais) CuIsE n €\nTartin €"
+    },
+    {
+      "engine": "easyocr",
+      "product_id": "off_6111242101180",
+      "ocr_text": "Le lait UHT Jaouda ne contient pas de conservateurs.\nSi le lait UHT se conserve & temperature ambiante\npendant 6 mois, cest parce que\nIlsubit un traitement thermique UHT (ultra Haute\nTemperature) qui detruit tous les micro-€ 'organismes\nIlest conditionne dans un emballage aseptique de 6\ncouches le protegeant de toute contamination exterieure"
+    },
+    {
+      "engine": "easyocr",
+      "product_id": "off_6111242100985",
+      "ocr_text": "VMbujej?\nFromage frais nature\n{100 J aiunl a~dl\nVoleurs nutritionnelles Pour 100g\ndec energetiques Kcdl IO1 JIs J\nProcines 764 B51\nCrbonyeraes 42 & Jr\nLoee 6,0 6\nlaum 92402\ndaall Lkhi: 'Zor225 Zxialezg\n30-Lazyi\n61 7242 '100985\nanilaire OnSS^ n9lPl 28 <"
+    },
+    {
+      "engine": "easyocr",
+      "product_id": "off_6111246721278",
+      "ocr_text": "4\n6\n64 e\nerg ardar r Qna\nLea Ocvet a C Fr\nuasuon 07lles e7enearou"
+    }
+  ]
+}
