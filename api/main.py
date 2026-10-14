@@ -22,6 +22,7 @@ from api.auth import (
     get_current_user,
     get_current_user_optional,
 )
+from api.health import run_health_checks
 from api.pipeline import AnalysisResult, analyze_label_image, get_candidate_products
 from src.common.schema import Allergen, NutritionFacts, ProductRecord, UserObjective
 from src.health.profile import ChronicCondition, HealthProfile
@@ -170,6 +171,7 @@ def _serialize_result(result: AnalysisResult) -> dict:
         "risk_messages": result.risk_messages,
         "ocr_confidence": result.ocr_confidence,
         "ocr_engine": result.ocr_engine,
+        "warnings": result.warnings,
     }
 
     if result.explanation is not None:
@@ -360,5 +362,7 @@ def recommend(product_id: str, profile_id: str, max_results: int = 3) -> dict:
 
 
 @app.get("/health")
-def health_check() -> dict:
-    return {"status": "ok"}
+def health_check(deep: bool = False) -> dict:
+    """Sistem parcalarinin durumu (bkz. api/health.py). deep=true gercek API cagrisiyla
+    embedding/LLM kredisini de dener - izleme icin, her istekte degil."""
+    return run_health_checks(deep=deep)

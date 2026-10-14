@@ -24,10 +24,20 @@ def _fake_image_bytes() -> bytes:
 
 
 class TestHealthCheck:
-    def test_returns_ok(self):
+    def test_returns_status_and_individual_checks(self):
         response = client.get("/health")
         assert response.status_code == 200
-        assert response.json() == {"status": "ok"}
+        body = response.json()
+        assert body["status"] in ("ok", "degraded")
+        assert set(body["checks"]) == {"api_keys", "ocr_engines", "rag_index", "vision_model"}
+
+    def test_deep_check_is_opt_in(self, monkeypatch):
+        import api.main as main_module
+
+        calls = []
+        monkeypatch.setattr(main_module, "run_health_checks", lambda deep: calls.append(deep) or {"status": "ok"})
+        client.get("/health?deep=true")
+        assert calls == [True]
 
 
 class TestCreateProfile:
