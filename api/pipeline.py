@@ -13,6 +13,7 @@ B-plani ile tutarlidir. Kisisel filtre de sadece bir HealthProfile verilmisse ca
 
 from __future__ import annotations
 
+import logging
 import tempfile
 from dataclasses import dataclass, field
 from functools import lru_cache
@@ -33,6 +34,8 @@ from src.rag.llm_provider import get_llm_provider
 from src.rag.retriever import Retriever
 from src.vision.infer import load_best_model_from_report, predict_category
 
+logger = logging.getLogger(__name__)
+
 DATASET_PATH = Path(__file__).resolve().parents[1] / "data" / "processed" / "dataset.csv"
 
 
@@ -46,6 +49,9 @@ class AnalysisResult:
     risk_messages: list[str]
     ocr_confidence: float
     ocr_engine: str | None = None
+    # Opsiyonel katmanlarin (RAG, yedek OCR) sessiz basarisizliklarini kullaniciya/istemciye
+    # gostermek icin (bkz. api/health.py'deki HuggingFace 402 olayi).
+    warnings: list[str] = field(default_factory=list)
     explanation: GenerationResult | None = None
     health_assessment: HealthAssessment | None = None
     alternatives: list[ProductRecord] = field(default_factory=list)
@@ -138,6 +144,15 @@ def analyze_label_image(
         nutrition, _basis = extract_and_normalize(ocr_result.text)
         detected_allergens = detect_allergens(ocr_result.text)
 
+    warnings: list[str] = []
+    if ocr_result.fallback_notes:
+        warnings.append(
+            f"OCR yedek motora dustu ({'; '.join(ocr_result.fallback_notes)}), "
+            f"{ocr_result.engine} kullanildi - dogruluk dusuk olabilir."
+        )
+    if not ocr_result.text.strip():
+        warnings.append("Etiketten metin okunamadi - daha yakindan ve net bir fotograf cekin.")
+
     risk_flags = assess_risks(nutrition)
     risk_messages = describe_risks(risk_flags)
 
@@ -147,9 +162,12 @@ def analyze_label_image(
             explanation = generate_explanation(
                 nutrition, risk_flags, _get_retriever(), _get_llm()
             )
-        except Exception:
+        except Exception as exc:
             # RAG katmani opsiyoneldir (API anahtari/aginin durumuna bagli) - basarisiz
-            # olursa kural tabanli (Faz 3) sonuclarla devam edilir, tum istek COKMEZ.
+            # olursa kural tabanli (Faz 3) sonuclarla devam edilir, tum istek COKMEZ. Ama hata
+            # artik loglanir ve yanita uyari olarak eklenir (once tamamen sessizdi).
+            logger.warning("RAG aciklamasi uretilemedi: %s", exc, exc_info=True)
+            warnings.append(f"Saglik aciklamasi uretilemedi ({type(exc).__name__}: {str(exc)[:120]}).")
             explanation = None
 
     health_assessment = None
@@ -181,6 +199,7 @@ def analyze_label_image(
         risk_messages=risk_messages,
         ocr_confidence=ocr_result.mean_confidence,
         ocr_engine=ocr_result.engine,
+        warnings=warnings,
         explanation=explanation,
         health_assessment=health_assessment,
         alternatives=alternatives,

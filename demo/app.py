@@ -386,6 +386,7 @@ with tab_scan:
                             "risk_messages": result.risk_messages,
                             "ocr_confidence": result.ocr_confidence,
                             "explanation_text": result.explanation.text if result.explanation else None,
+                            "warnings": result.warnings,
                         }
 
                         # Veritabanına kaydet
@@ -433,6 +434,10 @@ with tab_scan:
             )
         else:
             st.success(f"**{category_label}** kategorisinde bir ürün — belirgin bir sağlık riski tespit edilmedi.")
+
+        # Opsiyonel katmanlarin (RAG, yedek OCR) basarisizliklari artik sessiz degil.
+        for warning in result_data.get("warnings", []):
+            st.warning(f"⚠️ {warning}")
 
         if result_data["ocr_confidence"] < 50:
             st.caption(

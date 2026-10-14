@@ -24,9 +24,10 @@ from __future__ import annotations
 import base64
 import json
 import mimetypes
+import logging
 import os
 import subprocess
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from functools import lru_cache
 from pathlib import Path
 
@@ -36,6 +37,8 @@ import requests
 from dotenv import load_dotenv
 
 load_dotenv()
+
+logger = logging.getLogger(__name__)
 
 TESSERACT_EXE = Path(r"C:\Program Files\Tesseract-OCR\tesseract.exe")
 TESSDATA_DIR = (Path(__file__).resolve().parents[2] / "data" / "tessdata").resolve()
@@ -56,6 +59,9 @@ class OCRResult:
     mean_confidence: float  # 0-100 araliginda, motorlar arasi karsilastirilabilir
     engine: str
     usage: dict | None = None  # ucretli API'lerde token kullanimi (maliyet hesabi icin)
+    # extract_text_live: atlanan/basarisiz motorlar ("openai_vision: TimeoutError") - sessiz
+    # yedege dusmeyi gorunur kilmak icin (api/pipeline.py bunlari kullanici uyarisina cevirir).
+    fallback_notes: list[str] = field(default_factory=list)
 
 
 def _group_boxes_into_rows(boxes: list[dict]) -> str:
@@ -400,19 +406,26 @@ def extract_text_live(
     }
     last_result: OCRResult | None = None
     last_error: Exception | None = None
+    notes: list[str] = []
     for engine in engines or _live_engine_order():
         key_name = REQUIRED_API_KEYS.get(engine)
         if key_name and not os.environ.get(key_name):
+            notes.append(f"{engine}: {key_name} yok")
             continue
         try:
             result = extractors[engine](image_path)
         except Exception as exc:
+            logger.warning("OCR motoru %s basarisiz, bir sonrakine geciliyor: %s", engine, exc)
+            notes.append(f"{engine}: {type(exc).__name__}")
             last_error = exc
             continue
         if result.text.strip():
+            result.fallback_notes = notes
             return result
+        notes.append(f"{engine}: metin okunamadi")
         last_result = result
     if last_result is not None:
+        last_result.fallback_notes = notes
         return last_result
     if last_error is not None:
         raise last_error

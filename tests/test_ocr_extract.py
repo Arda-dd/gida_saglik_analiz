@@ -366,3 +366,15 @@ def test_encode_image_for_vlm_keeps_small_images_as_is(tmp_path):
     path = _make_text_image(tmp_path, "x")
     mime, _encoded = _encode_image_for_vlm(path, max_side=2048)
     assert mime == "image/png"
+
+
+def test_live_ocr_records_fallback_notes(tmp_path, monkeypatch):
+    monkeypatch.setenv("OPENAI_API_KEY", "fake")
+    monkeypatch.delenv("OCR_SPACE_API_KEY", raising=False)
+    with patch("src.ocr.extract.extract_text_openai_vision", side_effect=TimeoutError()), patch(
+        "src.ocr.extract.extract_text_easyocr", return_value=_ok("easyocr")
+    ):
+        result = extract_text_live(tmp_path / "x.jpg", engines=("openai_vision", "ocrspace", "easyocr"))
+
+    assert result.engine == "easyocr"
+    assert result.fallback_notes == ["openai_vision: TimeoutError", "ocrspace: OCR_SPACE_API_KEY yok"]

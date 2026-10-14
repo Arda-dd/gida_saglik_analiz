@@ -180,6 +180,28 @@ class TestAnalyzeLabelImage:
 
         assert result.explanation is None
         assert result.category == "atistirmalik"
+        # Hata artik sessiz degil: yanitta gorunur bir uyari var.
+        assert any("aciklamasi uretilemedi" in w and "rate limit" in w for w in result.warnings)
+
+    def test_ocr_fallback_is_reported_as_warning(self, mocked_pipeline_dependencies, monkeypatch):
+        monkeypatch.setattr(
+            pipeline_module,
+            "extract_text_live",
+            lambda path: OCRResult(
+                text="Seker: 35 g", mean_confidence=82.0, engine="easyocr",
+                fallback_notes=["openai_vision: TimeoutError"],
+            ),
+        )
+        result = pipeline_module.analyze_label_image(Path("fake.jpg"), generate_llm_explanation=False)
+        assert any("yedek motora dustu" in w and "TimeoutError" in w for w in result.warnings)
+
+    def test_unreadable_label_asks_for_better_photo(self, mocked_pipeline_dependencies, monkeypatch):
+        monkeypatch.setattr(
+            pipeline_module, "extract_text_live",
+            lambda path: OCRResult(text="", mean_confidence=0.0, engine="easyocr"),
+        )
+        result = pipeline_module.analyze_label_image(Path("fake.jpg"), generate_llm_explanation=False)
+        assert any("metin okunamadi" in w for w in result.warnings)
 
     def test_rag_success_populates_explanation(self, mocked_pipeline_dependencies, monkeypatch):
         fake_result = GenerationResult(
