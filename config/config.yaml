@@ -40,6 +40,10 @@ ocr:
   # birincil (kullanici karari; 5 motor kiyasi: docs/ocr_comparison_report.md).
   live_engines: [openai_vision, ocrspace, easyocr]
   openai_vision_model: gpt-4.1-mini
+  # OpenAI gorsel modeli okunamayan etikette besin tablosu uydurabiliyor (OCR raporu Bolum 5).
+  # Bu motor paralel calistirilip OpenAI'in okudugu degerler onun ham metninde aranir;
+  # gecmeyenler "dogrulanamadi" diye isaretlenir. null yapilirsa capraz dogrulama kapanir.
+  cross_check_engine: ocrspace
   languages: [tr, en]
 
 # 100g/100mL bazinda urun-seviyesi "yuksek" esikleri (Nutri-Score/UK FSA front-of-pack
