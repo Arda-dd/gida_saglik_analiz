@@ -12,6 +12,10 @@ güçlendirildikten sonra %38.2'den %86.4'e çıktı — bkz. "Sayısal Dayanak 
 Alignment %89.2). Metrikte daha yüksek çıkan `gpt-4o-mini`, besin değerlerini sistematik olarak
 yanlış besin öğesine bağladığı için seçilmedi — bkz. "OpenAI'a Geçiş ve Model Kıyası" bölümü.
 
+**Güncelleme (2026-10-14):** Embedding de OpenAI'a alındı (HuggingFace kredisi bitince canlı RAG
+sessizce çalışmaz olmuştu). Ürün verisi ve kural motoru kaynak kimliği aldı. 3 koşu ortalaması:
+Factual Consistency **%100**, GTA **%100**, MRR 0.800 — bkz. "Embedding OpenAI'a…" bölümü.
+
 ## Neden API tabanlı embedding'e geçildi (mimari değişiklik #1)
 
 İlk uygulama `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2` modelini yerel
@@ -189,6 +193,39 @@ ediliyor (5 yeni birim testi).
 - Tek resmi `evaluate` koşusu (gpt-4.1-mini, `docs/rag_evaluation_report.json`): FC %89.6, GTA
   %90.0 — yukarıdaki 3 koşuluk aralığın içinde.
 
+## Embedding OpenAI'a, iç kaynak kimlikleri, ölçü bazı düzeltmesi (2026-10-14)
+
+**Canlı hata:** HuggingFace'in ücretsiz aylık kredisi bitti (`402 Payment Required`). Sorgu
+embedding'i HuggingFace'ten alındığı için canlı pipeline'da RAG açıklaması üretilemiyordu. Hata
+`api/pipeline.py`'de bilinçli olarak yutulduğu için (opsiyonel katman) kullanıcıya açıklamasız
+sonuç dönüyordu ve fark edilmemişti. Embedding OpenAI `text-embedding-3-small`'a alındı ve indeks
+yeniden kuruldu. Retrieval: Recall@5 %100 (değişmedi), MRR 0.794 → **0.800**.
+
+**Kaynak kimlikleri:** Model, ürünün kendi değerlerini ve kural motorunun kararını kaynak göstermek
+istiyor ama bunların kimliği olmadığı için prompt'taki bölüm başlıklarını etiket olarak yazıyordu.
+Önce bunu yasaklayan bir talimat denendi: başlıkları prompt'ta anmak hatayı **artırdı** (3 koşuda
+geçersiz atıf 2 → 4, FC %91.0). Sonra iki bölüme gerçek kimlik verildi (`urun_etiketi`,
+`kural_motoru`) ve bunlar geçerli kaynak sayıldı. Uydurma kaynak tespiti diğer her kimlik için
+aynen çalışıyor (bkz. `test_section_header_cited_as_source_is_still_invalid`).
+`kural_motoru` atfındaki sayılar risk açıklamalarına karşı kontrol ediliyor.
+
+**Ölçü bazı:** "100 gramında", "100 g'da" gibi ifadelerdeki 100 artık sayısal kontrolden önce
+çıkarılıyor. Türkçe ekler dahil. Bu, aşağıdaki yol haritasının 5. maddesidir.
+
+| gpt-4.1-mini, 3 koşu ortalaması | Factual Consistency | Ground Truth Alignment | Geçersiz atıf |
+|---|---|---|---|
+| 2026-10-06 (HF embedding) | %96.5 | %89.2 | 2 / 3 koşu |
+| 2026-10-14 (OpenAI embedding + kimlikler + ölçü bazı) | **%100** | **%100** | 0 / 78 atıf |
+
+Bu artışın bir kısmı metrik düzeltmesinden geliyor: kaynak kimlikleri ve ölçü bazı. Yani
+model "daha akıllı" olmadı, metrik artık meşru davranışı cezalandırmıyor. 12 metin elle okundu:
+- Doymuş yağ 3 koşuda da doğru aktarıldı (14 g).
+- Değeri verilmeyen besin öğeleri için model değer uydurmadı ("doymuş yağ içeriği
+  belirtilmemiş" dedi).
+- Eşik değerleri (22.5 g şeker, 5 g doymuş yağ) kaynakla uyumlu.
+
+Canlı pipeline ile uçtan uca bir testte de açıklama yeniden üretildi (FC 1.00, GTA 1.00).
+
 ## Önerilen Yol Haritası
 
 1. ~~Self-consistency katmanını genişlet~~ **✅ Tamamlandı (2026-07-12)** — sayısal dayanak
@@ -196,18 +233,14 @@ ediliyor (5 yeni birim testi).
 2. ~~Üretim kalitesi için güçlü model~~ **✅ Tamamlandı (2026-10-06)** — Anthropic yerine
    OpenAI `gpt-4.1-mini`'ye geçildi (burs ile API anahtarı alındı); model seçiminin gerekçesi
    ve ölçümler için yukarıdaki "OpenAI'a Geçiş ve Model Kıyası" bölümüne bakınız.
-3. **Bölüm başlıklarını kaynak gibi gösterme:** gpt-4.1-mini'nin kalan Factual Consistency
-   kaybının tamamı, prompt'taki `URUN BESIN DEGERLERI` / `KURAL MOTORU RISK BAYRAKLARI`
-   başlıklarını `[Kaynak: ...]` etiketi olarak kullanmasından geliyor. Prompt'a "ürünün kendi
-   değerleri ve risk bayrakları için kaynak etiketi gerekmez" talimatı eklenmesi muhtemelen
-   yeterli (kod-only, küçük iş).
+3. ~~Bölüm başlıklarını kaynak gibi gösterme~~ **✅ Tamamlandı (2026-10-14)** — yasaklayan talimat
+   işe yaramadı; iki bölüme gerçek kaynak kimliği verildi (yukarıdaki bölüm).
 4. **Besin öğesi tutarlılık kontrolü:** Ground Truth Alignment bir sayının ürün verisinde
    geçip geçmediğine bakıyor, **doğru besin öğesine** bağlanıp bağlanmadığına bakmıyor
    (gpt-4o-mini'nin "30 g doymuş yağ" hatası %100 dayanaklı sayıldı). Self-consistency'e
    "X g <besin öğesi>" kalıplarını ürün verisindeki ilgili alanla karşılaştıran üçüncü bir
    kontrol eklenmesi, modelden bağımsız bir güvence sağlar.
-5. **"100 g" bazının cezalandırılması:** "100 gramında" ifadesindeki 100, ne kaynakta ne
-   ürün verisinde geçtiği için dayanaksız sayılıyor — tüm modellerde `risksiz_urun`'u
-   0.80'e sabitleyen bir metrik artefaktı. Ölçü bazı (100 g/100 mL) dayanaklı kabul edilmeli.
+5. ~~"100 g" bazının cezalandırılması~~ **✅ Tamamlandı (2026-10-14)** — ölçü bazı ifadeleri
+   (Türkçe ekler dahil) sayısal kontrolden önce çıkarılıyor.
 6. **Retrieval ince ayarı:** MRR'yi 1.0'a yaklaştırmak için dense/BM25 ağırlıkları (0.6/0.4)
    üzerinde küçük bir grid search denenebilir (Faz 8 kapsamlı değerlendirmesine bırakıldı).

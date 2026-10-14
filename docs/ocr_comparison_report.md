@@ -300,3 +300,40 @@ python -m src.ocr.evaluate --engines ocrspace --retry-failed  # hata veren görs
 - Ham sonuçlar, her görsel için OCR metni dahil: `docs/ocr_evaluation_report.json`
 - OpenAI talimat v1 çıktıları (uydurma örnekleri): `docs/ocr_openai_vision_prompt_v1.json`
 - Kod: `src/ocr/extract.py` (motorlar), `src/ocr/windows_ocr.ps1`, `src/ocr/evaluate.py` (ölçüm)
+
+---
+
+## 9. Ek (14 Ekim 2026): Ayrıştırıcı İyileştirmesi Sonrası
+
+Bölüm 7'deki ilk öneri uygulandı: kural tabanlı ayrıştırıcı (`src/ocr/normalize.py`) genişletildi.
+OCR motorları yeniden çalıştırılmadı. Bu rapordaki **aynı ham OCR metinleri** yeni ayrıştırıcıyla
+yeniden puanlandı (`python -m src.ocr.evaluate --reparse`). Sayı yakalama değişmez, çünkü OCR'a
+bağlıdır.
+
+| Motor | Alan doğruluğu (7 Ekim) | Alan doğruluğu (14 Ekim) | Ortak 27 görsel (14 Ekim) | Okundu, ayrıştırıcı kaçırdı (7 → 14 Ekim) |
+|---|---|---|---|---|
+| OpenAI gpt-4.1-mini | %50.6 | **%66.8** | **%63.9** | %19 → %3 |
+| OCR.space | %44.2 | **%56.6** | **%62.2** | %20 → %5 |
+| EasyOCR | %16.2 | %19.2 | %17.0 | %20 → %17 |
+| Windows OCR | %9.4 | %13.2 | %13.7 | %17 → %13 |
+| Tesseract | %7.9 | %10.2 | %10.4 | %6 → %3 |
+
+**Eklenen formatlar:**
+- Anahtar kelime ile değer arasında uzun boşluk ("matières grasses / vetten : 3,5 g", noktalı
+  dolgu).
+- Alt satıra kaymış değer.
+- Birimin sayıdan önce geldiği format ("Protéines | g | 3,0", "Kcal 97", "kJ/kcal 972,5/235").
+- Almanca, Hollandaca, İtalyanca, İspanyolca, İsveççe ve Arapça anahtar kelimeler; Arapça gram
+  birimi ("غ").
+- Önce bütün etiketlerin, sonra bütün değerlerin geldiği sütun düzenli tablolar.
+
+Önceden doğru olup yanlışa dönen alan **yok**.
+
+**Önemli uyarı:** Ayrıştırıcı bu 30 görselin hata örnekleri incelenerek geliştirildi. Kurallar
+belirli görsellere değil genel etiket formatlarına göre yazıldı ve 13 birim testiyle sabitlendi.
+Yine de aynı set hem geliştirme hem ölçüm için kullanıldığından 14 Ekim rakamları iyimserdir.
+Bağımsız bir test seti (Türk market ürünlerinin fotoğrafları) ile doğrulanmalıdır.
+
+**Canlı sistem:** Kullanıcı kararıyla canlı OCR motoru OpenAI gpt-4.1-mini görsel modeli oldu.
+Yedek sırası OCR.space → EasyOCR (`config.yaml -> ocr.live_engines`). Bölüm 5'teki uydurma riski
+bu karar için geçerliliğini koruyor (bkz. Bölüm 7, çapraz doğrulama önerisi).

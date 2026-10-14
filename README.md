@@ -109,25 +109,22 @@ curl -L -o data\tessdata\tur.traineddata https://github.com/tesseract-ocr/tessda
 cp .env.example .env
 ```
 
-Sistem iki API anahtarı kullanır:
+Sistemin çalışması için tek zorunlu anahtar **OpenAI**'dır. Üç iş için kullanılır: OCR
+(`gpt-4.1-mini` görsel), RAG açıklaması (`gpt-4.1-mini`) ve embedding
+(`text-embedding-3-small`). Ödemeli ama analiz başına 1 sentin çok altında. Anahtar
+[platform.openai.com/api-keys](https://platform.openai.com/api-keys)'ten alınır.
 
-- **Embedding (retrieval) → HuggingFace Inference API** — ücretsiz, kredi kartı gerektirmez:
-  1. [huggingface.co](https://huggingface.co) üzerinde ücretsiz bir hesap oluştur.
-  2. [huggingface.co/settings/tokens](https://huggingface.co/settings/tokens) → **Create new
-     token** → "Fine-grained" seç → sadece **Inference → "Make calls to Inference Providers"**
-     kutusunu işaretle (başka hiçbir izin gerekmez) → token oluştur.
-- **LLM (metin üretimi) → OpenAI `gpt-4.1-mini`** — ödemeli (analiz başına 1 sentin çok
-  altında); anahtar [platform.openai.com/api-keys](https://platform.openai.com/api-keys)'ten alınır.
-
-`.env` dosyasını aç, şu satırları doldur:
+`.env` dosyasını aç, şu satırı doldur:
 ```
-HUGGINGFACE_API_KEY=hf_...senin_tokenin...
 OPENAI_API_KEY=sk-...senin_anahtarin...
 ```
 
-OpenAI anahtarın yoksa `config/config.yaml` içinde `llm.provider: huggingface` yaparak ücretsiz
-Llama-3.1-8B ile de çalıştırabilirsin (açıklama kalitesi biraz daha oynak — bkz.
-`docs/rag_results_notes.md`, "OpenAI'a Geçiş ve Model Kıyası"). `anthropic` de desteklenir.
+İsteğe bağlı anahtarlar:
+- `OCR_SPACE_API_KEY` ([ocr.space/ocrapi](https://ocr.space/ocrapi), ücretsiz): OpenAI OCR hata
+  verirse ilk yedek motor. Yoksa doğrudan yerel EasyOCR'a düşülür.
+- `HUGGINGFACE_API_KEY`: yalnızca `config/config.yaml`'da `llm.provider` ya da
+  `rag.embedding_provider` değeri `huggingface` yapılırsa gerekir. Ücretsiz aylık kredisi
+  sınırlı; Ekim 2026'da bittiği için varsayılan sağlayıcı OpenAI'a alındı.
 
 ### 5. RAG bilgi tabanı index'ini kur
 
@@ -199,8 +196,8 @@ Her fazın sonucu, hedeflenen metrikle birlikte `docs/` altında **dürüstçe**
 |---|---|---|---|
 | 0-1 | İskelet + veri toplama | Tamamlandı (395 OFF kaydı) | `docs/attribution_off.md` |
 | 2 | Görsel sınıflandırma | **%75 test accuracy** (hedef ≥%85 — veri hacmi kısıtı, bkz. altta) | `docs/vision_results_notes.md` |
-| 3 | OCR + normalizasyon | 5 motor kıyası (30 görsel, alan doğruluğu): Tesseract %7.9, Windows OCR %9.4, EasyOCR %16.2, OCR.space %44.2, OpenAI gpt-4.1-mini **%50.6** (ortak 27 görselde ikisi de **%48.5**; OpenAI uydurma riski taşıyor). Canlı pipeline: OCR.space → EasyOCR fallback (hedef ≥%90) | `docs/ocr_comparison_report.md` |
-| 4 | RAG | Recall@5 %100, MRR 0.794. LLM: OpenAI gpt-4.1-mini (3 koşu ort.) Factual Consistency **%96.5**, Ground Truth Alignment **%89.2**; metrikte daha yüksek çıkan gpt-4o-mini besin değerini yanlış besin öğesine bağladığı için elendi | `docs/rag_results_notes.md` |
+| 3 | OCR + normalizasyon | Canlı motor: **OpenAI gpt-4.1-mini görsel** (yedek: OCR.space → EasyOCR). Alan doğruluğu (30 görsel): OpenAI **%66.8**, OCR.space %56.6, EasyOCR %19.2, Windows OCR %13.2, Tesseract %10.2 (14 Ekim ayrıştırıcı iyileştirmesiyle; önce %50.6 / %44.2). OpenAI okunamayan görselde uydurma riski taşıyor (hedef ≥%90) | `docs/ocr_comparison_report.md` |
+| 4 | RAG | Recall@5 %100, MRR 0.800 (OpenAI embedding). LLM: OpenAI gpt-4.1-mini (3 koşu ort.) Factual Consistency **%100**, Ground Truth Alignment **%100** (14 Ekim: ürün verisi ve kural motoru kaynak kimliği aldı, '100 g' ölçü bazı artefaktı giderildi); gpt-4o-mini besin değerini yanlış besin öğesine bağladığı için elendi | `docs/rag_results_notes.md` |
 | 5 | Kişisel profil | Profile Consistency %100, Recommendation Relevance %100 | `docs/health_results_notes.md` |
 | 6 | API + Demo | Gerçek fotoğrafla uçtan uca doğrulandı | `docs/faz6_results_notes.md` |
 
@@ -240,7 +237,10 @@ yeniden eğitip sonucu ölçme.
 Sistem, RAG modülünde hem LLM'i hem embedding'i **API üzerinden** kullanır — hiçbir model
 yerel olarak eğitilmez veya diske indirilmez (bkz. öneri formu 2.4). Varsayılan LLM
 **OpenAI `gpt-4.1-mini`** (2026-10-06'dan beri, TÜBİTAK 2209-A bursuyla), varsayılan embedding
-**HuggingFace Inference API** (ücretsiz). Sağlayıcılar `config/config.yaml -> llm.provider` /
+**OpenAI `text-embedding-3-small`** (2026-10-14'ten beri). Embedding sağlayıcısı ya da modeli
+değişirse indeks yeniden kurulmalıdır (`python -m src.rag.index_builder`). Canlı OCR motor
+sırası `config/config.yaml -> ocr.live_engines` ile belirlenir (varsayılan: OpenAI görsel →
+OCR.space → EasyOCR). Sağlayıcılar `config/config.yaml -> llm.provider` /
 `rag.embedding_provider` ve `.env` üzerinden değiştirilebilir (`openai` | `huggingface` |
 `anthropic`); modelleri karşılaştırmak için `python -m src.rag.compare_providers` kullanılabilir.
 

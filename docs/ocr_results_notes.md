@@ -1,5 +1,16 @@
 # Faz 3 Sonuçları ve Sınırlamalar — OCR ve Metin Normalizasyonu
 
+> **Güncelleme (2026-10-14):** Canlı OCR motoru **OpenAI gpt-4.1-mini görsel** oldu (kullanıcı
+> kararı). Yedek sırası: OCR.space → EasyOCR (`config.yaml -> ocr.live_engines`). Besin
+> ayrıştırıcısı (`src/ocr/normalize.py`) genişletildi: uzun anahtar kelime–değer boşlukları,
+> alt satıra kaymış değer, birimin sayıdan önce geldiği format, kJ/kcal çifti, AB dilleri ve
+> Arapça anahtar kelimeler, sütun düzenli tablolar. Aynı ham OCR metinleri yeniden puanlandı
+> (`python -m src.ocr.evaluate --reparse`), alan doğruluğu: OpenAI %50.6 → **%66.8**, OCR.space
+> %44.2 → %56.6, EasyOCR %16.2 → %19.2, Windows %9.4 → %13.2, Tesseract %7.9 → %10.2. Önceden
+> doğru olup yanlışa dönen alan yok. **Not:** ayrıştırıcı aynı 30 görsel üzerinde geliştirildi.
+> Kurallar genel etiket formatlarına göre yazıldı ve 13 birim testiyle sabitlendi. Yine de bu
+> rakamlar iyimserdir; bağımsız bir test seti (Türk market fotoğrafları) gerekiyor.
+
 > **Güncelleme (2026-10-06):** 5 OCR motorunun (Tesseract, EasyOCR, Windows OCR, OCR.space,
 > OpenAI gpt-4.1-mini görsel) aynı 30 görsellik setle karşılaştırması ayrı bir raporda:
 > **`docs/ocr_comparison_report.md`**. Özet: alan doğruluğu Tesseract %7.9, Windows OCR %9.4,
