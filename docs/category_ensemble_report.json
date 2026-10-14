@@ -1,0 +1,555 @@
+{
+  "summary": {
+    "n_test": 60,
+    "cnn_accuracy": 0.7333333333333333,
+    "vlm_accuracy": 0.95,
+    "combined_accuracy": 0.95,
+    "n_agree": 43,
+    "accuracy_when_agree": 0.9767441860465116,
+    "n_disagree": 17,
+    "disagree_cnn_correct": 2,
+    "disagree_vlm_correct": 15
+  },
+  "predictions": [
+    {
+      "product_id": "off_6923818812082",
+      "true": "icecek",
+      "cnn": "atistirmalik",
+      "cnn_confidence": 0.5857738852500916,
+      "vlm": "icecek",
+      "combined": "icecek",
+      "source": "vlm"
+    },
+    {
+      "product_id": "off_20187897",
+      "true": "konserve",
+      "cnn": "konserve",
+      "cnn_confidence": 0.9106751680374146,
+      "vlm": "konserve",
+      "combined": "konserve",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_5449000061515",
+      "true": "icecek",
+      "cnn": "sut_urunu",
+      "cnn_confidence": 0.6786404252052307,
+      "vlm": "icecek",
+      "combined": "icecek",
+      "source": "vlm"
+    },
+    {
+      "product_id": "off_6111035003004",
+      "true": "icecek",
+      "cnn": "icecek",
+      "cnn_confidence": 0.9404081106185913,
+      "vlm": "icecek",
+      "combined": "icecek",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_3083681095319",
+      "true": "konserve",
+      "cnn": "konserve",
+      "cnn_confidence": 0.999998927116394,
+      "vlm": "konserve",
+      "combined": "konserve",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_3487400006929",
+      "true": "hazir_gida",
+      "cnn": "hazir_gida",
+      "cnn_confidence": 0.9993823766708374,
+      "vlm": "hazir_gida",
+      "combined": "hazir_gida",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_6111260230619",
+      "true": "sut_urunu",
+      "cnn": "icecek",
+      "cnn_confidence": 0.8125025629997253,
+      "vlm": "sut_urunu",
+      "combined": "sut_urunu",
+      "source": "vlm"
+    },
+    {
+      "product_id": "off_5449000054227",
+      "true": "icecek",
+      "cnn": "icecek",
+      "cnn_confidence": 0.9466966390609741,
+      "vlm": "icecek",
+      "combined": "icecek",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_7613035694989",
+      "true": "hazir_gida",
+      "cnn": "hazir_gida",
+      "cnn_confidence": 0.9770834445953369,
+      "vlm": "hazir_gida",
+      "combined": "hazir_gida",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_20856090",
+      "true": "konserve",
+      "cnn": "sut_urunu",
+      "cnn_confidence": 0.49645182490348816,
+      "vlm": "konserve",
+      "combined": "konserve",
+      "source": "vlm"
+    },
+    {
+      "product_id": "off_3166353931402",
+      "true": "hazir_gida",
+      "cnn": "hazir_gida",
+      "cnn_confidence": 0.9067228436470032,
+      "vlm": "hazir_gida",
+      "combined": "hazir_gida",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_6111032009665",
+      "true": "sut_urunu",
+      "cnn": "sut_urunu",
+      "cnn_confidence": 0.9875405430793762,
+      "vlm": "sut_urunu",
+      "combined": "sut_urunu",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_7622210995087",
+      "true": "atistirmalik",
+      "cnn": "atistirmalik",
+      "cnn_confidence": 0.7301409244537354,
+      "vlm": "atistirmalik",
+      "combined": "atistirmalik",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_3571492210019",
+      "true": "hazir_gida",
+      "cnn": "hazir_gida",
+      "cnn_confidence": 0.9227297306060791,
+      "vlm": "hazir_gida",
+      "combined": "hazir_gida",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_3329770051072",
+      "true": "sut_urunu",
+      "cnn": "sut_urunu",
+      "cnn_confidence": 0.9937885403633118,
+      "vlm": "sut_urunu",
+      "combined": "sut_urunu",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_20004132",
+      "true": "konserve",
+      "cnn": "konserve",
+      "cnn_confidence": 0.9725563526153564,
+      "vlm": "konserve",
+      "combined": "konserve",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_5449000131805",
+      "true": "icecek",
+      "cnn": "sut_urunu",
+      "cnn_confidence": 0.8691766262054443,
+      "vlm": "icecek",
+      "combined": "icecek",
+      "source": "vlm"
+    },
+    {
+      "product_id": "off_6111032002208",
+      "true": "sut_urunu",
+      "cnn": "konserve",
+      "cnn_confidence": 0.5243960022926331,
+      "vlm": "sut_urunu",
+      "combined": "sut_urunu",
+      "source": "vlm"
+    },
+    {
+      "product_id": "off_3175681851856",
+      "true": "atistirmalik",
+      "cnn": "atistirmalik",
+      "cnn_confidence": 0.997863233089447,
+      "vlm": "atistirmalik",
+      "combined": "atistirmalik",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_3242274030056",
+      "true": "hazir_gida",
+      "cnn": "atistirmalik",
+      "cnn_confidence": 0.8849973082542419,
+      "vlm": "hazir_gida",
+      "combined": "hazir_gida",
+      "source": "vlm"
+    },
+    {
+      "product_id": "off_20198114",
+      "true": "konserve",
+      "cnn": "konserve",
+      "cnn_confidence": 0.7317538857460022,
+      "vlm": "konserve",
+      "combined": "konserve",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_3229820787015",
+      "true": "icecek",
+      "cnn": "icecek",
+      "cnn_confidence": 0.9809646010398865,
+      "vlm": "icecek",
+      "combined": "icecek",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_3336971805038",
+      "true": "atistirmalik",
+      "cnn": "hazir_gida",
+      "cnn_confidence": 0.8163495659828186,
+      "vlm": "atistirmalik",
+      "combined": "atistirmalik",
+      "source": "vlm"
+    },
+    {
+      "product_id": "off_6111266962910",
+      "true": "icecek",
+      "cnn": "sut_urunu",
+      "cnn_confidence": 0.7436696290969849,
+      "vlm": "sut_urunu",
+      "combined": "sut_urunu",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_3046920029759",
+      "true": "atistirmalik",
+      "cnn": "atistirmalik",
+      "cnn_confidence": 0.9999959468841553,
+      "vlm": "atistirmalik",
+      "combined": "atistirmalik",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_3760049798890",
+      "true": "atistirmalik",
+      "cnn": "atistirmalik",
+      "cnn_confidence": 0.8008540272712708,
+      "vlm": "atistirmalik",
+      "combined": "atistirmalik",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_6111246721278",
+      "true": "sut_urunu",
+      "cnn": "sut_urunu",
+      "cnn_confidence": 0.997129499912262,
+      "vlm": "sut_urunu",
+      "combined": "sut_urunu",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_6111266963207",
+      "true": "sut_urunu",
+      "cnn": "sut_urunu",
+      "cnn_confidence": 0.9980573058128357,
+      "vlm": "sut_urunu",
+      "combined": "sut_urunu",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_80176800",
+      "true": "atistirmalik",
+      "cnn": "atistirmalik",
+      "cnn_confidence": 0.5550674796104431,
+      "vlm": "atistirmalik",
+      "combined": "atistirmalik",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_3083681027860",
+      "true": "konserve",
+      "cnn": "konserve",
+      "cnn_confidence": 0.9997798800468445,
+      "vlm": "konserve",
+      "combined": "konserve",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_3272770097642",
+      "true": "sut_urunu",
+      "cnn": "sut_urunu",
+      "cnn_confidence": 0.9471834301948547,
+      "vlm": "sut_urunu",
+      "combined": "sut_urunu",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_3270190153917",
+      "true": "konserve",
+      "cnn": "konserve",
+      "cnn_confidence": 0.9999699592590332,
+      "vlm": "konserve",
+      "combined": "konserve",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_6111206000733",
+      "true": "sut_urunu",
+      "cnn": "sut_urunu",
+      "cnn_confidence": 0.9962745904922485,
+      "vlm": "sut_urunu",
+      "combined": "sut_urunu",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_3587220002252",
+      "true": "atistirmalik",
+      "cnn": "hazir_gida",
+      "cnn_confidence": 0.5035654306411743,
+      "vlm": "atistirmalik",
+      "combined": "atistirmalik",
+      "source": "vlm"
+    },
+    {
+      "product_id": "off_3600900005067",
+      "true": "hazir_gida",
+      "cnn": "atistirmalik",
+      "cnn_confidence": 0.9952326416969299,
+      "vlm": "hazir_gida",
+      "combined": "hazir_gida",
+      "source": "vlm"
+    },
+    {
+      "product_id": "off_6111246721964",
+      "true": "sut_urunu",
+      "cnn": "sut_urunu",
+      "cnn_confidence": 0.993955671787262,
+      "vlm": "sut_urunu",
+      "combined": "sut_urunu",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_6111032006619",
+      "true": "sut_urunu",
+      "cnn": "icecek",
+      "cnn_confidence": 0.5457679629325867,
+      "vlm": "sut_urunu",
+      "combined": "sut_urunu",
+      "source": "vlm"
+    },
+    {
+      "product_id": "off_3248832967611",
+      "true": "hazir_gida",
+      "cnn": "hazir_gida",
+      "cnn_confidence": 0.8468539118766785,
+      "vlm": "hazir_gida",
+      "combined": "hazir_gida",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_3760020507947",
+      "true": "konserve",
+      "cnn": "konserve",
+      "cnn_confidence": 0.9999978542327881,
+      "vlm": "konserve",
+      "combined": "konserve",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_3045140105502",
+      "true": "atistirmalik",
+      "cnn": "atistirmalik",
+      "cnn_confidence": 0.9971651434898376,
+      "vlm": "sut_urunu",
+      "combined": "sut_urunu",
+      "source": "vlm"
+    },
+    {
+      "product_id": "off_3560071006822",
+      "true": "konserve",
+      "cnn": "konserve",
+      "cnn_confidence": 0.9981086254119873,
+      "vlm": "konserve",
+      "combined": "konserve",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_3083681127430",
+      "true": "konserve",
+      "cnn": "konserve",
+      "cnn_confidence": 0.9695066809654236,
+      "vlm": "konserve",
+      "combined": "konserve",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_5410188024647",
+      "true": "hazir_gida",
+      "cnn": "hazir_gida",
+      "cnn_confidence": 0.37080076336860657,
+      "vlm": "icecek",
+      "combined": "icecek",
+      "source": "vlm"
+    },
+    {
+      "product_id": "off_3760020508012",
+      "true": "atistirmalik",
+      "cnn": "hazir_gida",
+      "cnn_confidence": 0.5459253787994385,
+      "vlm": "atistirmalik",
+      "combined": "atistirmalik",
+      "source": "vlm"
+    },
+    {
+      "product_id": "off_3335880006222",
+      "true": "konserve",
+      "cnn": "konserve",
+      "cnn_confidence": 0.5376901626586914,
+      "vlm": "konserve",
+      "combined": "konserve",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_3272770095334",
+      "true": "sut_urunu",
+      "cnn": "sut_urunu",
+      "cnn_confidence": 0.8811135292053223,
+      "vlm": "sut_urunu",
+      "combined": "sut_urunu",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_5449000000439",
+      "true": "icecek",
+      "cnn": "icecek",
+      "cnn_confidence": 0.9645885229110718,
+      "vlm": "icecek",
+      "combined": "icecek",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_06175700",
+      "true": "atistirmalik",
+      "cnn": "sut_urunu",
+      "cnn_confidence": 0.9847560524940491,
+      "vlm": "atistirmalik",
+      "combined": "atistirmalik",
+      "source": "vlm"
+    },
+    {
+      "product_id": "off_3302740483103",
+      "true": "hazir_gida",
+      "cnn": "hazir_gida",
+      "cnn_confidence": 0.9778879284858704,
+      "vlm": "hazir_gida",
+      "combined": "hazir_gida",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_3068320123264",
+      "true": "icecek",
+      "cnn": "sut_urunu",
+      "cnn_confidence": 0.9974863529205322,
+      "vlm": "icecek",
+      "combined": "icecek",
+      "source": "vlm"
+    },
+    {
+      "product_id": "off_3284230011884",
+      "true": "atistirmalik",
+      "cnn": "atistirmalik",
+      "cnn_confidence": 0.7239344120025635,
+      "vlm": "atistirmalik",
+      "combined": "atistirmalik",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_6111037000599",
+      "true": "sut_urunu",
+      "cnn": "sut_urunu",
+      "cnn_confidence": 0.5197204351425171,
+      "vlm": "sut_urunu",
+      "combined": "sut_urunu",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_3175681061460",
+      "true": "hazir_gida",
+      "cnn": "atistirmalik",
+      "cnn_confidence": 0.9312397837638855,
+      "vlm": "hazir_gida",
+      "combined": "hazir_gida",
+      "source": "vlm"
+    },
+    {
+      "product_id": "off_3175680011534",
+      "true": "atistirmalik",
+      "cnn": "atistirmalik",
+      "cnn_confidence": 0.9998670816421509,
+      "vlm": "atistirmalik",
+      "combined": "atistirmalik",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_3456300007817",
+      "true": "konserve",
+      "cnn": "konserve",
+      "cnn_confidence": 0.9999992847442627,
+      "vlm": "konserve",
+      "combined": "konserve",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_3083680918497",
+      "true": "konserve",
+      "cnn": "konserve",
+      "cnn_confidence": 0.9998788833618164,
+      "vlm": "konserve",
+      "combined": "konserve",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_3083680482042",
+      "true": "konserve",
+      "cnn": "konserve",
+      "cnn_confidence": 0.9999998807907104,
+      "vlm": "konserve",
+      "combined": "konserve",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_5449000214799",
+      "true": "icecek",
+      "cnn": "icecek",
+      "cnn_confidence": 0.4092090427875519,
+      "vlm": "icecek",
+      "combined": "icecek",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_3362600011006",
+      "true": "atistirmalik",
+      "cnn": "atistirmalik",
+      "cnn_confidence": 0.9109169840812683,
+      "vlm": "atistirmalik",
+      "combined": "atistirmalik",
+      "source": "cnn+vlm"
+    },
+    {
+      "product_id": "off_3412290070101",
+      "true": "sut_urunu",
+      "cnn": "sut_urunu",
+      "cnn_confidence": 0.998397171497345,
+      "vlm": "sut_urunu",
+      "combined": "sut_urunu",
+      "source": "cnn+vlm"
+    }
+  ]
+}
