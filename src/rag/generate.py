@@ -35,12 +35,27 @@ SYSTEM_PROMPT = (
     "veya oran UYDURMA - sadece sana verilen risk bayraklarini ve kaynak parcalarini yorumla. "
     "Bir kaynaktaki yuzde/orani kendi basina baska bir birime (ornegin grama) CEVIRME - kaynakta "
     "birebir yazan sayiyi kullan. Her iddiani, ilgili kaynagin chunk_id'siyle "
-    "[Kaynak: <chunk_id>] seklinde etiketle. Kaynak parcalarinda olmayan bir bilgiyi kesinlikle "
-    "ekleme."
+    "[Kaynak: <chunk_id>] seklinde etiketle: urunun kendi besin degerleri icin "
+    "[Kaynak: urun_etiketi], kural motorunun risk bayraklari icin [Kaynak: kural_motoru], "
+    "diger her sey icin SADECE KAYNAK PARCALARI'ndaki chunk_id'ler. Kaynak parcalarinda olmayan "
+    "bir bilgiyi kesinlikle ekleme."
 )
+
+# Urunun kendi verisi ve kural motoru da mesru birer kaynaktir; model onlari kaynak gostermek
+# istiyordu ama kimlikleri olmadigi icin bolum basliklarini ("URUN BESIN DEGERLERI") etiket
+# olarak yaziyor ve uydurma kaynak sayiliyordu (gpt-4.1-mini'nin kalan FC kaybinin tamami,
+# 2026-10-06 kiyasi). Yasaklamak yerine (denendi, basliklari ANMAK hatayi artirdi) gercek
+# kimlik verildi; uydurma kaynak tespiti diger her kimlik icin aynen calisir.
+PRODUCT_SOURCE_ID = "urun_etiketi"
+RULE_ENGINE_SOURCE_ID = "kural_motoru"
+INTERNAL_SOURCE_IDS = {PRODUCT_SOURCE_ID, RULE_ENGINE_SOURCE_ID}
 
 CITATION_PATTERN = re.compile(r"\[Kaynak:\s*([^\]]+)\]")
 NUMBER_PATTERN = re.compile(r"\d+(?:[.,]\d+)?")
+# "100 g'da", "100 ml icin" gibi olcu bazi ifadeleri bir iddia degil, birim; sayisal dayanak
+# kontrolunden once cikarilir (aksi halde "100" kaynakta gecmedigi icin her modelde haksiz
+# yere dayanaksiz sayiliyordu - 2026-10-06 kiyasinda risksiz_urun'u 0.80'e sabitleyen artefakt).
+BASIS_PATTERN = re.compile(r"\b100\s*(?:gram\w*|mililitre\w*|gr\b|g\b|ml\b)", re.IGNORECASE)
 
 
 @dataclass
@@ -74,8 +89,8 @@ def build_prompt(
     nutrition_summary = nutrition.model_dump(exclude_none=True)
 
     return (
-        f"URUN BESIN DEGERLERI (100g bazinda): {nutrition_summary}\n\n"
-        "KURAL MOTORU RISK BAYRAKLARI:\n"
+        f"URUN BESIN DEGERLERI [chunk_id: {PRODUCT_SOURCE_ID}] (100g bazinda): {nutrition_summary}\n\n"
+        f"KURAL MOTORU RISK BAYRAKLARI [chunk_id: {RULE_ENGINE_SOURCE_ID}]:\n"
         + "\n".join(f"- {line}" for line in risk_lines)
         + "\n\n"
         f"KAYNAK PARCALARI:\n{_build_context_block(retrieved)}\n\n"
@@ -138,6 +153,7 @@ def compute_numeric_grounding(
     text: str,
     retrieved: list[RetrievalResult],
     nutrition: NutritionFacts,
+    risk_flags: list[str] | None = None,
 ) -> float:
     """Her atiftaki sayisal degerin, o SPESIFIK atif yapilan chunk'in metninde ya da urunun
     kendi girdi besin verisinde (prompt'ta dogrudan verilir, retrieval disi ama mesru) birebir
@@ -146,14 +162,18 @@ def compute_numeric_grounding(
     Ne ikisinde de gecmeyen bir sayi = modelin kendi turettigi, kaynaksiz bir iddia (ornegin
     kaynakta "%5-10 enerji" yazarken "25 gram" gibi kendi hesapladigi bir deger sunmasi).
     Bir cumlede hic sayi yoksa kontrol edilecek bir sey yoktur (cezalandirilmaz).
+    [Kaynak: kural_motoru] atfindaki sayilar risk bayraklarinin aciklamalarina karsi kontrol edilir.
     """
+    nutrition_text = str(nutrition.model_dump(exclude_none=True))
     chunk_text_by_id = {r.chunk.chunk_id: r.chunk.text for r in retrieved}
-    nutrition_numbers = _numbers_in(str(nutrition.model_dump(exclude_none=True)))
+    chunk_text_by_id[PRODUCT_SOURCE_ID] = nutrition_text
+    chunk_text_by_id[RULE_ENGINE_SOURCE_ID] = " ".join(describe_risks(risk_flags or []))
+    nutrition_numbers = _numbers_in(nutrition_text)
 
     grounded_count = 0
     total_count = 0
     for segment_text, chunk_ids in _extract_citation_segments(text):
-        segment_numbers = _numbers_in(segment_text)
+        segment_numbers = _numbers_in(BASIS_PATTERN.sub(" ", segment_text))
         if not segment_numbers:
             continue
         # Birden fazla kaynak gosterildiyse sayi bunlardan HERHANGI birinde gecmesi yeterli.
@@ -195,24 +215,25 @@ def generate_explanation(
     gecerliligi + sayisal dayanak) -> (gerekirse) yeniden uretim."""
     query = " ".join(describe_risks(risk_flags)) if risk_flags else "genel beslenme degerlendirmesi"
     retrieved = retriever.retrieve(query, top_k=top_k)
-    valid_ids = {r.chunk.chunk_id for r in retrieved}
+    retrieved_ids = {r.chunk.chunk_id for r in retrieved}
+    valid_ids = retrieved_ids | INTERNAL_SOURCE_IDS
 
     prompt = build_prompt(nutrition, risk_flags, retrieved)
     text = llm.generate(prompt, system=SYSTEM_PROMPT)
     cited_ids = _extract_cited_ids(text)
     citation_ratio = _valid_citation_ratio(cited_ids, valid_ids)
-    numeric_ratio = compute_numeric_grounding(text, retrieved, nutrition)
+    numeric_ratio = compute_numeric_grounding(text, retrieved, nutrition, risk_flags)
     regenerated = False
 
     citation_ok = citation_ratio >= consistency_threshold
     numeric_ok = numeric_ratio >= consistency_threshold
 
-    if (not citation_ok or not numeric_ok) and valid_ids:
+    if (not citation_ok or not numeric_ok) and retrieved_ids:
         retry_prompt = prompt + _build_retry_suffix(citation_ok, numeric_ok, valid_ids)
         text = llm.generate(retry_prompt, system=SYSTEM_PROMPT)
         cited_ids = _extract_cited_ids(text)
         citation_ratio = _valid_citation_ratio(cited_ids, valid_ids)
-        numeric_ratio = compute_numeric_grounding(text, retrieved, nutrition)
+        numeric_ratio = compute_numeric_grounding(text, retrieved, nutrition, risk_flags)
         regenerated = True
 
     return GenerationResult(

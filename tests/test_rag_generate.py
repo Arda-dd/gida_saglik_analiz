@@ -244,3 +244,62 @@ def test_generate_explanation_regenerates_when_numeric_claim_unsupported():
     assert result.regenerated is True
     assert result.numeric_grounding_ratio == 1.0
     assert llm.generate.call_count == 2
+
+
+def test_generate_explanation_accepts_product_and_rule_engine_as_sources():
+    # Urunun kendi verisi ve kural motoru mesru kaynaklardir; uydurma sayilmamali.
+    retrieved = [make_retrieval_result("who_sugars_intake::0")]
+    retriever = MagicMock()
+    retriever.retrieve.return_value = retrieved
+    llm = MagicMock()
+    llm.generate.return_value = (
+        "Bu urun 100 g'da 35 g seker icerir [Kaynak: urun_etiketi]. "
+        "Yuksek seker icerir [Kaynak: kural_motoru]."
+    )
+
+    result = generate_explanation(NutritionFacts(sugar_g=35.0), ["yuksek_seker"], retriever, llm, top_k=3)
+
+    assert result.valid_citation_ratio == 1.0
+    assert result.regenerated is False
+
+
+def test_section_header_cited_as_source_is_still_invalid():
+    retrieved = [make_retrieval_result("who_sugars_intake::0")]
+    retriever = MagicMock()
+    retriever.retrieve.return_value = retrieved
+    llm = MagicMock()
+    llm.generate.return_value = "Risk yok [Kaynak: KURAL MOTORU RISK BAYRAKLARI]."
+
+    result = generate_explanation(NutritionFacts(sugar_g=2.0), [], retriever, llm, top_k=3)
+
+    assert result.regenerated is True
+
+
+def test_build_prompt_gives_internal_sources_explicit_ids():
+    prompt = build_prompt(NutritionFacts(sugar_g=35.0), ["yuksek_seker"], [])
+    assert "[chunk_id: urun_etiketi]" in prompt
+    assert "[chunk_id: kural_motoru]" in prompt
+
+
+def test_numeric_grounding_checks_rule_engine_citation_against_risk_text():
+    # Kural motoru aciklamasinda "100" geciyor ("100g'da esigin uzerinde"), "25" gecmiyor.
+    ok = compute_numeric_grounding(
+        "100 g'da esigin uzerinde [Kaynak: kural_motoru].", [], NutritionFacts(), ["yuksek_seker"]
+    )
+    invented = compute_numeric_grounding(
+        "Gunluk 25 gram siniri asar [Kaynak: kural_motoru].", [], NutritionFacts(), ["yuksek_seker"]
+    )
+    assert ok == 1.0
+    assert invented == 0.0
+
+
+def test_numeric_grounding_ignores_per_100g_basis_expression():
+    retrieved = [make_retrieval_result("a::0")]
+    retrieved[0].chunk.text = "Esik 22.5 g."
+    text = "Bu urun 100 g'da 2 g seker icerir, 100ml icin esik 22.5 g [Kaynak: a::0]."
+    assert compute_numeric_grounding(text, retrieved, NutritionFacts(sugar_g=2.0)) == 1.0
+
+
+def test_numeric_grounding_ignores_basis_with_turkish_suffixes():
+    text = "Bu urun 100 gramında 2 g seker, 100 gramda 3 g yag icerir [Kaynak: urun_etiketi]."
+    assert compute_numeric_grounding(text, [], NutritionFacts(sugar_g=2.0, fat_g=3.0)) == 1.0
